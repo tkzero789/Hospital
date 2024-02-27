@@ -56,7 +56,7 @@ symptomRoutes.route("/symptom/update/:id").post(async function (req, res) {
     const myquery = { _id: new ObjectId(req.params.id) };
     const newvalues = {
       $set: {
-        name: req.body.symptomName,
+        name: req.body.name,
         categories: req.body.categories,
       },
     };

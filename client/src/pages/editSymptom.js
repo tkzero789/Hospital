@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
 
-export default function NewSymptom() {
+export default function EditSymptom() {
   const [symptom, setSymptom] = useState({
     symptomName: "",
     categories: [
@@ -21,6 +21,32 @@ export default function NewSymptom() {
       },
     ],
   });
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchData() {
+      const id = params.id.toString();
+      const response = await fetch(
+        `http://localhost:5000/symptom/${params.id.toString()}`
+      );
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+
+      const dbsymptom = await response.json();
+      if (!dbsymptom) {
+        window.alert(`Symptom with id ${id} not found`);
+        navigate("/create-symptom");
+        return;
+      }
+      setSymptom(dbsymptom);
+    }
+    fetchData();
+    return;
+  }, [params.id, navigate]);
 
   const addCategoriesField = (id) => {
     let _symptom = { ...symptom };
@@ -60,6 +86,7 @@ export default function NewSymptom() {
     const categoryIndex = symptom.categories.findIndex(
       (category) => category.index === categoryId
     );
+
     _symptom.categories[categoryIndex][event.target.name] = event.target.value;
     setSymptom(_symptom);
   };
@@ -69,14 +96,17 @@ export default function NewSymptom() {
     const categoryIndex = symptom.categories.findIndex(
       (category) => category.index === categoryId
     );
+
     const descriptionIndex = symptom.categories[
       categoryIndex
     ].descriptions.findIndex(
       (description) => description.index === descriptionId
     );
+
     _symptom.categories[categoryIndex].descriptions[descriptionIndex][
       event.target.name
     ] = event.target.value;
+
     setSymptom(_symptom);
   };
 
@@ -100,37 +130,21 @@ export default function NewSymptom() {
     setSymptom(_symptom);
   };
 
-  const navigate = useNavigate();
-
   async function onSubmit(e) {
     e.preventDefault();
-    const newSymptom = { ...symptom };
-    await fetch("http://localhost:5000/symptom/add", {
+    const editedSymptom = { ...symptom };
+    console.log(editedSymptom);
+    await fetch(`http://localhost:5000/symptom/update/${params.id}`, {
       method: "POST",
+      body: JSON.stringify(editedSymptom),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newSymptom),
     }).catch((error) => {
       window.alert(error);
       return;
     });
-    console.log("Created");
-    setSymptom({
-      symptomName: "",
-      categories: [
-        {
-          index: uuidv4(),
-          categoryName: "Vị trí",
-          descriptions: [
-            {
-              index: uuidv4(),
-              descriptionDetail: "",
-            },
-          ],
-        },
-      ],
-    });
+    console.log("Edited");
     navigate("/create-symptom");
   }
 
@@ -148,7 +162,8 @@ export default function NewSymptom() {
             <input
               type="text"
               className="form-control border-danger-subtle col"
-              name="symptomName"
+              name="name"
+              value={symptom.name}
               onChange={(e) => updateNameField(e)}
             />
           </div>
@@ -167,6 +182,7 @@ export default function NewSymptom() {
                   </div>
                   <select
                     name="categoryName"
+                    value={category.categoryName}
                     className="form-select border-danger-subtle col"
                     onChange={(e) => updateCategoriesField(category.index, e)}
                   >
@@ -199,6 +215,7 @@ export default function NewSymptom() {
                       ></i>
                       <input
                         name="descriptionDetail"
+                        value={description.descriptionDetail}
                         type="text"
                         className="form-control border-danger-subtle "
                         placeholder="Mô tả"
@@ -224,15 +241,13 @@ export default function NewSymptom() {
               </div>
             );
           })}
-
           <div onClick={addCategoriesField} className="btn btn-outline-danger">
             <h5 className="text-danger">THÊM THUỘC TÍNH</h5>
           </div>
-
           <div className="row pt-5 pb-3 justify-content-center">
             <div className="col-3 d-grid gap-2">
               <button className="btn btn-danger" onClick={onSubmit}>
-                XÁC NHẬN VÀ TẠO
+                XÁC NHẬN CHỈNH SỬA
               </button>
             </div>
           </div>

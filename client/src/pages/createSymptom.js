@@ -1,70 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { Link, NavLink } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
 
-const Record = (props) => (
+const Symptom = (props) => (
   <div className="col-3 pb-3">
-    <div className="form-check">
-      <input className="form-check-input p-1" type="checkbox" value=""></input>
-      <Link className="text-danger" to={`/create-details/${props.record._id}`}>
-        <h5>{props.record.name}</h5>
+    <div className="form" style={{ display: "flex" }}>
+      <i
+        class="bi bi-trash text-danger"
+        style={{ marginRight: "5px" }}
+        onClick={() => {
+          props.onDelete(props.symptom._id);
+        }}
+      ></i>
+      <Link className="text-danger" to={`/edit-symptom/${props.symptom._id}`}>
+        <h5>{props.symptom.name}</h5>
       </Link>
     </div>
   </div>
 );
+
 export default function CreateSymptom() {
-  const [form, setForm] = useState({
-    name: "",
-    position: "",
-    level: "",
-  });
-  const navigate = useNavigate();
-  function updateForm(value) {
-    return setForm((prev) => {
-      return { ...prev, ...value };
-    });
-  }
-  async function onSubmit(e) {
-    e.preventDefault();
-
-    const newPerson = { ...form };
-
-    await fetch("http://localhost:5000/record/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPerson),
-    }).catch((error) => {
-      window.alert(error);
-      return;
-    });
-
-    setForm({ name: "", position: "", level: "" });
-    navigate("/");
-  }
-
-  const [records, setRecords] = useState([]);
+  const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
-    async function getRecords() {
-      const response = await fetch(`http://localhost:5000/record/`);
+    async function getSymptoms() {
+      const response = await fetch(`http://localhost:5000/symptom/`);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         window.alert(message);
         return;
       }
-      const records = await response.json();
-      setRecords(records);
+      const symptoms = await response.json();
+      setSymptoms(symptoms);
     }
-    getRecords();
+    getSymptoms();
     return;
-  }, [records.length]);
+  }, [symptoms.length]);
 
-  function recordList() {
-    return records.map((record) => {
-      return <Record record={record} />;
+  async function onDelete(id) {
+    if (window.confirm("Are you sure you want to delete this symptom?")) {
+      await fetch(`http://localhost:5000/symptom/${id}`, {
+        method: "DELETE",
+      });
+
+      const newSymptoms = symptoms.filter((el) => el._id !== id);
+      setSymptoms(newSymptoms);
+    }
+  }
+
+  function symptomList() {
+    return symptoms.map((symptom) => {
+      return (
+        <Symptom
+          symptom={symptom}
+          onDelete={() => onDelete(symptom._id)}
+          key={symptom._id}
+        />
+      );
     });
   }
 
@@ -77,18 +70,12 @@ export default function CreateSymptom() {
       </h3>
       <div className="container p-5">
         <div className="card border-danger-subtle p-5">
-          <form onSubmit={onSubmit}>
+          <form>
             <h4 className="card-title text-danger">TRIỆU CHỨNG ĐÃ CÓ</h4>
 
-            <div className="row pt-3 pb-3">{recordList()}</div>
+            <div className="row pt-3 pb-3">{symptomList()}</div>
+
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
-                <input
-                  type="submit"
-                  value="XÓA TRIỆU CHỨNG"
-                  className="btn btn-outline-danger"
-                />
-              </div>
               <div className="col-3 d-grid gap-2">
                 <NavLink className="btn btn-outline-danger" to="/new-symptom">
                   TẠO TRIỆU CHỨNG MỚI
