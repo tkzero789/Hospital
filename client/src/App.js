@@ -9,6 +9,7 @@ import Create from "./pages/create";
 import CreateSymptom from "./pages/createSymptom";
 import NewSymptom from "./pages/newSymptom";
 import EditSymptom from "./pages/editSymptom";
+import CreateAritcle from "./pages/createArticle";
 const App = () => {
   return (
     <div>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/create-symptom" element={<CreateSymptom />} />
         <Route path="/new-symptom" element={<NewSymptom />} />
         <Route path="/edit-symptom/:id" element={<EditSymptom />} />
+        <Route path="/create-article" element={<CreateAritcle />} />
       </Routes>
     </div>
   );

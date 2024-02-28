@@ -52,7 +52,7 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item px-5 mx-3">
-                <NavLink className="nav-link" to="/create-symptom">
+                <NavLink className="nav-link" to="/create-article">
                   <h3 className="text-light">CHẨN ĐOÁN BỆNH</h3>
                 </NavLink>
               </li>

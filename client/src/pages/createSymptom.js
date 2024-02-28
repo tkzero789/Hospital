@@ -44,7 +44,7 @@ export default function CreateSymptom() {
         method: "DELETE",
       });
 
-      const newSymptoms = symptoms.filter((el) => el._id !== id);
+      const newSymptoms = symptoms.filter((symptom) => symptom._id !== id);
       setSymptoms(newSymptoms);
     }
   }
