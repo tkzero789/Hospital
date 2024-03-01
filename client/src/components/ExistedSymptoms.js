@@ -10,6 +10,7 @@ const Symptom = (props) => {
           <input
             type="checkbox"
             style={{ marginRight: "5px" }}
+            checked={props.isChecked}
             onChange={() => {
               props.onCheck(props.symptom._id, props.symptom.name);
             }}
@@ -23,7 +24,7 @@ const Symptom = (props) => {
   );
 };
 
-const ExistedSymptoms = ({ form, setForm }) => {
+const ExistedSymptoms = ({ articleSymptoms, setArticleSymptoms }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     async function getSymptoms() {
@@ -41,6 +42,18 @@ const ExistedSymptoms = ({ form, setForm }) => {
   }, [symptoms.length]);
 
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  useEffect(() => {
+    function updateForm() {
+      if (articleSymptoms.length > 0) {
+        const selectedBeforeSymptoms = articleSymptoms.flatMap(
+          (symptom) => symptom._id
+        );
+        setSelectedSymptoms(selectedBeforeSymptoms);
+      } else return;
+    }
+    updateForm();
+    return;
+  }, [selectedSymptoms.length]);
 
   function symptomList() {
     return symptoms.map((symptom) => {
@@ -60,18 +73,20 @@ const ExistedSymptoms = ({ form, setForm }) => {
       setSelectedSymptoms(
         selectedSymptoms.filter((selectedId) => selectedId !== symptomId)
       );
-      const _form = form.filter((symptom) => symptom._id !== symptomId);
-      setForm(_form);
+      const _articleSymptoms = articleSymptoms.filter(
+        (symptom) => symptom._id !== symptomId
+      );
+      setArticleSymptoms(_articleSymptoms);
     } else {
       setSelectedSymptoms([...selectedSymptoms, symptomId]);
-      let _form = form;
-      _form.push({
+      let _articleSymptoms = articleSymptoms;
+      _articleSymptoms.push({
         index: uuidv4(),
         _id: symptomId,
         symptomName: symptomName,
         categories: [],
       });
-      setForm(_form);
+      setArticleSymptoms(_articleSymptoms);
     }
   };
 

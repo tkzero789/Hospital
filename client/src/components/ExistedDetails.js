@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const ExistedDetails = ({ form, setForm }) => {
+const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   useEffect(() => {
     async function getSymptoms() {
@@ -13,15 +13,34 @@ const ExistedDetails = ({ form, setForm }) => {
       }
       const symptoms = await response.json();
       const selected = symptoms.filter((symptom) =>
-        form.some((formSymptom) => formSymptom._id === symptom._id)
+        articleSymptoms.some(
+          (articleSymptom) => articleSymptom._id === symptom._id
+        )
       );
       setSelectedSymptoms(selected);
     }
     getSymptoms();
-    console.log(selectedSymptoms);
   }, []);
 
   const [selectedDetails, setSelectedDetails] = useState([]);
+  useEffect(() => {
+    function updateForm() {
+      if (articleSymptoms.length > 0) {
+        const categoryList = articleSymptoms.flatMap(
+          (symptom) => symptom.categories
+        );
+        const descriptionList = categoryList.map(
+          (category) => category.descriptions
+        );
+        const selectedBeforeDetails = descriptionList.flatMap((sublist) =>
+          sublist.map((item) => item.descriptionDetail)
+        );
+        setSelectedDetails(selectedBeforeDetails);
+      } else return;
+    }
+    updateForm();
+    return;
+  }, [selectedDetails.length]);
 
   const onCheck = (symptomId, categoryName, descriptionDetail) => {
     if (selectedDetails.includes(descriptionDetail)) {
@@ -30,32 +49,60 @@ const ExistedDetails = ({ form, setForm }) => {
           (selectedDetail) => selectedDetail !== descriptionDetail
         )
       );
-      const _form = form.flatMap((symptom) =>
-        symptom.categories.flatMap((category) =>
-          category.descriptions.filter(
-            (description) => description.descriptionDetail !== descriptionDetail
-          )
-        )
-      );
-      setForm(_form);
-    } else {
-      setSelectedDetails([...selectedDetails, descriptionDetail]);
-      let _form = form;
-      const symptomIndex = form.findIndex(
+      let _articleSymptoms = [...articleSymptoms];
+      const symptomIndex = _articleSymptoms.findIndex(
         (symptom) => symptom._id === symptomId
       );
-      console.log(form);
-      _form[symptomIndex].categories.push({
-        index: uuidv4(),
-        categoryName: categoryName,
-        descriptions: [
-          {
-            index: uuidv4(),
-            descriptionDetail: descriptionDetail,
-          },
-        ],
-      });
-      setForm(_form);
+      if (symptomIndex !== -1) {
+        const categoryIndex = articleSymptoms[
+          symptomIndex
+        ].categories.findIndex(
+          (category) => category.categoryName === categoryName
+        );
+        if (categoryIndex !== -1) {
+          _articleSymptoms[symptomIndex].categories[
+            categoryIndex
+          ].descriptions = _articleSymptoms[symptomIndex].categories[
+            categoryIndex
+          ].descriptions.filter(
+            (description) => description.descriptionDetail !== descriptionDetail
+          );
+          _articleSymptoms[symptomIndex].categories = _articleSymptoms[
+            symptomIndex
+          ].categories.filter((category) => category.descriptions.length > 0);
+        }
+        setArticleSymptoms(_articleSymptoms);
+      }
+    } else {
+      setSelectedDetails([...selectedDetails, descriptionDetail]);
+      let _articleSymptoms = [...articleSymptoms];
+      const symptomIndex = _articleSymptoms.findIndex(
+        (symptom) => symptom._id === symptomId
+      );
+      const categoryIndex = articleSymptoms[symptomIndex].categories.findIndex(
+        (category) => category.categoryName === categoryName
+      );
+      if (categoryIndex === -1) {
+        _articleSymptoms[symptomIndex].categories.push({
+          index: uuidv4(),
+          categoryName: categoryName,
+          descriptions: [
+            {
+              index: uuidv4(),
+              descriptionDetail: descriptionDetail,
+            },
+          ],
+        });
+        setArticleSymptoms(_articleSymptoms);
+      } else {
+        _articleSymptoms[symptomIndex].categories[
+          categoryIndex
+        ].descriptions.push({
+          index: uuidv4(),
+          descriptionDetail: descriptionDetail,
+        });
+        setArticleSymptoms(_articleSymptoms);
+      }
     }
   };
 
@@ -70,7 +117,7 @@ const ExistedDetails = ({ form, setForm }) => {
         {props.symptom.categories.map((category) => {
           return (
             <div key={category.index}>
-              <div className="form row pb-3">
+              <div className="form row pt-3 pb-3">
                 <h4 className="card-title text-danger col-3 text-uppercase">
                   {category.categoryName}
                 </h4>
@@ -83,10 +130,13 @@ const ExistedDetails = ({ form, setForm }) => {
                   >
                     <input
                       type="checkbox"
+                      checked={selectedDetails.includes(
+                        description.descriptionDetail
+                      )}
                       style={{ marginRight: "5px" }}
-                      onClick={(e) =>
+                      onChange={() =>
                         onCheck(
-                          props.key,
+                          props.symptom._id,
                           category.categoryName,
                           description.descriptionDetail
                         )

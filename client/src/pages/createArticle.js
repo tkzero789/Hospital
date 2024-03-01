@@ -1,63 +1,110 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { v4 as uuidv4 } from "uuid";
 
 import AdminNavBar from "../components/AdminNavBar";
 import ExistedSymptoms from "../components/ExistedSymptoms";
 import ExistedDetails from "../components/ExistedDetails";
-import MoreSymptoms from "../components/MoreSymptoms";
 import WriteArticle from "../components/WriteAriticle";
 
 export default function CreateAritcle() {
-  const [form, setForm] = useState([
-    // {
-    //   index: uuidv4(),
-    //   symptomName: "",
-    //   categories: [
-    //     {
-    //       index: uuidv4(),
-    //       categoryName: "Vị trí",
-    //       descriptions: [
-    //         {
-    //           index: uuidv4(),
-    //           descriptionDetail: "",
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
-  ]);
+  const [article, setArticle] = useState({
+    title: "",
+    author: "BS Anh Kiet",
+    diseaseName: "",
+    diseaseAgeRanges: [],
+    diseaseGenders: [],
+    diseaseSymptoms: [],
+    diseaseInfos: [],
+    diseaseTreatments: [],
+  });
 
-  const title = {
-    0: "Existed Symptoms",
-    1: "Existed Details",
-    2: "More Symptoms",
-    3: "Write Article",
-  };
+  const [articleSymptoms, setArticleSymptoms] = useState([]);
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const StepDisplay = () => {
-    if (step === 0) {
-      return <ExistedSymptoms form={form} setForm={setForm} />;
-    } else if (step === 1) {
-      return <ExistedDetails form={form} setForm={setForm} />;
+    if (step === 1) {
+      return (
+        <ExistedSymptoms
+          articleSymptoms={articleSymptoms}
+          setArticleSymptoms={setArticleSymptoms}
+        />
+      );
     } else if (step === 2) {
-      return <MoreSymptoms form={form} setForm={setForm} />;
+      return (
+        <ExistedDetails
+          articleSymptoms={articleSymptoms}
+          setArticleSymptoms={setArticleSymptoms}
+        />
+      );
     } else {
-      return <WriteArticle form={form} setForm={setForm} />;
+      if (articleSymptoms.length > 0) {
+        article["diseaseSymptoms"] = articleSymptoms;
+      }
+      return <WriteArticle article={article} setArticle={setArticle} />;
     }
   };
 
   const handlePrev = () => {
     setStep((step) => step - 1);
-    console.log(step);
   };
   const handleNext = () => {
     setStep((step) => step + 1);
-    console.log(step);
   };
+
+  const navigate = useNavigate();
+
+  async function confirmCreate(e) {
+    if (article.title === "") {
+      alert("Thiếu tên bài viết");
+    } else if (article.diseaseName === "") {
+      alert("Thiếu tên căn bệnh");
+    } else if (article.diseaseAgeRanges.length < 1) {
+      alert("Thiếu độ tuổi bệnh nhân");
+    } else if (article.diseaseGenders.length < 1) {
+      alert("Thiếu giới tính bệnh nhân");
+    } else if (article.diseaseSymptoms.length < 1) {
+      alert("Thiếu triệu chứng bệnh");
+    } else if (
+      article.diseaseInfos.filter((info) => info.detail === "").length > 0
+    ) {
+      alert("Thiếu thông tin bệnh");
+    } else if (
+      article.diseaseTreatments.filter((treatment) => treatment.detail === "")
+        .length > 0
+    ) {
+      alert("Thiếu phương pháp chữa trị");
+    } else {
+      e.preventDefault();
+      const newArticle = { ...article };
+      console.log(newArticle);
+      await fetch("http://localhost:5000/article/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newArticle),
+      }).catch((error) => {
+        window.alert(error);
+        return;
+      });
+      console.log("Article created");
+      console.log(article);
+      setArticle({
+        title: "",
+        author: "BS Anh Kiet",
+        diseaseName: "",
+        diseaseAgeRanges: [],
+        diseaseGenders: [],
+        diseaseSymptoms: [],
+        diseaseInfos: [],
+        diseaseTreatments: [],
+      });
+      setStep(1);
+      navigate("/create-article");
+    }
+  }
 
   // This following section will display the form that takes the input from the user.
   return (
@@ -74,7 +121,7 @@ export default function CreateAritcle() {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  disabled={step == 0}
+                  disabled={step === 1}
                   onClick={handlePrev}
                 >
                   QUAY LẠI
@@ -84,10 +131,15 @@ export default function CreateAritcle() {
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  disabled={step == 3}
-                  onClick={handleNext}
+                  onClick={(e) => {
+                    if (step === 3) {
+                      confirmCreate(e);
+                    } else {
+                      handleNext();
+                    }
+                  }}
                 >
-                  TIẾP THEO
+                  {step === 3 ? "XÁC NHẬN TẠO" : "TIẾP THEO"}
                 </button>
               </div>
             </div>

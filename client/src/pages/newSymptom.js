@@ -115,7 +115,7 @@ export default function NewSymptom() {
       window.alert(error);
       return;
     });
-    console.log("Created");
+    console.log("Symptom created");
     setSymptom({
       symptomName: "",
       categories: [
