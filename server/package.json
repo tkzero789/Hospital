@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "concurrently \"npm start\" \"cd ../client && npm start\""
   },
   "keywords": [],
   "author": "",
@@ -16,5 +18,8 @@
     "mongodb": "^6.2.0",
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
