@@ -105,13 +105,16 @@ export default function NewSymptom() {
   async function onSubmit(e) {
     e.preventDefault();
     const newSymptom = { ...symptom };
-    await fetch("http://localhost:5000/symptom/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newSymptom),
-    }).catch((error) => {
+    await fetch(
+      "https://symptom-checker-with-mern-backend.onrender.com/symptom/add",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newSymptom),
+      }
+    ).catch((error) => {
       window.alert(error);
       return;
     });

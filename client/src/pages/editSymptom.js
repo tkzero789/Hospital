@@ -27,7 +27,7 @@ export default function EditSymptom() {
     async function fetchData() {
       const id = params.id.toString();
       const response = await fetch(
-        `http://localhost:5000/symptom/${params.id.toString()}`
+        `https://symptom-checker-with-mern-backend.onrender.com/symptom/${params.id.toString()}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -133,13 +133,16 @@ export default function EditSymptom() {
     e.preventDefault();
     const editedSymptom = { ...symptom };
     console.log(editedSymptom);
-    await fetch(`http://localhost:5000/symptom/update/${params.id}`, {
-      method: "POST",
-      body: JSON.stringify(editedSymptom),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).catch((error) => {
+    await fetch(
+      `https://symptom-checker-with-mern-backend.onrender.com/symptom/update/${params.id}`,
+      {
+        method: "POST",
+        body: JSON.stringify(editedSymptom),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).catch((error) => {
       window.alert(error);
       return;
     });

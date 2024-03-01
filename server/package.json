@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },  "scripts": {
+  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "concurrently \"npm start\" \"cd ../client && npm start\"",
-    "installAll": "concurrently \"npm install\" \"cd ../client && npm install\""
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

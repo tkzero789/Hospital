@@ -79,13 +79,16 @@ export default function CreateAritcle() {
       e.preventDefault();
       const newArticle = { ...article };
       console.log(newArticle);
-      await fetch("http://localhost:5000/article/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newArticle),
-      }).catch((error) => {
+      await fetch(
+        "https://symptom-checker-with-mern-backend.onrender.com/article/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newArticle),
+        }
+      ).catch((error) => {
         window.alert(error);
         return;
       });

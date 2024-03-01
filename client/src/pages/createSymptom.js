@@ -25,7 +25,9 @@ export default function CreateSymptom() {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     async function getSymptoms() {
-      const response = await fetch(`http://localhost:5000/symptom/`);
+      const response = await fetch(
+        `https://symptom-checker-with-mern-backend.onrender.com/symptom/`
+      );
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         window.alert(message);
@@ -40,9 +42,12 @@ export default function CreateSymptom() {
 
   async function onDelete(id) {
     if (window.confirm("Are you sure you want to delete this symptom?")) {
-      await fetch(`http://localhost:5000/symptom/${id}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://symptom-checker-with-mern-backend.onrender.com/symptom/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const newSymptoms = symptoms.filter((symptom) => symptom._id !== id);
       setSymptoms(newSymptoms);

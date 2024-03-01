@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Link, NavLink } from "react-router-dom";
 
 const Symptom = (props) => {
   return (
@@ -28,7 +27,9 @@ const ExistedSymptoms = ({ articleSymptoms, setArticleSymptoms }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     async function getSymptoms() {
-      const response = await fetch(`http://localhost:5000/symptom/`);
+      const response = await fetch(
+        `https://symptom-checker-with-mern-backend.onrender.com/symptom/`
+      );
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         window.alert(message);
