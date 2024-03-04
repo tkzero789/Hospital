@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
+const PatientFormDetails = ({ patientForm, setPatientForm }) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   useEffect(() => {
-    async function getSymptoms() {
-      const response = await fetch(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/`
-      );
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
+    axios
+      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .then((res) => {
+        const symptoms = res.data;
+        const selected = symptoms.filter((symptom) =>
+          patientForm.patientSymptoms.some(
+            (patientFormSymptom) => patientFormSymptom._id === symptom._id
+          )
+        );
+        setSelectedSymptoms(selected);
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
         window.alert(message);
         return;
-      }
-      const symptoms = await response.json();
-      const selected = symptoms.filter((symptom) =>
-        articleSymptoms.some(
-          (articleSymptom) => articleSymptom._id === symptom._id
-        )
-      );
-      setSelectedSymptoms(selected);
-    }
-    getSymptoms();
-  }, []);
+      });
+  }, [selectedSymptoms]);
 
   const [selectedDetails, setSelectedDetails] = useState([]);
   useEffect(() => {
     function updateForm() {
-      if (articleSymptoms.length > 0) {
-        const categoryList = articleSymptoms.flatMap(
+      if (patientForm.patientSymptoms.length > 0) {
+        const symptomList = patientForm.patientSymptoms;
+        const categoryList = symptomList.flatMap(
           (symptom) => symptom.categories
         );
         const descriptionList = categoryList.map(
@@ -51,41 +51,44 @@ const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
           (selectedDetail) => selectedDetail !== descriptionDetail
         )
       );
-      let _articleSymptoms = [...articleSymptoms];
-      const symptomIndex = _articleSymptoms.findIndex(
+      const _patientForm = patientForm;
+      const symptomIndex = _patientForm.patientSymptoms.findIndex(
         (symptom) => symptom._id === symptomId
       );
       if (symptomIndex !== -1) {
-        const categoryIndex = articleSymptoms[
+        const categoryIndex = _patientForm.patientSymptoms[
           symptomIndex
         ].categories.findIndex(
           (category) => category.categoryName === categoryName
         );
         if (categoryIndex !== -1) {
-          _articleSymptoms[symptomIndex].categories[
+          _patientForm.patientSymptoms[symptomIndex].categories[
             categoryIndex
-          ].descriptions = _articleSymptoms[symptomIndex].categories[
-            categoryIndex
-          ].descriptions.filter(
+          ].descriptions = _patientForm.patientSymptoms[
+            symptomIndex
+          ].categories[categoryIndex].descriptions.filter(
             (description) => description.descriptionDetail !== descriptionDetail
           );
-          _articleSymptoms[symptomIndex].categories = _articleSymptoms[
-            symptomIndex
-          ].categories.filter((category) => category.descriptions.length > 0);
+          _patientForm.patientSymptoms[symptomIndex].categories =
+            _patientForm.patientSymptoms[symptomIndex].categories.filter(
+              (category) => category.descriptions.length > 0
+            );
         }
-        setArticleSymptoms(_articleSymptoms);
+        setPatientForm(_patientForm);
       }
     } else {
       setSelectedDetails([...selectedDetails, descriptionDetail]);
-      let _articleSymptoms = [...articleSymptoms];
-      const symptomIndex = _articleSymptoms.findIndex(
+      const _patientForm = patientForm;
+      const symptomIndex = _patientForm.patientSymptoms.findIndex(
         (symptom) => symptom._id === symptomId
       );
-      const categoryIndex = articleSymptoms[symptomIndex].categories.findIndex(
+      const categoryIndex = patientForm.patientSymptoms[
+        symptomIndex
+      ].categories.findIndex(
         (category) => category.categoryName === categoryName
       );
       if (categoryIndex === -1) {
-        _articleSymptoms[symptomIndex].categories.push({
+        _patientForm.patientSymptoms[symptomIndex].categories.push({
           index: uuidv4(),
           categoryName: categoryName,
           descriptions: [
@@ -95,15 +98,15 @@ const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
             },
           ],
         });
-        setArticleSymptoms(_articleSymptoms);
+        setPatientForm(_patientForm);
       } else {
-        _articleSymptoms[symptomIndex].categories[
+        _patientForm.patientSymptoms[symptomIndex].categories[
           categoryIndex
         ].descriptions.push({
           index: uuidv4(),
           descriptionDetail: descriptionDetail,
         });
-        setArticleSymptoms(_articleSymptoms);
+        setPatientForm(_patientForm);
       }
     }
   };
@@ -111,7 +114,7 @@ const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
   const Symptom = (props) => {
     return (
       <div>
-        <div className="form-group row pb-5">
+        <div className="form-group row pb-4">
           <h4 className="card-title text-danger text-uppercase">
             MÔ TẢ CHI TIẾT TRIỆU CHỨNG {props.symptom.name}
           </h4>
@@ -120,7 +123,7 @@ const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
           return (
             <div key={category.index}>
               <div className="form row pt-3 pb-3">
-                <h4 className="card-title text-danger col-3 text-uppercase">
+                <h4 className="card-title text-danger col-12 text-uppercase">
                   {category.categoryName}
                 </h4>
               </div>
@@ -153,7 +156,7 @@ const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
             </div>
           );
         })}
-        <hr style={{ color: "red" }} />
+        <hr className="pb-4" style={{ color: "red" }} />
       </div>
     );
   };
@@ -167,4 +170,4 @@ const ExistedDetails = ({ articleSymptoms, setArticleSymptoms }) => {
   );
 };
 
-export default ExistedDetails;
+export default PatientFormDetails;

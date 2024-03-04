@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const Symptom = (props) => {
   return (
@@ -23,30 +24,27 @@ const Symptom = (props) => {
   );
 };
 
-const ExistedSymptoms = ({ articleSymptoms, setArticleSymptoms }) => {
+const PatientFormSymptoms = ({ patientForm, setPatientForm }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
-    async function getSymptoms() {
-      const response = await fetch(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/`
-      );
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
+    axios
+      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .then((res) => {
+        const symptoms = res.data;
+        setSymptoms(symptoms);
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
         window.alert(message);
         return;
-      }
-      const symptoms = await response.json();
-      setSymptoms(symptoms);
-    }
-    getSymptoms();
-    return;
+      });
   }, [symptoms.length]);
 
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   useEffect(() => {
     function updateForm() {
-      if (articleSymptoms.length > 0) {
-        const selectedBeforeSymptoms = articleSymptoms.flatMap(
+      if (patientForm.patientSymptoms.length > 0) {
+        const selectedBeforeSymptoms = patientForm.patientSymptoms.flatMap(
           (symptom) => symptom._id
         );
         setSelectedSymptoms(selectedBeforeSymptoms);
@@ -74,29 +72,33 @@ const ExistedSymptoms = ({ articleSymptoms, setArticleSymptoms }) => {
       setSelectedSymptoms(
         selectedSymptoms.filter((selectedId) => selectedId !== symptomId)
       );
-      const _articleSymptoms = articleSymptoms.filter(
+      const _patientForm = patientForm;
+      _patientForm.patientSymptoms = _patientForm.patientSymptoms.filter(
         (symptom) => symptom._id !== symptomId
       );
-      setArticleSymptoms(_articleSymptoms);
+      setPatientForm(_patientForm);
     } else {
       setSelectedSymptoms([...selectedSymptoms, symptomId]);
-      let _articleSymptoms = articleSymptoms;
-      _articleSymptoms.push({
+      let _patientForm = patientForm;
+      _patientForm.patientSymptoms.push({
         index: uuidv4(),
         _id: symptomId,
         symptomName: symptomName,
         categories: [],
       });
-      setArticleSymptoms(_articleSymptoms);
+      setPatientForm(_patientForm);
     }
   };
 
   return (
     <div>
-      <h4 className="card-title text-danger">TRIỆU CHỨNG ĐÃ CÓ</h4>
+      <div className="pb-5 text-center">
+        <h4>HÃY CHỌN TRIỆU CHỨNG BỆNH MÀ BẠN ĐANG GẶP PHẢI</h4>
+      </div>
+      <h4 className="card-title text-danger">TRIỆU CHỨNG PHỔ BIẾN</h4>
       <div className="row pt-3 pb-3">{symptomList()}</div>
     </div>
   );
 };
 
-export default ExistedSymptoms;
+export default PatientFormSymptoms;

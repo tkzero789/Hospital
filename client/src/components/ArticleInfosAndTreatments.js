@@ -27,7 +27,7 @@ const Details = (props) => {
   );
 };
 
-const WriteAriticle = ({ article, setArticle }) => {
+const ArticleInfosAndTreatments = ({ article, setArticle }) => {
   const [finalInfoNumber, setFinalInfoNumber] = useState(
     article.diseaseInfos.length + 1
   );
@@ -168,7 +168,7 @@ const WriteAriticle = ({ article, setArticle }) => {
     "30 tuổi - 60 tuổi",
   ];
 
-  const genders = ["nam", "nữ"];
+  const genders = ["Nam", "Nữ"];
 
   // This following section will display the form that takes the input from the user.
   return (
@@ -333,4 +333,4 @@ const WriteAriticle = ({ article, setArticle }) => {
   );
 };
 
-export default WriteAriticle;
+export default ArticleInfosAndTreatments;

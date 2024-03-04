@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import AdminNavBar from "../components/AdminNavBar";
 
@@ -24,27 +25,25 @@ export default function EditSymptom() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
-      const id = params.id.toString();
-      const response = await fetch(
+    axios
+      .get(
         `https://symptom-checker-with-mern-backend.onrender.com/symptom/${params.id.toString()}`
-      );
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
+      )
+      .then((res) => {
+        const dbsymptom = res.data;
+        if (!dbsymptom) {
+          const id = params.id.toString();
+          window.alert(`Symptom with id ${id} not found`);
+          navigate("/create-symptom");
+          return;
+        }
+        setSymptom(dbsymptom);
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
         window.alert(message);
         return;
-      }
-
-      const dbsymptom = await response.json();
-      if (!dbsymptom) {
-        window.alert(`Symptom with id ${id} not found`);
-        navigate("/create-symptom");
-        return;
-      }
-      setSymptom(dbsymptom);
-    }
-    fetchData();
-    return;
+      });
   }, [params.id, navigate]);
 
   const addCategoriesField = (id) => {
@@ -132,22 +131,21 @@ export default function EditSymptom() {
   async function onSubmit(e) {
     e.preventDefault();
     const editedSymptom = { ...symptom };
-    console.log(editedSymptom);
-    await fetch(
-      `https://symptom-checker-with-mern-backend.onrender.com/symptom/update/${params.id}`,
-      {
-        method: "POST",
-        body: JSON.stringify(editedSymptom),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).catch((error) => {
-      window.alert(error);
-      return;
-    });
-    console.log("Edited");
-    navigate("/create-symptom");
+    axios
+      .post(
+        `https://symptom-checker-with-mern-backend.onrender.com/symptom/update/${params.id}`,
+        editedSymptom
+      )
+      .then((res) => {
+        console.log("Symptom edited");
+        console.log("res");
+        navigate("/create-symptom");
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
+        window.alert(message);
+        return;
+      });
   }
 
   // This following section will display the form that takes the input from the user.

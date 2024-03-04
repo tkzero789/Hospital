@@ -26,7 +26,7 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item item px-5">
-                <NavLink className="nav-link" to="">
+                <NavLink className="nav-link" to="/signup">
                   <h3 className="text-danger">Hello, Admin</h3>
                 </NavLink>
               </li>
@@ -42,7 +42,7 @@ export default function Navbar() {
           >
             <ul className="navbar-nav justify-content-center">
               <li className="nav-item px-5 mx-4">
-                <NavLink className="nav-link" to="/create">
+                <NavLink className="nav-link" to="/create-symptom">
                   <h3 className="text-light">TRANG CHỦ</h3>
                 </NavLink>
               </li>
@@ -57,7 +57,7 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item px-5 mx-2">
-                <NavLink className="nav-link" to="/create-symptom">
+                <NavLink className="nav-link" to="/symptom-checker">
                   <h3 className="text-light">HỎI & ĐÁP</h3>
                 </NavLink>
               </li>

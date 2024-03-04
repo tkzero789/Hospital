@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
-import ExistedSymptoms from "../components/ExistedSymptoms";
-import ExistedDetails from "../components/ExistedDetails";
-import WriteArticle from "../components/WriteAriticle";
+import ArticleSymptoms from "../components/ArticleSymptoms";
+import ArticleDetails from "../components/ArticleDetails";
+import ArticleInfosAndTreatments from "../components/ArticleInfosAndTreatments";
 
 export default function CreateAritcle() {
   const [article, setArticle] = useState({
@@ -19,30 +20,17 @@ export default function CreateAritcle() {
     diseaseTreatments: [],
   });
 
-  const [articleSymptoms, setArticleSymptoms] = useState([]);
-
   const [step, setStep] = useState(1);
 
   const StepDisplay = () => {
     if (step === 1) {
-      return (
-        <ExistedSymptoms
-          articleSymptoms={articleSymptoms}
-          setArticleSymptoms={setArticleSymptoms}
-        />
-      );
+      return <ArticleSymptoms article={article} setArticle={setArticle} />;
     } else if (step === 2) {
-      return (
-        <ExistedDetails
-          articleSymptoms={articleSymptoms}
-          setArticleSymptoms={setArticleSymptoms}
-        />
-      );
+      return <ArticleDetails article={article} setArticle={setArticle} />;
     } else {
-      if (articleSymptoms.length > 0) {
-        article["diseaseSymptoms"] = articleSymptoms;
-      }
-      return <WriteArticle article={article} setArticle={setArticle} />;
+      return (
+        <ArticleInfosAndTreatments article={article} setArticle={setArticle} />
+      );
     }
   };
 
@@ -78,34 +66,32 @@ export default function CreateAritcle() {
     } else {
       e.preventDefault();
       const newArticle = { ...article };
-      console.log(newArticle);
-      await fetch(
-        "https://symptom-checker-with-mern-backend.onrender.com/article/add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newArticle),
-        }
-      ).catch((error) => {
-        window.alert(error);
-        return;
-      });
-      console.log("Article created");
-      console.log(article);
-      setArticle({
-        title: "",
-        author: "BS Anh Kiet",
-        diseaseName: "",
-        diseaseAgeRanges: [],
-        diseaseGenders: [],
-        diseaseSymptoms: [],
-        diseaseInfos: [],
-        diseaseTreatments: [],
-      });
-      setStep(1);
-      navigate("/create-article");
+      axios
+        .post(
+          "https://symptom-checker-with-mern-backend.onrender.com/article/add",
+          newArticle
+        )
+        .then((res) => {
+          console.log("Article created");
+          console.log(res.data);
+          setArticle({
+            title: "",
+            author: "BS Anh Kiet",
+            diseaseName: "",
+            diseaseAgeRanges: [],
+            diseaseGenders: [],
+            diseaseSymptoms: [],
+            diseaseInfos: [],
+            diseaseTreatments: [],
+          });
+          setStep(1);
+          navigate("/create-article");
+        })
+        .catch((err) => {
+          const message = `An error occurred: ${err}`;
+          window.alert(message);
+          return;
+        });
     }
   }
 

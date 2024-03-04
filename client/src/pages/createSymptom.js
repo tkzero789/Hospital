@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
@@ -24,33 +25,34 @@ const Symptom = (props) => (
 export default function CreateSymptom() {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
-    async function getSymptoms() {
-      const response = await fetch(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/`
-      );
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
+    axios
+      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .then((res) => {
+        const symptoms = res.data;
+        setSymptoms(symptoms);
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
         window.alert(message);
         return;
-      }
-      const symptoms = await response.json();
-      setSymptoms(symptoms);
-    }
-    getSymptoms();
-    return;
+      });
   }, [symptoms.length]);
 
   async function onDelete(id) {
     if (window.confirm("Are you sure you want to delete this symptom?")) {
-      await fetch(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const newSymptoms = symptoms.filter((symptom) => symptom._id !== id);
-      setSymptoms(newSymptoms);
+      axios
+        .delete(
+          `https://symptom-checker-with-mern-backend.onrender.com/symptom/${id}`
+        )
+        .then(() => {
+          const newSymptoms = symptoms.filter((symptom) => symptom._id !== id);
+          setSymptoms(newSymptoms);
+        })
+        .catch((err) => {
+          const message = `An error occurred: ${err}`;
+          window.alert(message);
+          return;
+        });
     }
   }
 
