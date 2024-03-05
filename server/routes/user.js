@@ -26,14 +26,15 @@ userRoutes.route("/signup").post(async function (req, res) {
       password: hashedPassword,
       role: req.body.role,
       userInfos: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        ageRange: req.body.ageRange,
+        firstName: req.body.userInfos.firstName,
+        lastName: req.body.userInfos.lastName,
+        gender: req.body.userInfos.gender,
+        ageRange: req.body.userInfos.ageRange,
       },
     };
-
+    console.log("New User Object:", newUser);
     const result = await db_connect.collection("users").insertOne(newUser);
+    console.log("Insertion Result:", result);
     res.status(201).json(result);
   } catch (err) {
     throw err;

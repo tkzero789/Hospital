@@ -138,7 +138,6 @@ export default function Signup() {
                       id="inputLastName"
                       name="lastName"
                       value={user.userInfos.lastName}
-                      pattern="[A-Za-z]+"
                       required
                       onChange={(e) => updateLastNameField(e)}
                     />
@@ -155,7 +154,6 @@ export default function Signup() {
                       id="inputFirstName"
                       name="firstName"
                       value={user.userInfos.firstName}
-                      pattern="[A-Za-z]+"
                       required
                       onChange={(e) => updateFirstNameField(e)}
                     />
