@@ -17,11 +17,7 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/signout",
-        {},
-        { withCredentials: true }
-      )
+      .post("https://symptom-checker-with-mern-backend.onrender.com/signout")
       .then((res) => {
         console.log("Signed out");
         setIsLoggedIn(false); // Update the login state locally
