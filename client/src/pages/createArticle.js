@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { v4 as uuidv4 } from "uuid";
 
+import DoctorNav from "../components/DoctorNav";
 import AdminNavBar from "../components/AdminNavBar";
 import ExistedSymptoms from "../components/ExistedSymptoms";
 import ExistedDetails from "../components/ExistedDetails";
@@ -62,10 +62,11 @@ export default function CreateAritcle() {
   // This following section will display the form that takes the input from the user.
   return (
     <div>
+      <DoctorNav />
       <AdminNavBar />
-      <h3 className="container text-center text-danger pt-5">TẠO BÀI VIẾT</h3>
+      <h3 className="container text-center text-body pt-5">TẠO BÀI VIẾT</h3>
       <div className="container p-5">
-        <div className="card border-danger-subtle p-5">
+        <div className="card border-primary-subtle p-5">
           <form>
             <div>{StepDisplay()}</div>
 
@@ -73,7 +74,7 @@ export default function CreateAritcle() {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-secondary"
                   disabled={step == 0}
                   onClick={handlePrev}
                 >
@@ -83,7 +84,7 @@ export default function CreateAritcle() {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-primary"
                   disabled={step == 3}
                   onClick={handleNext}
                 >

@@ -1,0 +1,110 @@
+.ms-6 {
+  margin-left: 4rem;
+}
+
+.ms-7 {
+  margin-left: 5rem;
+}
+
+.me-6 {
+  margin-right: 4rem;
+}
+
+.me-7 {
+  margin-left: 5rem;
+}
+
+.symptom-item {
+  width: 950px;
+}
+
+/* NAVBAR */
+
+.emer-nav-item {
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}
+
+.logo-container {
+  overflow: hidden;
+  width: 110px;
+  height: 110px;
+}
+
+.logo-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.nav-bg {
+  background-color: #005b79;
+}
+
+.sub-nav-bg {
+  background-color: #cbe6f0;
+}
+
+.navbar-fs {
+  font-size: 1.1rem;
+}
+
+.nav-item-color {
+  color: #002c77;
+}
+
+.flex-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.first-sub-nav {
+  height: 85px;
+}
+
+.second-sub-nav {
+  height: 55px;
+  width: 500px;
+}
+
+.login-btn {
+  background-color: #1252bd;
+  padding: 8px 14px;
+  width: 180px;
+}
+
+.login-btn:hover {
+  background-color: #11449c;
+}
+
+.btn-icon-container {
+  position: relative;
+}
+
+.btn-icon {
+  position: absolute;
+  top: 2%;
+}
+
+/* HERO SECTION */
+.hero-section {
+  margin-top: 1px;
+  height: 650px;
+  width: 100%;
+  background: url("..//src/assets/h3.jpg");
+  background-position: 0 -380px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}

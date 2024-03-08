@@ -77,7 +77,7 @@ const ExistedSymptoms = ({ form, setForm }) => {
 
   return (
     <div>
-      <h4 className="card-title text-danger">TRIỆU CHỨNG ĐÃ CÓ</h4>
+      <h4 className="card-title text-body">Triệu chứng đã có:</h4>
       <div className="row pt-3 pb-3">{symptomList()}</div>
     </div>
   );
