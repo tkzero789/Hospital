@@ -36,15 +36,14 @@ export default function Signin() {
 
   async function confirmSignin(e) {
     e.preventDefault();
-    const newUser = { ...user };
-    console.log(newUser);
-    axios
+    await axios
       .post(
         "https://symptom-checker-with-mern-backend.onrender.com/signin",
         user
       )
       .then((res) => {
         console.log("Signed in");
+        console.log(res);
         console.log(res.data);
         setUser({
           email: "",
@@ -52,7 +51,9 @@ export default function Signin() {
           password: "",
           role: "patient",
         });
-        navigate("/signin");
+        const token = res.data.token;
+        localStorage.setItem("userToken", token);
+        navigate("/");
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
@@ -72,7 +73,7 @@ export default function Signin() {
       <AdminNavBar />
       <div className="row">
         <div className="col-4 d-flex justify-content-center align-items-center pt-5">
-          <img style={{ width: 75 + "%" }} src={SignupLogo}></img>
+          <img alt="Sign up" style={{ width: 75 + "%" }} src={SignupLogo}></img>
         </div>
         <div className="col-8">
           <h3 className="container text-center text-danger pt-5">ĐĂNG NHẬP</h3>
@@ -104,7 +105,7 @@ export default function Signin() {
                       className="form-control border-danger-subtle px-2"
                       id="inputPassword"
                       name="password"
-                      minlength="8"
+                      minLength="8"
                       required
                       onChange={(e) => updatePasswordField(e)}
                     />
@@ -123,7 +124,7 @@ export default function Signin() {
                   </div>
                 </div>
                 <div className="row pb-3 justify-content-center">
-                  <div className="col-4 d-flex justify-content-center">
+                  <div className="col-12 d-flex justify-content-center">
                     Bạn chưa có tài khoản? &nbsp;
                     <NavLink
                       className="text-danger text-decoration-underline"

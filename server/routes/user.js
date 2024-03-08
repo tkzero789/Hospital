@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/verifyToken");
 
 // userRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -25,12 +26,8 @@ userRoutes.route("/signup").post(async function (req, res) {
       phoneNumber: req.body.phoneNumber,
       password: hashedPassword,
       role: req.body.role,
-      userInfos: {
-        firstName: req.body.userInfos.firstName,
-        lastName: req.body.userInfos.lastName,
-        gender: req.body.userInfos.gender,
-        ageRange: req.body.userInfos.ageRange,
-      },
+      doctorID: req.body.doctorID,
+      userInfos: req.body.userInfos,
     };
     console.log("New User Object:", newUser);
     const result = await db_connect.collection("users").insertOne(newUser);
@@ -65,8 +62,10 @@ userRoutes.route("/signin").post(async function (req, res) {
         expiresIn: "1h", // Token expiration time
       }
     );
+    console.log(token);
     // Set the token as a cookie
-    res.cookie("userToken", token);
+
+    res.json({ token });
 
     res.status(200).json(result);
   } catch (err) {
@@ -76,7 +75,6 @@ userRoutes.route("/signin").post(async function (req, res) {
 
 // Sign out route
 userRoutes.route("/signout").post(async function (req, res) {
-  res.clearCookie("userToken");
   req.session.destroy();
   res.status(200).json({ message: "Logged out successfully" });
 });

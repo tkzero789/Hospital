@@ -1,17 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
 // We import NavLink to utilize the react router.
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+
 import Logo from "../assets/logo-hospital.png";
 // Here, we display our Navbar
 export default function Navbar() {
+  const [cookies] = useCookies(["userToken"]);
+  const userToken = cookies.userToken;
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Access login state from context
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    axios
+      .post(
+        "https://symptom-checker-with-mern-backend.onrender.com/signout",
+        {},
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log("Signed out");
+        setIsLoggedIn(false); // Update the login state locally
+        localStorage.removeItem("userToken");
+        navigate("/signin");
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
+        window.alert(message);
+      });
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
-            <img style={{ width: 100 + "%" }} src={Logo}></img>
+            <img
+              alt="Hospital logo"
+              style={{ width: 100 + "%" }}
+              src={Logo}
+            ></img>
           </NavLink>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
@@ -26,9 +58,19 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item item px-5">
-                <NavLink className="nav-link" to="/signup">
-                  <h3 className="text-danger">Hello, Admin</h3>
-                </NavLink>
+                {userToken ? (
+                  <NavLink
+                    className="nav-link"
+                    to="/signout"
+                    onClick={handleSignOut}
+                  >
+                    <h3 className="text-danger">Đăng xuất</h3>
+                  </NavLink>
+                ) : (
+                  <NavLink className="nav-link" to="/signin">
+                    <h3 className="text-danger">Đăng nhập</h3>
+                  </NavLink>
+                )}
               </li>
             </ul>
           </div>

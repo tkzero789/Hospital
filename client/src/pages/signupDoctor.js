@@ -7,13 +7,13 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import AdminNavBar from "../components/AdminNavBar";
 import SignupLogo from "../assets/signup-logo.png";
 
-export default function Signup() {
+export default function SignupDoctor() {
   const [user, setUser] = useState({
     email: "",
     phoneNumber: "",
     password: "",
-    role: "patient",
-    doctorID: null,
+    role: "doctor",
+    doctorID: "",
     userInfos: {
       firstName: "",
       lastName: "",
@@ -64,6 +64,12 @@ export default function Signup() {
     setUser(_user);
   };
 
+  const updateDoctorIDField = (event) => {
+    let _user = { ...user };
+    _user[event.target.name] = event.target.value;
+    setUser(_user);
+  };
+
   const navigate = useNavigate();
 
   async function confirmSignup(e) {
@@ -98,8 +104,8 @@ export default function Signup() {
             email: "",
             phoneNumber: "",
             password: "",
-            role: "patient",
-            doctorID: null,
+            role: "doctor",
+            doctorID: "",
             userInfos: {
               firstName: "",
               lastName: "",
@@ -262,6 +268,22 @@ export default function Signup() {
                     />
                   </div>
                 </div>
+                <div className="row pb-5">
+                  <h6 className="col-3 d-flex justify-content-end align-items-center">
+                    MSBS:
+                  </h6>
+                  <div className="col-9">
+                    <input
+                      type="text"
+                      className="form-control border-danger-subtle px-2"
+                      id="inputDoctorID"
+                      name="doctorID"
+                      value={user.doctorID}
+                      required
+                      onChange={(e) => updateDoctorIDField(e)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -272,26 +294,18 @@ export default function Signup() {
                   className="btn btn-outline-danger"
                   onClick={confirmSignup}
                 >
-                  XÁC NHẬN ĐĂNG KÝ
+                  ĐĂNG KÝ VÀ CHỜ DUYỆT
                 </button>
               </div>
             </div>
             <div className="row pb-3 justify-content-center">
-              <div className="col-12 pb-3 d-flex justify-content-center">
+              <div className="col-4 d-flex justify-content-center">
                 Bạn đã có tài khoản? &nbsp;
                 <NavLink
                   className="text-danger text-decoration-underline"
                   to="/signin"
                 >
                   Đăng nhập ngay
-                </NavLink>
-              </div>
-              <div className="col-12 d-flex justify-content-center">
-                <NavLink
-                  className="text-danger text-decoration-underline"
-                  to="/signup-doctor"
-                >
-                  Đăng ký tài khoản bác sĩ
                 </NavLink>
               </div>
             </div>

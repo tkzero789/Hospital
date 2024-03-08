@@ -9,7 +9,7 @@ const Symptom = (props) => (
   <div className="col-3 pb-3">
     <div className="form" style={{ display: "flex" }}>
       <i
-        class="bi bi-trash text-danger"
+        className="bi bi-trash text-danger"
         style={{ marginRight: "5px" }}
         onClick={() => {
           props.onDelete(props.symptom._id);
