@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup-doctor" element={<SignupDoctor />} />
         <Route path="/signin" element={<Signin />} />
-        <Route exact path="/" element={<CreateSymptom />} />
+        <Route exact path="/" element={<SymptomChecker />} />
         <Route
           path="/create-symptom"
           element={

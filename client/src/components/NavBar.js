@@ -5,13 +5,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
-import { useCookies } from "react-cookie";
 
 import Logo from "../assets/logo-hospital.png";
 // Here, we display our Navbar
 export default function Navbar() {
-  const [cookies] = useCookies(["userToken"]);
-  const userToken = cookies.userToken;
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Access login state from context
   const navigate = useNavigate();
 
@@ -20,8 +17,8 @@ export default function Navbar() {
       .post("https://symptom-checker-with-mern-backend.onrender.com/signout")
       .then((res) => {
         console.log("Signed out");
-        setIsLoggedIn(false); // Update the login state locally
-        localStorage.removeItem("userToken");
+        console.log(res);
+        setIsLoggedIn();
         navigate("/signin");
       })
       .catch((err) => {
@@ -54,17 +51,17 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item item px-5">
-                {userToken ? (
+                {isLoggedIn ? (
                   <NavLink
                     className="nav-link"
                     to="/signout"
                     onClick={handleSignOut}
                   >
-                    <h3 className="text-danger">Đăng xuất</h3>
+                    <h3 className="text-danger">Sign out</h3>
                   </NavLink>
                 ) : (
                   <NavLink className="nav-link" to="/signin">
-                    <h3 className="text-danger">Đăng nhập</h3>
+                    <h3 className="text-danger">Sign in</h3>
                   </NavLink>
                 )}
               </li>

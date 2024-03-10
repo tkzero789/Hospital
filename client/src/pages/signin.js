@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -6,6 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
 import SignupLogo from "../assets/signup-logo.png";
+import { AuthContext } from "../components/AuthContext";
 
 export default function Signin() {
   const [user, setUser] = useState({
@@ -14,6 +15,7 @@ export default function Signin() {
     password: "",
     role: "patient",
   });
+  const { setUserToken } = useContext(AuthContext);
 
   const updateEmailOrPhoneField = (event) => {
     let _user = { ...user };
@@ -52,8 +54,8 @@ export default function Signin() {
           role: "patient",
         });
         const token = res.data.token;
-        localStorage.setItem("userToken", token);
-        navigate("/");
+        setUserToken(token);
+        navigate("/symptom-checker");
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
