@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const navigationLinks = [
-  { link: "/create-symptom", text: "Trang chủ" },
+  { link: "/home", text: "Trang chủ" },
   { link: "/test-home", text: "Hướng dẫn" },
   { link: "", text: "Tin tức" },
   { link: "", text: "Tuyển dụng" },
