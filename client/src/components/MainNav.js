@@ -2,43 +2,42 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const navigationLinks = [
-  { link: "/home", text: "Chẩn đoán" },
-  { link: "", text: "Đặt lịch khám" },
+  { link: "/create-symptom", text: "Trang chủ" },
+  { link: "/test-home", text: "Hướng dẫn" },
+  { link: "", text: "Tin tức" },
+  { link: "", text: "Tuyển dụng" },
   { link: "", text: "Liên hệ" },
-  {
-    link: "",
-    text: "Cấp cứu 24/7: (089) 546-7421",
-    className: "emer-nav-item bg-danger",
-  },
-  { link: "/doctor-login", text: "Doctor Login" },
+  { link: "/doctor-login", text: "Hỏi đáp" },
 ];
 
-export default function Navbar() {
+export default function MainNav() {
   return (
-    <div>
-      <nav className="navbar navbar-expand-sm navbar-light nav-bg py-0">
-        <div className="container-fluid">
-          <div
-            className="d-flex flex-row-reverse collapse navbar-collapse"
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav mr-auto">
-              {navigationLinks.map((link) => (
+    <>
+      <div className="w-100 nav-bg">
+        <div className="nav-container">
+          <nav className="nav-bg py-0 d-none d-lg-block d-xl-block">
+            <ul className="main-nav-list">
+              {navigationLinks.map((link, index) => (
                 <li
                   key={link.link}
-                  className={`nav-item item mx-2 py-2 ${link.className || ""}`}
+                  className={`nav-item item ${link.className || ""}`}
                 >
-                  <NavLink className="nav-link px-3" to={link.link}>
-                    <div className="navbar-fs text-white fw-normal">
+                  <NavLink className="nav-link nav-link-first" to={link.link}>
+                    {index === 0 && ( // Check if it's the first item (index 0)
+                      <div className="home-icon-wrapper ms-3">
+                        <i className="home-icon bi bi-house-door"></i>
+                      </div>
+                    )}
+                    <div className="up-nav-text text-white fw-semibold">
                       {link.text}
                     </div>
                   </NavLink>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         </div>
-      </nav>
-    </div>
+      </div>
+    </>
   );
 }
