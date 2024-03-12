@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import MainNav from "../components/MainNav";
 import MidNav from "../components/MidNav";
@@ -8,7 +8,7 @@ import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
 import ApptForm from "../components/ApptForm";
 
-export default function Home() {
+export default function TestHome() {
   return (
     <>
       <header>
@@ -145,6 +145,7 @@ export default function Home() {
       </div>
 
       {/* Appointment */}
+
       <ApptForm />
     </>
   );

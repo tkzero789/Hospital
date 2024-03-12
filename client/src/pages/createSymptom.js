@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AdminNavBar from "../components/AdminNavBar";
 import DoctorNav from "../components/DoctorNav";
+import ApptForm from "../components/ApptForm";
 
 const Symptom = (props) => (
   <div className="symptom-item d-flex px-0 py-0 ms-3 my-2 ">
