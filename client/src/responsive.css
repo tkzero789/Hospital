@@ -1,0 +1,12 @@
+@media (min-width: 1200px) {
+  .nav-container {
+    width: 1190px;
+  }
+  .content-container {
+    width: 1190px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Styles for mobile devices */
+}

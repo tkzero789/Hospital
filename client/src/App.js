@@ -1,7 +1,5 @@
 import React from "react";
-// We use Route in order to define the different routes of our application
 import { Navigate, Route, Routes } from "react-router-dom";
-// We import all the pages we need in our app
 import RecordList from "./pages/recordList";
 import Edit from "./pages/edit";
 import Create from "./pages/create";
@@ -11,14 +9,21 @@ import EditSymptom from "./pages/editSymptom";
 import CreateAritcle from "./pages/createArticle";
 import DoctorLogin from "./pages/doctorLogin";
 import Home from "./pages/home";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles.css";
+import "./responsive.css";
+import "./base.css";
+import TestHome from "./pages/testHome";
 
 const App = () => {
   return (
-    <div>
+    <div style={{ overflow: "hidden", height: "2000px" }}>
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace={true} />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/test-home" element={<TestHome />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
         <Route path="/create-symptom" element={<CreateSymptom />} />
