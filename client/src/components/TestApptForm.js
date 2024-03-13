@@ -88,7 +88,9 @@ export default function TestApptForm() {
             <div className="c-4">
               {/* Appt Date */}
               <div className="appt-date">
-                <label for="appt-date">Đặt lịch khám</label>
+                <label for="appt-date">
+                  Đặt lịch khám <span>*</span>
+                </label>
                 <DatePicker
                   className="appt-date-input"
                   selected={startDate}
