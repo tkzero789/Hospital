@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 export default function TestApptForm() {
   const [selectedDate, setSelectedDate] = useState(null); // State for selected date
   const [showCalendar, setShowCalendar] = useState(false); // State for calendar visibility
+  const calendarRef = useRef(null);
 
   const handleChange = (date) => {
     setSelectedDate(date);
@@ -23,6 +24,20 @@ export default function TestApptForm() {
   const handleClick = () => {
     setShowCalendar(!showCalendar); // Toggle calendar visibility
   };
+
+  const handleClickOutside = (event) => {
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false); // Hide calendar on outside click
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <section className="appt w-100">
       <div className="content-container">
@@ -117,19 +132,20 @@ export default function TestApptForm() {
                   readOnly // Make the input read-only
                   onClick={handleClick} // Toggle calendar on click
                 ></input>
-                {showCalendar && ( // Conditionally render the calendar
-                  <Calendar
-                    className="calendar-box"
-                    onChange={handleChange}
-                    value={selectedDate}
-                    locale="vi-VN"
-                    minDate={new Date()}
-                    tileClassName={({ date }) =>
-                      date.getDay() === 0 || date.getDay() === 6
-                        ? "disabled-weekend"
-                        : ""
-                    }
-                  />
+                {showCalendar && (
+                  <div ref={calendarRef} className="calendar-box">
+                    <Calendar
+                      onChange={handleChange}
+                      value={selectedDate}
+                      locale="vi-VN"
+                      minDate={new Date()}
+                      tileClassName={({ date }) =>
+                        date.getDay() === 0 || date.getDay() === 6
+                          ? "disabled-weekend"
+                          : ""
+                      }
+                    />
+                  </div>
                 )}
               </div>
               {/* Symptom Description */}
