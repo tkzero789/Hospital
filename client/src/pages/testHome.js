@@ -145,7 +145,6 @@ export default function TestHome() {
       </div>
 
       {/* Appointment */}
-      <TestApptForm />
     </>
   );
 }
