@@ -145,6 +145,83 @@ export default function TestHome() {
       </div>
 
       {/* Appointment */}
+      <TestApptForm />
+
+      {/* Options */}
+      <section className="options w-100">
+        <div className="content-container">
+          <div className="options-wrapper d-flex">
+            <div className="c-6">
+              <div className="opt-wrapper">
+                <div className="opt-header">
+                  <div className="opt-header-text">Left header</div>
+                </div>
+                <div className="opt-box">
+                  <div className="opt-title">Chẩn đoán sức khoẻ trực tuyến</div>
+                  <div className="opt-body">
+                    Với phòng khám online, bạn có thể tiếp cận các dịch vụ y tế
+                    chất lượng mà không cần ra khỏi nhà.
+                  </div>
+                  <div className="opt-btn-wrapper">
+                    <btn className="opt-btn">Chẩn đoán</btn>
+                  </div>
+                </div>
+                <div className="opt-box">
+                  <div className="opt-title">Đăng ký lịch khám</div>
+                  <div className="opt-body">
+                    Đăng ký dịch vụ khám bệnh của chúng tôi để nhận được sự chăm
+                    sóc y tế chất lượng cao mà bạn xứng đáng.
+                  </div>
+                  <div className="opt-btn-wrapper">
+                    <btn className="opt-btn">Đăng ký</btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="c-6">
+              <div className="opt-wrapper">
+                <div className="opt-header">
+                  <div className="opt-header-text">Right header</div>
+                </div>
+                <div className="big-opt-box">
+                  <div className="box-select">
+                    <NavLink className="box-select-link">
+                      <div className="box-icon">
+                        <i class="bi bi-hospital"></i>
+                      </div>
+                      <div className="box-text">Option 1</div>
+                    </NavLink>
+                  </div>
+                  <div className="box-select">
+                    <NavLink className="box-select-link">
+                      <div className="box-icon">
+                        <i class="bi bi-lungs"></i>
+                      </div>
+                      <div className="box-text">Option 2</div>
+                    </NavLink>
+                  </div>
+                  <div className="box-select">
+                    <NavLink className="box-select-link">
+                      <div className="box-icon">
+                        <i class="bi bi-file-earmark-medical"></i>
+                      </div>
+                      <div className="box-text">Option 3</div>
+                    </NavLink>
+                  </div>
+                  <div className="box-select">
+                    <NavLink className="box-select-link">
+                      <div className="box-icon">
+                        <i class="bi bi-person-check"></i>
+                      </div>
+                      <div className="box-text">Option 4</div>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
