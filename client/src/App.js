@@ -16,10 +16,12 @@ import "./styles.css";
 import "./responsive.css";
 import "./base.css";
 import TestHome from "./pages/testHome";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <div style={{ overflow: "hidden", height: "2000px" }}>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace={true} />} />
         <Route path="/home" element={<Home />} />
