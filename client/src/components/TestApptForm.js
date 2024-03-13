@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React from "react";
 
 export default function TestApptForm() {
-  const [startDate, setStartDate] = useState(new Date());
   return (
     <section className="appt w-100">
       <div className="content-container">
@@ -91,11 +88,6 @@ export default function TestApptForm() {
                 <label for="appt-date">
                   Đặt lịch khám <span>*</span>
                 </label>
-                <DatePicker
-                  className="appt-date-input"
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                />
               </div>
               {/* Symptom Description */}
               <div className="reason-textarea">
