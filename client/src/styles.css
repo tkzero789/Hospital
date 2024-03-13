@@ -386,12 +386,22 @@
   font-size: 18px;
 }
 
+.appt-date {
+  position: relative;
+}
+
 .appt-date-input {
   width: 100%;
   height: 40px;
   padding-left: 15px;
   border-radius: 3px;
   border: 1px solid #d9d9d6;
+}
+
+.calendar-box {
+  z-index: 10;
+  position: absolute;
+  top: 98px;
 }
 
 .reason-textarea {
@@ -423,4 +433,10 @@
 
 .appt-btn:hover {
   background-color: #297fb8;
+}
+
+.disabled-weekend {
+  pointer-events: none;
+  opacity: 0.4;
+  cursor: not-allowed;
 }

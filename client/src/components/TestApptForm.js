@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 export default function TestApptForm() {
+  const [selectedDate, setSelectedDate] = useState(null); // State for selected date
+  const [showCalendar, setShowCalendar] = useState(false); // State for calendar visibility
+
+  const handleChange = (date) => {
+    setSelectedDate(date);
+    setShowCalendar(false); // Hide calendar after selection
+  };
+
+  // Format the selected date for display (optional)
+  const formattedDate = selectedDate
+    ? selectedDate.toLocaleDateString("vi-VN", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
+
+  const handleClick = () => {
+    setShowCalendar(!showCalendar); // Toggle calendar visibility
+  };
   return (
     <section className="appt w-100">
       <div className="content-container">
@@ -88,6 +110,27 @@ export default function TestApptForm() {
                 <label for="appt-date">
                   Đặt lịch khám <span>*</span>
                 </label>
+                <input
+                  className="appt-date-input"
+                  type="text"
+                  value={formattedDate || ""}
+                  readOnly // Make the input read-only
+                  onClick={handleClick} // Toggle calendar on click
+                ></input>
+                {showCalendar && ( // Conditionally render the calendar
+                  <Calendar
+                    className="calendar-box"
+                    onChange={handleChange}
+                    value={selectedDate}
+                    locale="vi-VN"
+                    minDate={new Date()}
+                    tileClassName={({ date }) =>
+                      date.getDay() === 0 || date.getDay() === 6
+                        ? "disabled-weekend"
+                        : ""
+                    }
+                  />
+                )}
               </div>
               {/* Symptom Description */}
               <div className="reason-textarea">
