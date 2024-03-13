@@ -3,14 +3,15 @@ import { NavLink } from "react-router-dom";
 import MainNav from "../components/MainNav";
 import MidNav from "../components/MidNav";
 import LowNav from "../components/LowNav";
+import ApptForm from "../components/ApptForm";
 import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
-import ApptForm from "../components/ApptForm";
 
 export default function Home() {
   return (
     <>
+      {/* Navbar */}
       <header>
         <MainNav />
         <MidNav />

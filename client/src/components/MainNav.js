@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const navigationLinks = [
+const navLinks = [
   { link: "/home", text: "Trang chủ" },
   { link: "/test-home", text: "Hướng dẫn" },
   { link: "", text: "Tin tức" },
@@ -17,7 +17,7 @@ export default function MainNav() {
         <div className="nav-container">
           <nav className="nav-bg py-0 d-none d-lg-block d-xl-block">
             <ul className="main-nav-list">
-              {navigationLinks.map((link, index) => (
+              {navLinks.map((link, index) => (
                 <li
                   key={link.link}
                   className={`nav-item item ${link.className || ""}`}
