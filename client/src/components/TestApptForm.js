@@ -88,18 +88,12 @@ export default function TestApptForm() {
             <div className="c-4">
               {/* Appt Date */}
               <div className="appt-date">
-                <label for="appt-date">
-                  Giới tính <span>*</span>
-                </label>
-                <select
-                  id="appt-date"
-                  name="appt-date"
-                  className="dropdown-field"
-                >
-                  <option value="Chọn giới tính">Chọn giới tính</option>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
-                </select>
+                <label for="appt-date">Đặt lịch khám</label>
+                <DatePicker
+                  className="appt-date-input"
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
               </div>
               {/* Symptom Description */}
               <div className="reason-textarea">
@@ -108,10 +102,7 @@ export default function TestApptForm() {
               </div>
             </div>
           </form>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-          />
+
           {/* Submit Button */}
           <div className="text-center">
             <button className="appt-btn">Đặt lịch khám</button>{" "}
