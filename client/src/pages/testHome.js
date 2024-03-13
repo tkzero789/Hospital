@@ -163,7 +163,9 @@ export default function TestHome() {
                     chất lượng mà không cần ra khỏi nhà.
                   </div>
                   <div className="opt-btn-wrapper">
-                    <btn className="opt-btn">Chẩn đoán</btn>
+                    <NavLink className="opt-btn-link" to="/record-list">
+                      <btn className="opt-btn">Chẩn đoán</btn>
+                    </NavLink>
                   </div>
                 </div>
                 <div className="opt-box">
@@ -173,7 +175,9 @@ export default function TestHome() {
                     sóc y tế chất lượng cao mà bạn xứng đáng.
                   </div>
                   <div className="opt-btn-wrapper">
-                    <btn className="opt-btn">Đăng ký</btn>
+                    <NavLink className="opt-btn-link" to="/record-list">
+                      <btn className="opt-btn">Đăng ký</btn>
+                    </NavLink>
                   </div>
                 </div>
               </div>

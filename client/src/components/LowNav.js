@@ -7,9 +7,10 @@ export default function LowNav() {
     { link: "", text: "Chuyên khoa" },
     { link: "", text: "Bác sĩ" },
     { link: "", text: "Chẩn đoán" },
-    { link: "", text: "Dịch vụ y khoa" },
+    { link: "/record-list", text: "Dịch vụ y khoa" },
     { link: "", text: "Chăm sóc khách hàng" },
   ];
+
   return (
     <>
       {/* LOWER NAVBAR */}

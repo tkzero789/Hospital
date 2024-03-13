@@ -490,6 +490,10 @@
   text-align: end;
 }
 
+.opt-btn-link {
+  text-decoration: none;
+}
+
 .opt-btn {
   color: #fff;
   background-color: #3498db;
@@ -501,6 +505,10 @@
   text-align: center;
   padding: 8px 0;
   font-weight: 500;
+}
+
+.opt-btn:hover {
+  background-color: #297fb8;
 }
 
 .big-opt-box {
