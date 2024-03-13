@@ -150,11 +150,11 @@ export default function TestHome() {
       {/* Options */}
       <section className="options w-100">
         <div className="content-container">
-          <div className="options-wrapper d-flex">
+          <div className="options-wrapper">
             <div className="c-6">
               <div className="opt-wrapper">
                 <div className="opt-header">
-                  <div className="opt-header-text">Left header</div>
+                  <div className="opt-header-text">Khám phá chức năng</div>
                 </div>
                 <div className="opt-box">
                   <div className="opt-title">Chẩn đoán sức khoẻ trực tuyến</div>
@@ -181,15 +181,15 @@ export default function TestHome() {
             <div className="c-6">
               <div className="opt-wrapper">
                 <div className="opt-header">
-                  <div className="opt-header-text">Right header</div>
+                  <div className="opt-header-text">Tìm hiểu các dịch vụ</div>
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">
                     <NavLink className="box-select-link">
                       <div className="box-icon">
-                        <i class="bi bi-hospital"></i>
+                        <i class="bi bi-question-circle"></i>
                       </div>
-                      <div className="box-text">Option 1</div>
+                      <div className="box-text">Tư vấn</div>
                     </NavLink>
                   </div>
                   <div className="box-select">
@@ -197,7 +197,15 @@ export default function TestHome() {
                       <div className="box-icon">
                         <i class="bi bi-lungs"></i>
                       </div>
-                      <div className="box-text">Option 2</div>
+                      <div className="box-text">Chuyên khoa</div>
+                    </NavLink>
+                  </div>
+                  <div className="box-select">
+                    <NavLink className="box-select-link">
+                      <div className="box-icon">
+                        <i class="bi bi-calendar-heart"></i>
+                      </div>
+                      <div className="box-text">Lịch làm việc</div>
                     </NavLink>
                   </div>
                   <div className="box-select">
@@ -205,15 +213,7 @@ export default function TestHome() {
                       <div className="box-icon">
                         <i class="bi bi-file-earmark-medical"></i>
                       </div>
-                      <div className="box-text">Option 3</div>
-                    </NavLink>
-                  </div>
-                  <div className="box-select">
-                    <NavLink className="box-select-link">
-                      <div className="box-icon">
-                        <i class="bi bi-person-check"></i>
-                      </div>
-                      <div className="box-text">Option 4</div>
+                      <div className="box-text">Bảng giá</div>
                     </NavLink>
                   </div>
                 </div>
