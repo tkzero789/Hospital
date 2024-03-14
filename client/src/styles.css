@@ -603,13 +603,13 @@
   font-size: 28px;
   font-weight: 500;
   color: #286ba6;
-  margin-bottom: 12px;
 }
 
 .syst-body {
   text-align: center;
   padding: 0 106px;
-  margin-bottom: 36px;
+  padding-top: 15px;
+  padding-bottom: 40px;
   font-size: 16px;
 }
 
@@ -669,7 +669,7 @@
 
 /* FOOTER SECTION */
 .footer {
-  margin-top: 30px;
+  margin-top: 80px;
 }
 
 .footer-wrapper {

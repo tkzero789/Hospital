@@ -33,7 +33,7 @@ export default function MidNav() {
                 </div>
                 <div className="mid-item-text">Hotline: 0905 677 589</div>
               </div>
-              <NavLink className="mid-item-wrapper" to="/record-list">
+              <NavLink className="mid-item-wrapper" to="/appt-request">
                 <div className="mid-item-icon">
                   <i class="bi bi-calendar-week"></i>
                 </div>
