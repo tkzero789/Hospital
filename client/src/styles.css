@@ -460,6 +460,7 @@
 .opt-header-text {
   font-size: 22px;
   font-weight: 500;
+  color: #286ba6;
 }
 
 .opt-box {
@@ -563,4 +564,36 @@
   font-size: 18px;
   font-weight: 500;
   margin-top: 6px;
+}
+
+/* ABOUT SECTION */
+.about {
+  margin-top: 80px;
+}
+.about-wrapper {
+  display: flex;
+}
+
+.about-section-header {
+  font-size: 28px;
+  font-weight: 500;
+  color: #286ba6;
+}
+
+.about-section-body {
+  padding-top: 15px;
+  font-size: 16px;
+}
+
+.about-img {
+  overflow: hidden;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+}
+
+.hospital-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }

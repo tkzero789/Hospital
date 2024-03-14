@@ -6,6 +6,7 @@ import LowNav from "../components/LowNav";
 import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
+import HospitalImg from "../assets/hospitalBuilding.jpg";
 import TestApptForm from "../components/TestApptForm";
 
 export default function TestHome() {
@@ -218,6 +219,37 @@ export default function TestHome() {
                     </NavLink>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section className="about w-100">
+        <div className="content-container">
+          <div className="about-wrapper">
+            <div className="c-6">
+              <div className="about-section">
+                <div className="about-section-header">
+                  BKC - Nơi gửi gắm niềm tin sức khỏe
+                </div>
+                <div className="about-section-body">
+                  Chào mừng bạn đến với Bệnh viện BKC, nơi cung cấp dịch vụ chăm
+                  sóc sức khỏe chất lượng cao với sự tận tâm và chuyên nghiệp.
+                  BKC tự hào là một trong những bệnh viện uy tín tại Việt Nam,
+                  với đội ngũ y bác sĩ giàu kinh nghiệm và trang thiết bị hiện
+                  đại.
+                </div>
+              </div>
+            </div>
+            <div className="c-6">
+              <div className="about-img">
+                <img
+                  className="hospital-img"
+                  src={HospitalImg}
+                  alt="Hospital Building About Section"
+                />
               </div>
             </div>
           </div>
