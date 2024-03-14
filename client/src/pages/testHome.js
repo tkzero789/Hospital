@@ -8,6 +8,7 @@ import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
 import HospitalImg from "../assets/hospitalBuilding.jpg";
 import SystemImg from "../assets/systemImg.jpg";
+import Logo from "../assets/logoBKC.png";
 import TestApptForm from "../components/TestApptForm";
 
 export default function TestHome() {
@@ -353,6 +354,94 @@ export default function TestHome() {
           </div>
         </div>
       </section>
+
+      {/* FOOTER SECTION */}
+      <footer className="footer w-100 bg-primary-subtle">
+        <div className="content-container">
+          <div className="footer-wrapper">
+            <div className="c-3">
+              <div className="footer-logo-wrapper">
+                <img className="footer-logo" src={Logo} alt="Footer logo"></img>
+              </div>
+              <div className="footer-logo-header">
+                <span>Công ty cổ phần bệnh viện Đa khoa BKC</span>
+              </div>
+              <div className="footer-logo-address">
+                <span>Khu túc xá Đại Học Quốc Gia thành phố Hồ Chí Minh</span>
+              </div>
+            </div>
+            <div className="c-3">
+              <div className="footer-header">Hỗ trợ khách hàng</div>
+              <ul className="footer-list">
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Dịch vụ</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Tư vấn</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Chuyên khoa</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Đặt lịch khám</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">
+                    Viện nghiên cứu
+                  </NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">
+                    Thông tin Dược
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+            <div className="c-3">
+              <div className="footer-header">Liên kết</div>
+              <ul className="footer-list">
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Trang chủ</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Giới thiệu</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Đối tác</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Dự án</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Đội ngũ</NavLink>
+                </li>
+                <li className="footer-item">
+                  <NavLink className="footer-item__link">Tuyển dụng</NavLink>
+                </li>
+              </ul>
+            </div>
+            <div className="c-3">
+              <div className="footer-header">Mạng xã hội</div>
+              <div className="footer-socials">
+                <NavLink className="footer-socials__link">
+                  <div className="footer-socials-icon">
+                    <span>
+                      <i class="bi bi-facebook"></i>
+                    </span>
+                  </div>
+                </NavLink>
+                <NavLink className="footer-socials__link">
+                  <div className="footer-socials-icon">
+                    <span>
+                      <i class="bi bi-youtube"></i>
+                    </span>
+                  </div>
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

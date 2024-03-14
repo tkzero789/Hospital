@@ -21,7 +21,7 @@ import ApptRequest from "./pages/apptRequest";
 
 const App = () => {
   return (
-    <div style={{ overflow: "hidden", height: "3000px" }}>
+    <div style={{ overflow: "hidden" }}>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace={true} />} />
