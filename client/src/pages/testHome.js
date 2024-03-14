@@ -12,13 +12,14 @@ import TestApptForm from "../components/TestApptForm";
 export default function TestHome() {
   return (
     <>
+      {/* NAVBAR */}
       <header>
         <MainNav />
         <MidNav />
         <LowNav />
       </header>
 
-      {/* Mobile: Hamburger Menu */}
+      {/* MOBILE: HAMBURGER MENU */}
       <nav className="navbar navbar-expand-lg nav-bg d-md-block d-lg-none">
         <div className="container-fluid">
           <NavLink className="navbar-brand" href="#">
@@ -94,7 +95,7 @@ export default function TestHome() {
         </div>
       </nav>
 
-      {/* Carousel */}
+      {/* CAROUSEL */}
       <div
         id="carouselExampleInterval"
         class="carousel slide d-none d-lg-block d-xl-block"
@@ -145,7 +146,7 @@ export default function TestHome() {
         </div>
       </div>
 
-      {/* Options */}
+      {/* OPTIONS SECTION */}
       <section className="options w-100">
         <div className="content-container">
           <div className="options-wrapper">
@@ -225,7 +226,7 @@ export default function TestHome() {
         </div>
       </section>
 
-      {/* About */}
+      {/* ABOUT SECTION */}
       <section className="about w-100">
         <div className="content-container">
           <div className="about-wrapper">
@@ -250,6 +251,25 @@ export default function TestHome() {
                   src={HospitalImg}
                   alt="Hospital Building About Section"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BKC SYSTEM SECTION */}
+      <section className="system w-100">
+        <div className="content-container">
+          <div className="syst-wrapper">
+            <div className="c-12">
+              <div className="syst-section">
+                <div className="syst-header">Hệ thống BKC</div>
+                <div className="syst-card-wrapper">
+                  <div className="syst-card">
+                    <div className="syst-card-header">Card header</div>
+                    <div className="syst-card-body">Card body text</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
