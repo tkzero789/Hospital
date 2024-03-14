@@ -144,9 +144,6 @@ export default function TestHome() {
         </div>
       </div>
 
-      {/* Appointment */}
-      <TestApptForm />
-
       {/* Options */}
       <section className="options w-100">
         <div className="content-container">
@@ -154,7 +151,7 @@ export default function TestHome() {
             <div className="c-6">
               <div className="opt-wrapper">
                 <div className="opt-header">
-                  <div className="opt-header-text">Khám phá chức năng</div>
+                  <div className="opt-header-text">Dịch vụ</div>
                 </div>
                 <div className="opt-box">
                   <div className="opt-title">Chẩn đoán sức khoẻ trực tuyến</div>
@@ -175,7 +172,7 @@ export default function TestHome() {
                     sóc y tế chất lượng cao mà bạn xứng đáng.
                   </div>
                   <div className="opt-btn-wrapper">
-                    <NavLink className="opt-btn-link" to="/record-list">
+                    <NavLink className="opt-btn-link" to="/appt-request">
                       <btn className="opt-btn">Đăng ký</btn>
                     </NavLink>
                   </div>
@@ -185,7 +182,7 @@ export default function TestHome() {
             <div className="c-6">
               <div className="opt-wrapper">
                 <div className="opt-header">
-                  <div className="opt-header-text">Tìm hiểu các dịch vụ</div>
+                  <div className="opt-header-text">Thông tin</div>
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">

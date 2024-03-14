@@ -17,6 +17,7 @@ import "./responsive.css";
 import "./base.css";
 import TestHome from "./pages/testHome";
 import ScrollToTop from "./components/ScrollToTop";
+import ApptRequest from "./pages/apptRequest";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/home" replace={true} />} />
         <Route path="/home" element={<Home />} />
         <Route path="/test-home" element={<TestHome />} />
+        <Route path="/appt-request" element={<ApptRequest />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
         <Route path="/create-symptom" element={<CreateSymptom />} />

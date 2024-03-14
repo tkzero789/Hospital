@@ -307,7 +307,7 @@
 /* HERO SECTION */
 .hero-section {
   margin-top: 1px;
-  height: 550px;
+  height: 500px;
   overflow: hidden;
   position: relative;
 }
@@ -326,7 +326,7 @@
 /* Appointment Register Form */
 .appt {
   position: relative;
-  margin-top: 30px;
+  background-color: #b3d3da;
 }
 
 .appt-wrapper {
@@ -442,14 +442,14 @@
 
 /* OPTIONS SECTION */
 .options {
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 .options-wrapper {
   display: flex;
   border-radius: 3px;
   padding: 20px 0 45px 0;
-  box-shadow: rgba(31, 37, 50, 0.2) 0px 3px 4px 1px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .opt-header {
