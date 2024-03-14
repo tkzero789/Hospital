@@ -269,6 +269,18 @@ export default function TestHome() {
                     <div className="syst-card-header">Card header</div>
                     <div className="syst-card-body">Card body text</div>
                   </div>
+                  <div className="syst-card">
+                    <div className="syst-card-header">Card header</div>
+                    <div className="syst-card-body">Card body text</div>
+                  </div>
+                  <div className="syst-card">
+                    <div className="syst-card-header">Card header</div>
+                    <div className="syst-card-body">Card body text</div>
+                  </div>
+                  <div className="syst-card">
+                    <div className="syst-card-header">Card header</div>
+                    <div className="syst-card-body">Card body text</div>
+                  </div>
                 </div>
               </div>
             </div>
