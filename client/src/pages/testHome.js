@@ -7,6 +7,7 @@ import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
 import HospitalImg from "../assets/hospitalBuilding.jpg";
+import SystemImg from "../assets/systemImg.jpg";
 import TestApptForm from "../components/TestApptForm";
 
 export default function TestHome() {
@@ -263,23 +264,88 @@ export default function TestHome() {
           <div className="syst-wrapper">
             <div className="c-12">
               <div className="syst-section">
-                <div className="syst-header">Hệ thống BKC</div>
+                <div className="syst-header">Hệ thống BKCare</div>
+                <div className="syst-body">
+                  Hệ thống được xây dựng nhằm mục đích nâng cao chất lượng dịch
+                  vụ chăm sóc sức khỏe cho người bệnh, đồng thời giúp cho việc
+                  theo dõi sức khỏe của người bệnh trở nên dễ dàng và hiệu quả
+                  hơn. Ngoài ra, BKCare còn tạo ra một cộng đồng nơi mọi người
+                  có thể chia sẻ kinh nghiệm và kiến thức về sức khỏe. Chúng tôi
+                  tin rằng, thông qua việc chia sẻ và học hỏi, mọi người sẽ có
+                  thêm kiến thức để chăm sóc sức khỏe của mình tốt hơn.
+                </div>
                 <div className="syst-card-wrapper">
                   <div className="syst-card">
-                    <div className="syst-card-header">Card header</div>
-                    <div className="syst-card-body">Card body text</div>
+                    <NavLink className="syst-card-link">
+                      <div className="syst-card-img">
+                        <img
+                          className="card-img"
+                          src={SystemImg}
+                          alt="BKCare System"
+                        ></img>
+                      </div>
+                      <div className="syst-card-header">
+                        Hệ thống trang thiết bị tân tiến
+                      </div>
+                      <div className="syst-card-body">
+                        Với hệ thống trang thiết bị y tế hiện đại bậc nhất, giúp
+                        chẩn đoán và điều trị bệnh hiệu quả.
+                      </div>
+                    </NavLink>
                   </div>
                   <div className="syst-card">
-                    <div className="syst-card-header">Card header</div>
-                    <div className="syst-card-body">Card body text</div>
+                    <NavLink className="syst-card-link">
+                      <div className="syst-card-img">
+                        <img
+                          className="card-img"
+                          src={SystemImg}
+                          alt="BKCare System"
+                        ></img>
+                      </div>
+                      <div className="syst-card-header">
+                        Đội ngũ y bác sĩ giàu kinh nghiệm
+                      </div>
+                      <div className="syst-card-body">
+                        BKC sở hữu đội ngũ y bác sĩ giỏi, giàu kinh nghiệm, tận
+                        tâm và chuyên nghiệp
+                      </div>
+                    </NavLink>
                   </div>
                   <div className="syst-card">
-                    <div className="syst-card-header">Card header</div>
-                    <div className="syst-card-body">Card body text</div>
+                    <NavLink className="syst-card-link">
+                      <div className="syst-card-img">
+                        <img
+                          className="card-img"
+                          src={SystemImg}
+                          alt="BKCare System"
+                        ></img>
+                      </div>
+                      <div className="syst-card-header">
+                        Dịch vụ chăm sóc chuyên nghiệp
+                      </div>
+                      <div className="syst-card-body">
+                        BKC cung cấp dịch vụ chăm sóc sức khỏe toàn diện, tận
+                        tâm và chuyên nghiệp cho người bệnh.
+                      </div>
+                    </NavLink>
                   </div>
                   <div className="syst-card">
-                    <div className="syst-card-header">Card header</div>
-                    <div className="syst-card-body">Card body text</div>
+                    <NavLink className="syst-card-link">
+                      <div className="syst-card-img">
+                        <img
+                          className="card-img"
+                          src={SystemImg}
+                          alt="BKCare System"
+                        ></img>
+                      </div>
+                      <div className="syst-card-header">
+                        Thành tích nổi bật trong 10 năm
+                      </div>
+                      <div className="syst-card-body">
+                        Bệnh viện đã đạt được nhiều thành tích nổi bật trong
+                        lĩnh vực y tế, được ghi nhận bởi các tổ chức uy tín.
+                      </div>
+                    </NavLink>
                   </div>
                 </div>
               </div>
