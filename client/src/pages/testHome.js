@@ -6,10 +6,13 @@ import LowNav from "../components/LowNav";
 import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
+import HosEquip from "../assets/hosEquip.jpg";
+import HosDoc from "../assets/hosDoc.jpg";
+import HosServ from "../assets/hosServ.jpg";
+import HosAward from "../assets/hosAward.jpg";
 import HospitalImg from "../assets/hospitalBuilding.jpg";
-import SystemImg from "../assets/systemImg.jpg";
 import Logo from "../assets/logoBKC.png";
-import TestApptForm from "../components/TestApptForm";
+import BCTLogo from "../assets/bctLogo.png";
 
 export default function TestHome() {
   return (
@@ -281,7 +284,7 @@ export default function TestHome() {
                       <div className="syst-card-img">
                         <img
                           className="card-img"
-                          src={SystemImg}
+                          src={HosEquip}
                           alt="BKCare System"
                         ></img>
                       </div>
@@ -299,7 +302,7 @@ export default function TestHome() {
                       <div className="syst-card-img">
                         <img
                           className="card-img"
-                          src={SystemImg}
+                          src={HosDoc}
                           alt="BKCare System"
                         ></img>
                       </div>
@@ -317,7 +320,7 @@ export default function TestHome() {
                       <div className="syst-card-img">
                         <img
                           className="card-img"
-                          src={SystemImg}
+                          src={HosServ}
                           alt="BKCare System"
                         ></img>
                       </div>
@@ -335,7 +338,7 @@ export default function TestHome() {
                       <div className="syst-card-img">
                         <img
                           className="card-img"
-                          src={SystemImg}
+                          src={HosAward}
                           alt="BKCare System"
                         ></img>
                       </div>
@@ -438,6 +441,26 @@ export default function TestHome() {
                   </div>
                 </NavLink>
               </div>
+              <div className="bct-logo-wrapper">
+                <img
+                  className="bct-logo"
+                  src={BCTLogo}
+                  alt="Đã thông báo Bộ Công Thương"
+                ></img>
+              </div>
+            </div>
+          </div>
+          <div className="footer-copyright">
+            <div className="copyright-header">
+              <span>Copyright © 2024 BKC. All rights reserved.</span>
+            </div>
+            <div className="copyright-body">
+              <span>
+                Các thông tin trên website BKC.com chỉ dành cho mục đích tham
+                khảo, tra cứu, khuyến nghị Quý khách hàng không tự ý áp dụng.
+                Vinmec không chịu trách nhiệm về những trường hợp tự ý áp dụng
+                mà không có chỉ định của bác sĩ.
+              </span>
             </div>
           </div>
         </div>

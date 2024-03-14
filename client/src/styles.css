@@ -629,8 +629,8 @@
 
 .syst-card:hover {
   transform: translateX(8px) translateY(-8px);
-  box-shadow: -5px 5px 0 0 #093c8a99, -10px 10px 0 0 #093c8a99,
-    -15px 15px 0 0 #093c8a99;
+  box-shadow: -5px 5px 0 0 #90ccec, -10px 10px 0 0 #90ccec,
+    -15px 15px 0 0 #90ccec;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -649,6 +649,7 @@
   width: 100%;
   height: auto;
   object-fit: contain;
+  object-position: 0 -24px;
 }
 
 .syst-card-header {
@@ -674,18 +675,17 @@
 .footer-wrapper {
   display: flex;
   justify-content: center;
-  padding-bottom: 40px;
+  padding-bottom: 15px;
 }
 
 .footer-logo-wrapper {
   overflow: hidden;
   width: 150px;
-  margin: auto;
 }
 
 .footer-logo {
   width: 100%;
-  height: auto;
+  height: 140px;
   object-fit: contain;
 }
 
@@ -744,4 +744,30 @@
 
 .footer-socials-icon span {
   font-size: 28px;
+}
+
+.bct-logo-wrapper {
+  margin-top: 20px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.bct-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-copyright {
+  padding: 30px;
+}
+
+.copyright-header {
+  font-weight: 400;
+  text-align: center;
+}
+
+.copyright-body {
+  font-weight: 300;
+  text-align: center;
 }
