@@ -609,8 +609,10 @@
 .syst-header {
   text-align: center;
   font-size: 28px;
-  font-weight: 500;
   color: #286ba6;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .syst-body {

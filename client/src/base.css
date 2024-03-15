@@ -1,3 +1,51 @@
+/* Google Font */
+:root {
+  --roboto-font-family: "Roboto", sans-serif;
+  --roboto-font-style: normal;
+  --roboto-thin-weight: 100;
+  --roboto-light-weight: 300;
+  --roboto-regular-weight: 400;
+  --roboto-medium-weight: 500;
+  --roboto-bold-weight: 700;
+  --roboto-black-weight: 900;
+}
+
+/* .roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+} */
+
 /* Responsive */
 .grid__row {
   display: flex;
