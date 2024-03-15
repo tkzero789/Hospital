@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import "bootstrap/dist/css/bootstrap.css";
 export default function Create() {
   const [form, setForm] = useState({
     name: "",
@@ -38,7 +39,7 @@ export default function Create() {
 
   // This following section will display the form that takes the input from the user.
   return (
-    <div>
+    <div className="mt-5 ms-5">
       <h3>Create New Record</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group">

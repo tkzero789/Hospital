@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import DoctorNav from "../components/DoctorNav";
+
 const Record = (props) => (
   <tr>
     <td>{props.record.name}</td>
@@ -66,19 +68,26 @@ export default function RecordList() {
   }
   // This following section will display the table with the records of individuals.
   return (
-    <div>
-      <h3>Record List</h3>
-      <table className="table table-striped" style={{ marginTop: 20 }}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Level</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>{recordList()}</tbody>
-      </table>
-    </div>
+    <>
+      <DoctorNav />
+      <div>
+        <h3 className="text-center my-4">Record List</h3>
+
+        <table
+          className="table table-striped text-center table-light"
+          style={{ marginTop: 20 }}
+        >
+          <thead className="table-primary">
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Level</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>{recordList()}</tbody>
+        </table>
+      </div>
+    </>
   );
 }

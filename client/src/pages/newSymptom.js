@@ -138,36 +138,37 @@ export default function NewSymptom() {
   return (
     <div>
       <AdminNavBar />
-      <h3 className="container text-center text-danger pt-5">
+      <h3 className="container text-center text-body pt-5">
         TẠO TRIỆU CHỨNG VÀ MÔ TẢ
       </h3>
       <div className="container p-5">
-        <div className="card border-danger-subtle p-5">
+        <div className="card border-primary p-5">
           <div className="form-group row pb-5">
-            <h4 className="card-title text-danger col-3">TÊN TRIỆU CHỨNG</h4>
+            <h4 className="card-title text-body col-3">Tên triệu chứng:</h4>
             <input
               type="text"
-              className="form-control border-danger-subtle col"
+              className="form-control border-primary col border-dark-subtle shadow-sm"
               name="symptomName"
+              placeholder="Nhập tên triệu chứng"
               onChange={(e) => updateNameField(e)}
             />
           </div>
-          <h4 className="card-title text-danger pb-3">THÊM MÔ TẢ CHI TIẾT</h4>
+          <h4 className="card-title text-body">Thêm mô tả chi tiết:</h4>
           {symptom.categories.map((category) => {
             return (
               <div key={category.index}>
-                <div className="form row pb-3">
+                <div className="form row pb-3 mt-5">
                   <div className="col-2" style={{ display: "flex" }}>
                     <i
-                      class="bi bi-file-minus"
-                      style={{ color: "red", marginRight: "5px" }}
+                      class="btn py-0 px-0 bi bi-file-minus"
+                      style={{ color: "#000", marginRight: "5px" }}
                       onClick={(e) => deleteCategoriesField(category.index)}
                     ></i>
-                    <h5 className="text-danger">THUỘC TÍNH</h5>
+                    <h5 className="text-body">Thuộc tính:</h5>
                   </div>
                   <select
                     name="categoryName"
-                    className="form-select border-danger-subtle col"
+                    className="form-select border-secondary col"
                     onChange={(e) => updateCategoriesField(category.index, e)}
                   >
                     <option value="Vị trí">Vị trí</option>
@@ -181,15 +182,16 @@ export default function NewSymptom() {
                     <option value="Dấu hiệu kèm theo">Dấu hiệu kèm theo</option>
                   </select>
                 </div>
+
                 <div className="row">
                   {category.descriptions.map((description) => (
                     <div
-                      className="form-group pb-3 col-6"
+                      className="form-group pb-3 col-12"
                       style={{ display: "flex" }}
                     >
                       <i
-                        class="bi bi-file-minus"
-                        style={{ color: "red", marginRight: "5px" }}
+                        class="btn py-0 px-0 bi bi-file-minus"
+                        style={{ color: "#000", marginRight: "5px" }}
                         onClick={(e) =>
                           deleteDescriptionsField(
                             category.index,
@@ -200,8 +202,8 @@ export default function NewSymptom() {
                       <input
                         name="descriptionDetail"
                         type="text"
-                        className="form-control border-danger-subtle "
-                        placeholder="Mô tả"
+                        className="form-control border border-dark-subtle shadow-sm rounded "
+                        placeholder="Nhập mô tả"
                         onChange={(e) =>
                           updateDescriptionsField(
                             category.index,
@@ -212,12 +214,12 @@ export default function NewSymptom() {
                       />
                     </div>
                   ))}
-                  <div className="pb-3 col-6">
-                    <div
-                      onClick={() => addDescriptionField(category.index)}
-                      className="btn btn-outline-danger p-1 col-12"
-                    >
-                      <h5 className="text-danger">THÊM MÔ TẢ</h5>
+                </div>
+
+                <div className="row justify-content-center">
+                  <div className="col-1 rounded-5 btn btn-light border-secondary-subtle border-0 py-0 px-0">
+                    <div onClick={() => addDescriptionField(category.index)}>
+                      <i class="text-secondary fs-3 bi bi-plus-circle"></i>
                     </div>
                   </div>
                 </div>
@@ -225,13 +227,19 @@ export default function NewSymptom() {
             );
           })}
 
-          <div onClick={addCategoriesField} className="btn btn-outline-danger">
-            <h5 className="text-danger">THÊM THUỘC TÍNH</h5>
+          <div
+            onClick={addCategoriesField}
+            className="btn btn-secondary bg-gradient mt-5"
+          >
+            Thêm thuộc tính
           </div>
 
-          <div className="row pt-5 pb-3 justify-content-center">
+          <div className="row pt-3 justify-content-center">
             <div className="col-3 d-grid gap-2">
-              <button className="btn btn-danger" onClick={onSubmit}>
+              <button
+                className="btn btn-primary bg-gradient"
+                onClick={onSubmit}
+              >
                 XÁC NHẬN VÀ TẠO
               </button>
             </div>

@@ -1,70 +1,43 @@
 import React from "react";
-// We import bootstrap to make our application look better.
-import "bootstrap/dist/css/bootstrap.css";
-// We import NavLink to utilize the react router.
 import { NavLink } from "react-router-dom";
-import Logo from "../assets/logo-hospital.png";
-// Here, we display our Navbar
-export default function Navbar() {
+
+const navigationLinks = [
+  { link: "/create-symptom", text: "Trang chủ" },
+  { link: "/test-home", text: "Hướng dẫn" },
+  { link: "", text: "Tin tức" },
+  { link: "", text: "Tuyển dụng" },
+  { link: "", text: "Liên hệ" },
+  { link: "/doctor-login", text: "Hỏi đáp" },
+];
+
+export default function MainNav() {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light">
-        <div className="container-fluid">
-          <NavLink className="navbar-brand" to="/">
-            <img style={{ width: 100 + "%" }} src={Logo}></img>
-          </NavLink>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item item px-5">
-                <NavLink className="nav-link" to="">
-                  <h3 className="text-danger">Hotline: 066 77 88 99</h3>
-                </NavLink>
-              </li>
-              <li className="nav-item item px-5">
-                <NavLink className="nav-link" to="">
-                  <h3 className="text-danger">Đặt lịch khám</h3>
-                </NavLink>
-              </li>
-              <li className="nav-item item px-5">
-                <NavLink className="nav-link" to="">
-                  <h3 className="text-danger">Hello, Admin</h3>
-                </NavLink>
-              </li>
+    <>
+      <div className="w-100 nav-bg">
+        <div className="nav-container">
+          <nav className="nav-bg py-0 d-none d-lg-block d-xl-block">
+            <ul className="main-nav-list">
+              {navigationLinks.map((link, index) => (
+                <li
+                  key={link.link}
+                  className={`nav-item item ${link.className || ""}`}
+                >
+                  <NavLink className="nav-link nav-link-first" to={link.link}>
+                    {index === 0 && ( // Check if it's the first item (index 0)
+                      <div className="home-icon-wrapper ms-3">
+                        <i className="home-icon bi bi-house-door"></i>
+                      </div>
+                    )}
+                    <div className="up-nav-text text-white fw-semibold">
+                      {link.text}
+                    </div>
+                  </NavLink>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
         </div>
-      </nav>
-      <nav className="navbar navbar-expand-lg navbar-light bg-danger">
-        <div className="container-fluid">
-          <div
-            className="collapse navbar-collapse justify-content-center"
-            id="navbarSupportedContent"
-          >
-            <ul className="navbar-nav justify-content-center">
-              <li className="nav-item px-5 mx-4">
-                <NavLink className="nav-link" to="/create">
-                  <h3 className="text-light">TRANG CHỦ</h3>
-                </NavLink>
-              </li>
-              <li className="nav-item px-5 mx-3">
-                <NavLink className="nav-link" to="/create-symptom">
-                  <h3 className="text-light">GIỚI THIỆU</h3>
-                </NavLink>
-              </li>
-              <li className="nav-item px-5 mx-3">
-                <NavLink className="nav-link" to="/create-article">
-                  <h3 className="text-light">CHẨN ĐOÁN BỆNH</h3>
-                </NavLink>
-              </li>
-              <li className="nav-item px-5 mx-2">
-                <NavLink className="nav-link" to="/create-symptom">
-                  <h3 className="text-light">HỎI & ĐÁP</h3>
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
+      </div>
+    </>
   );
 }

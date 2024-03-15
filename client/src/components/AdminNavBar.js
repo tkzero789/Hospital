@@ -5,34 +5,30 @@ export default function AdminNavBar() {
     <div className="container text-center">
       <div className="row pt-3 pb-3">
         <div className="col">
-          <div className="card border-danger-subtle">
+          <div className="card border-dark-subtle">
             <div className="card-body">
-              <h5 className="card-title text-danger">DANH SÁCH</h5>
-              <h5 className="card-title text-danger">TÀI KHOẢN</h5>
+              <h5 className="card-title text-body">Danh sách tài khoản</h5>
             </div>
           </div>
         </div>
         <div className="col">
-          <div className="card border-danger-subtle">
+          <div className="card border-dark-subtle">
             <div className="card-body">
-              <h5 className="card-title text-danger">DANH SÁCH</h5>
-              <h5 className="card-title text-danger">BÀI VIẾT</h5>
+              <h5 className="card-title text-body">Danh sách bài viết</h5>
             </div>
           </div>
         </div>
         <div className="col">
-          <div className="card border-danger-subtle">
+          <div className="card border-dark-subtle">
             <div className="card-body">
-              <h5 className="card-title text-danger">TẠO TRIỆU CHỨNG</h5>
-              <h5 className="card-title text-danger">VÀ MÔ TẢ</h5>
+              <h5 className="card-title text-body">Tạo bài viết</h5>
             </div>
           </div>
         </div>
         <div className="col">
-          <div className="card border-danger-subtle">
+          <div className="card border-dark-subtle">
             <div className="card-body">
-              <h5 className="card-title text-danger">CẬP NHẬT</h5>
-              <h5 className="card-title text-danger">LỊCH LÀM VIỆC</h5>
+              <h5 className="card-title text-body">Cập nhật lịch làm việc</h5>
             </div>
           </div>
         </div>
