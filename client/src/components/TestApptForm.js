@@ -122,15 +122,14 @@ export default function TestApptForm() {
             <div className="c-4">
               {/* Appt Date */}
               <div className="appt-date">
-                <label for="appt-date">
-                  Đặt lịch khám <span>*</span>
-                </label>
+                <label for="appt-date">Đặt lịch khám</label>
                 <input
                   className="appt-date-input"
                   type="text"
                   value={formattedDate || ""}
                   readOnly // Make the input read-only
                   onClick={handleClick} // Toggle calendar on click
+                  placeholder="Đặt lịch (không bắt buộc)"
                 ></input>
                 {showCalendar && (
                   <div ref={calendarRef} className="calendar-box">
