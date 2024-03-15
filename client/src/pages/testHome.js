@@ -268,7 +268,9 @@ export default function TestHome() {
           <div className="syst-wrapper">
             <div className="c-12">
               <div className="syst-section">
-                <div className="syst-header">Hệ thống BKCare</div>
+                <div className="syst-header">
+                  Hệ thống BKCare - Vì một cuộc sống tốt đẹp hơn
+                </div>
                 <div className="syst-body">
                   Hệ thống được xây dựng nhằm mục đích nâng cao chất lượng dịch
                   vụ chăm sóc sức khỏe cho người bệnh, đồng thời giúp cho việc

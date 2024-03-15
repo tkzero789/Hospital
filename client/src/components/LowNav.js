@@ -21,16 +21,16 @@ export default function LowNav() {
               {navLinks.map((link) => (
                 <li key={link.link} className="low-nav-item">
                   <NavLink className="nav-link" to={link.link}>
-                    <div className="low-nav-text fw-semibold">{link.text}</div>
+                    <div className="low-nav-text">{link.text}</div>
                   </NavLink>
                 </li>
               ))}
               {/* DROPDOWN  */}
               <li className="low-nav-item dropdown-link">
                 <NavLink className="nav-link" to="">
-                  <div className="low-nav-text fw-semibold">Khác</div>
+                  <div className="low-nav-text">Khác</div>
                   <div className="dropdown-content">
-                    <NavLink>Giờ làm việc</NavLink>
+                    <NavLink>Lịch làm việc</NavLink>
                     <NavLink>Bảo hiểm</NavLink>
                     <NavLink>Tra cứu</NavLink>
                     <NavLink>Thông tin Dược</NavLink>

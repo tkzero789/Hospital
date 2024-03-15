@@ -21,7 +21,7 @@ export default function MidNav() {
               {navLinks.map((link) => (
                 <li key={link.link} className="mid-nav-item">
                   <NavLink className="nav-link py-2" to={link.link}>
-                    <div className="mid-nav-text fw-semibold">{link.text}</div>
+                    <div className="mid-nav-text">{link.text}</div>
                   </NavLink>
                 </li>
               ))}

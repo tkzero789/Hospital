@@ -77,7 +77,11 @@
 }
 
 .up-nav-text {
+  color: #fff;
   font-size: 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .home-icon {
@@ -131,6 +135,9 @@
 .mid-nav-text {
   color: rgb(31, 37, 50);
   font-size: 20px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .mid-item-wrapper {
@@ -155,7 +162,9 @@
 
 .mid-item-text {
   font-size: 20px;
-  font-weight: 500;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .low-nav-list {
@@ -186,6 +195,9 @@
 .low-nav-text {
   color: rgb(31, 37, 50);
   font-size: 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .dropdown-link {
@@ -343,8 +355,10 @@
 
 .appt-title-text {
   font-size: 24px;
-  font-weight: 500;
   color: #1f2532;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .appt-form {
@@ -360,10 +374,12 @@
 
 .appt .appt-form .c-4 div > label {
   font-size: 18px;
-  font-weight: 500;
   margin-top: 28px;
   margin-bottom: 2px;
   color: #1f2532;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .appt .appt-form .c-4 div > input {
@@ -436,6 +452,9 @@
   border-radius: 3px;
   padding: 8px 12px;
   font-size: 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .appt-btn:hover {
@@ -463,7 +482,9 @@
 
 .opt-header-text {
   font-size: 22px;
-  font-weight: 500;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
   color: #286ba6;
 }
 
@@ -482,13 +503,17 @@
 
 .opt-title {
   font-size: 18px;
-  font-weight: 500;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .opt-body {
   margin: 8px 0;
   font-size: 16px;
-  font-weight: 400;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .opt-btn-wrapper {
@@ -509,7 +534,9 @@
   width: 110px;
   text-align: center;
   padding: 8px 0;
-  font-weight: 500;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .opt-btn:hover {
@@ -560,14 +587,16 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.box-icon:hover {
+.box-select:hover .box-icon {
   transform: scale(1.1);
 }
 
 .box-text {
   font-size: 18px;
-  font-weight: 500;
   margin-top: 6px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 /* ABOUT SECTION */
@@ -580,13 +609,18 @@
 
 .about-section-header {
   font-size: 28px;
-  font-weight: 500;
   color: #286ba6;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .about-section-body {
   padding-top: 15px;
   font-size: 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .about-img {
@@ -621,6 +655,9 @@
   padding-top: 15px;
   padding-bottom: 40px;
   font-size: 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .syst-card-wrapper {
@@ -633,6 +670,7 @@
   width: 240px;
   height: 400px;
   margin: 0 16px;
+  border-radius: 3px;
   box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -653,6 +691,8 @@
   width: 100%;
   margin: auto;
   height: 50%;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .card-img {
@@ -665,16 +705,22 @@
 .syst-card-header {
   text-align: center;
   font-size: 18px;
-  font-weight: 500;
   color: #286ba6;
-  margin: 10px 0 15px 0;
+  margin: 10px 0 12px 0;
+  padding: 0 12px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .syst-card-body {
   text-align: center;
   font-size: 16px;
-  font-weight: 500;
   color: rgb(31, 37, 50);
+  padding: 0 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 /* FOOTER SECTION */
@@ -701,19 +747,26 @@
 
 .footer-logo-header {
   font-size: 18px;
-  font-weight: 500;
   padding: 0 24px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .footer-logo-address {
   padding: 0 24px;
   margin-top: 4px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .footer-header {
   font-size: 18px;
-  font-weight: 500;
   margin-top: 24px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
 }
 
 .footer-list {
@@ -730,6 +783,9 @@
   display: inline-block;
   text-decoration: none;
   color: rgba(0, 0, 0, 0.65);
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .footer-socials__link {
@@ -777,11 +833,16 @@
 }
 
 .copyright-header {
-  font-weight: 400;
   text-align: center;
+  font-size: 16px;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .copyright-body {
-  font-weight: 300;
   text-align: center;
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-light-weight);
 }

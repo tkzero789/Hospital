@@ -28,9 +28,7 @@ export default function MainNav() {
                         <i className="home-icon bi bi-house-door"></i>
                       </div>
                     )}
-                    <div className="up-nav-text text-white fw-semibold">
-                      {link.text}
-                    </div>
+                    <div className="up-nav-text">{link.text}</div>
                   </NavLink>
                 </li>
               ))}
