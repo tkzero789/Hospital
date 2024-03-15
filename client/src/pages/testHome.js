@@ -450,6 +450,8 @@ export default function TestHome() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="copyright">
           <div className="footer-copyright">
             <div className="copyright-header">
               <span>Copyright © 2024 BKC. All rights reserved.</span>
