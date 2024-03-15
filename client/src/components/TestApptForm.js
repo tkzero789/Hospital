@@ -123,14 +123,20 @@ export default function TestApptForm() {
               {/* Appt Date */}
               <div className="appt-date">
                 <label for="appt-date">Đặt lịch khám</label>
-                <input
-                  className="appt-date-input"
-                  type="text"
-                  value={formattedDate || ""}
-                  readOnly // Make the input read-only
-                  onClick={handleClick} // Toggle calendar on click
-                  placeholder="Đặt lịch (không bắt buộc)"
-                ></input>
+                <div className="appt-date-container d-flex">
+                  <input
+                    className="appt-date-input"
+                    type="text"
+                    value={formattedDate || ""}
+                    readOnly // Make the input read-only
+                    onClick={handleClick} // Toggle calendar on click
+                    placeholder="Đặt lịch (không bắt buộc)"
+                  />
+                  <div className="app-date-icon">
+                    <i class="bi bi-calendar"></i>
+                  </div>
+                </div>
+
                 {showCalendar && (
                   <div ref={calendarRef} className="calendar-box">
                     <Calendar
