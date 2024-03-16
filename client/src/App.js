@@ -27,49 +27,49 @@ const App = () => {
         <Route
           path="/create-symptom"
           element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <CreateSymptom />
-            </RequireAuth>
-            // <CreateSymptom />
+            // <RequireAuth
+            //   userRole={getUserRole()}
+            //   allowedRoles={["doctor", "admin"]}
+            // >
+            //   <CreateSymptom />
+            // </RequireAuth>
+            <CreateSymptom />
           }
         />
         <Route
           path="/new-symptom"
           element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <NewSymptom />
-            </RequireAuth>
-            // <NewSymptom />
+            // <RequireAuth
+            //   userRole={getUserRole()}
+            //   allowedRoles={["doctor", "admin"]}
+            // >
+            //   <NewSymptom />
+            // </RequireAuth>
+            <NewSymptom />
           }
         />
         <Route
           path="/edit-symptom/:id"
           element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <EditSymptom />
-            </RequireAuth>
-            // <EditSymptom />
+            // <RequireAuth
+            //   userRole={getUserRole()}
+            //   allowedRoles={["doctor", "admin"]}
+            // >
+            //   <EditSymptom />
+            // </RequireAuth>
+            <EditSymptom />
           }
         />
         <Route
           path="/create-article"
           element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <CreateAritcle />
-            </RequireAuth>
-            // <CreateAritcle />
+            // <RequireAuth
+            //   userRole={getUserRole()}
+            //   allowedRoles={["doctor", "admin"]}
+            // >
+            //   <CreateAritcle />
+            // </RequireAuth>
+            <CreateAritcle />
           }
         />
       </Routes>

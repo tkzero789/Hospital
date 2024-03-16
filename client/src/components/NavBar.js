@@ -9,23 +9,23 @@ import axios from "axios";
 import Logo from "../assets/logo-hospital.png";
 // Here, we display our Navbar
 export default function Navbar() {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Access login state from context
-  const navigate = useNavigate();
+  // const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Access login state from context
+  // const navigate = useNavigate();
 
-  const handleSignOut = async () => {
-    axios
-      .post("https://symptom-checker-with-mern-backend.onrender.com/signout")
-      .then((res) => {
-        console.log("Signed out");
-        console.log(res);
-        setIsLoggedIn();
-        navigate("/signin");
-      })
-      .catch((err) => {
-        const message = `An error occurred: ${err}`;
-        window.alert(message);
-      });
-  };
+  // const handleSignOut = async () => {
+  //   axios
+  //     .post("https://symptom-checker-with-mern-backend.onrender.com/signout")
+  //     .then((res) => {
+  //       console.log("Signed out");
+  //       console.log(res);
+  //       setIsLoggedIn();
+  //       navigate("/signin");
+  //     })
+  //     .catch((err) => {
+  //       const message = `An error occurred: ${err}`;
+  //       window.alert(message);
+  //     });
+  // };
 
   return (
     <div>
@@ -51,10 +51,13 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li className="nav-item item px-5">
-                {isLoggedIn ? (
+                <NavLink className="nav-link" to="/signin">
+                  <h3 className="text-danger">Sign in</h3>
+                </NavLink>
+                {/* {isLoggedIn ? (
                   <NavLink
                     className="nav-link"
-                    to="/signout"
+                    to="/signin"
                     onClick={handleSignOut}
                   >
                     <h3 className="text-danger">Sign out</h3>
@@ -63,7 +66,7 @@ export default function Navbar() {
                   <NavLink className="nav-link" to="/signin">
                     <h3 className="text-danger">Sign in</h3>
                   </NavLink>
-                )}
+                )} */}
               </li>
             </ul>
           </div>
