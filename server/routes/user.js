@@ -1,11 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const verifyToken = require("../middleware/verifyToken");
 
-// userRoutes is an instance of the express router.
-// We use it to define our routes.
-// The router will be added as a middleware and will take control of requests starting with path /user.
 const userRoutes = express.Router();
 
 // This will help us connect to the database
