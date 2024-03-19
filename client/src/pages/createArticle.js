@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+import DoctorNav from "../components/DoctorNav";
 import AdminNavBar from "../components/AdminNavBar";
 import ArticleSymptoms from "../components/ArticleSymptoms";
 import ArticleDetails from "../components/ArticleDetails";
@@ -98,10 +99,11 @@ export default function CreateAritcle() {
   // This following section will display the form that takes the input from the user.
   return (
     <div>
+      <DoctorNav />
       <AdminNavBar />
-      <h3 className="container text-center text-danger pt-5">TẠO BÀI VIẾT</h3>
+      <h3 className="container text-center text-body pt-5">TẠO BÀI VIẾT</h3>
       <div className="container p-5">
-        <div className="card border-danger-subtle p-5">
+        <div className="card border-primary-subtle p-5">
           <form>
             <div>{StepDisplay()}</div>
 
@@ -109,7 +111,7 @@ export default function CreateAritcle() {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-secondary"
                   disabled={step === 1}
                   onClick={handlePrev}
                 >
@@ -119,7 +121,7 @@ export default function CreateAritcle() {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-primary"
                   onClick={(e) => {
                     if (step === 3) {
                       confirmCreate(e);

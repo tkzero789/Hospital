@@ -2,22 +2,42 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
 import AdminNavBar from "../components/AdminNavBar";
+import DoctorNav from "../components/DoctorNav";
+import ApptForm from "../components/ApptForm";
 
 const Symptom = (props) => (
-  <div className="col-3 pb-3">
-    <div className="form" style={{ display: "flex" }}>
-      <i
-        className="bi bi-trash text-danger"
-        style={{ marginRight: "5px" }}
-        onClick={() => {
-          props.onDelete(props.symptom._id);
-        }}
-      ></i>
-      <Link className="text-danger" to={`/edit-symptom/${props.symptom._id}`}>
-        <h5>{props.symptom.name}</h5>
-      </Link>
+  <div className="symptom-item d-flex px-0 py-0 ms-3 my-2 ">
+    <div className="d-flex border border-secondary-subtle shadow-sm rounded">
+      <div
+        className="symptom-item py-0 px-0 b rounded-start px-3 py-2"
+        style={{ display: "flex" }}
+      >
+        <Link
+          className="text-body text-decoration-none"
+          to={`/edit-symptom/${props.symptom._id}`}
+        >
+          <div>{props.symptom.name}</div>
+        </Link>
+      </div>
+      <div>
+        <Link
+          to={`/edit-symptom/${props.symptom._id}`}
+          className="rounded position-absolute bg-success bg-gradient py-2 px-3 ms-3"
+        >
+          <i className="text-light text-opacity-75 bi bi-pencil"></i>
+        </Link>
+      </div>
+      <div>
+        <Link>
+          <i
+            className="rounded position-absolute bg-danger bg-gradient bi bi-trash-fill text-light text-opacity-75 py-2 px-3 ms-7"
+            onClick={() => {
+              props.onDelete(props.symptom._id);
+            }}
+          ></i>
+        </Link>
+      </div>
     </div>
   </div>
 );
@@ -70,28 +90,34 @@ export default function CreateSymptom() {
 
   // This following section will display the form that takes the input from the user.
   return (
-    <div>
-      <AdminNavBar />
-      <h3 className="container text-center text-danger pt-5">
-        TẠO TRIỆU CHỨNG VÀ MÔ TẢ
-      </h3>
-      <div className="container p-5">
-        <div className="card border-danger-subtle p-5">
-          <form>
-            <h4 className="card-title text-danger">TRIỆU CHỨNG ĐÃ CÓ</h4>
+    <>
+      <div>
+        <DoctorNav />
+        <AdminNavBar />
+        <h4 className="container text-center text-body pt-5">
+          TẠO TRIỆU CHỨNG VÀ MÔ TẢ
+        </h4>
+        <div className="container p-5">
+          <div className="border border-secondary border-opacity-25 rounded shadow p-5">
+            <form>
+              <h4 className="card-title text-body">Triệu chứng đã có:</h4>
 
-            <div className="row pt-3 pb-3">{symptomList()}</div>
+              <div className="row d-flex px-3 pt-2 pb-2">{symptomList()}</div>
 
-            <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
-                <NavLink className="btn btn-outline-danger" to="/new-symptom">
-                  TẠO TRIỆU CHỨNG MỚI
-                </NavLink>
+              <div className="d-flex justify-content-evenly row pt-3">
+                <div className="col-3 d-grid gap-2">
+                  <NavLink
+                    className="btn btn-primary bg-gradient"
+                    to="/new-symptom"
+                  >
+                    TẠO TRIỆU CHỨNG MỚI
+                  </NavLink>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
