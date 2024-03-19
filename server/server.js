@@ -5,7 +5,7 @@ const session = require("cookie-session");
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 const app = express();
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(

@@ -71,8 +71,27 @@ userRoutes.route("/signin").post(async function (req, res) {
 
 // Sign out route
 userRoutes.route("/signout").post(async function (req, res) {
-  req.session.destroy();
-  res.status(200).json({ message: "Logged out successfully" });
+  try {
+    // 1. Extract token from request
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // 2. Generate a new token with shorter expiration for invalidation
+    const shortLivedToken = jwt.sign(
+      { userId: "invalidated" },
+      "my-secret-jwt-token-key",
+      {
+        expiresIn: "1 minute", // Short expiration for invalidation
+      }
+    );
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 
 module.exports = userRoutes;
