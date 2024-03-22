@@ -15,7 +15,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(require("./routes/record"));
 app.use(require("./routes/symptom"));
 app.use(require("./routes/article"));
 app.use(require("./routes/user"));
