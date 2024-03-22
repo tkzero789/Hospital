@@ -4,7 +4,6 @@ import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AdminNavBar from "../components/AdminNavBar";
 import DoctorNav from "../components/DoctorNav";
-import ApptForm from "../components/ApptForm";
 
 const Symptom = (props) => (
   <div className="symptom-item d-flex px-0 py-0 ms-3 my-2 ">
@@ -88,7 +87,6 @@ export default function CreateSymptom() {
     });
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <>
       <div>

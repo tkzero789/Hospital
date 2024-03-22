@@ -6,8 +6,8 @@ export default function LowNav() {
     { link: "/home", text: "Giới thiệu" },
     { link: "", text: "Chuyên khoa" },
     { link: "", text: "Bác sĩ" },
-    { link: "", text: "Chẩn đoán" },
-    { link: "/record-list", text: "Dịch vụ y khoa" },
+    { link: "symptom-checker", text: "Chẩn đoán" },
+    { link: "", text: "Dịch vụ y khoa" },
     { link: "", text: "Chăm sóc khách hàng" },
   ];
 

@@ -1,22 +1,16 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 const userRoutes = express.Router();
-
-// This will help us connect to the database
 const dbo = require("../db/conn");
+const SECRET_JWT_KEY = process.env.SECRET_JWT_KEY;
 
-// This help convert the id from string to ObjectId for the _id.
-
-// This section will help you get a list of all the users.
 userRoutes.route("/signup").post(async function (req, res) {
   console.log(req.body);
   try {
-    const db_connect = await dbo.getDb("employees");
+    const db_connect = await dbo.getDb("mern_hospital");
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
@@ -34,11 +28,10 @@ userRoutes.route("/signup").post(async function (req, res) {
   }
 });
 
-// Sign in route
 userRoutes.route("/signin").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("employees");
-    const { _id, email, phoneNumber, password, role } = req.body;
+    const db_connect = await dbo.getDb("mern_hospital");
+    const { email, phoneNumber, password } = req.body;
     const result = await db_connect.collection("users").findOne({
       $or: [{ email }, { phoneNumber }],
     });
@@ -50,43 +43,34 @@ userRoutes.route("/signin").post(async function (req, res) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     req.session.user = result;
-    // Generate a JWT token
     const token = jwt.sign(
-      { userId: _id, role: role },
-      "my-secret-jwt-token-key",
+      { userId: result._id, role: result.role },
+      SECRET_JWT_KEY,
       {
-        expiresIn: "1h", // Token expiration time
+        expiresIn: "1h",
       }
     );
-    console.log(token);
-    // Set the token as a cookie
-
     res.json({ token });
-
     res.status(200).json(result);
   } catch (err) {
     throw err;
   }
 });
 
-// Sign out route
 userRoutes.route("/signout").post(async function (req, res) {
   try {
-    // 1. Extract token from request
     const token = req.headers.authorization?.split(" ")[1];
+    console.log("Extracted Token:", token);
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-
-    // 2. Generate a new token with shorter expiration for invalidation
     const shortLivedToken = jwt.sign(
       { userId: "invalidated" },
-      "my-secret-jwt-token-key",
+      SECRET_JWT_KEY,
       {
-        expiresIn: "1 minute", // Short expiration for invalidation
+        expiresIn: "1 second",
       }
     );
-
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     console.error(err);

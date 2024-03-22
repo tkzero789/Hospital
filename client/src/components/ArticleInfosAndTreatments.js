@@ -170,7 +170,6 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
 
   const genders = ["Nam", "Nữ"];
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
       <div className="form-group row pb-5">

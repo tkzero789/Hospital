@@ -125,39 +125,4 @@ const PatientFormResult = ({ patientForm, setPatientForm }) => {
   );
 };
 
-// function findSuitablepatientForms(patientForms, symptoms, symptomDescriptions) {
-//     const patientFormScores = new Map(); // Use a Map for efficient key-value storage
-
-// for (const patientForm of patientForms) {
-//   let patientFormScore = 0;
-//   for (const symptom of patientForm.symptoms) {
-//     for (const category of symptom.categories) {
-//       for (const description of category.descriptions) {
-//         if (symptomDescriptions.includes(description.descriptionDetail)) {
-//           patientFormScore += 1;
-//         }
-//       }
-//     }
-//   }
-//   patientFormScores.set(patientForm._id, patientFormScore);
-// }
-
-//     // Sort patientForms based on scores (highest to lowest)
-//     const sortedpatientForms = [...patientFormScores.entries()].sort((a, b) => b[1] - a[1]);
-
-//     // Retrieve the sorted patientForm IDs
-//     const sortedpatientFormIds = sortedpatientForms.map(([patientFormId]) => patientFormId);
-
-//     // Retrieve the full patientForm details based on sorted IDs
-//     const sortedpatientFormsDetails = sortedpatientFormIds.map((patientFormId) =>
-//       patientForms.find((patientForm) => patientForm._id === patientFormId)
-//     );
-
-//     return sortedpatientFormsDetails;
-//   }
-
-//   // Example usage:
-//   const suitablepatientForms = findSuitablepatientForms(patientForms, symptoms, symptomDescriptions);
-//   suitablepatientForms;
-
 export default PatientFormResult;

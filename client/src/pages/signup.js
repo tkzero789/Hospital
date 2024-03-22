@@ -117,7 +117,6 @@ export default function Signup() {
     }
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
       <AdminNavBar />
@@ -298,7 +297,7 @@ export default function Signup() {
           </form>
         </div>
         <div className="d-flex justify-content-center pt-5">
-          <img style={{ width: 25 + "%" }} src={SignupLogo}></img>
+          <img alt="" style={{ width: 25 + "%" }} src={SignupLogo}></img>
         </div>
       </div>
     </div>

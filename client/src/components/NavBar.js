@@ -1,32 +1,9 @@
-import React, { useContext } from "react";
-// We import bootstrap to make our application look better.
+import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-// We import NavLink to utilize the react router.
-import { NavLink, useNavigate } from "react-router-dom";
-import { AuthContext } from "./AuthContext";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 import Logo from "../assets/logo-hospital.png";
-// Here, we display our Navbar
 export default function Navbar() {
-  // const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Access login state from context
-  // const navigate = useNavigate();
-
-  // const handleSignOut = async () => {
-  //   axios
-  //     .post("https://symptom-checker-with-mern-backend.onrender.com/signout")
-  //     .then((res) => {
-  //       console.log("Signed out");
-  //       console.log(res);
-  //       setIsLoggedIn();
-  //       navigate("/signin");
-  //     })
-  //     .catch((err) => {
-  //       const message = `An error occurred: ${err}`;
-  //       window.alert(message);
-  //     });
-  // };
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -54,19 +31,6 @@ export default function Navbar() {
                 <NavLink className="nav-link" to="/signin">
                   <h3 className="text-danger">Sign in</h3>
                 </NavLink>
-                {/* {isLoggedIn ? (
-                  <NavLink
-                    className="nav-link"
-                    to="/signin"
-                    onClick={handleSignOut}
-                  >
-                    <h3 className="text-danger">Sign out</h3>
-                  </NavLink>
-                ) : (
-                  <NavLink className="nav-link" to="/signin">
-                    <h3 className="text-danger">Sign in</h3>
-                  </NavLink>
-                )} */}
               </li>
             </ul>
           </div>

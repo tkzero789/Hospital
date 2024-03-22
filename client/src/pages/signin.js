@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -6,7 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
 import SignupLogo from "../assets/signup-logo.png";
-import { AuthContext } from "../components/AuthContext";
+import { useAuth } from "../AuthContext";
 
 export default function Signin() {
   const [user, setUser] = useState({
@@ -15,7 +15,7 @@ export default function Signin() {
     password: "",
     role: "patient",
   });
-  const { setUserToken } = useContext(AuthContext);
+  const { login } = useAuth();
 
   const updateEmailOrPhoneField = (event) => {
     let _user = { ...user };
@@ -45,7 +45,6 @@ export default function Signin() {
       )
       .then((res) => {
         console.log("Signed in");
-        console.log(res);
         console.log(res.data);
         setUser({
           email: "",
@@ -54,12 +53,11 @@ export default function Signin() {
           role: "patient",
         });
         const token = res.data.token;
-        setUserToken(token);
-        navigate("/symptom-checker");
+        login(token);
+        navigate("/");
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
-          // Invalid login credentials
           window.alert("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
         } else {
           const message = `An error occurred: ${err}`;
@@ -69,7 +67,6 @@ export default function Signin() {
       });
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
       <AdminNavBar />

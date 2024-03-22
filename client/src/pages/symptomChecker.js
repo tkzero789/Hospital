@@ -156,7 +156,6 @@ export default function SymptomChecker() {
     }
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
       <AdminNavBar />

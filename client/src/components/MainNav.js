@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
-import { AuthContext } from "./AuthContext";
+import { useAuth } from "../AuthContext";
 
 const navLinks = [
   { link: "/home", text: "Trang chủ" },
@@ -10,26 +10,36 @@ const navLinks = [
   { link: "", text: "Tin tức" },
   { link: "", text: "Tuyển dụng" },
   { link: "", text: "Liên hệ" },
-  { link: "/doctor-login", text: "Hỏi đáp" },
+  { link: "", text: "Hỏi đáp" },
 ];
 
 export default function MainNav() {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Access login state from context
+  const { loggedIn, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
-    axios
-      .post("https://symptom-checker-with-mern-backend.onrender.com/signout")
-      .then((res) => {
-        console.log("Signed out");
-        console.log(res);
-        setIsLoggedIn();
-        navigate("/signin");
-      })
-      .catch((err) => {
-        const message = `An error occurred: ${err}`;
-        window.alert(message);
-      });
+    try {
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        console.error("No token found in storage");
+        return;
+      }
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const response = await axios.post(
+        "https://symptom-checker-with-mern-backend.onrender.com/signout",
+        null,
+        config
+      );
+      console.log("Signed out");
+      console.log(response);
+      logout();
+      navigate("/signin");
+    } catch (err) {
+      const message = `An error occurred: ${err}`;
+      window.alert(message);
+    }
   };
 
   return (
@@ -44,7 +54,7 @@ export default function MainNav() {
                   className={`nav-item item ${link.className || ""}`}
                 >
                   <NavLink className="nav-link nav-link-first" to={link.link}>
-                    {index === 0 && ( // Check if it's the first item (index 0)
+                    {index === 0 && (
                       <div className="home-icon-wrapper ms-3">
                         <i className="home-icon bi bi-house-door"></i>
                       </div>
@@ -56,7 +66,7 @@ export default function MainNav() {
                 </li>
               ))}
 
-              {isLoggedIn ? (
+              {loggedIn ? (
                 <li key={"signin"}>
                   <NavLink
                     className="nav-link nav-link-first"
