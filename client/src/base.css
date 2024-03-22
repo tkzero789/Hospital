@@ -1,5 +1,5 @@
-/* Google Font */
 :root {
+  /* Google font */
   --roboto-font-family: "Roboto", sans-serif;
   --roboto-font-style: normal;
   --roboto-thin-weight: 100;
@@ -8,6 +8,15 @@
   --roboto-medium-weight: 500;
   --roboto-bold-weight: 700;
   --roboto-black-weight: 900;
+
+  /* Color */
+  --text-color: #1f2532;
+  --text-white: #ffffff;
+  --header-color: #286ba6;
+  --light-blue-hover: #2f80ed;
+  --up-nav-color: #002c77;
+  --btn-blue-hover: #297fb8;
+  --btn-blue2-hover: #0083cb;
 }
 
 /* .roboto-thin {

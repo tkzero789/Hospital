@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import MainNav from "../components/MainNav";
-import MidNav from "../components/MidNav";
+
 import LowNav from "../components/LowNav";
 import ApptForm from "../components/ApptForm";
 import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
+import Options from "../home/Options";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
       {/* Navbar */}
       <header>
         <MainNav />
-        <MidNav />
+
         <LowNav />
       </header>
 
@@ -145,6 +146,7 @@ export default function Home() {
         </div>
       </div>
 
+      <Options />
       {/* Appointment */}
       <ApptForm />
 

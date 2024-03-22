@@ -1,41 +1,89 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import RecordList from "./pages/recordList";
-import Edit from "./pages/edit";
-import Create from "./pages/create";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
+import "./styles.css";
+import "./responsive.css";
+import "./base.css";
 import CreateSymptom from "./pages/createSymptom";
 import NewSymptom from "./pages/newSymptom";
 import EditSymptom from "./pages/editSymptom";
 import CreateAritcle from "./pages/createArticle";
-import DoctorLogin from "./pages/doctorLogin";
+import SymptomChecker from "./pages/symptomChecker";
+import Signup from "./pages/signup";
+import SignupDoctor from "./pages/signupDoctor";
+import Signin from "./pages/signin";
 import Home from "./pages/home";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./styles.css";
-import "./responsive.css";
-import "./base.css";
 import TestHome from "./pages/testHome";
 import ScrollToTop from "./components/ScrollToTop";
 import ApptRequest from "./pages/apptRequest";
+import { useAuth } from "./AuthContext";
+import RequireAuth from "./RequireAuth";
 
 const App = () => {
+  const { getUserRole } = useAuth();
   return (
     <div style={{ overflow: "hidden" }}>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace={true} />} />
+        <Route
+          exact
+          path="/"
+          element={<Navigate to="/home" replace={true} />}
+        />
         <Route path="/home" element={<Home />} />
         <Route path="/test-home" element={<TestHome />} />
         <Route path="/appt-request" element={<ApptRequest />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/create-symptom" element={<CreateSymptom />} />
-        <Route path="/new-symptom" element={<NewSymptom />} />
-        <Route path="/edit-symptom/:id" element={<EditSymptom />} />
-        <Route path="/create-article" element={<CreateAritcle />} />
-        <Route path="/doctor-login" element={<DoctorLogin />} />
-        <Route path="/record-list" element={<RecordList />} />
+        <Route path="/symptom-checker" element={<SymptomChecker />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup-doctor" element={<SignupDoctor />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/create-symptom"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <CreateSymptom />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/new-symptom"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <NewSymptom />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/edit-symptom/:id"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <EditSymptom />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/create-article"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <CreateAritcle />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </div>
   );

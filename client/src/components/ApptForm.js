@@ -66,15 +66,11 @@ export default function ApptForm() {
                 </select>
               </div>
               {/* Specialties */}
-              <div className="specialty">
-                <label for="specialty">
+              <div className="need">
+                <label for="need">
                   Nhu cầu khám <span>*</span>
                 </label>
-                <select
-                  id="specialty"
-                  name="specialty"
-                  className="dropdown-field"
-                >
+                <select id="need" name="need" className="dropdown-field">
                   <option value="Chọn nhu cầu">Chọn nhu cầu</option>
                   <option>Khám chuyên khoa</option>
                   <option>Kiểm tra sức khoẻ tổng quát</option>

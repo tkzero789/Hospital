@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
@@ -105,36 +106,38 @@ export default function NewSymptom() {
   async function onSubmit(e) {
     e.preventDefault();
     const newSymptom = { ...symptom };
-    await fetch("http://localhost:5000/symptom/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newSymptom),
-    }).catch((error) => {
-      window.alert(error);
-      return;
-    });
-    console.log("Created");
-    setSymptom({
-      symptomName: "",
-      categories: [
-        {
-          index: uuidv4(),
-          categoryName: "Vị trí",
-          descriptions: [
+    axios
+      .post(
+        "https://symptom-checker-with-mern-backend.onrender.com/symptom/add",
+        newSymptom
+      )
+      .then((res) => {
+        console.log("Symptom created");
+        console.log(res.data);
+        setSymptom({
+          symptomName: "",
+          categories: [
             {
               index: uuidv4(),
-              descriptionDetail: "",
+              categoryName: "Vị trí",
+              descriptions: [
+                {
+                  index: uuidv4(),
+                  descriptionDetail: "",
+                },
+              ],
             },
           ],
-        },
-      ],
-    });
-    navigate("/create-symptom");
+        });
+        navigate("/create-symptom");
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
+        window.alert(message);
+        return;
+      });
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
       <AdminNavBar />

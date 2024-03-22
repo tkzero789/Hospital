@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Link, NavLink } from "react-router-dom";
+import axios from "axios";
 
 const Symptom = (props) => {
   return (
@@ -10,6 +10,7 @@ const Symptom = (props) => {
           <input
             type="checkbox"
             style={{ marginRight: "5px" }}
+            checked={props.isChecked}
             onChange={() => {
               props.onCheck(props.symptom._id, props.symptom.name);
             }}
@@ -23,24 +24,36 @@ const Symptom = (props) => {
   );
 };
 
-const ExistedSymptoms = ({ form, setForm }) => {
+const ArticleSymptoms = ({ article, setArticle }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
-    async function getSymptoms() {
-      const response = await fetch(`http://localhost:5000/symptom/`);
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
+    axios
+      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .then((res) => {
+        const symptoms = res.data;
+        setSymptoms(symptoms);
+      })
+      .catch((err) => {
+        const message = `An error occurred: ${err}`;
         window.alert(message);
         return;
-      }
-      const symptoms = await response.json();
-      setSymptoms(symptoms);
-    }
-    getSymptoms();
-    return;
+      });
   }, [symptoms.length]);
 
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  useEffect(() => {
+    function updateForm() {
+      if (article.diseaseSymptoms.length > 0) {
+        console.log(article.diseaseSymptoms.flatMap((symptom) => symptom._id));
+        const selectedBeforeSymptoms = article.diseaseSymptoms.flatMap(
+          (symptom) => symptom._id
+        );
+        setSelectedSymptoms(selectedBeforeSymptoms);
+      } else return;
+    }
+    updateForm();
+    return;
+  }, [selectedSymptoms.length]);
 
   function symptomList() {
     return symptoms.map((symptom) => {
@@ -60,18 +73,21 @@ const ExistedSymptoms = ({ form, setForm }) => {
       setSelectedSymptoms(
         selectedSymptoms.filter((selectedId) => selectedId !== symptomId)
       );
-      const _form = form.filter((symptom) => symptom._id !== symptomId);
-      setForm(_form);
+      const _article = article;
+      _article.diseaseSymptoms = _article.diseaseSymptoms.filter(
+        (symptom) => symptom._id !== symptomId
+      );
+      setArticle(_article);
     } else {
       setSelectedSymptoms([...selectedSymptoms, symptomId]);
-      let _form = form;
-      _form.push({
+      let _article = article;
+      _article.diseaseSymptoms.push({
         index: uuidv4(),
         _id: symptomId,
         symptomName: symptomName,
         categories: [],
       });
-      setForm(_form);
+      setArticle(_article);
     }
   };
 
@@ -83,4 +99,4 @@ const ExistedSymptoms = ({ form, setForm }) => {
   );
 };
 
-export default ExistedSymptoms;
+export default ArticleSymptoms;

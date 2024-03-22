@@ -4,7 +4,7 @@ import Logo from "../assets/logoBKC.png";
 export default function MidNav() {
   const navLinks = [
     { link: "/home", text: "Hệ thống BKCare" },
-    { link: "", text: "Phòng khám online" },
+    { link: "/symptom-checker", text: "Phòng khám online" },
   ];
 
   return (
