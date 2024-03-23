@@ -27,6 +27,7 @@ const PatientFormInfos = ({ patientForm, setPatientForm }) => {
             className="form-select border-danger-subtle col-12"
             onChange={(e) => updatePatientAgeRangeField(e)}
           >
+            <option value="">Chọn độ tuổi</option>
             <option value="Mọi độ tuổi">Mọi độ tuổi</option>
             <option value="Dưới 1 tháng">Dưới 1 tháng</option>
             <option value="1 tuổi - 6 tuổi">1 tuổi - 6 tuổi</option>
@@ -46,6 +47,7 @@ const PatientFormInfos = ({ patientForm, setPatientForm }) => {
             className="form-select border-danger-subtle col-3"
             onChange={(e) => updatePatientGenderField(e)}
           >
+            <option value="">Chọn giới tính</option>
             <option value="Nam">Nam</option>
             <option value="Nữ">Nữ</option>
           </select>
