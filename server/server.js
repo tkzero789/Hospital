@@ -18,6 +18,7 @@ app.use(
 app.use(require("./routes/symptom"));
 app.use(require("./routes/article"));
 app.use(require("./routes/user"));
+app.use(require("./routes/appointment"));
 const dbo = require("./db/conn");
 app.listen(port, async () => {
   await dbo.connectToServer(function (err) {

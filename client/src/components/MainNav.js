@@ -10,7 +10,6 @@ const navLinks = [
   { link: "", text: "Tin tức" },
   { link: "", text: "Tuyển dụng" },
   { link: "", text: "Liên hệ" },
-  { link: "", text: "Hỏi đáp" },
 ];
 
 export default function MainNav() {

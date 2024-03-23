@@ -41,6 +41,19 @@ const AuthProvider = ({ children }) => {
     return null;
   };
 
+  const getUserId = () => {
+    if (!userToken) return null;
+    try {
+      const decodedToken = jwtDecode(userToken);
+      if (decodedToken && decodedToken.userId) {
+        return decodedToken.userId;
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+    return null;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -49,6 +62,7 @@ const AuthProvider = ({ children }) => {
         login,
         logout,
         getUserRole,
+        getUserId,
       }}
     >
       {children}

@@ -34,6 +34,7 @@ const PatientFormResult = ({ patientForm, setPatientForm }) => {
           (patientSymptom) => patientSymptom._id === symptom._id
         );
         for (const category of symptom.categories) {
+          // Vi tri, muc do,...
           if (
             !_patientSymptoms[patientSymptomIndex].categories
               .map((category) => category.categoryName)

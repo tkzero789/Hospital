@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AdminNavBar from "../components/AdminNavBar";
 import PatientFormInfos from "../components/PatientFormInfos";

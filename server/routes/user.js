@@ -78,4 +78,46 @@ userRoutes.route("/signout").post(async function (req, res) {
   }
 });
 
+userRoutes.route("/user").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const result = await db_connect.collection("users").find({}).toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+userRoutes.route("/user/:id").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { _id: new ObjectId(req.params.id) };
+    const result = await db_connect.collection("users").findOne(myquery);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+userRoutes.route("/user/update/:id").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { _id: new ObjectId(req.params.id) };
+    const newvalues = {
+      $set: {
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        password: req.body.password,
+        userInfos: req.body.userInfos,
+      },
+    };
+    const result = await db_connect
+      .collection("users")
+      .updateOne(myquery, newvalues);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
 module.exports = userRoutes;
