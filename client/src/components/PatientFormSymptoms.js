@@ -93,9 +93,9 @@ const PatientFormSymptoms = ({ patientForm, setPatientForm }) => {
   return (
     <div>
       <div className="pb-5 text-center">
-        <h4>HÃY CHỌN TRIỆU CHỨNG BỆNH MÀ BẠN ĐANG GẶP PHẢI</h4>
+        <h4>Hãy chọn triệu chứng mà bạn đang gặp phải</h4>
       </div>
-      <h4 className="card-title text-danger">TRIỆU CHỨNG PHỔ BIẾN</h4>
+      <h4 className="card-title text-danger">Triệu chứng phổ biến</h4>
       <div className="row pt-3 pb-3">{symptomList()}</div>
     </div>
   );

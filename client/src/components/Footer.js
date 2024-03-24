@@ -23,7 +23,7 @@ const footerLinks2 = [
 
 export default function Footer() {
   return (
-    <footer className="footer w-100 bg-primary-subtle">
+    <footer className="footer w-100 footer-bg">
       <div className="content-container">
         <div className="footer-wrapper">
           <div className="c-3">

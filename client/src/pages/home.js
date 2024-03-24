@@ -1,23 +1,25 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import MainNav from "../components/MainNav";
-
-import LowNav from "../components/LowNav";
-import ApptForm from "../components/ApptForm";
+import Footer from "../components/Footer";
 import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
 import HI3 from "../assets/h8.png";
 import Options from "../home/Options";
+import About from "../home/About";
+import BKCSystem from "../home/BKCSystem";
+import News from "../home/News";
+import TestImg from "../assets/splty.jpg";
+import MainNav from "../components/MainNav";
+import LowNav from "../components/LowNav";
 
 export default function Home() {
   return (
     <>
       {/* Navbar */}
-      <header>
+      <nav className="navbar-wrapper w-100">
         <MainNav />
-
         <LowNav />
-      </header>
+      </nav>
 
       {/* Mobile: Hamburger Menu */}
       <nav className="navbar navbar-expand-lg nav-bg d-md-block d-lg-none">
@@ -95,62 +97,178 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Carousel */}
-      <div
-        id="carouselExampleInterval"
-        class="carousel slide d-none d-lg-block d-xl-block"
-        data-bs-ride="carousel"
-      >
-        <div className="hero-section">
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="5000">
-              <img
-                className="car-img d-block w-100"
-                src={HI1}
-                alt="Background 1"
-              />
+      {/* Main */}
+      <main id="main">
+        {/* CAROUSEL */}
+        <div
+          id="carouselExampleInterval"
+          class="carousel slide d-none d-lg-block d-xl-block"
+          data-bs-ride="carousel"
+        >
+          <div className="hero-section">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="5000">
+                <img
+                  className="car-img d-block w-100"
+                  src={HI1}
+                  alt="Background 1"
+                />
+              </div>
+              <div class="carousel-item" data-bs-interval="5000">
+                <img
+                  className="car-img d-block w-100"
+                  src={HI2}
+                  alt="Background 2"
+                />
+              </div>
+              <div class="carousel-item" data-bs-interval="5000">
+                <img
+                  className="car-img d-block w-100"
+                  src={HI3}
+                  alt="Background 3"
+                />
+              </div>
             </div>
-            <div class="carousel-item" data-bs-interval="5000">
-              <img
-                className="car-img d-block w-100"
-                src={HI2}
-                alt="Background 2"
-              />
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-              <img
-                className="car-img d-block w-100"
-                src={HI3}
-                alt="Background 3"
-              />
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleInterval"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleInterval"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+        <Options />
+        <About />
+        <BKCSystem />
+        <News />
+
+        {/* Specialty */}
+        <section className="specialty w-100">
+          <div className="content-container">
+            <div className="splty-wrapper">
+              <div className="c-12">
+                <div className="splty-section">
+                  <div className="splty-section-header">
+                    Chuyên khoa tiêu biểu
+                  </div>
+                  <div className="splty-items-container">
+                    <div className="splty-items-wrapper">
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                    </div>
+                    <div className="splty-items-wrapper">
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                      <div className="splty-item">
+                        <NavLink className="splty-item__link">
+                          <div className="splty-item-img">
+                            <img src={TestImg} alt="specialty"></img>
+                          </div>
+                          <div className="splty-item-header">
+                            <span>Specialty</span>
+                          </div>
+                        </NavLink>
+                      </div>
+                    </div>
+                    <div className="splty-btn-wrapper">
+                      <NavLink className="splty-btn-link">
+                        <btn className="splty-btn">Xem tất cả chuyên khoa</btn>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
+        </section>
 
-      <Options />
-      {/* Appointment */}
-      <ApptForm />
-
-      {/*  */}
+        <Footer />
+      </main>
     </>
   );
 }

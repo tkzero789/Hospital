@@ -116,7 +116,7 @@ const PatientFormDetails = ({ patientForm, setPatientForm }) => {
       <div>
         <div className="form-group row pb-4">
           <h4 className="card-title text-danger text-uppercase">
-            MÔ TẢ CHI TIẾT TRIỆU CHỨNG {props.symptom.name}
+            Mô tả chi tiết triệu chứng {props.symptom.name}
           </h4>
         </div>
         {props.symptom.categories.map((category) => {

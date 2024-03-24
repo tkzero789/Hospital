@@ -6,17 +6,16 @@ export default function LowNav() {
     { link: "/home", text: "Giới thiệu" },
     { link: "", text: "Chuyên khoa" },
     { link: "", text: "Bác sĩ" },
-    { link: "symptom-checker", text: "Chẩn đoán" },
-    { link: "", text: "Dịch vụ y khoa" },
-    { link: "", text: "Chăm sóc khách hàng" },
+    { link: "/symptom-checker", text: "Chẩn đoán" },
+    { link: "", text: "Lịch làm việc" },
   ];
 
   return (
     <>
       {/* LOWER NAVBAR */}
-      <div className="w-100 sub-nav-bg ">
+      <div className="w-100 low-nav-bg ">
         <div className="nav-container">
-          <nav className="sub-nav-bg py-0 d-none d-lg-block d-xl-block">
+          <nav className="low-nav-bg py-0 d-none d-lg-block d-xl-block">
             <ul className="low-nav-list">
               {navLinks.map((link) => (
                 <li key={link.link} className="low-nav-item">
@@ -40,21 +39,6 @@ export default function LowNav() {
                   </div>
                 </NavLink>
               </li>
-
-              {/* SEARCH BUTTON */}
-              <div className="search">
-                <input
-                  type="text"
-                  className="search-input"
-                  placeholder="Tìm kiếm bài viết, trợ giúp"
-                  name=""
-                />
-                <div className="search-icon-wrapper">
-                  <NavLink href="#" class="search-icon-link">
-                    <i className="search-icon bi bi-search"></i>
-                  </NavLink>
-                </div>
-              </div>
             </ul>
           </nav>
         </div>

@@ -5,10 +5,10 @@ import { useAuth } from "../AuthContext";
 
 const navLinks = [
   { link: "/home", text: "Trang chủ" },
-  { link: "/test-home", text: "Hướng dẫn" },
-  { link: "", text: "Tin tức" },
-  { link: "", text: "Tuyển dụng" },
-  { link: "", text: "Liên hệ" },
+  { link: "/test-home", text: "Tin tức" },
+  { link: "/appt-request", text: "Đăng ký khám bệnh" },
+  { link: "", text: "Xem kết quả online" },
+  { link: "", text: "Hotline: 0938 888 888" },
 ];
 
 export default function MainNav() {
@@ -49,7 +49,9 @@ export default function MainNav() {
               {navLinks.map((link, index) => (
                 <li
                   key={link.link}
-                  className={`nav-item item ${link.className || ""}`}
+                  className={`nav-item item ${
+                    index === navLinks.length - 1 ? "nav-item-last" : ""
+                  }`}
                 >
                   <NavLink className="nav-link nav-link-first" to={link.link}>
                     {index === 0 && (
@@ -57,9 +59,7 @@ export default function MainNav() {
                         <i className="home-icon bi bi-house-door"></i>
                       </div>
                     )}
-                    <div className="up-nav-text text-white fw-semibold">
-                      {link.text}
-                    </div>
+                    <div className="main-nav-text">{link.text}</div>
                   </NavLink>
                 </li>
               ))}
@@ -70,17 +70,13 @@ export default function MainNav() {
                     className="nav-link nav-link-first"
                     onClick={handleSignOut}
                   >
-                    <div className="up-nav-text text-white fw-semibold">
-                      Sign out
-                    </div>
+                    <div className="main-nav-text">Sign out</div>
                   </NavLink>
                 </li>
               ) : (
                 <li key={"signout"}>
                   <NavLink className="nav-link nav-link-first" to="/signin">
-                    <div className="up-nav-text text-white fw-semibold">
-                      Sign in
-                    </div>
+                    <div className="main-nav-text">Đăng nhập</div>
                   </NavLink>
                 </li>
               )}

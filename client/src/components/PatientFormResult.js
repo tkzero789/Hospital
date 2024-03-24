@@ -105,7 +105,7 @@ const PatientFormResult = ({ patientForm, setPatientForm }) => {
   return (
     <div>
       <div className="pb-5 text-center">
-        <h4>ĐÂY LÀ KẾT QUẢ GỢI Ý CHẨN ĐOÁN DỰA TRÊN THÔNG TIN BẠN CUNG CẤP</h4>
+        <h4>Kết quả gợi ý chẩn đoán dựa trên thông tin bạn cung cấp</h4>
       </div>
       <div className="row pt-3 pb-3">
         <div className="col-4">

@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import BigNav from "../components/BigNav";
 import Footer from "../components/Footer";
 import HI1 from "../assets/h6.jpg";
 import HI2 from "../assets/h7.png";
@@ -10,16 +9,19 @@ import About from "../home/About";
 import BKCSystem from "../home/BKCSystem";
 import News from "../home/News";
 import TestImg from "../assets/splty.jpg";
+import MainNav from "../components/MainNav";
+import LowNav from "../components/LowNav";
 
-export default function TestHome() {
+export default function Home() {
   return (
     <>
-      <header>
-        {/* Bignav */}
-        <BigNav />
-      </header>
+      {/* Navbar */}
+      <nav className="navbar-wrapper w-100">
+        <MainNav />
+        <LowNav />
+      </nav>
 
-      {/* MOBILE: HAMBURGER MENU */}
+      {/* Mobile: Hamburger Menu */}
       <nav className="navbar navbar-expand-lg nav-bg d-md-block d-lg-none">
         <div className="container-fluid">
           <NavLink className="navbar-brand" href="#">
@@ -95,6 +97,7 @@ export default function TestHome() {
         </div>
       </nav>
 
+      {/* Main */}
       <main id="main">
         {/* CAROUSEL */}
         <div

@@ -3,10 +3,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-import "./styles.css";
-import "./responsive.css";
-import "./base.css";
+import "./css/styles.css";
+import "./css/responsive.css";
+import "./css/base.css";
 import CreateSymptom from "./pages/createSymptom";
 import NewSymptom from "./pages/newSymptom";
 import EditSymptom from "./pages/editSymptom";
