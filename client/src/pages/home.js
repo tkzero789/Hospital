@@ -8,9 +8,9 @@ import Options from "../home/Options";
 import About from "../home/About";
 import BKCSystem from "../home/BKCSystem";
 import News from "../home/News";
-import TestImg from "../assets/splty.jpg";
 import MainNav from "../components/MainNav";
 import LowNav from "../components/LowNav";
+import Specialty from "../home/Specialty";
 
 export default function Home() {
   return (
@@ -159,114 +159,8 @@ export default function Home() {
         <Options />
         <About />
         <BKCSystem />
+        <Specialty />
         <News />
-
-        {/* Specialty */}
-        <section className="specialty w-100">
-          <div className="content-container">
-            <div className="splty-wrapper">
-              <div className="c-12">
-                <div className="splty-section">
-                  <div className="splty-section-header">
-                    Chuyên khoa tiêu biểu
-                  </div>
-                  <div className="splty-items-container">
-                    <div className="splty-items-wrapper">
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                    </div>
-                    <div className="splty-items-wrapper">
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                      <div className="splty-item">
-                        <NavLink className="splty-item__link">
-                          <div className="splty-item-img">
-                            <img src={TestImg} alt="specialty"></img>
-                          </div>
-                          <div className="splty-item-header">
-                            <span>Specialty</span>
-                          </div>
-                        </NavLink>
-                      </div>
-                    </div>
-                    <div className="splty-btn-wrapper">
-                      <NavLink className="splty-btn-link">
-                        <btn className="splty-btn">Xem tất cả chuyên khoa</btn>
-                      </NavLink>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <Footer />
       </main>
     </>

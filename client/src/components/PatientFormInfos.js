@@ -16,16 +16,18 @@ const PatientFormInfos = ({ patientForm, setPatientForm }) => {
   return (
     <div>
       <div className="pb-5 text-center">
-        <h4>Vui lòng cung cấp thông tin của bạn</h4>
+        <h4 className="text-blue-1 fw-med">
+          Vui lòng cung cấp thông tin của bạn
+        </h4>
       </div>
       <div className="px-5">
         <div className="form-group row pb-5">
-          <h5 className="text-black col-2">Độ tuổi</h5>
+          <h5 className="col-2 fw-med text-blue-2">Độ tuổi</h5>
           <div className="col-3">
             <select
               name="patientAgeRange"
               value={patientForm.patientAgeRange}
-              className="form-select blue-border-1 col-12"
+              className="form-select blue-border-1 col-12 fw-reg"
               onChange={(e) => updatePatientAgeRangeField(e)}
             >
               <option value="">Chọn độ tuổi</option>
@@ -40,12 +42,12 @@ const PatientFormInfos = ({ patientForm, setPatientForm }) => {
           </div>
         </div>
         <div className="form-group row pb-5">
-          <h5 className="text-black col-2">Giới tính</h5>
+          <h5 className="col-2 fw-med text-blue-2">Giới tính</h5>
           <div className="col-3">
             <select
               name="patientGender"
               value={patientForm.patientGender}
-              className="form-select blue-border-1 col-12"
+              className="form-select blue-border-1 col-12 fw-reg"
               onChange={(e) => updatePatientGenderField(e)}
             >
               <option value="">Chọn giới tính</option>

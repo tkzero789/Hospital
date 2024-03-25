@@ -6,17 +6,16 @@ const Symptom = (props) => {
   return (
     <div className="col-3 pb-3">
       <div className="form">
-        <label style={{ display: "flex" }}>
-          <input
-            type="checkbox"
-            style={{ marginRight: "5px" }}
-            checked={props.isChecked}
-            onChange={() => {
-              props.onCheck(props.symptom._id, props.symptom.name);
-            }}
-          />
-          <span className="text-danger">
-            <h5 style={{ marginBottom: "1px" }}>{props.symptom.name}</h5>
+        <label
+          style={{ display: "flex" }}
+          checked={props.isChecked}
+          onChange={() => {
+            props.onCheck(props.symptom._id, props.symptom.name);
+          }}
+        >
+          <input type="checkbox" style={{ marginRight: "5px" }} />
+          <span className="text-black-1 fw-reg fs-18">
+            <div style={{ marginBottom: "1px" }}>{props.symptom.name}</div>
           </span>
         </label>
       </div>
@@ -93,9 +92,13 @@ const PatientFormSymptoms = ({ patientForm, setPatientForm }) => {
   return (
     <div>
       <div className="pb-5 text-center">
-        <h4>Hãy chọn triệu chứng mà bạn đang gặp phải</h4>
+        <h4 className="text-blue-1 fw-med">
+          Hãy chọn triệu chứng mà bạn đang gặp phải
+        </h4>
       </div>
-      <h4 className="card-title text-danger">Triệu chứng phổ biến</h4>
+      <h5 className="card-title text-blue-1 fw-med text-blue-2">
+        Triệu chứng phổ biến
+      </h5>
       <div className="row pt-3 pb-3">{symptomList()}</div>
     </div>
   );

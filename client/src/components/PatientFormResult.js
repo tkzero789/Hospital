@@ -79,11 +79,11 @@ const PatientFormResult = ({ patientForm, setPatientForm }) => {
 
   const SuitableArticle = (props) => {
     return (
-      <div className="col-12 mb-3 border border-danger-subtle">
-        <h5 className="p-3" style={{ marginBottom: "1px" }}>
+      <div className="col-12 mb-3 p-3 box-shadow-1">
+        <h5 className="fw-med text-blue-2" style={{ marginBottom: "1px" }}>
           {props.article.diseaseName}
         </h5>
-        <p className="p-3 pt-0" style={{ marginBottom: "1px" }}>
+        <p className="pt-1 fw-reg" style={{ marginBottom: "1px" }}>
           {props.article.diseaseInfos[0].detail.substr(0, 20)}...
         </p>
       </div>
@@ -91,11 +91,11 @@ const PatientFormResult = ({ patientForm, setPatientForm }) => {
   };
   const FirstSuitableArticle = (props) => {
     return (
-      <div className="col-12 mb-3 border border-danger-subtle">
-        <h5 className="p-3" style={{ marginBottom: "1px" }}>
+      <div className="col-12 mb-3 p-3 box-shadow-1">
+        <h5 className="fw-med text-blue-2" style={{ marginBottom: "1px" }}>
           {props.article.diseaseName}
         </h5>
-        <p className="p-3 pt-0" style={{ marginBottom: "1px" }}>
+        <p className="pt-1 fw-reg" style={{ marginBottom: "1px" }}>
           {props.article.diseaseInfos[0].detail.substr(0, 20)}...
         </p>
       </div>
@@ -104,7 +104,7 @@ const PatientFormResult = ({ patientForm, setPatientForm }) => {
 
   return (
     <div>
-      <div className="pb-5 text-center">
+      <div className="pb-5 text-center text-blue-1 fw-med">
         <h4>Kết quả gợi ý chẩn đoán dựa trên thông tin bạn cung cấp</h4>
       </div>
       <div className="row pt-3 pb-3">

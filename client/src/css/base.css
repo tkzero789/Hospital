@@ -13,6 +13,7 @@
   --text-color: #1f2532;
   --text-white: #ffffff;
   --header-color: #286ba6;
+  --sub-header-color: #002c77;
 
   /* Background */
   --up-nav-bg: #002c77;
@@ -29,15 +30,70 @@
   --btn-blue2-hover: #0083cb;
 }
 
-/* Pre-defined CSS classes */
+* {
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+}
+
+/* Pre-defined CSS classes: Start */
+/* Color */
+.text-black-1 {
+  color: var(--text-color);
+}
+
+.text-blue-1 {
+  color: var(--header-color);
+}
+
+.text-blue-2 {
+  color: var(--sub-header-color);
+}
+
+/* Font (style, weight, size) */
+.fw-reg {
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-regular-weight);
+}
+
+.fw-med {
+  font-family: var(--roboto-font-family);
+  font-style: var(--roboto-font-style);
+  font-weight: var(--roboto-medium-weight);
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+/* Decoration */
+.text-underline {
+  text-decoration: underline;
+  text-underline-offset: 8px;
+}
+
+/* Background */
 .blue-bg-1 {
   background-color: var(--blue-bg-1);
 }
 
+/* Border */
 .blue-border-1 {
   border: 1px solid var(--blue-border-1);
 }
 
+.box-shadow-1 {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  border-radius: 6px;
+}
+/* Pre-defined CSS classes: End */
+
+/* Reset */
 h1,
 h2,
 h3,
@@ -48,42 +104,6 @@ p {
   padding: 0;
   margin: 0;
 }
-
-/* .roboto-thin {
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.roboto-light {
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.roboto-regular {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.roboto-medium {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.roboto-bold {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.roboto-black {
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-} */
 
 /* Responsive */
 .grid__row {

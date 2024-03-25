@@ -79,7 +79,7 @@ export default function SymptomChecker() {
       >
         <h5
           className={
-            "text-center " +
+            "fw-med text-center " +
             (props.number < props.currStep ? "text-white" : "text-black")
           }
           style={{ marginBottom: "1px" }}

@@ -115,7 +115,7 @@ const PatientFormDetails = ({ patientForm, setPatientForm }) => {
     return (
       <div>
         <div className="form-group row pb-4">
-          <h4 className="card-title text-danger text-uppercase">
+          <h4 className="card-title text-blue-1 fw-med text-center text-underline">
             Mô tả chi tiết triệu chứng {props.symptom.name}
           </h4>
         </div>
@@ -123,9 +123,9 @@ const PatientFormDetails = ({ patientForm, setPatientForm }) => {
           return (
             <div key={category.index}>
               <div className="form row pt-3 pb-3">
-                <h4 className="card-title text-danger col-12 text-uppercase">
+                <h5 className="card-title text-blue-2 col-12 fw-med">
                   {category.categoryName}
-                </h4>
+                </h5>
               </div>
               <div className="row">
                 {category.descriptions.map((description) => (
@@ -133,30 +133,35 @@ const PatientFormDetails = ({ patientForm, setPatientForm }) => {
                     className="form-group pb-3 col-4"
                     style={{ display: "flex" }}
                   >
-                    <input
-                      type="checkbox"
-                      checked={selectedDetails.includes(
-                        description.descriptionDetail
-                      )}
-                      style={{ marginRight: "5px" }}
-                      onChange={() =>
-                        onCheck(
-                          props.symptom._id,
-                          category.categoryName,
+                    <label className="d-flex">
+                      <input
+                        type="checkbox"
+                        checked={selectedDetails.includes(
                           description.descriptionDetail
-                        )
-                      }
-                    />
-                    <h5 style={{ marginBottom: "0px" }}>
-                      {description.descriptionDetail}
-                    </h5>
+                        )}
+                        style={{ marginRight: "5px" }}
+                        onChange={() =>
+                          onCheck(
+                            props.symptom._id,
+                            category.categoryName,
+                            description.descriptionDetail
+                          )
+                        }
+                      />
+                      <h5
+                        className="fw-reg fs-18"
+                        style={{ marginBottom: "0px" }}
+                      >
+                        {description.descriptionDetail}
+                      </h5>
+                    </label>
                   </div>
                 ))}
               </div>
             </div>
           );
         })}
-        <hr className="pb-4" style={{ color: "red" }} />
+        <hr className="pb-4" style={{ color: "#002c77" }} />
       </div>
     );
   };
