@@ -6,14 +6,15 @@ const Symptom = (props) => {
   return (
     <div className="col-3 pb-3">
       <div className="form">
-        <label
-          style={{ display: "flex" }}
-          checked={props.isChecked}
-          onChange={() => {
-            props.onCheck(props.symptom._id, props.symptom.name);
-          }}
-        >
-          <input type="checkbox" style={{ marginRight: "5px" }} />
+        <label className="d-flex">
+          <input
+            type="checkbox"
+            style={{ marginRight: "5px" }}
+            checked={props.isChecked}
+            onChange={() => {
+              props.onCheck(props.symptom._id, props.symptom.name);
+            }}
+          />
           <span className="text-black-1 fw-reg fs-18">
             <div style={{ marginBottom: "1px" }}>{props.symptom.name}</div>
           </span>
