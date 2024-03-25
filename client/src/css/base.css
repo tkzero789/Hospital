@@ -51,14 +51,10 @@
 
 /* Font (style, weight, size) */
 .fw-reg {
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
 .fw-med {
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 

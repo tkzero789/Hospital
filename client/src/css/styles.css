@@ -95,8 +95,6 @@
 .main-nav-text {
   font-size: 16px;
   color: var(--text-white);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -151,8 +149,6 @@
 .mid-nav-text {
   color: var(--text-color);
   font-size: 20px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -178,8 +174,6 @@
 
 .mid-item-text {
   font-size: 20px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -207,8 +201,6 @@
 .low-nav-text {
   color: var(--text-color);
   font-size: 16px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -367,8 +359,6 @@
 .appt-title-text {
   font-size: 24px;
   color: var(--text-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -388,8 +378,6 @@
   margin-top: 28px;
   margin-bottom: 2px;
   color: var(--text-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -463,8 +451,6 @@
   border-radius: 3px;
   padding: 8px 12px;
   font-size: 16px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -489,8 +475,6 @@
 
 .opt-big-header-text {
   font-size: 28px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
   color: var(--header-color);
 }
@@ -510,8 +494,6 @@
 
 .opt-header-text {
   font-size: 22px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
   color: var(--header-color);
 }
@@ -531,16 +513,12 @@
 
 .opt-title {
   font-size: 18px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
 .opt-body {
   margin: 8px 0;
   font-size: 16px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -562,8 +540,6 @@
   width: 110px;
   text-align: center;
   padding: 8px 0;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -622,8 +598,6 @@
 .box-text {
   font-size: 18px;
   margin-top: 6px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -638,16 +612,12 @@
 .about-header {
   font-size: 28px;
   color: var(--header-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
 .about-body {
   padding-top: 16px;
   font-size: 18px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -674,8 +644,6 @@
   text-align: center;
   font-size: 28px;
   color: var(--header-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -685,8 +653,6 @@
   padding-top: 16px;
   padding-bottom: 84px;
   font-size: 18px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -738,8 +704,6 @@
   color: var(--header-color);
   margin: 10px 0 12px 0;
   padding: 0 12px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -748,8 +712,6 @@
   font-size: 16px;
   padding: 0 16px;
   color: var(--text-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -767,8 +729,6 @@
   text-align: center;
   font-size: 28px;
   color: var(--header-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -799,8 +759,6 @@
   padding-top: 8px;
   font-size: 18px;
   color: var(--text-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
   transition: color 0.2s ease-in-out;
 }
@@ -848,8 +806,6 @@
   max-width: 65%;
   font-size: 16px;
   color: var(--text-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
   transition: color 0.2s ease-in-out;
 }
@@ -871,8 +827,6 @@
   display: inline-block;
   text-align: center;
   padding: 8px 12px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -889,8 +843,6 @@
   text-align: center;
   font-size: 28px;
   color: var(--header-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -938,8 +890,6 @@
   text-align: center;
   color: var(--text-white);
   padding: 8px 0;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
   background-color: var(--header-color);
   border-bottom-left-radius: 3px;
@@ -969,8 +919,6 @@
   display: inline-block;
   text-align: center;
   padding: 8px 12px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -1007,24 +955,18 @@
 .footer-logo-header {
   font-size: 18px;
   padding: 0 24px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
 .footer-logo-address {
   padding: 0 24px;
   margin-top: 4px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
 .footer-header {
   font-size: 18px;
   margin-top: 24px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -1042,8 +984,6 @@
   display: inline-block;
   text-decoration: none;
   color: rgba(0, 0, 0, 0.65);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -1094,15 +1034,11 @@
 .copyright-header {
   text-align: center;
   font-size: 16px;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-regular-weight);
 }
 
 .copyright-body {
   text-align: center;
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-light-weight);
 }
 
@@ -1110,8 +1046,6 @@
 .symp-checker h3 {
   margin-top: 40px;
   color: var(--header-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -1123,8 +1057,6 @@
   margin-bottom: 8px;
   font-size: 22px;
   color: var(--header-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -1132,8 +1064,6 @@
   padding: 6px 0;
   font-size: 18px;
   color: var(--text-color);
-  font-family: var(--roboto-font-family);
-  font-style: var(--roboto-font-style);
   font-weight: var(--roboto-medium-weight);
 }
 
