@@ -49,7 +49,7 @@
   color: var(--sub-header-color);
 }
 
-/* Font (style, weight, size) */
+/* Font (weight, size) */
 .fw-reg {
   font-weight: var(--roboto-regular-weight);
 }
