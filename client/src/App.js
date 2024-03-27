@@ -20,6 +20,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ApptRequest from "./pages/apptRequest";
 import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";
+import TestSignin from "./pages/testSignin";
 
 const App = () => {
   const { getUserRole } = useAuth();
@@ -39,6 +40,8 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup-doctor" element={<SignupDoctor />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/test-signin" element={<TestSignin />} />
+
         <Route
           path="/create-symptom"
           element={

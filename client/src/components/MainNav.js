@@ -7,7 +7,7 @@ const navLinks = [
   { link: "/home", text: "Trang chủ" },
   { link: "/test-home", text: "Tin tức" },
   { link: "/appt-request", text: "Đăng ký khám bệnh" },
-  { link: "", text: "Xem kết quả online" },
+  { link: "/test-signin", text: "Xem kết quả online" },
   { link: "", text: "Hotline: 0938 888 888" },
 ];
 
@@ -75,7 +75,10 @@ export default function MainNav() {
                 </li>
               ) : (
                 <li key={"signout"}>
-                  <NavLink className="nav-link nav-link-first" to="/signin">
+                  <NavLink
+                    className="nav-link nav-link-first"
+                    to="/test-signin"
+                  >
                     <div className="main-nav-text">Đăng nhập</div>
                   </NavLink>
                 </li>
