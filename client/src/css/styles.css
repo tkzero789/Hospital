@@ -1142,8 +1142,8 @@
 
 .signin-box {
   display: flex;
-  width: 50vw;
-  height: 60vh;
+  min-width: 50vw;
+  min-height: 60vh;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
