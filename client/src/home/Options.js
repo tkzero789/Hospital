@@ -49,7 +49,7 @@ export default function Options() {
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">
-                    <NavLink className="box-select-link">
+                    <NavLink className="box-select-link" to="/test-signin">
                       <div className="box-icon">
                         <i class="bi bi-question-circle"></i>
                       </div>
