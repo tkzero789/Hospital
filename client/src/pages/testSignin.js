@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import MainNav from "../components/MainNav";
-import LowNav from "../components/LowNav";
 import { useAuth } from "../AuthContext";
+import LogoText from "../assets/BKCare.svg";
 
 export default function TestSignin() {
   // User
@@ -79,6 +78,9 @@ export default function TestSignin() {
     <>
       <div className="signin-bg">
         <div className="signin">
+          <NavLink to="/home">
+            <img src={LogoText} alt="Logo"></img>
+          </NavLink>
           <div className="shape r-shape"></div>
           <div className="shape l-shape"></div>
           <div className="content-container zi">
