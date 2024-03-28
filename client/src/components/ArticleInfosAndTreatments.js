@@ -161,14 +161,18 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
   const ageRanges = [
     "Mọi độ tuổi",
     "Dưới 1 tháng",
-    "1 tuổi - 6 tuổi",
+    "1 tháng - 1 tuổi",
+    "1 tuổi - 5 tuổi",
     "6 tuổi - 12 tuổi",
-    "12 tuổi - 18 tuổi",
-    "18 tuổi - 30 tuổi",
-    "30 tuổi - 60 tuổi",
+    "13 tuổi - 16 tuổi",
+    "17 tuổi - 29 tuổi",
+    "30 tuổi - 39 tuổi",
+    "40 tuổi - 49 tuổi",
+    "50 tuổi - 64 tuổi",
+    "Trên 65 tuổi",
   ];
 
-  const genders = ["Nam", "Nữ"];
+  const genders = ["Cả nam và nữ", "Nam", "Nữ"];
 
   return (
     <div>

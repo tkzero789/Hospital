@@ -31,14 +31,15 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myobj = {
-      apptDate: req.body.apptDate,
-      email: req.body.email,
-      phone: req.body.phone,
       fullName: req.body.fullName,
-      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
       dob: req.body.dob,
-      medicalNeed: req.body.medicalNeed,
-      healthCondition: req.body.healthCondition,
+      gender: req.body.gender,
+      need: req.body.need,
+      date: req.body.date,
+      reason: req.body.reason,
+      createdAt: req.body.createdAt,
     };
     const result = await db_connect.collection("appointments").insertOne(myobj);
     res.json(result);
@@ -55,14 +56,15 @@ appointmentRoutes
       const myquery = { _id: new ObjectId(req.params.id) };
       const newvalues = {
         $set: {
-          apptDate: req.body.apptDate,
-          email: req.body.email,
-          phone: req.body.phone,
           fullName: req.body.fullName,
-          gender: req.body.gender,
+          phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
           dob: req.body.dob,
-          medicalNeed: req.body.medicalNeed,
-          healthCondition: req.body.healthCondition,
+          gender: req.body.gender,
+          need: req.body.need,
+          date: req.body.date,
+          reason: req.body.reason,
+          createdAt: req.body.createdAt,
         },
       };
       const result = await db_connect
