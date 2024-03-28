@@ -102,7 +102,7 @@ export default function Home() {
         {/* CAROUSEL */}
         <div
           id="carouselExampleInterval"
-          class="carousel slide"
+          class="carousel slide d-none d-lg-block d-xl-block"
           data-bs-ride="carousel"
         >
           <div class="carousel-inner">

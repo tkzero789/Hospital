@@ -7,6 +7,30 @@
   }
 }
 
-@media (max-width: 768px) {
-  /* Styles for mobile devices */
+/* Small laptop, large tablet */
+@media only screen and (min-width: 992px) {
+  .box-select {
+    width: 240px;
+  }
+}
+
+/* Standard tablet */
+@media only screen and (min-width: 768px) {
+  .box-select {
+    width: 180px;
+  }
+
+  #main {
+    margin-top: 0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .box-select {
+    width: 100px;
+  }
+
+  .signin-box {
+    flex-direction: column-reverse;
+  }
 }

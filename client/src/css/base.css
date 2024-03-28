@@ -274,8 +274,8 @@ li {
   margin-left: 91.66667%;
 }
 
-/* >= Tablet */
-@media (min-width: 740px) {
+/* Mobile */
+@media (max-width: 767px) {
   .col {
     padding-left: 8px;
     padding-right: 8px;

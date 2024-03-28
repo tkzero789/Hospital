@@ -83,10 +83,10 @@ export default function TestSignin() {
           </NavLink>
           <div className="shape r-shape"></div>
           <div className="shape l-shape"></div>
-          <div className="content-container zi">
-            <div className="signin-wrapper">
+          <div className="signin-wrapper zi">
+            <div className="content-container">
               <div className="signin-box">
-                <div className="c-6 signin-left">
+                <div className="c-6 m-12 signin-left">
                   <div className="signin-left-container">
                     <div className="signin-left-header">
                       <span>Chức năng tài khoản</span>
@@ -118,7 +118,7 @@ export default function TestSignin() {
                     </div>
                   </div>
                 </div>
-                <div className="c-6 signin-right">
+                <div className="c-6 m-12 signin-right">
                   <div className="signin-right-container">
                     <div className="signin-right-header">
                       <span>Đăng nhập</span>
