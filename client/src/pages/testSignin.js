@@ -77,8 +77,6 @@ export default function TestSignin() {
 
   return (
     <>
-      <MainNav />
-      <LowNav />
       <div className="signin-bg">
         <div className="signin">
           <div className="shape r-shape"></div>
@@ -173,16 +171,17 @@ export default function TestSignin() {
             <span className="text-white">
               Copyright © 2024 BKC. All rights reserved.
             </span>
-            <div></div>
-            <NavLink className="text-decoration-none ">
-              <span>Điều khoản</span>
-            </NavLink>
-            <NavLink className="text-decoration-none ">
-              <span>Chính sách</span>
-            </NavLink>
-            <NavLink className="text-decoration-none ">
-              <span>Trợ giúp</span>
-            </NavLink>
+            <div>
+              <NavLink className="text-decoration-none ">
+                <span>Điều khoản</span>
+              </NavLink>
+              <NavLink className="text-decoration-none ">
+                <span>Chính sách</span>
+              </NavLink>
+              <NavLink className="text-decoration-none ">
+                <span>Trợ giúp</span>
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>
