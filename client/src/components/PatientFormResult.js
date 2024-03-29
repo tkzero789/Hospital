@@ -6,6 +6,7 @@ const PatientFormResult = ({ patientForm }) => {
   const [isProcessing, setIsProcessing] = useState(true);
   const [articlesDB, setArticlesDB] = useState([]);
   const [sortedSuitableArticles, setSortedSuitableArticles] = useState([]);
+  const [displayedArticle, setDisplayedArticle] = useState();
   const [part, setPart] = useState(1);
   useEffect(() => {
     axios
@@ -96,14 +97,22 @@ const PatientFormResult = ({ patientForm }) => {
     setIsProcessing(true);
     const res = findSortedSuitableArticles(patientForm);
     setSortedSuitableArticles(res);
+    setDisplayedArticle(res[0]);
     setIsProcessing(false);
+  };
+
+  const chooseArticle = (article) => {
+    setDisplayedArticle(article);
   };
 
   const SuitableArticle = (props) => {
     const articleFirstInfo =
       props.article.diseaseInfos[0].detail.split("\n\n")[1];
     return (
-      <div className="col-12 mb-3 p-3 box-shadow-1">
+      <div
+        className="button col-12 mb-3 p-3 box-shadow-1"
+        onClick={() => chooseArticle(props.article)}
+      >
         <h5 className="fw-med text-blue-2" style={{ marginBottom: "1px" }}>
           {props.article.diseaseName}
         </h5>
@@ -192,7 +201,7 @@ const PatientFormResult = ({ patientForm }) => {
     }
   };
 
-  const FirstSuitableArticle = (props) => {
+  const DisplayedArticle = (props) => {
     const articleFirstInfo =
       props.article.diseaseInfos[0].detail.split("\n\n")[1];
     const articleFirstTreatment =
@@ -209,7 +218,7 @@ const PatientFormResult = ({ patientForm }) => {
         {PartDisplay(articleFirstInfo, articleFirstTreatment)}
         <Link
           to={`/articles/${props.article._id}`}
-          className="pt-1 fw-reg"
+          className="pt-1 fw-reg d-flex justify-content-end"
           style={{ marginBottom: "1px" }}
         >
           Xem chi tiết
@@ -236,9 +245,9 @@ const PatientFormResult = ({ patientForm }) => {
           </div>
           <div className="col-8">
             {sortedSuitableArticles.length > 0 ? (
-              <FirstSuitableArticle
-                article={sortedSuitableArticles[0]}
-                key={sortedSuitableArticles[0]._id}
+              <DisplayedArticle
+                article={displayedArticle}
+                key={displayedArticle._id}
               />
             ) : null}
           </div>

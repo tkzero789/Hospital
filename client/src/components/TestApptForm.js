@@ -64,25 +64,27 @@ export default function TestApptForm() {
     const inputPhoneNumber = document.getElementById("inputPhoneNumber");
     const inputEmail = document.getElementById("inputEmail");
     const inputDob = document.getElementById("inputDob");
-    const inputGender = document.getElementById("inputGender");
-    const inputNeed = document.getElementById("inputNeed");
-    const iputDate = document.getElementById("iputDate");
     if (!inputFullName.checkValidity()) {
       alert("Thiếu Họ và tên");
+    } else if (appt.phoneNumber === "") {
+      alert("Số điện thoại không hợp lệ");
     } else if (!inputPhoneNumber.checkValidity()) {
       alert("Số điện thoại không hợp lệ");
     } else if (!inputEmail.checkValidity()) {
       alert("Email không hợp lệ");
     } else if (!inputDob.checkValidity()) {
       alert("Ngày sinh theo dạng ngày/tháng/năm");
-    } else if (!inputGender.checkValidity()) {
+    } else if (appt.gender === "") {
       alert("Vui lòng chọn giới tính");
-    } else if (!inputNeed.checkValidity()) {
+    } else if (appt.need === "") {
       alert("Vui lòng chọn Nhu cầu khám");
-    } else if (!iputDate.checkValidity()) {
-      alert("Vui lòng chọn ngày đặt lịch khám");
-    } else {
+    }
+    // else if (appt.date === "") {
+    //   alert("Vui lòng chọn ngày đặt lịch khám");
+    // }
+    else {
       e.preventDefault();
+      setAppt((appt) => ({ ...appt, createdAt: Date.now() }));
       const newAppt = { ...appt };
       axios
         .post(
@@ -160,7 +162,7 @@ export default function TestApptForm() {
                 <label for="email">Email</label>
                 <input
                   className="appt-input"
-                  type="text"
+                  type="email"
                   placeholder="Email (không bắt buộc)"
                   id="inputEmail"
                   name="email"
@@ -182,6 +184,7 @@ export default function TestApptForm() {
                   id="inputDob"
                   name="dob"
                   value={appt.dob}
+                  pattern="^\d{2}\/\d{2}\/\d{4}$"
                   required
                   onChange={(e) => updateApptField(e)}
                 />
@@ -195,6 +198,7 @@ export default function TestApptForm() {
                   id="inputGender"
                   name="gender"
                   className="dropdown-field"
+                  type="text"
                   value={appt.gender}
                   required
                   onChange={(e) => updateApptField(e)}
@@ -213,14 +217,19 @@ export default function TestApptForm() {
                   id="inputNeed"
                   name="need"
                   className="dropdown-field"
+                  type="text"
                   value={appt.need}
                   required
                   onChange={(e) => updateApptField(e)}
                 >
                   <option value="Chọn nhu cầu">Chọn nhu cầu</option>
-                  <option>Khám chuyên khoa</option>
-                  <option>Kiểm tra sức khoẻ tổng quát</option>
-                  <option>Xét nghiệm, chẩn đoán hình ảnh</option>
+                  <option value="Khám chuyên khoa">Khám chuyên khoa</option>
+                  <option value="Kiểm tra sức khoẻ tổng quát">
+                    Kiểm tra sức khoẻ tổng quát
+                  </option>
+                  <option value="Xét nghiệm, chẩn đoán hình ảnh">
+                    Xét nghiệm, chẩn đoán hình ảnh
+                  </option>
                 </select>
               </div>
             </div>
