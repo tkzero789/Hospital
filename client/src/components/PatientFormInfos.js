@@ -31,13 +31,16 @@ const PatientFormInfos = ({ patientForm, setPatientForm }) => {
               onChange={(e) => updatePatientAgeRangeField(e)}
             >
               <option value="">Chọn độ tuổi</option>
-              <option value="Mọi độ tuổi">Mọi độ tuổi</option>
               <option value="Dưới 1 tháng">Dưới 1 tháng</option>
-              <option value="1 tuổi - 6 tuổi">1 tuổi - 6 tuổi</option>
+              <option value="1 tháng - 1 tuổi">1 tháng - 1 tuổi</option>
+              <option value="1 tuổi - 5 tuổi">1 tuổi - 5 tuổi</option>
               <option value="6 tuổi - 12 tuổi">6 tuổi - 12 tuổi</option>
-              <option value="12 tuổi - 18 tuổi">12 tuổi - 18 tuổi</option>
-              <option value="18 tuổi - 30 tuổi">18 tuổi - 30 tuổi</option>
-              <option value="30 tuổi - 60 tuổi">30 tuổi - 60 tuổi</option>
+              <option value="13 tuổi - 16 tuổi">13 tuổi - 16 tuổi</option>
+              <option value="17 tuổi - 29 tuổi">17 tuổi - 29 tuổi</option>
+              <option value="30 tuổi - 39 tuổi">30 tuổi - 39 tuổi</option>
+              <option value="40 tuổi - 49 tuổi">40 tuổi - 49 tuổi</option>
+              <option value="50 tuổi - 64 tuổi">50 tuổi - 64 tuổi</option>
+              <option value="Trên 65 tuổi">Trên 65 tuổi</option>
             </select>
           </div>
         </div>

@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import "bootstrap-icons/font/bootstrap-icons.css";
-
 import AdminNavBar from "../components/AdminNavBar";
 import SignupLogo from "../assets/signup-logo.png";
 import { useAuth } from "../AuthContext";
