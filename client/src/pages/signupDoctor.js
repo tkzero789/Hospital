@@ -22,49 +22,13 @@ export default function SignupDoctor() {
     },
   });
 
-  const updateLastNameField = (event) => {
+  const updateInfoField = (event) => {
     let _user = { ...user };
     _user.userInfos[event.target.name] = event.target.value;
     setUser(_user);
   };
 
-  const updateFirstNameField = (event) => {
-    let _user = { ...user };
-    _user.userInfos[event.target.name] = event.target.value;
-    setUser(_user);
-  };
-
-  const updateGenderField = (event) => {
-    let _user = { ...user };
-    _user.userInfos[event.target.name] = event.target.value;
-    setUser(_user);
-  };
-
-  const updateAgeRangeField = (event) => {
-    let _user = { ...user };
-    _user.userInfos[event.target.name] = event.target.value;
-    setUser(_user);
-  };
-
-  const updateEmailField = (event) => {
-    let _user = { ...user };
-    _user[event.target.name] = event.target.value;
-    setUser(_user);
-  };
-
-  const updatePhoneNumberField = (event) => {
-    let _user = { ...user };
-    _user[event.target.name] = event.target.value;
-    setUser(_user);
-  };
-
-  const updatePasswordField = (event) => {
-    let _user = { ...user };
-    _user[event.target.name] = event.target.value;
-    setUser(_user);
-  };
-
-  const updateDoctorIDField = (event) => {
+  const updateUserField = (event) => {
     let _user = { ...user };
     _user[event.target.name] = event.target.value;
     setUser(_user);
@@ -146,7 +110,7 @@ export default function SignupDoctor() {
                       name="lastName"
                       value={user.userInfos.lastName}
                       required
-                      onChange={(e) => updateLastNameField(e)}
+                      onChange={(e) => updateInfoField(e)}
                     />
                   </div>
                 </div>
@@ -162,7 +126,7 @@ export default function SignupDoctor() {
                       name="firstName"
                       value={user.userInfos.firstName}
                       required
-                      onChange={(e) => updateFirstNameField(e)}
+                      onChange={(e) => updateInfoField(e)}
                     />
                   </div>
                 </div>
@@ -176,7 +140,7 @@ export default function SignupDoctor() {
                       className="form-control border-danger-subtle px-2"
                       name="gender"
                       value={user.userInfos.gender}
-                      onChange={(e) => updateGenderField(e)}
+                      onChange={(e) => updateInfoField(e)}
                     >
                       <option value="">Chọn giới tính</option>
                       <option value="Nam">Nam</option>
@@ -194,7 +158,7 @@ export default function SignupDoctor() {
                       className="form-control border-danger-subtle px-2"
                       name="ageRange"
                       value={user.userInfos.ageRange}
-                      onChange={(e) => updateAgeRangeField(e)}
+                      onChange={(e) => updateInfoField(e)}
                     >
                       <option value="">Chọn độ tuổi</option>
                       <option value="Dưới 1 tháng">Dưới 1 tháng</option>
@@ -228,7 +192,7 @@ export default function SignupDoctor() {
                       value={user.email}
                       placeholder="abc@gmail.com"
                       required
-                      onChange={(e) => updateEmailField(e)}
+                      onChange={(e) => updateUserField(e)}
                     />
                   </div>
                 </div>
@@ -245,7 +209,7 @@ export default function SignupDoctor() {
                       value={user.phoneNumber}
                       pattern="[0-9]{10}"
                       required
-                      onChange={(e) => updatePhoneNumberField(e)}
+                      onChange={(e) => updateUserField(e)}
                     />
                   </div>
                 </div>
@@ -263,7 +227,7 @@ export default function SignupDoctor() {
                       minLength="8"
                       placeholder="Ít nhất 8 ký tự"
                       required
-                      onChange={(e) => updatePasswordField(e)}
+                      onChange={(e) => updateUserField(e)}
                     />
                   </div>
                 </div>
@@ -279,7 +243,7 @@ export default function SignupDoctor() {
                       name="doctorID"
                       value={user.doctorID}
                       required
-                      onChange={(e) => updateDoctorIDField(e)}
+                      onChange={(e) => updateUserField(e)}
                     />
                   </div>
                 </div>

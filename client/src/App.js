@@ -20,6 +20,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ApptRequest from "./pages/apptRequest";
 import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";
+import ArticlePatientView from "./pages/articlePatientView";
 import TestSignin from "./pages/testSignin";
 
 const App = () => {
@@ -41,7 +42,7 @@ const App = () => {
         <Route path="/signup-doctor" element={<SignupDoctor />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/test-signin" element={<TestSignin />} />
-
+        <Route path="/articles/:id" element={<ArticlePatientView />} />
         <Route
           path="/create-symptom"
           element={

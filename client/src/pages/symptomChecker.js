@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+
 import PatientFormInfos from "../components/PatientFormInfos";
 import PatientFormSymptoms from "../components/PatientFormSymptoms";
 import PatientFormDetails from "../components/PatientFormDetails";
@@ -40,12 +41,7 @@ export default function SymptomChecker() {
         />
       );
     } else {
-      return (
-        <PatientFormResult
-          patientForm={patientForm}
-          setPatientForm={setPatientForm}
-        />
-      );
+      return <PatientFormResult patientForm={patientForm} />;
     }
   };
 
@@ -102,63 +98,6 @@ export default function SymptomChecker() {
     });
   };
 
-  const navigate = useNavigate();
-
-  async function confirmCreate(e) {
-    if (patientForm.title === "") {
-      alert("Thiếu tên bài viết");
-    } else if (patientForm.diseaseName === "") {
-      alert("Thiếu tên căn bệnh");
-    } else if (patientForm.diseaseAgeRanges.length < 1) {
-      alert("Thiếu độ tuổi bệnh nhân");
-    } else if (patientForm.diseaseGenders.length < 1) {
-      alert("Thiếu giới tính bệnh nhân");
-    } else if (patientForm.diseaseSymptoms.length < 1) {
-      alert("Thiếu triệu chứng bệnh");
-    } else if (
-      patientForm.diseaseInfos.filter((info) => info.detail === "").length > 0
-    ) {
-      alert("Thiếu thông tin bệnh");
-    } else if (
-      patientForm.diseaseTreatments.filter(
-        (treatment) => treatment.detail === ""
-      ).length > 0
-    ) {
-      alert("Thiếu phương pháp chữa trị");
-    } else {
-      e.preventDefault();
-      const newpatientForm = { ...patientForm };
-      console.log(newpatientForm);
-      await fetch(
-        "https://symptom-checker-with-mern-backend.onrender.com/patientForm/add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newpatientForm),
-        }
-      ).catch((error) => {
-        window.alert(error);
-        return;
-      });
-      console.log("patientForm created");
-      console.log(patientForm);
-      setPatientForm({
-        title: "",
-        author: "BS Anh Kiet",
-        diseaseName: "",
-        diseaseAgeRanges: [],
-        diseaseGenders: [],
-        diseaseSymptoms: [],
-        diseaseInfos: [],
-        diseaseTreatments: [],
-      });
-      setStep(1);
-      navigate("/create-patientForm");
-    }
-  }
-
   return (
     <div>
       <MainNav />
@@ -202,19 +141,25 @@ export default function SymptomChecker() {
                     </button>
                   </div>
                   <div className="col-3 d-grid gap-2">
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary"
-                      onClick={(e) => {
-                        if (step === 4) {
-                          confirmCreate(e);
-                        } else {
+                    {step === 4 ? (
+                      <Link
+                        type="button"
+                        className="btn btn-outline-primary"
+                        to={`/appt-request`}
+                      >
+                        ĐẶT LỊCH KHÁM
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary"
+                        onClick={(e) => {
                           handleNext();
-                        }
-                      }}
-                    >
-                      {step === 3 ? "Xem kết quả" : "Tiếp theo"}
-                    </button>
+                        }}
+                      >
+                        {step === 3 ? "Xem kết quả" : "Tiếp theo"}
+                      </button>
+                    )}
                   </div>
                 </div>
               </form>
