@@ -16,16 +16,17 @@
   --sub-header-color: #002c77;
 
   /* Background */
-  --up-nav-bg: #002c77;
-  --low-nav-bg: #cfe2ff;
-  --footer-bg: #d6fffc;
+  --main-nav-bg: #ffffff;
+  --low-nav-bg: #2988b8;
+  --footer-bg: #eef5f6;
+  --copyright-bg: #fff;
   --blue-bg-1: #1471c9;
 
   /* Border */
   --blue-border-1: #1471c9;
 
   /* Hover */
-  --light-blue-hover: #2f80ed;
+  --light-blue-hover: #dde2e9;
   --btn-blue-hover: #297fb8;
   --btn-blue2-hover: #0083cb;
 }

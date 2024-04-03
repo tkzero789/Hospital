@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
-import LogoText from "../assets/BKCare.svg";
+import BKCsvg from "../assets/bkcaresvg.svg";
 
 export default function TestSignin() {
   // User
@@ -79,7 +79,7 @@ export default function TestSignin() {
       <div className="signin-bg">
         <div className="signin">
           <NavLink to="/home">
-            <img src={LogoText} alt="Logo"></img>
+            <img src={BKCsvg} alt="BKCare logo"></img>
           </NavLink>
           <div className="shape r-shape"></div>
           <div className="shape l-shape"></div>
@@ -140,7 +140,7 @@ export default function TestSignin() {
                         ></input>
                         <label for="password">Mật khẩu</label>
                         <input
-                          type="text"
+                          type="password"
                           id="password"
                           name="password"
                           required
