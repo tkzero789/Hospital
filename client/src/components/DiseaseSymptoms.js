@@ -24,7 +24,7 @@ const Symptom = (props) => {
   );
 };
 
-const ArticleSymptoms = ({ article, setArticle }) => {
+const DiseaseSymptoms = ({ disease, setDisease }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     axios
@@ -43,9 +43,8 @@ const ArticleSymptoms = ({ article, setArticle }) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   useEffect(() => {
     function updateForm() {
-      if (article.diseaseSymptoms.length > 0) {
-        console.log(article.diseaseSymptoms.flatMap((symptom) => symptom._id));
-        const selectedBeforeSymptoms = article.diseaseSymptoms.flatMap(
+      if (disease.symptoms.length > 0) {
+        const selectedBeforeSymptoms = disease.symptoms.flatMap(
           (symptom) => symptom._id
         );
         setSelectedSymptoms(selectedBeforeSymptoms);
@@ -73,21 +72,21 @@ const ArticleSymptoms = ({ article, setArticle }) => {
       setSelectedSymptoms(
         selectedSymptoms.filter((selectedId) => selectedId !== symptomId)
       );
-      const _article = article;
-      _article.diseaseSymptoms = _article.diseaseSymptoms.filter(
+      const _disease = disease;
+      _disease.symptoms = _disease.symptoms.filter(
         (symptom) => symptom._id !== symptomId
       );
-      setArticle(_article);
+      setDisease(_disease);
     } else {
       setSelectedSymptoms([...selectedSymptoms, symptomId]);
-      let _article = article;
-      _article.diseaseSymptoms.push({
+      let _disease = disease;
+      _disease.symptoms.push({
         index: uuidv4(),
         _id: symptomId,
         symptomName: symptomName,
         categories: [],
       });
-      setArticle(_article);
+      setDisease(_disease);
     }
   };
 
@@ -99,4 +98,4 @@ const ArticleSymptoms = ({ article, setArticle }) => {
   );
 };
 
-export default ArticleSymptoms;
+export default DiseaseSymptoms;

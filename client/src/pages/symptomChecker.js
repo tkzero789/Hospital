@@ -8,6 +8,7 @@ import PatientFormResult from "../components/PatientFormResult";
 import MainNav from "../components/MainNav";
 import LowNav from "../components/LowNav";
 import Footer from "../components/Footer";
+import PatientFormResultTest from "../components/PatientFormResultTest";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -41,7 +42,7 @@ export default function SymptomChecker() {
         />
       );
     } else {
-      return <PatientFormResult patientForm={patientForm} />;
+      return <PatientFormResultTest patientForm={patientForm} />;
     }
   };
 

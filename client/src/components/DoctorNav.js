@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const navLinks = [
-  { link: "/record-list", text: "Create New Record" },
   { link: "/create-symptom", text: "Tạo triệu chứng" },
   { link: "/create-article", text: "Tạo bài viết" },
 ];

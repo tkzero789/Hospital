@@ -5,7 +5,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 const Symptom = (props) => {
   return (
     <div className="col-4 p-2">
-      <div className="border border-danger-subtle p-2 text-center">
+      <div className="border border-primary-subtle p-2 text-center">
         <p className="m-0">{props.symptom.symptomName}</p>
       </div>
     </div>
@@ -117,30 +117,22 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
   const [selectedAgeRanges, setSelectedAgeRanges] = useState([]);
 
   const checkAgeRangeField = (checkingAgeRange) => {
-    if (selectedAgeRanges.includes(checkingAgeRange)) {
-      setSelectedAgeRanges(
-        selectedAgeRanges.filter(
-          (selectedAgeRange) => selectedAgeRange !== checkingAgeRange
-        )
-      );
-      let _article = { ...article };
-      _article.diseaseAgeRanges = _article.diseaseAgeRanges.filter(
-        (ageRange) => ageRange !== checkingAgeRange
-      );
-      setArticle(_article);
-    } else {
-      setSelectedAgeRanges([...selectedAgeRanges, checkingAgeRange]);
-      let _article = { ...article };
-      _article.diseaseAgeRanges.push(checkingAgeRange);
-      setArticle(_article);
-    }
+    const newSelectedAgeRanges = selectedAgeRanges.includes(checkingAgeRange)
+      ? selectedAgeRanges.filter((ageRange) => ageRange !== checkingAgeRange)
+      : [...selectedAgeRanges, checkingAgeRange];
+    setSelectedAgeRanges(newSelectedAgeRanges);
+    const _article = {
+      ...article,
+      diseaseAgeRanges: newSelectedAgeRanges,
+    };
+    setArticle(_article);
   };
 
-  const [selectedGenders, seSelectedtGenders] = useState([]);
+  const [selectedGenders, setSelectedtGenders] = useState([]);
 
   const checkGenderField = (checkingGender) => {
     if (selectedGenders.includes(checkingGender)) {
-      seSelectedtGenders(
+      setSelectedtGenders(
         selectedGenders.filter(
           (selectedGender) => selectedGender !== checkingGender
         )
@@ -151,7 +143,7 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
       );
       setArticle(_article);
     } else {
-      seSelectedtGenders([...selectedGenders, checkingGender]);
+      setSelectedtGenders([...selectedGenders, checkingGender]);
       let _article = { ...article };
       _article.diseaseGenders.push(checkingGender);
       setArticle(_article);
@@ -177,10 +169,10 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="text-danger col-3">TÊN BÀI VIẾT</h4>
+        <h4 className="text-blue-2 col-3">TÊN BÀI VIẾT</h4>
         <input
           type="text"
-          className="form-control border-danger-subtle col"
+          className="form-control border-primary-subtle col"
           name="title"
           value={article.title}
           onChange={(e) => updateTitleField(e)}
@@ -188,10 +180,10 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-danger col-3">TÊN CĂN BỆNH</h4>
+        <h4 className="text-blue-2 col-3">TÊN CĂN BỆNH</h4>
         <input
           type="text"
-          className="form-control border-danger-subtle col"
+          className="form-control border-primary-subtle col"
           name="diseaseName"
           value={article.diseaseName}
           onChange={(e) => updateDiseaseNameField(e)}
@@ -199,20 +191,20 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-danger col-3">VỀ BỆNH NHÂN</h4>
-        <div className="text-danger col p-0 row">
+        <h4 className="text-blue-2 col-3">VỀ BỆNH NHÂN</h4>
+        <div className="text-blue-1 col p-0 row">
           <Dropdown className=" col-6" autoClose={false}>
-            <Dropdown.Toggle className="col-12 border-danger-subtle text-danger bg-white ">
+            <Dropdown.Toggle className="col-12 border-primary-subtle text-blue-2 bg-white ">
               Độ tuổi
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {ageRanges.map((ageRange) => (
                 <Dropdown.Item>
-                  <label className="text-danger">
+                  <label className="text-blue-1">
                     <input
                       type="checkbox"
                       style={{ marginRight: "5px" }}
-                      checked={selectedAgeRanges.includes(ageRange)}
+                      defaultChecked={selectedAgeRanges.includes(ageRange)}
                       onChange={() => checkAgeRangeField(ageRange)}
                     />
                     {ageRange}
@@ -222,13 +214,13 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown className=" col-6" autoClose={false}>
-            <Dropdown.Toggle className="col-12 border-danger-subtle text-danger bg-white">
+            <Dropdown.Toggle className="col-12 border-primary-subtle text-blue-2 bg-white">
               Giới tính
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {genders.map((gender) => (
                 <Dropdown.Item>
-                  <label className="text-danger">
+                  <label className="text-blue-1">
                     <input
                       type="checkbox"
                       style={{ marginRight: "5px" }}
@@ -245,8 +237,8 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-danger col-3">TRIỆU CHỨNG</h4>
-        <div className="border border-danger-subtle rounded col-9">
+        <h4 className="text-blue-2 col-3">TRIỆU CHỨNG</h4>
+        <div className="border border-primary-subtle rounded col-9">
           <div className="row">
             {article.diseaseSymptoms.map((symptom) => {
               return <Symptom symptom={symptom} key={symptom._id} />;
@@ -256,8 +248,8 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-danger col-3">MÔ TẢ CHI TIẾT</h4>
-        <div className="border border-danger-subtle rounded col">
+        <h4 className="text-blue-2 col-3">MÔ TẢ CHI TIẾT</h4>
+        <div className="border border-primary-subtle rounded col">
           {article.diseaseSymptoms.map((symptom) => {
             return <Details symptom={symptom} key={symptom._id} />;
           })}
@@ -275,12 +267,12 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
                     style={{ color: "red", marginRight: "5px" }}
                     onClick={(e) => deleteDiseaseInfoField(info.number)}
                   ></i>
-                  <h4 className="text-danger">THÔNG TIN {info.number}</h4>
+                  <h4 className="text-blue-2">THÔNG TIN {info.number}</h4>
                 </div>
                 <textarea
                   name="detail"
                   value={info.detail}
-                  className="form-control border-danger-subtle col-9"
+                  className="form-control border-primary-subtle col-9"
                   placeholder="Thông tin"
                   rows="4"
                   onChange={(e) => updateDiseaseInfoField(info.number, e)}
@@ -289,8 +281,8 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
             </div>
           );
         })}
-        <div onClick={addDiseaseInfoField} className="btn btn-outline-danger">
-          <h4 className="text-danger">THÊM THÔNG TIN</h4>
+        <div onClick={addDiseaseInfoField} className="btn btn-outline-primary">
+          <h4 className="text-blue-2">THÊM THÔNG TIN</h4>
         </div>
       </div>
 
@@ -307,14 +299,14 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
                       deleteDiseaseTreatmentField(treatment.number)
                     }
                   ></i>
-                  <h4 className="text-danger">
+                  <h4 className="text-blue-2">
                     PHƯƠNG PHÁP {treatment.number}
                   </h4>
                 </div>
                 <textarea
                   name="detail"
                   value={treatment.detail}
-                  className="form-control border-danger-subtle col-9"
+                  className="form-control border-primary-subtle col-9"
                   placeholder="Thông tin"
                   rows="4"
                   onChange={(e) =>
@@ -327,9 +319,9 @@ const ArticleInfosAndTreatments = ({ article, setArticle }) => {
         })}
         <div
           onClick={addDiseaseTreatmentField}
-          className="btn btn-outline-danger"
+          className="btn btn-outline-primary"
         >
-          <h4 className="text-danger">THÊM PHƯƠNG PHÁP CHỮA TRỊ</h4>
+          <h4 className="text-blue-2">THÊM PHƯƠNG PHÁP CHỮA TRỊ</h4>
         </div>
       </div>
     </div>

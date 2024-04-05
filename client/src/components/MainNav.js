@@ -5,7 +5,6 @@ import { useAuth } from "../AuthContext";
 
 const navLinks = [
   { link: "/home", text: "Trang chủ" },
-  { link: "/test-home", text: "Tin tức" },
   { link: "/appt-request", text: "Đăng ký khám bệnh" },
   { link: "/test-signin", text: "Xem kết quả online" },
   { link: "", text: "Hotline: 0938 888 888" },

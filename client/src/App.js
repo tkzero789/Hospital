@@ -22,6 +22,8 @@ import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";
 import ArticlePatientView from "./pages/articlePatientView";
 import TestSignin from "./pages/testSignin";
+import CreateDisease from "./pages/createDisease";
+import DiseaseList from "./pages/diseaseList";
 
 const App = () => {
   const { getUserRole } = useAuth();
@@ -84,6 +86,28 @@ const App = () => {
               allowedRoles={["doctor", "admin"]}
             >
               <CreateAritcle />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/disease-list"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <DiseaseList />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/create-disease"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <CreateDisease />
             </RequireAuth>
           }
         />

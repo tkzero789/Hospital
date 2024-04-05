@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const ArticleDetails = ({ article, setArticle }) => {
+const DiseaseSympDes = ({ disease, setDisease }) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   useEffect(() => {
     async function getSymptoms() {
@@ -15,8 +15,8 @@ const ArticleDetails = ({ article, setArticle }) => {
       }
       const symptoms = await response.json();
       const selected = symptoms.filter((symptom) =>
-        article.diseaseSymptoms.some(
-          (articleSymptom) => articleSymptom._id === symptom._id
+        disease.symptoms.some(
+          (diseaseSymptom) => diseaseSymptom._id === symptom._id
         )
       );
       setSelectedSymptoms(selected);
@@ -27,8 +27,8 @@ const ArticleDetails = ({ article, setArticle }) => {
   const [selectedDetails, setSelectedDetails] = useState([]);
   useEffect(() => {
     function updateForm() {
-      if (article.diseaseSymptoms.length > 0) {
-        const symptomList = article.diseaseSymptoms;
+      if (disease.symptoms.length > 0) {
+        const symptomList = disease.symptoms;
         const categoryList = symptomList.flatMap(
           (symptom) => symptom.categories
         );
@@ -52,44 +52,41 @@ const ArticleDetails = ({ article, setArticle }) => {
           (selectedDetail) => selectedDetail !== descriptionDetail
         )
       );
-      const _article = article;
-      const symptomIndex = _article.diseaseSymptoms.findIndex(
+      const _disease = disease;
+      const symptomIndex = _disease.symptoms.findIndex(
         (symptom) => symptom._id === symptomId
       );
       if (symptomIndex !== -1) {
-        const categoryIndex = _article.diseaseSymptoms[
+        const categoryIndex = _disease.symptoms[
           symptomIndex
         ].categories.findIndex(
           (category) => category.categoryName === categoryName
         );
         if (categoryIndex !== -1) {
-          _article.diseaseSymptoms[symptomIndex].categories[
+          _disease.symptoms[symptomIndex].categories[
             categoryIndex
-          ].descriptions = _article.diseaseSymptoms[symptomIndex].categories[
+          ].descriptions = _disease.symptoms[symptomIndex].categories[
             categoryIndex
           ].descriptions.filter(
             (description) => description.descriptionDetail !== descriptionDetail
           );
-          _article.diseaseSymptoms[symptomIndex].categories =
-            _article.diseaseSymptoms[symptomIndex].categories.filter(
-              (category) => category.descriptions.length > 0
-            );
+          _disease.symptoms[symptomIndex].categories = _disease.symptoms[
+            symptomIndex
+          ].categories.filter((category) => category.descriptions.length > 0);
         }
-        setArticle(_article);
+        setDisease(_disease);
       }
     } else {
       setSelectedDetails([...selectedDetails, descriptionDetail]);
-      const _article = article;
-      const symptomIndex = _article.diseaseSymptoms.findIndex(
+      const _disease = disease;
+      const symptomIndex = _disease.symptoms.findIndex(
         (symptom) => symptom._id === symptomId
       );
-      const categoryIndex = article.diseaseSymptoms[
-        symptomIndex
-      ].categories.findIndex(
+      const categoryIndex = disease.symptoms[symptomIndex].categories.findIndex(
         (category) => category.categoryName === categoryName
       );
       if (categoryIndex === -1) {
-        _article.diseaseSymptoms[symptomIndex].categories.push({
+        _disease.symptoms[symptomIndex].categories.push({
           index: uuidv4(),
           categoryName: categoryName,
           descriptions: [
@@ -99,15 +96,15 @@ const ArticleDetails = ({ article, setArticle }) => {
             },
           ],
         });
-        setArticle(_article);
+        setDisease(_disease);
       } else {
-        _article.diseaseSymptoms[symptomIndex].categories[
+        _disease.symptoms[symptomIndex].categories[
           categoryIndex
         ].descriptions.push({
           index: uuidv4(),
           descriptionDetail: descriptionDetail,
         });
-        setArticle(_article);
+        setDisease(_disease);
       }
     }
   };
@@ -171,4 +168,4 @@ const ArticleDetails = ({ article, setArticle }) => {
   );
 };
 
-export default ArticleDetails;
+export default DiseaseSympDes;

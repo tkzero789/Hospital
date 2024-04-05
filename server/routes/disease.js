@@ -1,67 +1,60 @@
 const express = require("express");
-const articleRoutes = express.Router();
+const diseaseRoutes = express.Router();
 const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
-articleRoutes.route("/article").get(async function (req, res) {
+diseaseRoutes.route("/disease").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const result = await db_connect.collection("articles").find({}).toArray();
+    const result = await db_connect.collection("diseases").find({}).toArray();
     res.json(result);
   } catch (err) {
     throw err;
   }
 });
 
-articleRoutes.route("/article/:id").get(async function (req, res) {
+diseaseRoutes.route("/disease/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myquery = { _id: new ObjectId(req.params.id) };
-    const result = await db_connect.collection("articles").findOne(myquery);
+    const result = await db_connect.collection("diseases").findOne(myquery);
     res.json(result);
   } catch (err) {
     throw err;
   }
 });
 
-articleRoutes.route("/article/add").post(async function (req, res) {
+diseaseRoutes.route("/disease/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myobj = {
-      title: req.body.title,
-      author: req.body.author,
-      diseaseName: req.body.diseaseName,
-      diseaseAgeRanges: req.body.diseaseAgeRanges,
-      diseaseGenders: req.body.diseaseGenders,
-      diseaseSymptoms: req.body.diseaseSymptoms,
-      diseaseInfos: req.body.diseaseInfos,
-      diseaseTreatments: req.body.diseaseTreatments,
+      name: req.body.name,
+      ageRanges: req.body.ageRanges,
+      genders: req.body.genders,
+      symptoms: req.body.symptoms,
+      relatedArticles: req.body.relatedArticles,
     };
-    const result = await db_connect.collection("articles").insertOne(myobj);
+    const result = await db_connect.collection("diseases").insertOne(myobj);
     res.json(result);
   } catch (err) {
     throw err;
   }
 });
 
-articleRoutes.route("/article/update/:id").post(async function (req, res) {
+diseaseRoutes.route("/disease/update/:id").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myquery = { _id: new ObjectId(req.params.id) };
     const newvalues = {
       $set: {
-        title: req.body.title,
-        author: req.body.author,
-        diseaseName: req.body.diseaseName,
-        diseaseAgeRanges: req.body.diseaseAgeRanges,
-        diseaseGenders: req.body.diseaseGenders,
-        diseaseSymptoms: req.body.diseaseSymptoms,
-        diseaseInfos: req.body.diseaseInfos,
-        diseaseTreatments: req.body.diseaseTreatments,
+        name: req.body.name,
+        ageRanges: req.body.ageRanges,
+        genders: req.body.genders,
+        symptoms: req.body.symptoms,
       },
     };
     const result = await db_connect
-      .collection("articles")
+      .collection("diseases")
       .updateOne(myquery, newvalues);
     res.json(result);
   } catch (err) {
@@ -69,28 +62,46 @@ articleRoutes.route("/article/update/:id").post(async function (req, res) {
   }
 });
 
-articleRoutes.route("/article/:id").delete(async function (req, res) {
+diseaseRoutes.route("/disease/:id").delete(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myquery = { _id: new ObjectId(req.params.id) };
-    const result = await db_connect.collection("articles").deleteOne(myquery);
+    const result = await db_connect.collection("diseases").deleteOne(myquery);
     res.json(result);
   } catch (err) {
     throw err;
   }
 });
 
-articleRoutes.route("/suit-articles").post(async function (req, res) {
+diseaseRoutes.route("/disease-add-article/:id").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const articles = await db_connect.collection("articles").find({}).toArray();
-    console.log(articles);
+    const myquery = { _id: new ObjectId(req.params.id) };
+    const newvalues = {
+      $set: {
+        relatedArticles: req.body.relatedArticles,
+      },
+    };
+    const result = await db_connect
+      .collection("diseases")
+      .updateOne(myquery, newvalues);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+diseaseRoutes.route("/suit-diseases").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const diseases = await db_connect.collection("diseases").find({}).toArray();
+    console.log(diseases);
     const patientForm = { ...req.body };
     console.log(patientForm);
-    const matchingArticles = articles
-      .filter((article) => {
-        // Count matching details for each article
-        const matchingDetailsCount = article.diseaseSymptoms.reduce(
+    const matchingDiseases = diseases
+      .filter((disease) => {
+        // Count matching details for each disease
+        const matchingDetailsCount = disease.symptoms.reduce(
           (count, symptom) => {
             return (
               count +
@@ -104,7 +115,7 @@ articleRoutes.route("/suit-articles").post(async function (req, res) {
                           categoryCount +
                           category.descriptions.reduce(
                             (descriptionCount, description) => {
-                              // Check for any match between patient and article descriptions
+                              // Check for any match between patient and disease descriptions
                               const patientMatches = patientSymptom.categories
                                 .flatMap((cat) => cat.descriptions)
                                 .some((pd) =>
@@ -131,24 +142,24 @@ articleRoutes.route("/suit-articles").post(async function (req, res) {
           0
         );
 
-        article.matchingDetailsCount = matchingDetailsCount;
+        disease.matchingDetailsCount = matchingDetailsCount;
 
-        // Filter articles with at least one matching detail
+        // Filter diseases with at least one matching detail
         return matchingDetailsCount > 0;
       })
-      .sort((article1, article2) => {
-        // Sort by matching details count (descending) and then by article name (ascending)
+      .sort((disease1, disease2) => {
+        // Sort by matching details count (descending) and then by disease name (ascending)
         const countDiff =
-          article2.matchingDetailsCount - article1.matchingDetailsCount;
+          disease2.matchingDetailsCount - disease1.matchingDetailsCount;
         if (countDiff !== 0) return countDiff;
-        return article1.diseaseName.localeCompare(article2.diseaseName);
+        return disease1.name.localeCompare(disease2.name);
       });
 
-    // Add matchingDetailsCount property to each article in the result
-    res.json(matchingArticles);
+    // Add matchingDetailsCount property to each disease in the result
+    res.json(matchingDiseases);
   } catch (err) {
     throw err;
   }
 });
 
-module.exports = articleRoutes;
+module.exports = diseaseRoutes;
