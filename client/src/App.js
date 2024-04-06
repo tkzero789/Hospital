@@ -24,6 +24,9 @@ import ArticlePatientView from "./pages/articlePatientView";
 import TestSignin from "./pages/testSignin";
 import CreateDisease from "./pages/createDisease";
 import DiseaseList from "./pages/diseaseList";
+import EditDisease from "./pages/editDisease";
+import ArticleByDisease from "./pages/articleByDisease";
+import CreateAritcleTest from "./pages/createArticleTest";
 
 const App = () => {
   const { getUserRole } = useAuth();
@@ -90,6 +93,28 @@ const App = () => {
           }
         />
         <Route
+          path="/create-article/:id"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <CreateAritcleTest />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/article-list/:id"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <ArticleByDisease />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="/disease-list"
           element={
             <RequireAuth
@@ -108,6 +133,17 @@ const App = () => {
               allowedRoles={["doctor", "admin"]}
             >
               <CreateDisease />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/edit-disease/:id"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["doctor", "admin"]}
+            >
+              <EditDisease />
             </RequireAuth>
           }
         />

@@ -24,18 +24,43 @@ articleRoutes.route("/article/:id").get(async function (req, res) {
   }
 });
 
+// Tim tat ca bai viet lien quan bang id cua can benh
+
+articleRoutes.route("/article-list/:id").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const findDiseaseQuery = { _id: new ObjectId(req.params.id) };
+    const disease = await db_connect
+      .collection("diseases")
+      .findOne(findDiseaseQuery);
+    if (!disease) {
+      res.status(404).json({ message: "Disease not found" });
+      return;
+    }
+    const result = await db_connect
+      .collection("articles")
+      .find({ diseaseName: disease.name })
+      .toArray();
+    if (!result.length) {
+      res.status(404).json({ message: "No articles found for this disease" });
+    } else {
+      res.json(result);
+    }
+  } catch (err) {
+    throw err;
+  }
+});
+
 articleRoutes.route("/article/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myobj = {
       title: req.body.title,
       author: req.body.author,
+      diseaseId: req.body.diseaseId,
       diseaseName: req.body.diseaseName,
-      diseaseAgeRanges: req.body.diseaseAgeRanges,
-      diseaseGenders: req.body.diseaseGenders,
-      diseaseSymptoms: req.body.diseaseSymptoms,
-      diseaseInfos: req.body.diseaseInfos,
-      diseaseTreatments: req.body.diseaseTreatments,
+      infos: req.body.infos,
+      treatments: req.body.ireatments,
     };
     const result = await db_connect.collection("articles").insertOne(myobj);
     res.json(result);
