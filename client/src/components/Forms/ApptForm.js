@@ -16,8 +16,9 @@ export default function TestApptForm() {
     reason: "",
     createdAt: null,
   });
-  const [selectedDate, setSelectedDate] = useState(null); // State for selected date
-  const [showCalendar, setShowCalendar] = useState(false); // State for calendar visibility
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef(null);
 
   const handleCalendarChange = (date) => {

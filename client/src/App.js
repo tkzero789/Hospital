@@ -16,7 +16,7 @@ import SignupDoctor from "./pages/signupDoctor";
 import Signin from "./pages/signin";
 import Home from "./pages/home";
 import TestHome from "./pages/testHome";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./components/Functionals/ScrollToTop";
 import ApptRequest from "./pages/apptRequest";
 import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";

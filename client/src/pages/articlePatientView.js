@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-import MainNav from "../components/MainNav";
-import LowNav from "../components/LowNav";
-import Footer from "../components/Footer";
+import MainNav from "../components/Navbar/MainNav";
+import LowNav from "../components/Navbar/LowNav";
+import Footer from "../components/ForPages/Footer";
 
 export default function ArticlePatientView() {
   const [article, setArticle] = useState(null);

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-import PatientFormInfos from "../components/PatientFormInfos";
-import PatientFormSymptoms from "../components/PatientFormSymptoms";
-import PatientFormDetails from "../components/PatientFormDetails";
-import PatientFormResult from "../components/PatientFormResult";
-import MainNav from "../components/MainNav";
-import LowNav from "../components/LowNav";
-import Footer from "../components/Footer";
-import PatientFormResultTest from "../components/PatientFormResultTest";
+import { Helmet } from "react-helmet";
+import PatientFormInfos from "../components/Forms/PatientFormInfos";
+import PatientFormSymptoms from "../components/Forms/PatientFormSymptoms";
+import PatientFormDetails from "../components/Forms/PatientFormDetails";
+import PatientFormResult from "../components/Forms/PatientFormResult";
+import MainNav from "../components/Navbar/MainNav";
+import LowNav from "../components/Navbar/LowNav";
+import Footer from "../components/ForPages/Footer";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -100,75 +99,82 @@ export default function SymptomChecker() {
   };
 
   return (
-    <div>
-      <MainNav />
-      <LowNav />
-      {/* Symptom Checker Section */}
-      <div className="symp-checker w-100">
-        <div className="content-container">
-          <h3 className="text-center">
-            CHÀO MỪNG BẠN ĐẾN VỚI TÍNH NĂNG GỢI Ý CHẨN ĐOÁN BỆNH
-          </h3>
-          <div className="symp-checker-steps">
-            <h5>CÁC BƯỚC SỬ DỤNG</h5>
-            <p>Bước 1: Điền thông tin về giới tính, tuổi tác của bạn</p>
-            <p>
-              Bước 2: Chọn một hoặc nhiều triệu chứng bệnh từ danh sách có sẵn
-              hoặc từ bản đồ cơ thể
-            </p>
-            <p>
-              Bước 3: Chọn một hoặc nhiều các mô tả chi tiết của triệu chứng phù
-              hợp với tình trạng cơ thể
-            </p>
-            <p>Bước 4: Chọn căn bệnh được hệ thống chẩn đoán</p>
-            <p>Bước 5: Chọn bài viết về căn bệnh để biết thông tin chi tiết</p>
-            <p>Bước 6: Chọn phương pháp điều trị</p>
-          </div>
-          <div className="symp-checker-board">
-            <div className="card p-5">
-              <div className="row border rounded">{ProcessBar()}</div>
-              <form className="pt-4">
-                <div>{StepDisplay()}</div>
+    <>
+      <Helmet>
+        <title>Chẩn đoán - Phòng khám online</title>
+      </Helmet>
+      <div>
+        <MainNav />
+        <LowNav />
+        {/* Symptom Checker Section */}
+        <div className="symp-checker w-100">
+          <div className="content-container">
+            <h3 className="text-center">
+              CHÀO MỪNG BẠN ĐẾN VỚI TÍNH NĂNG GỢI Ý CHẨN ĐOÁN BỆNH
+            </h3>
+            <div className="symp-checker-steps">
+              <h5>CÁC BƯỚC SỬ DỤNG</h5>
+              <p>Bước 1: Điền thông tin về giới tính, tuổi tác của bạn</p>
+              <p>
+                Bước 2: Chọn một hoặc nhiều triệu chứng bệnh từ danh sách có sẵn
+                hoặc từ bản đồ cơ thể
+              </p>
+              <p>
+                Bước 3: Chọn một hoặc nhiều các mô tả chi tiết của triệu chứng
+                phù hợp với tình trạng cơ thể
+              </p>
+              <p>Bước 4: Chọn căn bệnh được hệ thống chẩn đoán</p>
+              <p>
+                Bước 5: Chọn bài viết về căn bệnh để biết thông tin chi tiết
+              </p>
+              <p>Bước 6: Chọn phương pháp điều trị</p>
+            </div>
+            <div className="symp-checker-board">
+              <div className="card p-5">
+                <div className="row border rounded">{ProcessBar()}</div>
+                <form className="pt-4">
+                  <div>{StepDisplay()}</div>
 
-                <div className="row pt-3 pb-3 justify-content-end">
-                  <div className="col-3 d-grid gap-2">
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      disabled={step === 1}
-                      onClick={handlePrev}
-                    >
-                      Quay lại
-                    </button>
-                  </div>
-                  <div className="col-3 d-grid gap-2">
-                    {step === 4 ? (
-                      <Link
-                        type="button"
-                        className="btn btn-outline-primary"
-                        to={`/appt-request`}
-                      >
-                        ĐẶT LỊCH KHÁM
-                      </Link>
-                    ) : (
+                  <div className="row pt-3 pb-3 justify-content-end">
+                    <div className="col-3 d-grid gap-2">
                       <button
                         type="button"
-                        className="btn btn-outline-primary"
-                        onClick={(e) => {
-                          handleNext();
-                        }}
+                        className="btn btn-outline-secondary"
+                        disabled={step === 1}
+                        onClick={handlePrev}
                       >
-                        {step === 3 ? "Xem kết quả" : "Tiếp theo"}
+                        Quay lại
                       </button>
-                    )}
+                    </div>
+                    <div className="col-3 d-grid gap-2">
+                      {step === 4 ? (
+                        <Link
+                          type="button"
+                          className="btn btn-outline-primary"
+                          to={`/appt-request`}
+                        >
+                          ĐẶT LỊCH KHÁM
+                        </Link>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn btn-outline-primary"
+                          onClick={(e) => {
+                            handleNext();
+                          }}
+                        >
+                          {step === 3 ? "Xem kết quả" : "Tiếp theo"}
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
