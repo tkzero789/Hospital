@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AdminNavBar from "../components/AdminNavBar";
-import DoctorNav from "../components/DoctorNav";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import DoctorNav from "../components/Navbar/DoctorNav";
 
 const Symptom = (props) => (
   <div className="symptom-item d-flex px-0 py-0 ms-3 my-2 ">

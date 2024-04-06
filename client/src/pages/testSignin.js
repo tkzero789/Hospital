@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { useAuth } from "../AuthContext";
-import BKCsvg from "../assets/bkcaresvg.svg";
+import axios from "axios";
+import BKCsvg from "../assets/logo/bkcaresvg.svg";
 
 export default function TestSignin() {
   // User

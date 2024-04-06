@@ -3,11 +3,11 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import DoctorNav from "../components/DoctorNav";
-import AdminNavBar from "../components/AdminNavBar";
-import ArticleSymptoms from "../components/ArticleSymptoms";
-import ArticleDetails from "../components/ArticleDetails";
-import ArticleInfosAndTreatments from "../components/ArticleInfosAndTreatments";
+import DoctorNav from "../components/Navbar/DoctorNav";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import ArticleSymptoms from "../components/Articles/ArticleSymptoms";
+import ArticleDetails from "../components/Articles/ArticleDetails";
+import ArticleInfosAndTreatments from "../components/Articles/ArticleInfosAndTreatments";
 
 export default function CreateAritcle() {
   const [article, setArticle] = useState({

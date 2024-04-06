@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import PatientFormInfos from "../components/PatientFormInfos";
-import PatientFormSymptoms from "../components/PatientFormSymptoms";
-import PatientFormDetails from "../components/PatientFormDetails";
-import PatientFormResult from "../components/PatientFormResult";
-import MainNav from "../components/MainNav";
-import LowNav from "../components/LowNav";
-import Footer from "../components/Footer";
+import PatientFormInfos from "../components/Forms/PatientFormInfos";
+import PatientFormSymptoms from "../components/Forms/PatientFormSymptoms";
+import PatientFormDetails from "../components/Forms/PatientFormDetails";
+import PatientFormResult from "../components/Forms/PatientFormResult";
+import MainNav from "../components/Navbar/MainNav";
+import LowNav from "../components/Navbar/LowNav";
+import Footer from "../components/ForPages/Footer";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({

@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import HosEquip from "../assets/hosEquip.jpg";
-import HosDoc from "../assets/hosDoc.jpg";
-import HosServ from "../assets/hosServ.jpg";
-import HosAward from "../assets/hosAward.jpg";
+import HosEquip from "../assets/home/hosEquip.jpg";
+import HosDoc from "../assets/home/hosDoc.jpg";
+import HosServ from "../assets/home/hosServ.jpg";
+import HosAward from "../assets/home/hosAward.jpg";
 
 export default function BKCSystem() {
   return (

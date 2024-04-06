@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../AuthContext";
-import BKCsvg from "../assets/bkcaresvg.svg";
+import { useAuth } from "../../AuthContext";
+import BKCsvg from "../../assets/logo/bkcaresvg.svg";
 
 const navLinks = [
   { link: "/home", text: "" },

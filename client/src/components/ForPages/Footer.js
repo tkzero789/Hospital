@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import BCTLogo from "../assets/bctLogo.png";
-import BKCsvg from "../assets/bkcaresvg.svg";
+import BKCsvg from "../../assets/logo/bkcaresvg.svg";
 
 const footerLinks1 = [
   { name: "Dịch vụ", link: "/" },

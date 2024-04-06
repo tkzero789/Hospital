@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-import AdminNavBar from "../components/AdminNavBar";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
 
 export default function EditSymptom() {
   const [symptom, setSymptom] = useState({
