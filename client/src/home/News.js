@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import NewsIMG1 from "../assets/newsImg1.jpg";
+import NewsIMG1 from "../assets/home/newsImg1.jpg";
 
 export default function News() {
   return (

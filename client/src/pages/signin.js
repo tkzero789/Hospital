@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
-import axios from "axios";
-import AdminNavBar from "../components/AdminNavBar";
-import SignupLogo from "../assets/signup-logo.png";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import SignupLogo from "../assets/logo/signup-logo.png";
 import { useAuth } from "../AuthContext";
+import axios from "axios";
 
 export default function Signin() {
   const [user, setUser] = useState({

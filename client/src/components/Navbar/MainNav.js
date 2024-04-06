@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../AuthContext";
+import BKCsvg from "../../assets/logo/bkcaresvg.svg";
 
 const navLinks = [
-  { link: "/home", text: "Trang chủ" },
-  { link: "/test-home", text: "Tin tức" },
+  { link: "/home", text: "" },
   { link: "/appt-request", text: "Đăng ký khám bệnh" },
-  { link: "/test-signin", text: "Xem kết quả online" },
+  { link: "/symptom-checker", text: "Phòng khám online" },
   { link: "", text: "Hotline: 0938 888 888" },
 ];
 
@@ -55,10 +55,11 @@ export default function MainNav() {
                 >
                   <NavLink className="nav-link nav-link-first" to={link.link}>
                     {index === 0 && (
-                      <div className="home-icon-wrapper ms-3">
-                        <i className="home-icon bi bi-house-door"></i>
+                      <div className="home-logo">
+                        <img src={BKCsvg} alt="BKCare logo"></img>
                       </div>
                     )}
+
                     <div className="main-nav-text">{link.text}</div>
                   </NavLink>
                 </li>

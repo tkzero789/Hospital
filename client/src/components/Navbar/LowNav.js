@@ -13,7 +13,7 @@ export default function LowNav() {
   return (
     <>
       {/* LOWER NAVBAR */}
-      <div className="w-100 low-nav-bg ">
+      <div className="w-100 low-nav-bg border-top">
         <div className="nav-container">
           <nav className="low-nav-bg py-0 d-none d-lg-block d-xl-block">
             <ul className="low-nav-list">

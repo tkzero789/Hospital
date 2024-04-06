@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import TestImg from "../assets/splty.jpg";
+import TestImg from "../assets/home/splty.jpg";
 
 export default function Specialty() {
   return (

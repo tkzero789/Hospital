@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import AdminNavBar from "../components/AdminNavBar";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
 
 export default function NewSymptom() {
   const [symptom, setSymptom] = useState({

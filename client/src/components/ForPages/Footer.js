@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "../assets/logoBKC.png";
-import BCTLogo from "../assets/bctLogo.png";
+import BKCsvg from "../../assets/logo/bkcaresvg.svg";
 
 const footerLinks1 = [
   { name: "Dịch vụ", link: "/" },
@@ -28,7 +27,7 @@ export default function Footer() {
         <div className="footer-wrapper">
           <div className="c-3">
             <div className="footer-logo-wrapper">
-              <img className="footer-logo" src={Logo} alt="Footer logo"></img>
+              <img className="footer-logo" src={BKCsvg} alt="Footer logo"></img>
             </div>
             <div className="footer-logo-header">
               <span>Công ty cổ phần bệnh viện Đa khoa BKC</span>
@@ -78,13 +77,6 @@ export default function Footer() {
                   </span>
                 </div>
               </NavLink>
-            </div>
-            <div className="bct-logo-wrapper">
-              <img
-                className="bct-logo"
-                src={BCTLogo}
-                alt="Đã thông báo Bộ Công Thương"
-              ></img>
             </div>
           </div>
         </div>

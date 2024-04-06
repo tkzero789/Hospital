@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import AdminNavBar from "../components/AdminNavBar";
-import SignupLogo from "../assets/signup-logo.png";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import SignupLogo from "../assets/logo/signup-logo.png";
 
 export default function SignupDoctor() {
   const [user, setUser] = useState({

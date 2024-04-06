@@ -1,16 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Footer from "../components/Footer";
-import HI1 from "../assets/h6.jpg";
-import HI2 from "../assets/h7.png";
-import HI3 from "../assets/h8.png";
+import HI1 from "../assets/carousel/h6.jpg";
+import HI3 from "../assets/carousel/h8.png";
 import Options from "../home/Options";
 import About from "../home/About";
 import BKCSystem from "../home/BKCSystem";
 import News from "../home/News";
-import TestImg from "../assets/splty.jpg";
-import MainNav from "../components/MainNav";
-import LowNav from "../components/LowNav";
+import TestImg from "../assets/home/splty.jpg";
+import MainNav from "../components/Navbar/MainNav";
+import LowNav from "../components/Navbar/LowNav";
+import Footer from "../components/ForPages/Footer";
 
 export default function Home() {
   return (
@@ -112,13 +111,6 @@ export default function Home() {
                   className="car-img d-block w-100"
                   src={HI1}
                   alt="Background 1"
-                />
-              </div>
-              <div class="carousel-item" data-bs-interval="5000">
-                <img
-                  className="car-img d-block w-100"
-                  src={HI2}
-                  alt="Background 2"
                 />
               </div>
               <div class="carousel-item" data-bs-interval="5000">

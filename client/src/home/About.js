@@ -1,5 +1,5 @@
 import React from "react";
-import HospitalImg from "../assets/hospitalBuilding.jpg";
+import HospitalImg from "../assets/home/hospitalBuilding.jpg";
 
 export default function About() {
   return (
