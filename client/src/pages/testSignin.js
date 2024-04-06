@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -76,6 +78,9 @@ export default function TestSignin() {
 
   return (
     <>
+      <Helmet>
+        <title>Đăng nhập</title>
+      </Helmet>
       <div className="signin-bg">
         <div className="signin">
           <NavLink to="/home">

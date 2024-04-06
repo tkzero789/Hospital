@@ -7,7 +7,7 @@ import BKCsvg from "../assets/bkcaresvg.svg";
 const navLinks = [
   { link: "/home", text: "" },
   { link: "/appt-request", text: "Đăng ký khám bệnh" },
-  { link: "/test-signin", text: "Xem kết quả online" },
+  { link: "/symptom-checker", text: "Phòng khám online" },
   { link: "", text: "Hotline: 0938 888 888" },
 ];
 

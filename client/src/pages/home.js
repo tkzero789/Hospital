@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import MainNav from "../components/MainNav";
 import LowNav from "../components/LowNav";
 import Carousel from "../components/Carousel";
@@ -13,6 +14,9 @@ import MobileNav from "../components/MobileNav";
 export default function Home() {
   return (
     <>
+      <Helmet>
+        <title>Bệnh viện BKCare</title>
+      </Helmet>
       {/* Navbar */}
       <nav className="navbar-wrapper w-100">
         <MainNav />
