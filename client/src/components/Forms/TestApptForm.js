@@ -107,7 +107,7 @@ export default function TestApptForm() {
   }, []);
   // --- Calendar: End ---
 
-  // --- Form: Start ---
+  // --- Validate: Start ---
   const [appt, setAppt] = useState({
     fullName: "",
     phoneNumber: "",
@@ -187,7 +187,6 @@ export default function TestApptForm() {
   const validateInput = () => {
     const inputFullName = document.getElementById("inputFullName");
     const inputEmail = document.getElementById("inputEmail");
-    const optionDate = document.getElementById("optionDate");
     if (!inputFullName.checkValidity()) {
       alert("Thiếu Họ và tên");
     } else if (appt.phoneNumber === "") {
@@ -202,7 +201,7 @@ export default function TestApptForm() {
       displayModal();
     }
   };
-  // --- Form: End ---
+  // --- Validate: End ---
 
   // --- Modal: Start ---
   const [showModal, setShowModal] = useState(false);
@@ -220,7 +219,7 @@ export default function TestApptForm() {
     <>
       <section className="appt w-100">
         <div className="content-container">
-          <div className="appt-wrapper">
+          <div className={`appt-wrapper ${showModal ? "hidden" : ""}`}>
             <div className="appt-title">
               <div className="appt-title-text">Đăng ký khám bệnh</div>
             </div>

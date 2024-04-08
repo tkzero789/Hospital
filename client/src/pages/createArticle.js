@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
 import DoctorNav from "../components/Navbar/DoctorNav";
 import AdminNavBar from "../components/Navbar/AdminNavBar";
 import ArticleSymptoms from "../components/Articles/ArticleSymptoms";

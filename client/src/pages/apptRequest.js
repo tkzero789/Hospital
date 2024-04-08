@@ -20,7 +20,7 @@ export default function ApptRequest() {
       </header>
 
       {/* Appointment Form */}
-      <TestApptForm />
+      <FeatureApptForm />
       {/* Footer */}
       <Footer />
     </>

@@ -88,6 +88,11 @@
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
   border-radius: 6px;
 }
+
+/* Hidden */
+.hidden {
+  display: none;
+}
 /* Pre-defined CSS classes: End */
 
 /* Reset */
