@@ -72,7 +72,6 @@ export default function FeatureApptForm() {
       dob: `${date}/${month}/${selectedYear}`,
     }));
   };
-
   // --- DOB: End ---
 
   // --- Calendar: Start ---
@@ -470,9 +469,18 @@ export default function FeatureApptForm() {
             </form>
             {/* Submit Button */}
             <div className="text-center">
-              <button className="appt-btn" onClick={validateInput}>
-                Đặt lịch khám
-              </button>
+              <hr />
+              <span>
+                <b>Lưu ý:</b> Thời gian{" "}
+                <b style={{ fontWeight: "var(--roboto-medium-weight)" }}>
+                  đặt lịch khám
+                </b>{" "}
+                trên chỉ là thời gian dự kiến, tổng đài sẽ liên hệ xác nhận thời
+                gian khám chính xác tới quý khách sau khi quý khách đặt hẹn.
+              </span>
+              <div className="appt-btn">
+                <button onClick={validateInput}>Tiếp tục</button>
+              </div>
             </div>
           </div>
         </div>
@@ -515,10 +523,7 @@ export default function FeatureApptForm() {
                     <p>{appt.need}</p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>
-                      Ngày đặt khám:
-                      <span style={{ color: "red", marginLeft: "3px" }}>*</span>
-                    </span>
+                    <span>Ngày đặt khám:</span>
                     <p>{appt.date}</p>
                   </div>
                   <div className="appt-modal-data">
@@ -528,12 +533,9 @@ export default function FeatureApptForm() {
                   <hr style={{ marginTop: "4rem" }} />
                   <div className="attention-text">
                     <p>
-                      <span style={{ color: "red", paddingRight: "3px" }}>
-                        *
-                      </span>
-                      <b>Lưu ý:</b> Tổng đài BKCare sẽ liên hệ Quý khách trong
-                      thời gian sớm nhất để xác nhận lịch hẹn. Cảm ơn Quý khách
-                      đã lựa chọn dịch vụ của BKCare.
+                      Tổng đài BKCare sẽ liên hệ Quý khách trong thời gian sớm
+                      nhất để xác nhận lịch hẹn. Cảm ơn Quý khách đã lựa chọn
+                      dịch vụ của BKCare.
                     </p>
                   </div>
                 </div>
@@ -542,7 +544,7 @@ export default function FeatureApptForm() {
                     Quay lại
                   </button>
                   <button type="button" onClick={confirmSetAppt}>
-                    Xác nhận đặt hẹn
+                    Đăng ký khám
                   </button>{" "}
                 </div>
               </div>

@@ -390,7 +390,6 @@
   margin: 0 auto;
   border-radius: 8px;
   background-color: #fff;
-  box-shadow: rgba(31, 37, 50, 0.2) 0px 3px 4px 1px;
 }
 
 .appt-title {
@@ -509,16 +508,21 @@
 }
 
 .appt-btn {
+  padding-top: 20px;
+}
+
+.appt-btn button {
   color: var(--text-white);
   background-color: #3498db;
   border: none;
   border-radius: 3px;
   padding: 8px 12px;
-  font-size: 16px;
+  width: 150px;
+
   font-weight: var(--roboto-regular-weight);
 }
 
-.appt-btn:hover {
+.appt-btn button:hover {
   background-color: var(--btn-blue-hover);
 }
 
@@ -552,7 +556,6 @@
 
 .appt-modal-info .attention-text {
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .attention-text p {
@@ -578,6 +581,7 @@
 
 .appt-modal-btn {
   text-align: center;
+  padding-top: 20px;
 }
 
 .appt-modal-btn button:first-child {
