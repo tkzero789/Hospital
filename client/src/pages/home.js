@@ -10,6 +10,7 @@ import Specialty from "../home/Specialty";
 import News from "../home/News";
 import Footer from "../components/ForPages/Footer";
 import MobileNav from "../components/Navbar/MobileNav";
+import MobileHero from "../components/ForPages/MobileHero";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
 
       {/* Mobile: Hamburger Menu */}
       <MobileNav />
+      <MobileHero />
 
       {/* Main */}
       <main id="main">

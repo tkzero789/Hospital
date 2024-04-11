@@ -10,7 +10,7 @@ export default function News() {
           <div className="news-wrapper">
             <div className="news-header">Tin tức mới nhất</div>
             <div className="news-section">
-              <div className="c-7">
+              <div className="c-7 m-12">
                 <div className="news-section-left">
                   <div className="news-left-wrapper">
                     <NavLink className="news-link-left">
@@ -29,7 +29,7 @@ export default function News() {
                   </div>
                 </div>
               </div>
-              <div className="c-5">
+              <div className="c-5 m-12">
                 <div className="news-section-right">
                   <div className="news-link-wrapper">
                     <NavLink className="news-link-right">

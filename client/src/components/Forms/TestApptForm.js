@@ -398,7 +398,7 @@ export default function TestApptForm() {
                       name="date"
                       required
                     />
-                    <div className="app-date-icon">
+                    <div className="appt-date-icon">
                       <i class="bi bi-calendar"></i>
                     </div>
                   </div>

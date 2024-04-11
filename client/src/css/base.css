@@ -18,8 +18,8 @@
   /* Background */
   --main-nav-bg: #ffffff;
   --low-nav-bg: #2988b8;
-  --footer-bg: #eef5f6;
-  --copyright-bg: #fff;
+  --footer-bg: #006298;
+  --copyright-bg: #006298;
   --blue-bg-1: #1471c9;
 
   /* Border */
@@ -76,6 +76,10 @@
 /* Background */
 .blue-bg-1 {
   background-color: var(--blue-bg-1);
+}
+
+.blue-bg-2 {
+  background-color: #f7f7f7;
 }
 
 /* Border */

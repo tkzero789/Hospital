@@ -124,7 +124,7 @@ export default function TestApptForm() {
             <div className="appt-title-text">Đăng ký khám bệnh</div>
           </div>
           <form className="appt-form d-flex">
-            <div className="c-4">
+            <div className="c-4 m-12">
               {/* Name */}
               <div className="name-form">
                 <label for="name">
@@ -172,7 +172,7 @@ export default function TestApptForm() {
                 />
               </div>
             </div>
-            <div className="c-4">
+            <div className="c-4 m-12">
               {/* DOB */}
               <div className="dob-form">
                 <label for="dob">
@@ -234,7 +234,7 @@ export default function TestApptForm() {
                 </select>
               </div>
             </div>
-            <div className="c-4">
+            <div className="c-4 m-12">
               {/* Appt Date */}
               <div className="appt-date">
                 <label for="appt-date">Đặt lịch khám</label>
@@ -251,7 +251,7 @@ export default function TestApptForm() {
                     required
                     onChange={(e) => updateApptField(e)}
                   />
-                  <div className="app-date-icon">
+                  <div className="appt-date-icon">
                     <i class="bi bi-calendar"></i>
                   </div>
                 </div>

@@ -8,6 +8,7 @@ import PatientFormResult from "../components/Forms/PatientFormResult";
 import MainNav from "../components/Navbar/MainNav";
 import LowNav from "../components/Navbar/LowNav";
 import Footer from "../components/ForPages/Footer";
+import MobileNav from "../components/Navbar/MobileNav";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -106,6 +107,7 @@ export default function SymptomChecker() {
       <div>
         <MainNav />
         <LowNav />
+        <MobileNav />
         {/* Symptom Checker Section */}
         <div className="symp-checker w-100">
           <div className="content-container">

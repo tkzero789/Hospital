@@ -243,6 +243,13 @@ export default function FeatureApptForm() {
   const formatDateForModal = (date) => {
     return date.padStart(2, "0");
   };
+
+  useEffect(() => {
+    if (showModal) {
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }
+  }, [showModal]);
+
   // --- Modal: End ---
 
   return (
@@ -258,8 +265,8 @@ export default function FeatureApptForm() {
             <div className="appt-title">
               <div className="appt-title-text">Đăng ký khám bệnh</div>
             </div>
-            <form className="appt-form d-flex">
-              <div className="c-4">
+            <form className="appt-form">
+              <div className="c-4 m-12">
                 {/* Name */}
                 <div className="name-form">
                   <label for="name">
@@ -307,7 +314,7 @@ export default function FeatureApptForm() {
                   />
                 </div>
               </div>
-              <div className="c-4">
+              <div className="c-4 m-12">
                 {/* DOB */}
                 <div className="dob-form">
                   <label htmlFor="dob">
@@ -417,7 +424,7 @@ export default function FeatureApptForm() {
                   </select>
                 </div>
               </div>
-              <div className="c-4">
+              <div className="c-4 m-12">
                 {/* Appt Date */}
                 <div className="appt-date">
                   <label for="appt-date">Đặt lịch khám</label>
@@ -433,7 +440,7 @@ export default function FeatureApptForm() {
                       name="date"
                       required
                     />
-                    <div className="app-date-icon">
+                    <div className="appt-date-icon">
                       <i class="bi bi-calendar"></i>
                     </div>
                   </div>
@@ -505,8 +512,12 @@ export default function FeatureApptForm() {
                     <p>{appt.phoneNumber}</p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>Email:</span>
-                    <p>{appt.email}</p>
+                    {appt.email ? (
+                      <>
+                        <span>Email:</span>
+                        <p>{appt.email}</p>
+                      </>
+                    ) : null}
                   </div>
                   <div className="appt-modal-data">
                     <span>Ngày sinh:</span>
@@ -523,12 +534,20 @@ export default function FeatureApptForm() {
                     <p>{appt.need}</p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>Ngày đặt khám:</span>
-                    <p>{appt.date}</p>
+                    {appt.date ? (
+                      <>
+                        <span>Ngày đặt khám:</span>
+                        <p>{appt.date}</p>
+                      </>
+                    ) : null}
                   </div>
                   <div className="appt-modal-data">
-                    <span>Mô tả vấn đề sức khoẻ:</span>
-                    <p>{appt.reason}</p>
+                    {appt.reason ? (
+                      <>
+                        <span>Mô tả vấn đề sức khoẻ:</span>
+                        <p>{appt.reason}</p>
+                      </>
+                    ) : null}
                   </div>
                   <hr style={{ marginTop: "4rem" }} />
                   <div className="attention-text">
