@@ -9,8 +9,8 @@ import BKCSystem from "../home/BKCSystem";
 import Specialty from "../home/Specialty";
 import News from "../home/News";
 import Footer from "../components/ForPages/Footer";
-import MobileNav from "../components/Navbar/MobileNav";
 import MobileHero from "../components/ForPages/MobileHero";
+import TestMobileNav from "../components/Navbar/MobileNav";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
       </nav>
 
       {/* Mobile: Hamburger Menu */}
-      <MobileNav />
+      <TestMobileNav />
       <MobileHero />
 
       {/* Main */}

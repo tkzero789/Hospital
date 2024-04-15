@@ -45,7 +45,7 @@ export default function CreateSymptom() {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .get(`http://localhost:5000/symptom/`)
       .then((res) => {
         const symptoms = res.data;
         setSymptoms(symptoms);
@@ -60,9 +60,7 @@ export default function CreateSymptom() {
   async function onDelete(id) {
     if (window.confirm("Are you sure you want to delete this symptom?")) {
       axios
-        .delete(
-          `https://symptom-checker-with-mern-backend.onrender.com/symptom/${id}`
-        )
+        .delete(`http://localhost:5000/symptom/${id}`)
         .then(() => {
           const newSymptoms = symptoms.filter((symptom) => symptom._id !== id);
           setSymptoms(newSymptoms);

@@ -14,9 +14,7 @@ export default function ArticlePatientView() {
 
   useEffect(() => {
     axios
-      .get(
-        `https://symptom-checker-with-mern-backend.onrender.com/article/${params.id.toString()}`
-      )
+      .get(`http://localhost:5000/article/${params.id.toString()}`)
       .then((res) => {
         const article = res.data;
         if (!article) {

@@ -22,6 +22,14 @@ import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";
 import ArticlePatientView from "./pages/articlePatientView";
 import TestSignin from "./pages/testSignin";
+import AdminHome from "./pages/home/AdminHome";
+import Login from "./pages/login/Login";
+import DoctorList from "./pages/list/DoctorList";
+import ArticleList from "./pages/list/ArticleList";
+
+import Single from "./pages/single/Single";
+import New from "./pages/new/New";
+import { productInputs, userInputs } from "./formSource";
 
 const App = () => {
   const { getUserRole } = useAuth();
@@ -36,6 +44,24 @@ const App = () => {
         />
         <Route path="/home" element={<Home />} />
         <Route path="/test-home" element={<TestHome />} />
+        <Route path="/admin-home" element={<AdminHome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/users">
+          <Route index element={<DoctorList />} />
+          <Route path=":userId" element={<Single />} />
+          <Route
+            path="new"
+            element={<New inputs={userInputs} title="Add New User" />}
+          />
+        </Route>
+        <Route path="/articles">
+          <Route index element={<ArticleList />} />
+          <Route path=":articlesId" element={<Single />} />
+          <Route
+            path="new"
+            element={<New inputs={productInputs} title="Add New Product" />}
+          />
+        </Route>
         <Route path="/appt-request" element={<ApptRequest />} />
         <Route path="/symptom-checker" element={<SymptomChecker />} />
         <Route path="/signup" element={<Signup />} />

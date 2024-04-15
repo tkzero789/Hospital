@@ -67,10 +67,7 @@ export default function CreateAritcle() {
       e.preventDefault();
       const newArticle = { ...article };
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/article/add",
-          newArticle
-        )
+        .post("http://localhost:5000/article/add", newArticle)
         .then((res) => {
           console.log("Article created");
           console.log(res.data);

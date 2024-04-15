@@ -10,7 +10,7 @@ const PatientFormResult = ({ patientForm }) => {
   const [part, setPart] = useState(1);
   useEffect(() => {
     axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/article/`)
+      .get(`http://localhost:5000/article/`)
       .then((res) => {
         const articlesDB = res.data;
         processData(articlesDB);

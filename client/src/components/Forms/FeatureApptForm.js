@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import "../../css/calendar.css";
 import { useNavigate } from "react-router-dom";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
 
@@ -77,7 +78,7 @@ export default function FeatureApptForm() {
   // --- Calendar: Start ---
   const [calendarDate, setCalendarDate] = useState(null);
   const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 21); // Set max date to 21 days from today
+  maxDate.setDate(maxDate.getDate() + 75); // Set max date to 21 days from today
   const [showCalendar, setShowCalendar] = useState(false); // State for calendar visibility
   const calendarRef = useRef(null);
 
@@ -175,10 +176,7 @@ export default function FeatureApptForm() {
       };
 
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/appointment/add",
-          updatedAppt
-        )
+        .post("http://localhost:5000/appointment/add", updatedAppt)
         .then((res) => {
           console.log("Appointment set");
           console.log(res.data);
@@ -452,11 +450,6 @@ export default function FeatureApptForm() {
                         locale="vi-VN"
                         minDate={new Date()}
                         maxDate={maxDate}
-                        tileClassName={({ date }) =>
-                          date.getDay() === 0 || date.getDay() === 6
-                            ? "disabled-weekend"
-                            : ""
-                        }
                       />
                     </div>
                   )}

@@ -26,9 +26,7 @@ export default function EditSymptom() {
 
   useEffect(() => {
     axios
-      .get(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/${params.id.toString()}`
-      )
+      .get(`http://localhost:5000/symptom/${params.id.toString()}`)
       .then((res) => {
         const dbsymptom = res.data;
         if (!dbsymptom) {
@@ -132,10 +130,7 @@ export default function EditSymptom() {
     e.preventDefault();
     const editedSymptom = { ...symptom };
     axios
-      .post(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/update/${params.id}`,
-        editedSymptom
-      )
+      .post(`http://localhost:5000/symptom/update/${params.id}`, editedSymptom)
       .then((res) => {
         console.log("Symptom edited");
         console.log("res");

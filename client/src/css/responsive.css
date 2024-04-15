@@ -23,10 +23,52 @@
   #main {
     margin-top: 0;
   }
+
+  .mobile-nav {
+    display: block;
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+  }
+
+  .navbar-slider {
+    width: 100%;
+    top: 58px;
+    height: calc(100% - 58px);
+    background-color: rgb(255, 255, 255);
+    border-top: 1px solid rgb(217, 217, 214);
+    position: fixed;
+    right: -100%;
+    transition: 0.3s cubic-bezier(0, 0, 0.2, 1);
+    touch-action: none;
+    display: block;
+  }
+
+  .navbar-slider.open {
+    right: 0;
+  }
+
+  .slider-wrapper ul {
+    list-style: none;
+    padding: 20px 8px;
+  }
+
+  .slider-wrapper ul li {
+    padding: 12px 0 12px 8px;
+  }
+
+  .hero-mobile {
+    margin-top: 58px;
+  }
 }
 
 /* Mobile phone */
 @media only screen and (max-width: 767px) {
+  .blue-bg-2 {
+    background-color: #ffffff !important;
+  }
+
   #main {
     margin-top: 0;
   }
@@ -36,59 +78,48 @@
   }
 
   .mobile-nav {
+    display: block;
     z-index: 1000;
     position: fixed;
     width: 100%;
     background-color: #fff;
   }
 
-  .mobile-nav .container-fluid {
-    position: relative;
-  }
-
-  .mobile-nav-icon div .bi-x-lg {
-    animation: fadein 0.2s ease-in-out 0ms both;
-  }
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  .mobile-nav .container-fluid div ul li {
-    margin-right: 0;
-  }
-
-  .mobile-nav .container-fluid div ul {
-    animation: fadein 0.2s ease-in-out 0ms both;
-  }
-
-  .mobile-nav .container-fluid .navbar-collapse {
-    z-index: 1000;
-    position: fixed;
-    top: 66px;
-    left: 0;
+  .navbar-slider {
     width: 100%;
-    height: calc(100% - 66px);
-    overflow-y: auto;
-    background-color: whitesmoke;
+    top: 58px;
+    height: calc(100% - 58px);
+    background-color: rgb(255, 255, 255);
     border-top: 1px solid rgb(217, 217, 214);
+    position: fixed;
+    right: -100%;
+    transition: 0.3s cubic-bezier(0, 0, 0.2, 1);
     touch-action: none;
+    display: block;
   }
 
-  .navbar-collapse.collapsing {
-    transition: none;
+  .navbar-slider.open {
+    right: 0;
+  }
+
+  .slider-wrapper ul {
+    list-style: none;
+    padding: 20px 8px;
+  }
+
+  .slider-wrapper ul li {
+    padding: 12px 0 12px 8px;
   }
 
   .hero-mobile {
-    margin-top: 66px;
+    margin-top: 58px;
   }
 
   /* Option section */
+  .options {
+    background-image: none;
+  }
+
   .options-wrapper {
     flex-direction: column;
     padding: 0;
@@ -124,7 +155,7 @@
     flex-direction: column;
     border-radius: 8px;
     padding: 0;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   }
 
   .opt-header {
@@ -143,7 +174,6 @@
   }
 
   .box-select:first-child {
-    border-top: 1px solid rgb(217, 217, 214);
     border-right: none;
     border-bottom: none;
     border-top-left-radius: 8px;
@@ -325,6 +355,7 @@
   }
   .appt-wrapper {
     padding: 8px 8px;
+    box-shadow: none;
   }
 
   .select-wrapper {
@@ -342,6 +373,7 @@
 
   .appt-modal-wrapper {
     padding: 8px 8px;
+    box-shadow: none;
   }
 
   .appt-title {
@@ -361,13 +393,25 @@
     font-weight: var(--roboto-medium-weight);
   }
 
+  .appt .appt-form .c-4 div > input {
+    background-color: #f5f5f5;
+  }
+
   .appt-input {
-    height: 50px;
+    height: 44px;
+  }
+
+  .appt-date-input {
+    height: 44px;
   }
 
   .appt-date-icon {
     top: 80px;
     right: 12px;
+  }
+
+  .reason-textarea textarea {
+    background-color: #f5f5f5;
   }
 
   .appt-modal-info {

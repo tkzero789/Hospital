@@ -28,7 +28,7 @@ const ArticleSymptoms = ({ article, setArticle }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .get(`http://localhost:5000/symptom/`)
       .then((res) => {
         const symptoms = res.data;
         setSymptoms(symptoms);

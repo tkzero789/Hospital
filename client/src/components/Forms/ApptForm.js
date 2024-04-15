@@ -88,10 +88,7 @@ export default function TestApptForm() {
       setAppt((appt) => ({ ...appt, createdAt: Date.now() }));
       const newAppt = { ...appt };
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/appointment/add",
-          newAppt
-        )
+        .post("http://localhost:5000/appointment/add", newAppt)
         .then((res) => {
           console.log("Appointment set");
           console.log(res.data);

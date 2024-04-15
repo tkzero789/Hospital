@@ -235,7 +235,7 @@
   border-radius: 4px;
   position: absolute;
   background-color: #fff;
-  border: 1px solid rgb(218, 217, 217);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .dropdown-content a {
@@ -243,6 +243,14 @@
   text-decoration: none;
   display: block;
   padding: 8px 15px;
+}
+
+.dropdown-content a:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.dropdown-content a:last-child {
+  border-radius: 0 0 4px 4px;
 }
 
 .dropdown-content a:hover {
@@ -346,12 +354,80 @@
 /* MOBILE NAVBAR */
 .mobile-nav {
   box-shadow: rgba(31, 37, 50, 0.2) 0px 2px 4px 0px;
+  display: none;
 }
 
-.navbar-brand {
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
+.mobile-nav-container {
+  padding: 4px 15px;
+}
+
+.mobile-nav-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.menu-btn {
+  height: 40px;
+  width: 40px;
+}
+
+.menu-toggler {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon {
+  width: 22px;
+  height: 3px;
+  background-color: black;
+  transition-duration: 0.4s;
+  border-radius: 12px;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 3px;
+  background-color: black;
+  transition-duration: 0.4s;
+  border-radius: 12px;
+}
+
+.menu-icon::before {
+  transform: translateY(-8px);
+}
+
+.menu-icon::after {
+  transform: translateY(8px);
+}
+
+.menu-btn.open .menu-icon {
+  background-color: transparent;
+}
+
+.menu-btn.open .menu-icon::before {
+  opacity: 1;
+  transform: rotate(45deg) translate(0px, 0px);
+  transition-duration: 0.4s;
+}
+
+.menu-btn.open .menu-icon::after {
+  opacity: 1;
+  transform: rotate(-45deg) translate(0px, 0px);
+  transition-duration: 0.4s;
+}
+
+.navbar-slider {
+  /* display: none; */
+}
+
+.mobile-logo-link {
+  margin-right: auto;
 }
 
 .mobile-nav-logo {
@@ -364,39 +440,11 @@
   height: 100%;
 }
 
-.navbar-toggler {
-  border: none;
-}
-
-.navbar-toggler:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.mobile-nav-icon i {
-  color: var(--text-color);
-  font-size: 24px;
-}
-
-.mobile-nav .container-fluid div ul {
-  padding: 20px 8px;
-}
-
-.mobile-nav .container-fluid div ul li {
-  padding: 12px 0;
-}
-
 .mobile-nav-link {
   display: block;
   text-decoration: none;
-  color: var(--text-color);
-  font-size: 20px;
-  font-weight: var(--roboto-medium-weight);
-}
-
-.mobile-nav .dropdown-menu li a {
-  color: var(--text-color);
-  font-size: 20px;
+  color: var(--text-blue);
+  font-size: 16px;
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -508,6 +556,7 @@
 
 .appt .appt-form .c-4 div > input {
   outline: none;
+  cursor: pointer;
 }
 
 .appt-form .c-4 div label > span {
@@ -586,12 +635,6 @@
 
 .appt-btn button:hover {
   background-color: var(--btn-blue-hover);
-}
-
-.disabled-weekend {
-  pointer-events: none;
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 
 /* APPOINTMENT MODAL: CONFIRMATION */
@@ -679,10 +722,15 @@
 
 /* OPTIONS SECTION */
 .options {
-  margin-top: 30px;
+  background-color: #ffffff;
+  background-image: url("../assets/background/options-bg.png");
+  background-repeat: no-repeat;
+  background-position: 12% 60%;
+  padding-bottom: 16px;
 }
 
 .opt-big-header {
+  padding-top: 30px;
   text-align: center;
 }
 
@@ -697,7 +745,9 @@
   border-radius: 3px;
   padding: 8px 0 44px 0;
   margin-top: 12px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: white;
 }
 
 .opt-header {
@@ -716,8 +766,7 @@
   margin: 0 15px;
   padding: 10px 20px;
   border-radius: 3px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .opt-box:nth-child(2) {

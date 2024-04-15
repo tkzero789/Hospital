@@ -39,10 +39,7 @@ export default function TestSignin() {
   async function confirmSignin(e) {
     e.preventDefault();
     await axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/signin",
-        user
-      )
+      .post("http://localhost:5000/signin", user)
       .then((res) => {
         console.log("Signed in");
         console.log(res.data);

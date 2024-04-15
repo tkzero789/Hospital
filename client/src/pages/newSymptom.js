@@ -107,10 +107,7 @@ export default function NewSymptom() {
     e.preventDefault();
     const newSymptom = { ...symptom };
     axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/symptom/add",
-        newSymptom
-      )
+      .post("http://localhost:5000/symptom/add", newSymptom)
       .then((res) => {
         console.log("Symptom created");
         console.log(res.data);
