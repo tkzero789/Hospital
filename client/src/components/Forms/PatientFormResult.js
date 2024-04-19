@@ -129,10 +129,6 @@ const PatientFormResult = ({ patientResult }) => {
     }
   };
 
-  const openInNewTab = (url) => {
-    window.open(url, "_blank");
-  };
-
   const DisplayedArticle = ({ article }) => {
     console.log(article);
     const articleFirstInfo = article.infos[0].detail.split("\n\n")[1];
@@ -147,17 +143,9 @@ const PatientFormResult = ({ patientResult }) => {
         </h5>
         {SwitchPartButton()}
         {PartDisplay(articleFirstInfo, articleFirstTrm)}
-        {/* <button
-          className="pt-1 fw-reg d-flex justify-content-end"
-          style={{ marginBottom: "1px" }}
-          onClick={() =>
-            openInNewTab(`http://localhost:3000/articles/${article.id}`)
-          }
-        >
-          Xem chi tiết
-        </button> */}
         <Link
           to={`/articles/${article.id}`}
+          target="_blank"
           className="pt-1 fw-reg d-flex justify-content-end"
           style={{ marginBottom: "1px" }}
         >
