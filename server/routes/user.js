@@ -108,4 +108,17 @@ userRoutes.route("/user/update/:id").post(async function (req, res) {
   }
 });
 
+userRoutes.route("/user/me").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const userEmail = req.session.user.email; // Assuming you're storing the user email in the session
+    const result = await db_connect
+      .collection("users")
+      .findOne({ email: userEmail });
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
 module.exports = userRoutes;

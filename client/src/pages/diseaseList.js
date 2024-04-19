@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
-
 import AdminNavBar from "../components/Navbar/AdminNavBar";
 import DoctorNav from "../components/Navbar/DoctorNav";
+import "../css/disease.css";
 
 export default function DiseaseList({ userInfos }) {
   const [diseases, setDiseases] = useState([]);
@@ -38,42 +38,33 @@ export default function DiseaseList({ userInfos }) {
 
   // display each disease
   const Disease = ({ disease, onDelete }) => (
-    <div className="disease-item d-flex px-0 py-0 ms-3 my-2 ">
-      <div className="d-flex border border-secondary-subtle shadow-sm rounded">
-        <div
-          className="disease-item py-0 px-0 b rounded-start px-3 py-2"
-          style={{ display: "flex" }}
+    <div className="disease-item d-flex py-2">
+      <div className="disease-box border border-secondary-subtle shadow-sm rounded">
+        <Link
+          className="text-body text-decoration-none d-block py-2 px-2"
+          to={`/disease/${disease.id}/view`}
         >
+          {disease.name}
+        </Link>
+      </div>
+      {userInfos.doctorID === disease.createInfos.doctorID && (
+        <div className="ms-auto">
           <Link
-            className="text-body text-decoration-none"
-            to={`/disease/${disease.id}/view`}
+            to={`/disease/${disease.id}/edit`}
+            className="rounded bg-success bg-gradient py-2 px-2"
           >
-            <div>{disease.name}</div>
+            <i className="bi bi-pencil text-light text-opacity-75"></i>
+          </Link>
+          <Link className="rounded bg-danger bg-gradient py-2 px-2 ms-2">
+            <i
+              className="bi bi-trash-fill text-light text-opacity-75"
+              onClick={() => {
+                onDelete(disease.id);
+              }}
+            ></i>
           </Link>
         </div>
-        {userInfos.doctorID === disease.createInfos.doctorID && (
-          <div>
-            <div>
-              <Link
-                to={`/disease/${disease.id}/edit`}
-                className="rounded position-absolute bg-success bg-gradient py-2 px-3 ms-3"
-              >
-                <i className="text-light text-opacity-75 bi bi-pencil"></i>
-              </Link>
-            </div>
-            <div>
-              <Link>
-                <i
-                  className="rounded position-absolute bg-danger bg-gradient bi bi-trash-fill text-light text-opacity-75 py-2 px-3 ms-7"
-                  onClick={() => {
-                    onDelete(disease.id);
-                  }}
-                ></i>
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 
@@ -97,11 +88,11 @@ export default function DiseaseList({ userInfos }) {
       <h4 className="container text-center text-body pt-5">
         DANH SÁCH BỆNH ĐÃ TẠO
       </h4>
-      <div className="container p-5">
+      <div className="content-container p-5">
         <div className="border border-secondary border-opacity-25 rounded shadow p-5">
           <form>
             <h4 className="card-title text-body">Những bệnh đã có:</h4>
-            <div className="row d-flex px-3 pt-2 pb-2">{diseaseList()}</div>
+            <div className="px-3 pt-2 pb-2">{diseaseList()}</div>
             <div className="d-flex justify-content-evenly row pt-3">
               <div className="col-3 d-grid gap-2">
                 <NavLink

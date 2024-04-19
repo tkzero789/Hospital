@@ -12,25 +12,21 @@ const navLinks = [
 ];
 
 export default function MainNav() {
-  const { loggedIn, logout, userId } = useAuth();
+  const { loggedIn, logout, getUserInfos, getUserRole } = useAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false); //toggle dropdown
 
+  // get user infos and role
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`/user/${userId}`);
-        setUser(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    console.log("User Infos:", getUserInfos());
+    console.log("User Role:", getUserRole());
+  }, [getUserInfos, getUserRole]);
 
-    if (loggedIn && userId) {
-      fetchUserData();
-    }
-  }, [loggedIn, userId]);
+  // get user full name
+  const userInfos = getUserInfos();
+  const fullName = userInfos ? userInfos.fullName : null;
 
+  // Handle sign out
   const handleSignOut = async () => {
     try {
       const token = localStorage.getItem("userToken");
@@ -55,6 +51,22 @@ export default function MainNav() {
       window.alert(message);
     }
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".user-login")) {
+        setDropdownVisible(false);
+      }
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
@@ -83,12 +95,30 @@ export default function MainNav() {
 
               {loggedIn ? (
                 <li key={"signin"}>
-                  <NavLink
-                    className="nav-link nav-link-first"
-                    onClick={handleSignOut}
+                  <div
+                    className="nav-link nav-link-first user-login"
+                    onClick={() => setDropdownVisible(!dropdownVisible)}
                   >
-                    <div className="main-nav-text">Đăng xuất</div>
-                  </NavLink>
+                    <NavLink>
+                      <div className="main-nav-text">{fullName}</div>
+                      <div className="user-icon-dropdown">
+                        {dropdownVisible ? (
+                          <i className="left-dropdown-icon bi bi-caret-down-fill"></i>
+                        ) : (
+                          <i className="down-dropdown-icon bi bi-caret-left-fill"></i>
+                        )}
+                      </div>
+                      <div
+                        className={`user-dropdown ${
+                          dropdownVisible ? "visible" : "hidden"
+                        }`}
+                      >
+                        <NavLink to="/admin-home">Bài viết</NavLink>
+                        <NavLink>Cài đặt</NavLink>
+                        <NavLink onClick={handleSignOut}>Đăng xuất</NavLink>
+                      </div>
+                    </NavLink>
+                  </div>
                 </li>
               ) : (
                 <li key={"signout"}>
