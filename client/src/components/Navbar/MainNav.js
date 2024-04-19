@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
@@ -12,8 +12,24 @@ const navLinks = [
 ];
 
 export default function MainNav() {
-  const { loggedIn, logout } = useAuth();
+  const { loggedIn, logout, userId } = useAuth();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`/user/${userId}`);
+        setUser(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (loggedIn && userId) {
+      fetchUserData();
+    }
+  }, [loggedIn, userId]);
 
   const handleSignOut = async () => {
     try {
@@ -71,7 +87,7 @@ export default function MainNav() {
                     className="nav-link nav-link-first"
                     onClick={handleSignOut}
                   >
-                    <div className="main-nav-text">Sign out</div>
+                    <div className="main-nav-text">Đăng xuất</div>
                   </NavLink>
                 </li>
               ) : (

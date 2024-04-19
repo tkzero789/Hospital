@@ -54,9 +54,9 @@ const App = () => {
             element={<New inputs={userInputs} title="Add New User" />}
           />
         </Route>
-        <Route path="/articles">
+        <Route path="/article-doctor">
           <Route index element={<ArticleList />} />
-          <Route path=":articlesId" element={<Single />} />
+          <Route path=":article-doctorID" element={<Single />} />
           <Route
             path="new"
             element={<New inputs={productInputs} title="Add New Product" />}
