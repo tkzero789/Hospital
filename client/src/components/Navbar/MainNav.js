@@ -33,7 +33,7 @@ export default function MainNav() {
       console.log("Signed out");
       console.log(response);
       logout();
-      navigate("/signin");
+      navigate("/home");
     } catch (err) {
       const message = `An error occurred: ${err}`;
       window.alert(message);
