@@ -76,16 +76,6 @@ userRoutes.route("/signout").post(async function (req, res) {
   }
 });
 
-userRoutes.route("/user").get(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("mern_hospital");
-    const result = await db_connect.collection("users").find({}).toArray();
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
-
 userRoutes.route("/user/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");

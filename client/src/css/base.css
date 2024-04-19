@@ -12,14 +12,15 @@
   /* Color */
   --text-color: #1f2532;
   --text-white: #ffffff;
+  --text-blue: #006298;
   --header-color: #286ba6;
   --sub-header-color: #002c77;
 
   /* Background */
   --main-nav-bg: #ffffff;
   --low-nav-bg: #2988b8;
-  --footer-bg: #eef5f6;
-  --copyright-bg: #fff;
+  --footer-bg: #006298;
+  --copyright-bg: #006298;
   --blue-bg-1: #1471c9;
 
   /* Border */
@@ -78,6 +79,10 @@
   background-color: var(--blue-bg-1);
 }
 
+.blue-bg-2 {
+  background-color: #f7f7f7;
+}
+
 /* Border */
 .blue-border-1 {
   border: 1px solid var(--blue-border-1);
@@ -87,6 +92,11 @@
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
   border-radius: 6px;
+}
+
+/* Hidden */
+.hidden {
+  display: none;
 }
 /* Pre-defined CSS classes: End */
 

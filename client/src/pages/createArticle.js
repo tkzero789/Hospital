@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
 import DoctorNav from "../components/Navbar/DoctorNav";
 import AdminNavBar from "../components/Navbar/AdminNavBar";
 import ArticleForm from "../components/ArticleForm";

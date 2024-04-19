@@ -10,6 +10,7 @@ import PatientFormSymptoms from "../components/Forms/PatientFormSymptoms";
 import PatientFormDes from "../components/Forms/PatientFormDes";
 import PatientFormResult from "../components/Forms/PatientFormResult";
 import axios from "axios";
+import MobileNav from "../components/Navbar/MobileNav";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -246,6 +247,7 @@ export default function SymptomChecker() {
       <div>
         <MainNav />
         <LowNav />
+        <MobileNav />
         {/* Symptom Checker Section */}
         <div className="symp-checker w-100">
           <div className="content-container">

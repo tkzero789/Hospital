@@ -1,113 +1,106 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import BKCsvg from "../../assets/logo/bkcaresvg.svg";
 
 export default function MobileNav() {
+  const location = useLocation();
+
+  const handleLinkClick = (event) => {
+    const { to } = event.currentTarget.dataset;
+    if (location.pathname === to) {
+      event.preventDefault();
+      window.location.reload();
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  };
+
+  const menuBtn = useRef(null);
+  const navSlider = useRef(null);
+
+  useEffect(() => {
+    const handleClick = () => {
+      menuBtn.current.classList.toggle("open");
+      navSlider.current.classList.toggle("open");
+    };
+    const menuBtnElement = menuBtn.current;
+    menuBtnElement.addEventListener("click", handleClick);
+
+    return () => {
+      menuBtnElement.removeEventListener("click", handleClick);
+    };
+  }, []);
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-primary-subtle d-md-block d-lg-none">
-        <div className="container-fluid">
-          <NavLink className="navbar-brand" href="#">
-            BKCare
-          </NavLink>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item px-2">
-                <NavLink
-                  className="nav-link active"
-                  aria-current="page"
-                  href="#"
-                >
-                  Trang chủ
-                </NavLink>
-              </li>
-              <li className="nav-item px-2">
-                <NavLink className="nav-link" href="#">
-                  Thông tin
-                </NavLink>
-              </li>
-
-              <li className="nav-item px-2">
-                <NavLink className="nav-link" href="#">
-                  Đăng ký khám bệnh
-                </NavLink>
-              </li>
-              <li className="nav-item px-2">
-                <NavLink className="nav-link" href="#">
-                  Chẩn đoán - Xem kết quả online
-                </NavLink>
-              </li>
-
-              <li className="nav-item dropdown px-2">
-                <NavLink
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Khác
-                </NavLink>
-                <ul className="dropdown-menu">
-                  <li>
-                    <NavLink
-                      className="dropdown-item bg-white text-black"
-                      href="#"
-                    >
-                      Bác sĩ
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className="dropdown-item bg-white text-black"
-                      href="#"
-                    >
-                      Chuyên khoa
-                    </NavLink>
-                  </li>
-
-                  <li>
-                    <NavLink
-                      className="dropdown-item bg-white text-black"
-                      href="#"
-                    >
-                      Tin tức - Y học thường thức
-                    </NavLink>
-                  </li>
-                  <li className="dropdown-divider"></li>
-
-                  <li>
-                    <NavLink
-                      className="dropdown-item bg-white text-black"
-                      href="#"
-                    >
-                      Liên hệ
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className="dropdown-item bg-white text-black"
-                      href="#"
-                    >
-                      Lịch làm việc
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+      <div className="mobile-nav">
+        <div className="navbar-slider" ref={navSlider}>
+          <div className="slider-content">
+            <div className="slider-wrapper">
+              <ul>
+                <li>
+                  <NavLink
+                    className="mobile-nav-link"
+                    to="/home"
+                    data-to="/home"
+                    onClick={handleLinkClick}
+                  >
+                    Trang chủ
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="mobile-nav-link"
+                    to="/appt-request"
+                    data-to="/appt-request"
+                    onClick={handleLinkClick}
+                  >
+                    Thông tin
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="mobile-nav-link"
+                    to="/appt-request"
+                    data-to="/appt-request"
+                    onClick={handleLinkClick}
+                  >
+                    Đăng ký khám bệnh
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="mobile-nav-link"
+                    to="/symptom-checker"
+                    data-to="/symptom-checker"
+                    onClick={handleLinkClick}
+                  >
+                    Chẩn đoán - Xem kết quả online
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </nav>
+        <div className="mobile-nav-container">
+          <div className="mobile-nav-wrapper">
+            <NavLink
+              className="mobile-logo-link"
+              to="/home"
+              data-to="/home"
+              onClick={handleLinkClick}
+            >
+              <div className="mobile-nav-logo">
+                <img src={BKCsvg} alt="hospital logo" />
+              </div>
+            </NavLink>
+            <div className="menu-btn" ref={menuBtn}>
+              <div className="menu-toggler">
+                <div className="menu-icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

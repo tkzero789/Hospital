@@ -11,7 +11,7 @@ export default function Options() {
             <div className="opt-big-header-text">Dịch vụ trực tuyến</div>
           </div>
           <div className="options-wrapper">
-            <div className="c-6">
+            <div className="c-6 m-12">
               <div className="opt-section">
                 <div className="opt-header">
                   <div className="opt-header-text">Tiện ích</div>
@@ -42,14 +42,14 @@ export default function Options() {
                 </div>
               </div>
             </div>
-            <div className="c-6">
+            <div className="c-6 m-12">
               <div className="opt-section">
                 <div className="opt-header">
                   <div className="opt-header-text">Thông tin</div>
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">
-                    <NavLink className="box-select-link" to="/test-signin">
+                    <NavLink className="box-select-link" to="/admin-home">
                       <div className="box-icon">
                         <i class="bi bi-question-circle"></i>
                       </div>
