@@ -3,10 +3,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-import "./styles.css";
-import "./responsive.css";
-import "./base.css";
+import "./css/styles.css";
+import "./css/responsive.css";
+import "./css/base.css";
 import CreateSymptom from "./pages/createSymptom";
 import NewSymptom from "./pages/newSymptom";
 import EditSymptom from "./pages/editSymptom";
@@ -17,10 +16,20 @@ import SignupDoctor from "./pages/signupDoctor";
 import Signin from "./pages/signin";
 import Home from "./pages/home";
 import TestHome from "./pages/testHome";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./components/Functionals/ScrollToTop";
 import ApptRequest from "./pages/apptRequest";
 import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";
+import ArticlePatientView from "./pages/articlePatientView";
+import TestSignin from "./pages/testSignin";
+import AdminHome from "./pages/home/AdminHome";
+import Login from "./pages/login/Login";
+import DoctorList from "./pages/list/DoctorList";
+import ArticleList from "./pages/list/ArticleList";
+
+import Single from "./pages/single/Single";
+import New from "./pages/new/New";
+import { productInputs, userInputs } from "./formSource";
 
 const App = () => {
   const { getUserRole } = useAuth();
@@ -35,11 +44,31 @@ const App = () => {
         />
         <Route path="/home" element={<Home />} />
         <Route path="/test-home" element={<TestHome />} />
+        <Route path="/admin-home" element={<AdminHome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/users">
+          <Route index element={<DoctorList />} />
+          <Route path=":userId" element={<Single />} />
+          <Route
+            path="new"
+            element={<New inputs={userInputs} title="Add New User" />}
+          />
+        </Route>
+        <Route path="/article-doctor">
+          <Route index element={<ArticleList />} />
+          <Route path=":article-doctorID" element={<Single />} />
+          <Route
+            path="new"
+            element={<New inputs={productInputs} title="Add New Product" />}
+          />
+        </Route>
         <Route path="/appt-request" element={<ApptRequest />} />
         <Route path="/symptom-checker" element={<SymptomChecker />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup-doctor" element={<SignupDoctor />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/test-signin" element={<TestSignin />} />
+        <Route path="/articles/:id" element={<ArticlePatientView />} />
         <Route
           path="/create-symptom"
           element={

@@ -44,14 +44,13 @@ userRoutes.route("/signin").post(async function (req, res) {
     }
     req.session.user = result;
     const token = jwt.sign(
-      { userId: result._id, role: result.role },
+      { userId: result._id, role: result.role, userInfos: result.userInfos },
       SECRET_JWT_KEY,
       {
         expiresIn: "1h",
       }
     );
-    res.json({ token });
-    res.status(200).json(result);
+    res.status(200).json({ token });
   } catch (err) {
     throw err;
   }
@@ -75,16 +74,6 @@ userRoutes.route("/signout").post(async function (req, res) {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
-  }
-});
-
-userRoutes.route("/user").get(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("mern_hospital");
-    const result = await db_connect.collection("users").find({}).toArray();
-    res.json(result);
-  } catch (err) {
-    throw err;
   }
 });
 

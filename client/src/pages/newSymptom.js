@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import AdminNavBar from "../components/AdminNavBar";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
 
 export default function NewSymptom() {
   const [symptom, setSymptom] = useState({
@@ -107,10 +107,7 @@ export default function NewSymptom() {
     e.preventDefault();
     const newSymptom = { ...symptom };
     axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/symptom/add",
-        newSymptom
-      )
+      .post("http://localhost:5000/symptom/add", newSymptom)
       .then((res) => {
         console.log("Symptom created");
         console.log(res.data);

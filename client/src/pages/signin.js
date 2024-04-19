@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
-import axios from "axios";
-import "bootstrap-icons/font/bootstrap-icons.css";
-
-import AdminNavBar from "../components/AdminNavBar";
-import SignupLogo from "../assets/signup-logo.png";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import SignupLogo from "../assets/logo/signup-logo.png";
 import { useAuth } from "../AuthContext";
+import axios from "axios";
 
 export default function Signin() {
   const [user, setUser] = useState({
@@ -39,10 +37,7 @@ export default function Signin() {
   async function confirmSignin(e) {
     e.preventDefault();
     await axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/signin",
-        user
-      )
+      .post("http://localhost:5000/signin", user)
       .then((res) => {
         console.log("Signed in");
         console.log(res.data);

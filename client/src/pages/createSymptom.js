@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AdminNavBar from "../components/AdminNavBar";
-import DoctorNav from "../components/DoctorNav";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import DoctorNav from "../components/Navbar/DoctorNav";
 
 const Symptom = (props) => (
   <div className="symptom-item d-flex px-0 py-0 ms-3 my-2 ">
@@ -45,7 +45,7 @@ export default function CreateSymptom() {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .get(`http://localhost:5000/symptom/`)
       .then((res) => {
         const symptoms = res.data;
         setSymptoms(symptoms);
@@ -60,9 +60,7 @@ export default function CreateSymptom() {
   async function onDelete(id) {
     if (window.confirm("Are you sure you want to delete this symptom?")) {
       axios
-        .delete(
-          `https://symptom-checker-with-mern-backend.onrender.com/symptom/${id}`
-        )
+        .delete(`http://localhost:5000/symptom/${id}`)
         .then(() => {
           const newSymptoms = symptoms.filter((symptom) => symptom._id !== id);
           setSymptoms(newSymptoms);

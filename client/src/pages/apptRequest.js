@@ -1,24 +1,33 @@
 import React from "react";
-import MainNav from "../components/MainNav";
-import MidNav from "../components/MidNav";
-import LowNav from "../components/LowNav";
-import HI1 from "../assets/h6.jpg";
-import HI2 from "../assets/h7.png";
-import HI3 from "../assets/h8.png";
-import TestApptForm from "../components/TestApptForm";
+import { Helmet } from "react-helmet";
+import MainNav from "../components/Navbar/MainNav";
+import LowNav from "../components/Navbar/LowNav";
+
+import Footer from "../components/ForPages/Footer";
+import FeatureApptForm from "../components/Forms/FeatureApptForm";
+import TestApptForm from "../components/Forms/TestApptForm";
+import MobileNav from "../components/Navbar/MobileNav";
 
 export default function ApptRequest() {
   return (
     <>
-      {/* Navbar */}
-      <header>
-        <MainNav />
-        <MidNav />
-        <LowNav />
-      </header>
+      <Helmet>
+        <title>Đăng ký khám bệnh</title>
+      </Helmet>
 
-      {/* Appointment Form */}
-      <TestApptForm />
+      <div className="blue-bg-2">
+        {/* Navbar */}
+        <header>
+          <MainNav />
+          <LowNav />
+          <MobileNav />
+        </header>
+
+        {/* Appointment Form */}
+        <FeatureApptForm />
+        {/* Footer */}
+        <Footer />
+      </div>
     </>
   );
 }

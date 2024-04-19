@@ -1,5 +1,5 @@
 import React from "react";
-import HospitalImg from "../assets/hospitalBuilding.jpg";
+import HospitalImg from "../assets/home/hospitalBuilding.jpg";
 
 export default function About() {
   return (
@@ -8,7 +8,7 @@ export default function About() {
       <section className="about w-100">
         <div className="content-container">
           <div className="about-wrapper">
-            <div className="c-6">
+            <div className="c-6 m-12">
               <div className="about-section">
                 <div className="about-header">
                   BKC - Nơi gửi gắm niềm tin sức khỏe
@@ -22,7 +22,7 @@ export default function About() {
                 </div>
               </div>
             </div>
-            <div className="c-6">
+            <div className="c-6 m-12">
               <div className="about-img">
                 <img
                   className="hospital-img"

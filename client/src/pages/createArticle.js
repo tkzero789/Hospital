@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
-import DoctorNav from "../components/DoctorNav";
-import AdminNavBar from "../components/AdminNavBar";
-import ArticleSymptoms from "../components/ArticleSymptoms";
-import ArticleDetails from "../components/ArticleDetails";
-import ArticleInfosAndTreatments from "../components/ArticleInfosAndTreatments";
+import DoctorNav from "../components/Navbar/DoctorNav";
+import AdminNavBar from "../components/Navbar/AdminNavBar";
+import ArticleSymptoms from "../components/Articles/ArticleSymptoms";
+import ArticleDetails from "../components/Articles/ArticleDetails";
+import ArticleInfosAndTreatments from "../components/Articles/ArticleInfosAndTreatments";
 
 export default function CreateAritcle() {
   const [article, setArticle] = useState({
@@ -68,10 +67,7 @@ export default function CreateAritcle() {
       e.preventDefault();
       const newArticle = { ...article };
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/article/add",
-          newArticle
-        )
+        .post("http://localhost:5000/article/add", newArticle)
         .then((res) => {
           console.log("Article created");
           console.log(res.data);
