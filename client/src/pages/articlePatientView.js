@@ -1,65 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import MainNav from "../components/Navbar/MainNav";
 import LowNav from "../components/Navbar/LowNav";
 import Footer from "../components/ForPages/Footer";
 
-export default function ArticlePatientView() {
+export default function ArticlePatientView({ userInfos }) {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const params = useParams();
+  const { articleId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(
-        `https://symptom-checker-with-mern-backend.onrender.com/article/${params.id.toString()}`
-      )
+      .get(`http://localhost:5000/article/${articleId}`)
       .then((res) => {
         const article = res.data;
         if (!article) {
-          const id = params.id.toString();
-          window.alert(`Article with id ${id} not found`);
-          navigate("/symptom-checker");
+          window.alert(`Article with id ${articleId} not found`);
+          if (!userInfos) {
+            navigate("/symptom-checker");
+          } else {
+            console.log(userInfos);
+            navigate(-1);
+          }
           return;
         }
         setArticle(article);
         setIsLoading(false);
       })
       .catch((err) => {
-        const message = `An error occurred: ${err}`;
+        const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
-        return;
       });
-  }, [params.id]);
+  }, [articleId]);
 
-  const ArticleInfo = (props) => {
-    const infoDetail = props.info.detail;
-    const detailType = infoDetail.split("\n\n")[0];
-    const detailContent = infoDetail.split("\n\n")[1];
+  const ArticleContent = ({ element }) => {
+    const elemDetail = element.detail;
+    const detailType = elemDetail.split("\n\n")[0];
+    const detailContent = elemDetail.split("\n\n")[1];
     const detailContentRows = detailContent.split("\n");
     return (
       <div>
         <p>{detailType}</p>
-        {detailContentRows.map((row, index) => (
-          <p key={index}>{row}</p>
-        ))}
-      </div>
-    );
-  };
-
-  const ArticleTreatment = (props) => {
-    const treatmentDetail = props.treatment.detail;
-    const detailType = treatmentDetail.split("\n\n")[0];
-    const detailContent = treatmentDetail.split("\n\n")[1];
-    const detailContentRows = detailContent.split("\n");
-    return (
-      <div>
-        <p>{detailType}</p>
-        {detailContentRows.map((row, index) => (
-          <p key={index}>{row}</p>
+        {element.image && console.log(element.image, detailType)}
+        {element.image && <img alt={element.image} src={element.image} />}
+        {detailContentRows.map((row) => (
+          <p key={row.slice(0, 10)}>{row}</p>
         ))}
       </div>
     );
@@ -78,16 +66,16 @@ export default function ArticlePatientView() {
             <h3 className="text-center">{article.title}</h3>
             <div className="symp-checker-steps">
               <h5>THÔNG TIN CĂN BỆNH</h5>
-              {article.diseaseInfos.map((info) => (
-                <ArticleInfo info={info} key={info.index} />
+              {article.infos.map((info) => (
+                <ArticleContent element={info} key={info.id} />
               ))}
               <h5>PHƯƠNG PHÁP ĐIỀU TRỊ</h5>
-              {article.diseaseTreatments.map((treatment) => (
-                <ArticleTreatment treatment={treatment} key={treatment.index} />
+              {article.treatments.map((trm) => (
+                <ArticleContent element={trm} key={trm.id} />
               ))}
               <hr></hr>
               <p className="d-flex justify-content-end">
-                Bài viết được cung cấp bởi {article.author}
+                Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
               </p>
             </div>
           </div>

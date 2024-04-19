@@ -85,10 +85,7 @@ export default function FeatureApptForm() {
       setAppt((appt) => ({ ...appt, createdAt: Date.now() }));
       const newAppt = { ...appt };
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/appointment/add",
-          newAppt
-        )
+        .post("http://localhost:5000/appointment/add", newAppt)
         .then((res) => {
           console.log("Appointment set");
           console.log(res.data);
@@ -106,7 +103,7 @@ export default function FeatureApptForm() {
           navigate("/");
         })
         .catch((err) => {
-          const message = `An error occurred: ${err}`;
+          const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
           return;
         });

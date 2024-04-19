@@ -27,12 +27,24 @@ const AuthProvider = ({ children }) => {
     setUserToken(null);
   };
 
+  const getUserId = () => {
+    if (!userToken) return null;
+    try {
+      const decodedToken = jwtDecode(userToken);
+      if (decodedToken && decodedToken.userId) {
+        return decodedToken.userId;
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+    return null;
+  };
+
   const getUserRole = () => {
     if (!userToken) return null;
     try {
       const decodedToken = jwtDecode(userToken);
       if (decodedToken && decodedToken.role) {
-        console.log(decodedToken);
         return decodedToken.role;
       }
     } catch (error) {
@@ -41,12 +53,12 @@ const AuthProvider = ({ children }) => {
     return null;
   };
 
-  const getUserId = () => {
+  const getUserInfos = () => {
     if (!userToken) return null;
     try {
       const decodedToken = jwtDecode(userToken);
-      if (decodedToken && decodedToken.userId) {
-        return decodedToken.userId;
+      if (decodedToken && decodedToken.userInfos) {
+        return decodedToken.userInfos;
       }
     } catch (error) {
       console.error("Error decoding token:", error);
@@ -63,6 +75,7 @@ const AuthProvider = ({ children }) => {
         logout,
         getUserRole,
         getUserId,
+        getUserInfos,
       }}
     >
       {children}

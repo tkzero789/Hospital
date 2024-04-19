@@ -57,10 +57,7 @@ export default function SignupDoctor() {
       const newUser = { ...user };
       console.log(newUser);
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/signup",
-          newUser
-        )
+        .post("http://localhost:5000/signup", newUser)
         .then((res) => {
           console.log("User created");
           console.log(res.data);
@@ -80,7 +77,7 @@ export default function SignupDoctor() {
           navigate("/signin");
         })
         .catch((err) => {
-          const message = `An error occurred: ${err}`;
+          const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
           return;
         });

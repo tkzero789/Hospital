@@ -28,13 +28,13 @@ const ArticleSymptoms = ({ article, setArticle }) => {
   const [symptoms, setSymptoms] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
+      .get(`http://localhost:5000/symptom/`)
       .then((res) => {
         const symptoms = res.data;
         setSymptoms(symptoms);
       })
       .catch((err) => {
-        const message = `An error occurred: ${err}`;
+        const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
         return;
       });

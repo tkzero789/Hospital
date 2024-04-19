@@ -11,21 +11,15 @@ export default function Signup() {
     email: "",
     phoneNumber: "",
     password: "",
-    role: "patient",
-    doctorID: null,
+    role: "",
     userInfos: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       gender: "",
-      ageRange: "",
+      dob: "",
+      doctorID: null,
+      medSpecialty: null,
     },
   });
-
-  const updateInfoField = (event) => {
-    let _user = { ...user };
-    _user.userInfos[event.target.name] = event.target.value;
-    setUser(_user);
-  };
 
   const updateUserField = (event) => {
     let _user = { ...user };
@@ -33,33 +27,45 @@ export default function Signup() {
     setUser(_user);
   };
 
+  const updateInfoField = (event) => {
+    let _user = { ...user };
+    _user.userInfos[event.target.name] = event.target.value;
+    setUser(_user);
+  };
+
   const navigate = useNavigate();
 
   async function confirmSignup(e) {
+    const inputFullName = document.getElementById("inputFullName");
+    const inputGender = document.getElementById("inputGender");
+    const inputDob = document.getElementById("inputDob");
+    const inputDoctorID = document.getElementById("inputDoctorID");
+    const inputMedSpecialty = document.getElementById("inputMedSpecialty");
+    const inputRole = document.getElementById("inputRole");
     const inputEmail = document.getElementById("inputEmail");
-    const inputPassword = document.getElementById("inputPassword");
-    const inputLastName = document.getElementById("inputLastName");
-    const inputFirstName = document.getElementById("inputFirstName");
     const inputPhoneNumber = document.getElementById("inputPhoneNumber");
+    const inputPassword = document.getElementById("inputPassword");
     if (!inputEmail.checkValidity()) {
       alert("Email không hợp lệ");
-    } else if (!inputPassword.checkValidity()) {
-      alert("Mật khẩu phải có ít nhất 8 ký tự");
-    } else if (!inputLastName.checkValidity()) {
-      alert("Họ không hợp lệ");
-    } else if (!inputFirstName.checkValidity()) {
-      alert("Tên không hợp lệ");
     } else if (!inputPhoneNumber.checkValidity()) {
       alert("Số điện thoại không hợp lệ");
+    } else if (!inputPassword.checkValidity()) {
+      alert("Mật khẩu phải có ít nhất 8 ký tự");
+    } else if (
+      !inputFullName.checkValidity() &&
+      !inputGender.checkValidity() &&
+      !inputDob.checkValidity() &&
+      !inputDoctorID.checkValidity() &&
+      !inputMedSpecialty.checkValidity() &&
+      !inputRole.checkValidity()
+    ) {
+      alert("Thông tin cá nhân không hợp lệ");
     } else {
       e.preventDefault();
       const newUser = { ...user };
       console.log(newUser);
       axios
-        .post(
-          "https://symptom-checker-with-mern-backend.onrender.com/signup",
-          newUser
-        )
+        .post("http://localhost:5000/signup", newUser)
         .then((res) => {
           console.log("User created");
           console.log(res.data);
@@ -67,19 +73,19 @@ export default function Signup() {
             email: "",
             phoneNumber: "",
             password: "",
-            role: "patient",
-            doctorID: null,
+            role: "",
             userInfos: {
-              firstName: "",
-              lastName: "",
+              fullName: "",
               gender: "",
-              ageRange: "",
+              dob: "",
+              doctorID: null,
+              medSpecialty: null,
             },
           });
           navigate("/signin");
         })
         .catch((err) => {
-          const message = `An error occurred: ${err}`;
+          const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
           return;
         });
@@ -96,49 +102,35 @@ export default function Signup() {
         <div className="card border-danger-subtle p-5">
           <form className="needs-validation" noValidate>
             <div className="row">
-              <div className="col-6 p-0">
+              <div className="col-12 p-0">
                 <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
-                    Họ:
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
+                    Họ và tên:
                   </h6>
-                  <div className="col-9">
+                  <div className="col-10">
                     <input
                       type="text"
                       className="form-control border-danger-subtle px-2"
-                      id="inputLastName"
-                      name="lastName"
-                      value={user.userInfos.lastName}
+                      id="inputFullName"
+                      name="fullName"
+                      value={user.userInfos.fullName}
                       required
                       onChange={(e) => updateInfoField(e)}
                     />
                   </div>
                 </div>
                 <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
-                    Tên:
-                  </h6>
-                  <div className="col-9">
-                    <input
-                      type="text"
-                      className="form-control border-danger-subtle px-2"
-                      id="inputFirstName"
-                      name="firstName"
-                      value={user.userInfos.firstName}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
                     Giới tính:
                   </h6>
-                  <div className="col-9">
+                  <div className="col-10">
                     <select
                       type="text"
                       className="form-control border-danger-subtle px-2"
+                      id="inputGender"
                       name="gender"
                       value={user.userInfos.gender}
+                      required
                       onChange={(e) => updateInfoField(e)}
                     >
                       <option value="">Chọn giới tính</option>
@@ -148,41 +140,84 @@ export default function Signup() {
                   </div>
                 </div>
                 <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
-                    Độ tuổi:
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
+                    Ngày sinh:
                   </h6>
-                  <div className="col-9">
+                  <div className="col-10">
+                    <input
+                      type="text"
+                      className="form-control border-danger-subtle px-2"
+                      placeholder="dd/mm/yyyy"
+                      id="inputDob"
+                      name="dob"
+                      value={user.userInfos.dob}
+                      pattern="^\d{2}\/\d{2}\/\d{4}$"
+                      required
+                      onChange={(e) => updateInfoField(e)}
+                    />
+                  </div>
+                </div>
+                <div className="row pb-5">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
+                    Mã số bác sĩ:
+                  </h6>
+                  <div className="col-10">
+                    <input
+                      type="text"
+                      className="form-control border-danger-subtle px-2"
+                      id="inputDoctorID"
+                      name="doctorID"
+                      value={user.userInfos.ageRange}
+                      required
+                      onChange={(e) => updateInfoField(e)}
+                    />
+                  </div>
+                </div>
+                <div className="row pb-5">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
+                    Chuyên khoa:
+                  </h6>
+                  <div className="col-10">
+                    <input
+                      type="text"
+                      className="form-control border-danger-subtle px-2"
+                      id="inputMedSpecialty"
+                      name="medSpecialty"
+                      value={user.userInfos.medSpecialty}
+                      required
+                      onChange={(e) => updateInfoField(e)}
+                    />
+                  </div>
+                </div>
+                <div className="row pb-5">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
+                    Chức danh:
+                  </h6>
+                  <div className="col-10">
                     <select
                       type="text"
                       className="form-control border-danger-subtle px-2"
-                      name="ageRange"
-                      value={user.userInfos.ageRange}
-                      onChange={(e) => updateInfoField(e)}
+                      id="inputRole"
+                      name="role"
+                      value={user.role}
+                      required
+                      onChange={(e) => updateUserField(e)}
                     >
-                      <option value="">Chọn độ tuổi</option>
-                      <option value="Dưới 1 tháng">Dưới 1 tháng</option>
-                      <option value="1 tuổi - 6 tuổi">1 tuổi - 6 tuổi</option>
-                      <option value="6 tuổi - 12 tuổi">6 tuổi - 12 tuổi</option>
-                      <option value="12 tuổi - 18 tuổi">
-                        12 tuổi - 18 tuổi
-                      </option>
-                      <option value="18 tuổi - 30 tuổi">
-                        18 tuổi - 30 tuổi
-                      </option>
-                      <option value="30 tuổi - 60 tuổi">
-                        30 tuổi - 60 tuổi
-                      </option>
+                      <option value="">Chọn chức danh</option>
+                      <option value="doctor">Bác sĩ</option>
+                      <option value="head-doctor">Bác sĩ trưởng khoa</option>
+                      <option value="admin">Quản trị viên</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              <div className="col-6 p-0">
+              <div className="col-12 p-0">
                 <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
                     Email:
                   </h6>
-                  <div className="col-9">
+                  <div className="col-10">
                     <input
                       type="email"
                       className="form-control border-danger-subtle px-2"
@@ -196,10 +231,10 @@ export default function Signup() {
                   </div>
                 </div>
                 <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
                     Số điện thoại:
                   </h6>
-                  <div className="col-9">
+                  <div className="col-10">
                     <input
                       type="tel"
                       className="form-control border-danger-subtle px-2"
@@ -213,10 +248,10 @@ export default function Signup() {
                   </div>
                 </div>
                 <div className="row pb-5">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
+                  <h6 className="col-2 d-flex justify-content-end align-items-center">
                     Mật khẩu:
                   </h6>
-                  <div className="col-9">
+                  <div className="col-10">
                     <input
                       type="password"
                       className="form-control border-danger-subtle px-2"

@@ -9,7 +9,6 @@ import "./css/base.css";
 import CreateSymptom from "./pages/createSymptom";
 import NewSymptom from "./pages/newSymptom";
 import EditSymptom from "./pages/editSymptom";
-import CreateAritcle from "./pages/createArticle";
 import SymptomChecker from "./pages/symptomChecker";
 import Signup from "./pages/signup";
 import SignupDoctor from "./pages/signupDoctor";
@@ -25,11 +24,14 @@ import TestSignin from "./pages/testSignin";
 import CreateDisease from "./pages/createDisease";
 import DiseaseList from "./pages/diseaseList";
 import EditDisease from "./pages/editDisease";
-import ArticleByDisease from "./pages/articleByDisease";
-import CreateAritcleTest from "./pages/createArticleTest";
+import ArticlesByDisease from "./pages/articlesByDisease";
+import CreateArticle from "./pages/createArticle";
+import ViewDisease from "./pages/viewDisease";
+import ViewArticle from "./pages/viewArticle";
+import EditArticle from "./pages/editArticle";
 
 const App = () => {
-  const { getUserRole } = useAuth();
+  const { getUserRole, getUserInfos } = useAuth();
   return (
     <div style={{ overflow: "hidden" }}>
       <ScrollToTop />
@@ -47,13 +49,16 @@ const App = () => {
         <Route path="/signup-doctor" element={<SignupDoctor />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/test-signin" element={<TestSignin />} />
-        <Route path="/articles/:id" element={<ArticlePatientView />} />
+        <Route
+          path="/articles/:articleId"
+          element={<ArticlePatientView userInfos={getUserInfos()} />}
+        />
         <Route
           path="/create-symptom"
           element={
             <RequireAuth
               userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
+              allowedRoles={["head-doctor", "admin"]}
             >
               <CreateSymptom />
             </RequireAuth>
@@ -64,7 +69,7 @@ const App = () => {
           element={
             <RequireAuth
               userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
+              allowedRoles={["head-doctor", "admin"]}
             >
               <NewSymptom />
             </RequireAuth>
@@ -75,42 +80,9 @@ const App = () => {
           element={
             <RequireAuth
               userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
+              allowedRoles={["head-doctor", "admin"]}
             >
               <EditSymptom />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/create-article"
-          element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <CreateAritcle />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/create-article/:id"
-          element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <CreateAritcleTest />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/article-list/:id"
-          element={
-            <RequireAuth
-              userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
-            >
-              <ArticleByDisease />
             </RequireAuth>
           }
         />
@@ -119,31 +91,86 @@ const App = () => {
           element={
             <RequireAuth
               userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
             >
-              <DiseaseList />
+              <DiseaseList userInfos={getUserInfos()} />
             </RequireAuth>
           }
         />
         <Route
-          path="/create-disease"
+          path="/disease/:diseaseId/view"
           element={
             <RequireAuth
               userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
             >
-              <CreateDisease />
+              <ViewDisease userInfos={getUserInfos()} />
             </RequireAuth>
           }
         />
         <Route
-          path="/edit-disease/:id"
+          path="/disease/:diseaseId/edit"
           element={
             <RequireAuth
               userRole={getUserRole()}
-              allowedRoles={["doctor", "admin"]}
+              allowedRoles={["head-doctor", "admin"]}
             >
-              <EditDisease />
+              <EditDisease userInfos={getUserInfos()} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/disease/create"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["head-doctor", "admin"]}
+            >
+              <CreateDisease userInfos={getUserInfos()} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/disease/:diseaseId/article-list"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <ArticlesByDisease userInfos={getUserInfos()} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/disease/:diseaseId/article/:articleId/view"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <ViewArticle userInfos={getUserInfos()} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/disease/:diseaseId/article/:articleId/edit"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <EditArticle userInfos={getUserInfos()} />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/disease/:diseaseId/article/create"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <CreateArticle userInfos={getUserInfos()} />
             </RequireAuth>
           }
         />

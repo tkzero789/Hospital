@@ -37,10 +37,7 @@ export default function Signin() {
   async function confirmSignin(e) {
     e.preventDefault();
     await axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/signin",
-        user
-      )
+      .post("http://localhost:5000/signin", user)
       .then((res) => {
         console.log("Signed in");
         console.log(res.data);
@@ -58,7 +55,7 @@ export default function Signin() {
         if (err.response && err.response.status === 401) {
           window.alert("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
         } else {
-          const message = `An error occurred: ${err}`;
+          const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
         }
         return;

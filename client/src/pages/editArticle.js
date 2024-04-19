@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import "bootstrap-icons/font/bootstrap-icons.css";
 
 import DoctorNav from "../components/Navbar/DoctorNav";
 import AdminNavBar from "../components/Navbar/AdminNavBar";
 import ArticleForm from "../components/ArticleForm";
-import { NavLink } from "react-router-dom";
 
-export default function CreateArticle({ userInfos }) {
+export default function EditArticle({ userInfos }) {
   const [article, setArticle] = useState({
     id: uuidv4(),
     title: "",
@@ -19,69 +17,78 @@ export default function CreateArticle({ userInfos }) {
     infos: [],
     treatments: [],
     createInfos: {
-      doctorCreated: userInfos.fullName,
-      doctorID: userInfos.doctorID,
-      timeCreated: Date.now(),
+      doctorCreated: "",
+      doctorID: "",
+      timeCreated: "",
       timeEdited: null,
     },
   });
-  const { diseaseId } = useParams();
+  const { diseaseId, articleId } = useParams();
   const navigate = useNavigate();
 
+  // get article by articleId
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/disease/${diseaseId}`)
+      .get(`http://localhost:5000/article/${articleId}`)
       .then((res) => {
-        const disease = res.data;
+        const dbArticle = res.data;
+        if (!dbArticle) {
+          window.alert(`Không tìm thấy bài viết với id ${articleId} `);
+          navigate("/disease-list");
+          return;
+        }
+        if (dbArticle.createInfos.doctorID !== userInfos.doctorID) {
+          window.alert("Chỉ có bác sĩ tạo ra mới được chỉnh sửa dữ liệu");
+          navigate("/disease-list");
+          return;
+        }
         setArticle({
-          ...article,
-          diseaseId: disease.id,
-          diseaseName: disease.name,
+          ...dbArticle,
+          createInfos: {
+            ...dbArticle.createInfos,
+            timeEdited: Date.now(),
+          },
         });
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
       });
-  }, [diseaseId]);
+  }, [articleId, navigate]);
 
-  async function confirmCreate(e) {
+  // handle edit article
+  async function confirmEdit(e) {
     // validation fields
     if (article.title === "") {
       alert("Thiếu tên bài viết");
     } else if (article.infos.filter((info) => info.detail === "").length > 0) {
       alert("Thiếu thông tin bệnh");
     } else if (
-      article.treatments.filter((treatment) => treatment.detail === "").length >
-      0
+      article.treatments.filter((trm) => trm.detail === "").length > 0
     ) {
       alert("Thiếu phương pháp chữa trị");
     } else {
       e.preventDefault();
-      // create new article
-      const newArticle = { ...article };
+      // update article
+      const _article = { ...article };
       axios
-        .post("http://localhost:5000/article/add", newArticle)
+        .post(`http://localhost:5000/article/update/${articleId}`, _article)
         .then((res) => {
-          if (res.data && res.data.message === "Article already exists") {
-            window.alert("Bài viết cùng tên cho bệnh này đã tồn tại!");
-          } else {
-            console.log("Article created:", res.data);
-            setArticle({
-              id: uuidv4(),
-              title: "",
-              diseaseId: "",
-              diseaseName: "",
-              infos: [],
-              treatments: [],
-              createInfos: {
-                doctorCreated: userInfos.fullName,
-                doctorID: userInfos.doctorID,
-                timeCreated: Date.now(),
-                timeEdited: null,
-              },
-            });
-          }
+          console.log("Article edited:", res.data);
+          setArticle({
+            id: "",
+            title: "",
+            diseaseId: "",
+            diseaseName: "",
+            infos: [],
+            treatments: [],
+            createInfos: {
+              doctorCreated: "",
+              doctorID: "",
+              timeCreated: "",
+              timeEdited: null,
+            },
+          });
         })
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
@@ -89,18 +96,19 @@ export default function CreateArticle({ userInfos }) {
         });
       // update disease article
       const newArtShort = {
-        id: newArticle.id,
-        title: newArticle.title,
-        doctorID: newArticle.createInfos.doctorID,
+        id: _article.id,
+        title: _article.title,
+        doctorID: _article.createInfos.doctorID,
       };
+      console.log(newArtShort);
       axios
         .post(
-          `http://localhost:5000/disease/add-article/${diseaseId}`,
+          `http://localhost:5000/disease/update-article/${diseaseId}`,
           newArtShort
         )
         .then((res) => {
-          console.log("Disease relatedArticle Added:", res.data);
-          navigate(`/disease/${diseaseId}/article-list`);
+          console.log("Disease relatedArticle Edited:", res.data);
+          navigate(`/disease/${diseaseId}/article/${articleId}/view`);
         })
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
@@ -113,7 +121,9 @@ export default function CreateArticle({ userInfos }) {
     <div>
       <DoctorNav />
       <AdminNavBar />
-      <h3 className="container text-center text-body pt-5">TẠO BÀI VIẾT</h3>
+      <h3 className="container text-center text-body pt-5">
+        CHỈNH SỬA BÀI VIẾT
+      </h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -126,14 +136,13 @@ export default function CreateArticle({ userInfos }) {
                 />
               }
             </div>
-
             <div className="row pt-3 pb-3 justify-content-end">
               <div className="col-3 d-grid gap-2">
                 <NavLink
                   className="btn btn-outline-primary"
-                  to={`/disease/${diseaseId}/article-list`}
+                  to={`/disease/${diseaseId}/article/${articleId}/view`}
                 >
-                  HỦY TẠO BÀI VIẾT
+                  TRỞ VỀ CHẾ ĐỘ XEM
                 </NavLink>
               </div>
               <div className="col-3 d-grid gap-2">
@@ -141,10 +150,10 @@ export default function CreateArticle({ userInfos }) {
                   type="button"
                   className="btn btn-outline-primary"
                   onClick={(e) => {
-                    confirmCreate(e);
+                    confirmEdit(e);
                   }}
                 >
-                  XÁC NHẬN TẠO
+                  XÁC NHẬN CHỈNH SỬA
                 </button>
               </div>
             </div>

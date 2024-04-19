@@ -26,9 +26,7 @@ export default function EditSymptom() {
 
   useEffect(() => {
     axios
-      .get(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/${params.id.toString()}`
-      )
+      .get(`http://localhost:5000/symptom/${params.id.toString()}`)
       .then((res) => {
         const dbsymptom = res.data;
         if (!dbsymptom) {
@@ -40,13 +38,13 @@ export default function EditSymptom() {
         setSymptom(dbsymptom);
       })
       .catch((err) => {
-        const message = `An error occurred: ${err}`;
+        const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
         return;
       });
   }, [params.id, navigate]);
 
-  const addCategoriesField = (id) => {
+  const addCategoryField = (id) => {
     let _symptom = { ...symptom };
     _symptom.categories.push({
       index: uuidv4(),
@@ -79,7 +77,7 @@ export default function EditSymptom() {
     return setSymptom(_symptom);
   };
 
-  const updateCategoriesField = (categoryId, event) => {
+  const updateCategoryField = (categoryId, event) => {
     let _symptom = { ...symptom };
     const categoryIndex = symptom.categories.findIndex(
       (category) => category.index === categoryId
@@ -132,17 +130,14 @@ export default function EditSymptom() {
     e.preventDefault();
     const editedSymptom = { ...symptom };
     axios
-      .post(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/update/${params.id}`,
-        editedSymptom
-      )
+      .post(`http://localhost:5000/symptom/update/${params.id}`, editedSymptom)
       .then((res) => {
         console.log("Symptom edited");
         console.log("res");
         navigate("/create-symptom");
       })
       .catch((err) => {
-        const message = `An error occurred: ${err}`;
+        const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
         return;
       });
@@ -183,7 +178,7 @@ export default function EditSymptom() {
                     name="categoryName"
                     value={category.categoryName}
                     className="form-select border-secondary-subtle col"
-                    onChange={(e) => updateCategoriesField(category.index, e)}
+                    onChange={(e) => updateCategoryField(category.index, e)}
                   >
                     <option value="Vị trí">Vị trí</option>
                     <option value="Mức độ">Mức độ</option>
@@ -248,7 +243,7 @@ export default function EditSymptom() {
             );
           })}
           <div
-            onClick={addCategoriesField}
+            onClick={addCategoryField}
             className="btn btn-secondary bg-gradient mt-5"
           >
             Thêm thuộc tính

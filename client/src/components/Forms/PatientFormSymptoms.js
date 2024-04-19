@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+import React from "react";
 
 const Symptom = (props) => {
   return (
@@ -24,69 +22,25 @@ const Symptom = (props) => {
   );
 };
 
-const PatientFormSymptoms = ({ patientForm, setPatientForm }) => {
-  const [symptoms, setSymptoms] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
-      .then((res) => {
-        const symptoms = res.data;
-        setSymptoms(symptoms);
-      })
-      .catch((err) => {
-        const message = `An error occurred: ${err}`;
-        window.alert(message);
-        return;
-      });
-  }, [symptoms.length]);
-
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  useEffect(() => {
-    function updateForm() {
-      if (patientForm.patientSymptoms.length > 0) {
-        const selectedBeforeSymptoms = patientForm.patientSymptoms.flatMap(
-          (symptom) => symptom._id
-        );
-        setSelectedSymptoms(selectedBeforeSymptoms);
-      } else return;
-    }
-    updateForm();
-    return;
-  }, [selectedSymptoms.length]);
-
-  function symptomList() {
-    return symptoms.map((symptom) => {
-      return (
-        <Symptom
-          symptom={symptom}
-          onCheck={() => onCheck(symptom._id, symptom.name)}
-          isChecked={selectedSymptoms.includes(symptom._id)}
-          key={symptom._id}
-        />
-      );
-    });
-  }
-
-  const onCheck = (symptomId, symptomName) => {
-    if (selectedSymptoms.includes(symptomId)) {
-      setSelectedSymptoms(
-        selectedSymptoms.filter((selectedId) => selectedId !== symptomId)
-      );
+const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
+  const onCheck = (symptomId) => {
+    if (patientForm.chosenSymps.includes(symptomId)) {
       const _patientForm = patientForm;
-      _patientForm.patientSymptoms = _patientForm.patientSymptoms.filter(
-        (symptom) => symptom._id !== symptomId
+      _patientForm.chosenSymps = _patientForm.chosenSymps.filter(
+        (chosenId) => chosenId !== symptomId
+      );
+      _patientForm.chosenCats = _patientForm.chosenCats.filter(
+        (chosenCat) => chosenCat.sympId !== symptomId
+      );
+      _patientForm.chosenDes = _patientForm.chosenDes.filter(
+        (chosenDes) => chosenDes.sympId !== symptomId
       );
       setPatientForm(_patientForm);
     } else {
-      setSelectedSymptoms([...selectedSymptoms, symptomId]);
-      let _patientForm = patientForm;
-      _patientForm.patientSymptoms.push({
-        index: uuidv4(),
-        _id: symptomId,
-        symptomName: symptomName,
-        categories: [],
+      setPatientForm({
+        ...patientForm,
+        chosenSymps: [...patientForm.chosenSymps, symptomId],
       });
-      setPatientForm(_patientForm);
     }
   };
 
@@ -100,7 +54,18 @@ const PatientFormSymptoms = ({ patientForm, setPatientForm }) => {
       <h5 className="card-title text-blue-1 fw-med text-blue-2">
         Triệu chứng phổ biến
       </h5>
-      <div className="row pt-3 pb-3">{symptomList()}</div>
+      <div className="row pt-3 pb-3">
+        {dbSymps.map((symptom) => {
+          return (
+            <Symptom
+              symptom={symptom}
+              onCheck={() => onCheck(symptom.id)}
+              isChecked={patientForm.chosenSymps.includes(symptom.id)}
+              key={symptom.id}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

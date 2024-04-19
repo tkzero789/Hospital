@@ -23,7 +23,7 @@ export default function NewSymptom() {
     ],
   });
 
-  const addCategoriesField = (id) => {
+  const addCategoryField = (id) => {
     let _symptom = { ...symptom };
     _symptom.categories.push({
       index: uuidv4(),
@@ -56,7 +56,7 @@ export default function NewSymptom() {
     return setSymptom(_symptom);
   };
 
-  const updateCategoriesField = (categoryId, event) => {
+  const updateCategoryField = (categoryId, event) => {
     let _symptom = { ...symptom };
     const categoryIndex = symptom.categories.findIndex(
       (category) => category.index === categoryId
@@ -107,10 +107,7 @@ export default function NewSymptom() {
     e.preventDefault();
     const newSymptom = { ...symptom };
     axios
-      .post(
-        "https://symptom-checker-with-mern-backend.onrender.com/symptom/add",
-        newSymptom
-      )
+      .post("http://localhost:5000/symptom/add", newSymptom)
       .then((res) => {
         console.log("Symptom created");
         console.log(res.data);
@@ -132,7 +129,7 @@ export default function NewSymptom() {
         navigate("/create-symptom");
       })
       .catch((err) => {
-        const message = `An error occurred: ${err}`;
+        const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
         return;
       });
@@ -172,7 +169,7 @@ export default function NewSymptom() {
                   <select
                     name="categoryName"
                     className="form-select border-secondary col"
-                    onChange={(e) => updateCategoriesField(category.index, e)}
+                    onChange={(e) => updateCategoryField(category.index, e)}
                   >
                     <option value="Vị trí">Vị trí</option>
                     <option value="Mức độ">Mức độ</option>
@@ -231,7 +228,7 @@ export default function NewSymptom() {
           })}
 
           <div
-            onClick={addCategoriesField}
+            onClick={addCategoryField}
             className="btn btn-secondary bg-gradient mt-5"
           >
             Thêm thuộc tính

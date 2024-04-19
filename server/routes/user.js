@@ -16,7 +16,6 @@ userRoutes.route("/signup").post(async function (req, res) {
       phoneNumber: req.body.phoneNumber,
       password: hashedPassword,
       role: req.body.role,
-      doctorID: req.body.doctorID,
       userInfos: req.body.userInfos,
     };
     console.log("New User Object:", newUser);
@@ -44,14 +43,13 @@ userRoutes.route("/signin").post(async function (req, res) {
     }
     req.session.user = result;
     const token = jwt.sign(
-      { userId: result._id, role: result.role },
+      { userId: result._id, role: result.role, userInfos: result.userInfos },
       SECRET_JWT_KEY,
       {
         expiresIn: "1h",
       }
     );
-    res.json({ token });
-    res.status(200).json(result);
+    res.status(200).json({ token });
   } catch (err) {
     throw err;
   }

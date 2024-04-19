@@ -26,7 +26,7 @@ export default function MainNav() {
         headers: { Authorization: `Bearer ${token}` },
       };
       const response = await axios.post(
-        "https://symptom-checker-with-mern-backend.onrender.com/signout",
+        "http://localhost:5000/signout",
         null,
         config
       );
@@ -35,7 +35,7 @@ export default function MainNav() {
       logout();
       navigate("/signin");
     } catch (err) {
-      const message = `An error occurred: ${err}`;
+      const message = `Có lỗi xảy ra: ${err}`;
       window.alert(message);
     }
   };

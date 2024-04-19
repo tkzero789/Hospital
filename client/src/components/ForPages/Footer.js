@@ -66,14 +66,14 @@ export default function Footer() {
               <NavLink className="footer-socials__link">
                 <div className="footer-socials-icon">
                   <span>
-                    <i class="bi bi-facebook"></i>
+                    <i className="bi bi-facebook"></i>
                   </span>
                 </div>
               </NavLink>
               <NavLink className="footer-socials__link">
                 <div className="footer-socials-icon">
                   <span>
-                    <i class="bi bi-youtube"></i>
+                    <i className="bi bi-youtube"></i>
                   </span>
                 </div>
               </NavLink>

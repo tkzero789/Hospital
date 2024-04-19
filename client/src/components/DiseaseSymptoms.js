@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+import React from "react";
 
-const Symptom = (props) => {
+const Symptom = ({ symptom, isChecked, onCheck, key }) => {
   return (
-    <div className="col-3 pb-3">
+    <div key={key} className="col-3 pb-3">
       <div className="form">
         <label style={{ display: "flex" }}>
           <input
             type="checkbox"
             style={{ marginRight: "5px" }}
-            checked={props.isChecked}
+            checked={isChecked}
             onChange={() => {
-              props.onCheck(props.symptom._id, props.symptom.name);
+              onCheck(symptom.id, symptom.name);
             }}
           />
           <span className="text-blue-1">
-            <h5 style={{ marginBottom: "1px" }}>{props.symptom.name}</h5>
+            <h5 style={{ marginBottom: "1px" }}>{symptom.name}</h5>
           </span>
         </label>
       </div>
@@ -24,66 +22,45 @@ const Symptom = (props) => {
   );
 };
 
-const DiseaseSymptoms = ({ disease, setDisease }) => {
-  const [symptoms, setSymptoms] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`https://symptom-checker-with-mern-backend.onrender.com/symptom/`)
-      .then((res) => {
-        const symptoms = res.data;
-        setSymptoms(symptoms);
-      })
-      .catch((err) => {
-        const message = `An error occurred: ${err}`;
-        window.alert(message);
-        return;
-      });
-  }, [symptoms.length]);
-
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  useEffect(() => {
-    function updateForm() {
-      if (disease.symptoms.length > 0) {
-        const selectedBeforeSymptoms = disease.symptoms.flatMap(
-          (symptom) => symptom._id
-        );
-        setSelectedSymptoms(selectedBeforeSymptoms);
-      } else return;
-    }
-    updateForm();
-    return;
-  }, [selectedSymptoms.length]);
-
-  function symptomList() {
-    return symptoms.map((symptom) => {
-      return (
-        <Symptom
-          symptom={symptom}
-          onCheck={() => onCheck(symptom._id, symptom.name)}
-          isChecked={selectedSymptoms.includes(symptom._id)}
-          key={symptom._id}
-        />
-      );
-    });
-  }
-
+const DiseaseSymptoms = ({
+  disease,
+  dbSymps,
+  setDisease,
+  chosenSymps,
+  setChosenSymps,
+  chosenCats,
+  setChosenCats,
+  chosenDes,
+  setChosenDes,
+}) => {
+  // display symptom chosen and update disease symptoms
   const onCheck = (symptomId, symptomName) => {
-    if (selectedSymptoms.includes(symptomId)) {
-      setSelectedSymptoms(
-        selectedSymptoms.filter((selectedId) => selectedId !== symptomId)
-      );
+    if (chosenSymps.includes(symptomId)) {
+      setChosenSymps(chosenSymps.filter((existId) => existId !== symptomId));
       const _disease = disease;
+      const symptomIndex = _disease.symptoms.findIndex(
+        (symptom) => symptom.id === symptomId
+      );
+      if (_disease.symptoms[symptomIndex].categories.length > 0) {
+        for (const cat of _disease.symptoms[symptomIndex].categories) {
+          setChosenCats(chosenCats.filter((chosenId) => chosenId !== cat.id));
+          if (cat.descriptions.length > 0) {
+            for (const des of cat.descriptions) {
+              setChosenDes(chosenDes.filter((chosenId) => chosenId !== des.id));
+            }
+          }
+        }
+      }
       _disease.symptoms = _disease.symptoms.filter(
-        (symptom) => symptom._id !== symptomId
+        (symptom) => symptom.id !== symptomId
       );
       setDisease(_disease);
     } else {
-      setSelectedSymptoms([...selectedSymptoms, symptomId]);
+      setChosenSymps([...chosenSymps, symptomId]);
       let _disease = disease;
       _disease.symptoms.push({
-        index: uuidv4(),
-        _id: symptomId,
-        symptomName: symptomName,
+        id: symptomId,
+        name: symptomName,
         categories: [],
       });
       setDisease(_disease);
@@ -93,7 +70,18 @@ const DiseaseSymptoms = ({ disease, setDisease }) => {
   return (
     <div>
       <h4 className="card-title text-body">Triệu chứng đã có:</h4>
-      <div className="row pt-3 pb-3">{symptomList()}</div>
+      <div className="row pt-3 pb-3">
+        {dbSymps.map((symptom) => {
+          return (
+            <Symptom
+              symptom={symptom}
+              onCheck={() => onCheck(symptom.id, symptom.name)}
+              isChecked={chosenSymps.includes(symptom.id)}
+              key={symptom.id}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

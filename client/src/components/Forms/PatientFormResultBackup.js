@@ -2,31 +2,102 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const PatientFormResultTest = ({ patientForm }) => {
+const PatientFormResultBackup = ({ patientForm }) => {
   const [isProcessing, setIsProcessing] = useState(true);
-  const [suitableArticles, setSuitableArticles] = useState([]);
+  const [articlesDB, setArticlesDB] = useState([]);
+  const [sortedSuitableArticles, setSortedSuitableArticles] = useState([]);
   const [displayedArticle, setDisplayedArticle] = useState();
   const [part, setPart] = useState(1);
   useEffect(() => {
     axios
-      .post(
-        `https://symptom-checker-with-mern-backend.onrender.com/suit-articles/`,
-        patientForm
-      )
+      .get(`http://localhost:5000/article/`)
       .then((res) => {
-        processData(res.data);
+        const articlesDB = res.data;
+        processData(articlesDB);
+        console.log(patientForm);
       })
       .catch((err) => {
-        const message = `An error occurred: ${err}`;
+        const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
         return;
       });
-  }, []);
+  }, [articlesDB.length]);
 
-  const processData = (apiRes) => {
+  function findSortedSuitableArticles(patientForm) {
+    let articlesWithScore = [];
+    for (const articleDB of articlesDB) {
+      if (!articleDB.diseaseAgeRanges.includes(patientForm.patientAgeRange)) {
+        continue;
+      } else if (
+        !articleDB.diseaseGenders.includes(patientForm.patientGender)
+      ) {
+        continue;
+      }
+      let articleSuitableScore = 0;
+      for (const symptom of articleDB.diseaseSymptoms) {
+        if (
+          !patientForm.patientSymptoms
+            .map((patientSymptom) => patientSymptom._id)
+            .includes(symptom._id)
+        ) {
+          continue;
+        }
+        const _patientSymptoms = patientForm.patientSymptoms;
+        const patientSymptomIndex = _patientSymptoms.findIndex(
+          (patientSymptom) => patientSymptom._id === symptom._id
+        );
+        for (const category of symptom.categories) {
+          // Vi tri, muc do,...
+          if (
+            !_patientSymptoms[patientSymptomIndex].categories
+              .map((category) => category.categoryName)
+              .includes(category.categoryName)
+          ) {
+            continue;
+          }
+          const _patientCategories =
+            _patientSymptoms[patientSymptomIndex].categories;
+          const categoryIndex = _patientCategories.findIndex(
+            (patientCategory) =>
+              patientCategory.categoryName === category.categoryName
+          );
+          for (const description of category.descriptions) {
+            if (
+              _patientCategories[categoryIndex].descriptions
+                .map((description) => description.descriptionDetail)
+                .includes(description.descriptionDetail)
+            ) {
+              articleSuitableScore += 1;
+            }
+          }
+        }
+      }
+      articlesWithScore.push({
+        _id: articleDB._id,
+        score: articleSuitableScore,
+      });
+    }
+    const SuitableArticle = articlesWithScore.filter(
+      (article) => article.score > 0
+    );
+    const sortedSuitableArticle = [...SuitableArticle].sort(
+      (a, b) => b.score - a.score
+    );
+
+    const sortedSuitableArticlesDB = sortedSuitableArticle.map(
+      (suitableArticle) =>
+        articlesDB.find((articleDB) => articleDB._id === suitableArticle._id)
+    );
+
+    return sortedSuitableArticlesDB;
+  }
+
+  const processData = (articlesDB) => {
+    setArticlesDB(articlesDB);
     setIsProcessing(true);
-    setSuitableArticles(apiRes);
-    setDisplayedArticle(apiRes[0]);
+    const res = findSortedSuitableArticles(patientForm);
+    setSortedSuitableArticles(res);
+    setDisplayedArticle(res[0]);
     setIsProcessing(false);
   };
 
@@ -35,7 +106,8 @@ const PatientFormResultTest = ({ patientForm }) => {
   };
 
   const SuitableArticle = (props) => {
-    console.log(props.article);
+    const articleFirstInfo =
+      props.article.diseaseInfos[0].detail.split("\n\n")[1];
     return (
       <div
         className="button col-12 mb-3 p-3 box-shadow-1"
@@ -45,7 +117,7 @@ const PatientFormResultTest = ({ patientForm }) => {
           {props.article.diseaseName}
         </h5>
         <p className="pt-1 fw-reg" style={{ marginBottom: "1px" }}>
-          Mức độ khớp: {props.article.matchingDetailsCount}
+          {articleFirstInfo.substr(0, 20)}...
         </p>
       </div>
     );
@@ -140,7 +212,7 @@ const PatientFormResultTest = ({ patientForm }) => {
           className="fw-med text-blue-2 d-flex justify-content-center pb-3"
           style={{ marginBottom: "1px" }}
         >
-          {props.article.title}
+          {props.article.diseaseName}
         </h5>
         {SwitchPartButton()}
         {PartDisplay(articleFirstInfo, articleFirstTreatment)}
@@ -167,17 +239,17 @@ const PatientFormResultTest = ({ patientForm }) => {
       ) : (
         <div className="row pt-3 pb-3">
           <div className="col-4">
-            {suitableArticles.map((article) => (
+            {sortedSuitableArticles.map((article) => (
               <SuitableArticle article={article} key={article._id} />
             ))}
           </div>
           <div className="col-8">
-            {suitableArticles.length > 0 ? (
+            {sortedSuitableArticles.length > 0 && (
               <DisplayedArticle
                 article={displayedArticle}
                 key={displayedArticle._id}
               />
-            ) : null}
+            )}
           </div>
         </div>
       )}
@@ -185,4 +257,4 @@ const PatientFormResultTest = ({ patientForm }) => {
   );
 };
 
-export default PatientFormResultTest;
+export default PatientFormResultBackup;

@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
 const DiseaseAgeGen = ({ disease, setDisease }) => {
-  const updateField = (event) => {
-    let _disease = { ...disease };
-    _disease[event.target.name] = event.target.value;
-    return setDisease(_disease);
-  };
-
   const ageRanges = [
     "Mọi độ tuổi",
-    "Dưới 1 tháng",
-    "1 tháng - 1 tuổi",
+    "Dưới 1 tuổi",
     "1 tuổi - 5 tuổi",
     "6 tuổi - 12 tuổi",
     "13 tuổi - 16 tuổi",
@@ -21,36 +14,52 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
     "50 tuổi - 64 tuổi",
     "Trên 65 tuổi",
   ];
-
   const genders = ["Cả nam và nữ", "Nam", "Nữ"];
+  const [chosenAges, setChosenAges] = useState([]);
+  const [chosenGens, setChosenGens] = useState([]);
 
-  const [selectedAgeRanges, setSelectedAgeRanges] = useState([]);
+  // check form status if user click back button
+  useEffect(() => {
+    console.log(disease.genders);
+    if (disease.ageRanges.length > 0) {
+      const existedAgeRanges = [...disease.ageRanges];
+      setChosenAges(existedAgeRanges);
+    }
+    if (disease.genders.length > 0) {
+      const existedGenders = [...disease.genders];
+      setChosenGens(existedGenders);
+    }
+  }, []);
 
+  // display age chosen
   const checkAgeRangeField = (checkingAgeRange) => {
-    const newSelectedAgeRanges = selectedAgeRanges.includes(checkingAgeRange)
-      ? selectedAgeRanges.filter((ageRange) => ageRange !== checkingAgeRange)
-      : [...selectedAgeRanges, checkingAgeRange];
-    setSelectedAgeRanges(newSelectedAgeRanges);
-    const _disease = {
-      ...disease,
-      ageRanges: newSelectedAgeRanges,
-    };
-    setDisease(_disease);
+    if (chosenAges.includes(checkingAgeRange)) {
+      setChosenAges(
+        chosenAges.filter((ageRange) => ageRange !== checkingAgeRange)
+      );
+    } else {
+      setChosenAges([...chosenAges, checkingAgeRange]);
+    }
   };
 
-  const [selectedGenders, setSelectedtGenders] = useState([]);
+  // update disease ageRanges
+  useEffect(() => {
+    setDisease({ ...disease, ageRanges: chosenAges });
+  }, [chosenAges]);
 
+  // display gender chosen
   const checkGenderField = (checkingGender) => {
-    const newSelectedGenders = selectedGenders.includes(checkingGender)
-      ? selectedGenders.filter((gender) => gender !== checkingGender)
-      : [...selectedGenders, checkingGender];
-    setSelectedtGenders(newSelectedGenders);
-    const _disease = {
-      ...disease,
-      genders: newSelectedGenders,
-    };
-    setDisease(_disease);
+    if (chosenGens.includes(checkingGender)) {
+      setChosenGens(chosenGens.filter((gender) => gender !== checkingGender));
+    } else {
+      setChosenGens([...chosenGens, checkingGender]);
+    }
   };
+
+  // update disease genders
+  useEffect(() => {
+    setDisease({ ...disease, genders: chosenGens });
+  }, [chosenGens]);
 
   return (
     <div>
@@ -74,7 +83,7 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
                       <input
                         type="checkbox"
                         style={{ marginRight: "5px" }}
-                        checked={selectedAgeRanges.includes(ageRange)}
+                        checked={chosenAges.includes(ageRange)}
                         onChange={() => checkAgeRangeField(ageRange)}
                       />
                       {ageRange}
@@ -99,7 +108,7 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
                       <input
                         type="checkbox"
                         style={{ marginRight: "5px" }}
-                        checked={selectedGenders.includes(gender)}
+                        checked={chosenGens.includes(gender)}
                         onChange={() => checkGenderField(gender)}
                       />
                       {gender}

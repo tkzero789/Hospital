@@ -5,11 +5,9 @@ const ArticleDetails = ({ article, setArticle }) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   useEffect(() => {
     async function getSymptoms() {
-      const response = await fetch(
-        `https://symptom-checker-with-mern-backend.onrender.com/symptom/`
-      );
+      const response = await fetch(`http://localhost:5000/symptom/`);
       if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
+        const message = `Có lỗi xảy ra: ${response.statusText}`;
         window.alert(message);
         return;
       }

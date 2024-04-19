@@ -1,8 +1,33 @@
 const express = require("express");
 const articleRoutes = express.Router();
 const dbo = require("../db/conn");
-const ObjectId = require("mongodb").ObjectId;
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+const fileFilter = function (req, file, cb) {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
+// set up multer to upload image
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
+
+// get all articles
 articleRoutes.route("/article").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
@@ -13,10 +38,11 @@ articleRoutes.route("/article").get(async function (req, res) {
   }
 });
 
+// get article by id
 articleRoutes.route("/article/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const result = await db_connect.collection("articles").findOne(myquery);
     res.json(result);
   } catch (err) {
@@ -24,43 +50,56 @@ articleRoutes.route("/article/:id").get(async function (req, res) {
   }
 });
 
-// Tim tat ca bai viet lien quan bang id cua can benh
-
-articleRoutes.route("/article-list/:id").get(async function (req, res) {
+// get articles by many ids
+articleRoutes.route("/article/by-ids").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const findDiseaseQuery = { _id: new ObjectId(req.params.id) };
-    const disease = await db_connect
-      .collection("diseases")
-      .findOne(findDiseaseQuery);
-    if (!disease) {
-      res.status(404).json({ message: "Disease not found" });
-      return;
-    }
     const result = await db_connect
       .collection("articles")
-      .find({ diseaseName: disease.name })
+      .find({ id: { $in: req.body.ids } })
       .toArray();
-    if (!result.length) {
-      res.status(404).json({ message: "No articles found for this disease" });
-    } else {
-      res.json(result);
-    }
+    res.json(result);
   } catch (err) {
     throw err;
   }
 });
 
+// save image and get the link
+articleRoutes
+  .route("/article/upload")
+  .post(upload.single("image"), async function (req, res) {
+    try {
+      const uploadedImage = req.file;
+      if (!uploadedImage) {
+        throw new Error("No image uploaded");
+      }
+      res.json({
+        link: `http://localhost:5000/uploads/${uploadedImage.filename}`,
+      });
+    } catch (err) {
+      throw err;
+    }
+  });
+
+// add article
 articleRoutes.route("/article/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
+    const { title, diseaseId } = req.body;
+    const dupCheck = await db_connect
+      .collection("articles")
+      .findOne({ title, diseaseId });
+    if (dupCheck) {
+      return res.json({ message: "Article already exists" });
+    }
     const myobj = {
+      id: req.body.id,
       title: req.body.title,
-      author: req.body.author,
       diseaseId: req.body.diseaseId,
       diseaseName: req.body.diseaseName,
       infos: req.body.infos,
-      treatments: req.body.ireatments,
+      treatments: req.body.treatments,
+      createInfos: req.body.createInfos,
     };
     const result = await db_connect.collection("articles").insertOne(myobj);
     res.json(result);
@@ -69,20 +108,19 @@ articleRoutes.route("/article/add").post(async function (req, res) {
   }
 });
 
+// update article by id
 articleRoutes.route("/article/update/:id").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const newvalues = {
       $set: {
         title: req.body.title,
-        author: req.body.author,
+        diseaseId: req.body.diseaseId,
         diseaseName: req.body.diseaseName,
-        diseaseAgeRanges: req.body.diseaseAgeRanges,
-        diseaseGenders: req.body.diseaseGenders,
-        diseaseSymptoms: req.body.diseaseSymptoms,
-        diseaseInfos: req.body.diseaseInfos,
-        diseaseTreatments: req.body.diseaseTreatments,
+        infos: req.body.infos,
+        treatments: req.body.treatments,
+        createInfos: req.body.createInfos,
       },
     };
     const result = await db_connect
@@ -94,10 +132,11 @@ articleRoutes.route("/article/update/:id").post(async function (req, res) {
   }
 });
 
+// delete article by id
 articleRoutes.route("/article/:id").delete(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const result = await db_connect.collection("articles").deleteOne(myquery);
     res.json(result);
   } catch (err) {
@@ -105,13 +144,12 @@ articleRoutes.route("/article/:id").delete(async function (req, res) {
   }
 });
 
+// OUTDATED -> REMOVE
 articleRoutes.route("/suit-articles").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const articles = await db_connect.collection("articles").find({}).toArray();
-    console.log(articles);
     const patientForm = { ...req.body };
-    console.log(patientForm);
     const matchingArticles = articles
       .filter((article) => {
         // Count matching details for each article

@@ -4,7 +4,7 @@ const Symptom = (props) => {
   return (
     <div className="col-4 p-2">
       <div className="border border-primary-subtle p-2 text-center">
-        <p className="m-0">{props.symptom.symptomName}</p>
+        <p className="m-0">{props.symptom.name}</p>
       </div>
     </div>
   );
@@ -19,20 +19,18 @@ const Details = (props) => {
   return (
     <div className="p-2">
       <p className="m-0">
-        - {props.symptom.symptomName}: {descriptionDetailArray.join(", ")}
+        - {props.symptom.name}: {descriptionDetailArray.join(", ")}
       </p>
     </div>
   );
 };
 
-const DiseaseName = ({ disease, setDisease }) => {
+const DiseaseName = ({ disease, setDisease, editMode }) => {
   const updateField = (event) => {
     let _disease = { ...disease };
     _disease[event.target.name] = event.target.value;
     setDisease(_disease);
   };
-
-  console.log(disease);
 
   return (
     <div>
@@ -43,6 +41,7 @@ const DiseaseName = ({ disease, setDisease }) => {
           className="form-control border-primary-subtle col"
           name="name"
           value={disease.name}
+          readOnly={!editMode}
           onChange={(e) => updateField(e)}
         />
       </div>
@@ -78,7 +77,7 @@ const DiseaseName = ({ disease, setDisease }) => {
         <div className="border border-primary-subtle rounded col-9">
           <div className="row">
             {disease.symptoms.map((symptom) => {
-              return <Symptom symptom={symptom} key={symptom._id} />;
+              return <Symptom symptom={symptom} key={symptom.name} />;
             })}
           </div>
         </div>
@@ -88,7 +87,7 @@ const DiseaseName = ({ disease, setDisease }) => {
         <h4 className="text-blue-2 col-3">MÔ TẢ CHI TIẾT</h4>
         <div className="border border-primary-subtle rounded col">
           {disease.symptoms.map((symptom) => {
-            return <Details symptom={symptom} key={symptom._id} />;
+            return <Details symptom={symptom} key={symptom.name} />;
           })}
         </div>
       </div>

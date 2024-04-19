@@ -1,8 +1,8 @@
 const express = require("express");
 const diseaseRoutes = express.Router();
 const dbo = require("../db/conn");
-const ObjectId = require("mongodb").ObjectId;
 
+// get all
 diseaseRoutes.route("/disease").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
@@ -13,10 +13,11 @@ diseaseRoutes.route("/disease").get(async function (req, res) {
   }
 });
 
+// get by id
 diseaseRoutes.route("/disease/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const result = await db_connect.collection("diseases").findOne(myquery);
     res.json(result);
   } catch (err) {
@@ -24,33 +25,48 @@ diseaseRoutes.route("/disease/:id").get(async function (req, res) {
   }
 });
 
+// add whole new disease
 diseaseRoutes.route("/disease/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myobj = {
-      name: req.body.name,
-      ageRanges: req.body.ageRanges,
-      genders: req.body.genders,
-      symptoms: req.body.symptoms,
-      relatedArticles: req.body.relatedArticles,
-    };
-    const result = await db_connect.collection("diseases").insertOne(myobj);
-    res.json(result);
+    const dupCheck = await db_connect
+      .collection("diseases")
+      .findOne({ name: req.body.name });
+    if (dupCheck) {
+      return res.json({ message: "Disease already exists" });
+    } else {
+      const myobj = {
+        id: req.body.id,
+        name: req.body.name,
+        ageRanges: req.body.ageRanges,
+        genders: req.body.genders,
+        symptoms: req.body.symptoms,
+        medSpecialty: req.body.medSpecialty,
+        relatedArticles: req.body.relatedArticles,
+        createInfos: req.body.createInfos,
+      };
+      const result = await db_connect.collection("diseases").insertOne(myobj);
+      res.json(result);
+    }
   } catch (err) {
     throw err;
   }
 });
 
+// update by id
 diseaseRoutes.route("/disease/update/:id").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const newvalues = {
       $set: {
         name: req.body.name,
         ageRanges: req.body.ageRanges,
         genders: req.body.genders,
         symptoms: req.body.symptoms,
+        medSpecialty: req.body.medSpecialty,
+        relatedArticles: req.body.relatedArticles,
+        createInfos: req.body.createInfos,
       },
     };
     const result = await db_connect
@@ -62,10 +78,78 @@ diseaseRoutes.route("/disease/update/:id").post(async function (req, res) {
   }
 });
 
+// add new article to relatedArticles array of disease with id
+diseaseRoutes.route("/disease/add-article/:id").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { id: req.params.id };
+    const action = {
+      $push: {
+        relatedArticles: req.body,
+      },
+    };
+    const result = await db_connect
+      .collection("diseases")
+      .updateOne(myquery, action);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// update article with id (req.body) in relatedArticles array of disease with id (req.params)
+diseaseRoutes
+  .route("/disease/update-article/:id")
+  .post(async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("mern_hospital");
+      const myquery = { id: req.params.id };
+      const searchRes = await db_connect
+        .collection("diseases")
+        .findOne(myquery);
+      const _articles = searchRes.relatedArticles.map((article) =>
+        article.id === req.body.id ? req.body : article
+      );
+      const action = {
+        $set: {
+          relatedArticles: _articles,
+        },
+      };
+      const result = await db_connect
+        .collection("diseases")
+        .updateOne(myquery, action);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+// delete article with id (req.body) in relatedArticles array of disease with id (req.params)
+diseaseRoutes
+  .route("/disease/delete-article/:id")
+  .post(async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("mern_hospital");
+      const myquery = { id: req.params.id };
+      const action = {
+        $pull: {
+          relatedArticles: { id: req.body.id },
+        },
+      };
+      const result = await db_connect
+        .collection("diseases")
+        .updateOne(myquery, action);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+// delete by id
 diseaseRoutes.route("/disease/:id").delete(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const result = await db_connect.collection("diseases").deleteOne(myquery);
     res.json(result);
   } catch (err) {
@@ -73,31 +157,12 @@ diseaseRoutes.route("/disease/:id").delete(async function (req, res) {
   }
 });
 
-diseaseRoutes.route("/disease-add-article/:id").post(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
-    const newvalues = {
-      $set: {
-        relatedArticles: req.body.relatedArticles,
-      },
-    };
-    const result = await db_connect
-      .collection("diseases")
-      .updateOne(myquery, newvalues);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
-
+// get suitable diseases by patientForm
 diseaseRoutes.route("/suit-diseases").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const diseases = await db_connect.collection("diseases").find({}).toArray();
-    console.log(diseases);
     const patientForm = { ...req.body };
-    console.log(patientForm);
     const matchingDiseases = diseases
       .filter((disease) => {
         // Count matching details for each disease
