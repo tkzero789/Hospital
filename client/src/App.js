@@ -31,11 +31,11 @@ import ViewArticle from "./pages/viewArticle";
 import EditArticle from "./pages/editArticle";
 import AdminHome from "./pages/home/AdminHome";
 import Login from "./pages/login/Login";
-import DoctorList from "./pages/list/DoctorList";
-import AppointmentList from "./pages/list/ApptList";
+import ArticleTable from "./pages/list/ArticleList";
+import AppointmentTable from "./pages/list/ApptList";
+import DiseaseTable from "./pages/list/DiseaseList";
+import UserTable from "./pages/list/UserList";
 import Single from "./pages/single/Single";
-import New from "./pages/new/New";
-import { productInputs, userInputs } from "./formSource";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();
@@ -50,23 +50,67 @@ const App = () => {
         />
         <Route path="/home" element={<Home />} />
         <Route path="/test-home" element={<TestHome />} />
-        <Route path="/admin-home" element={<AdminHome />} />
+        <Route
+          path="/admin-home"
+          element={
+            <RequireAuth
+              userRole={getUserRole()}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <AdminHome userRole={getUserRole()} />
+            </RequireAuth>
+          }
+        />
         <Route path="/login" element={<Login />} />
-        <Route path="/users">
-          <Route index element={<DoctorList />} />
-          <Route path=":userId" element={<Single />} />
+        <Route path="/article-list-table">
           <Route
-            path="new"
-            element={<New inputs={userInputs} title="Add New User" />}
+            index
+            element={
+              <RequireAuth
+                userRole={getUserRole()}
+                allowedRoles={["head-doctor", "doctor", "admin"]}
+              >
+                <ArticleTable userRole={getUserRole()} />
+              </RequireAuth>
+            }
           />
+          <Route path=":article-table-id" element={<Single />} />
         </Route>
-        <Route path="/appointment-list">
-          <Route index element={<AppointmentList />} />
-          <Route path=":appointment-list-id" element={<Single />} />
+        <Route path="/appointment-list-table">
           <Route
-            path="new"
-            element={<New inputs={productInputs} title="Add New Product" />}
+            index
+            element={
+              <RequireAuth userRole={getUserRole()} allowedRoles={["admin"]}>
+                <AppointmentTable userRole={getUserRole()} />
+              </RequireAuth>
+            }
           />
+          <Route path=":appointment-list-id" element={<Single />} />
+        </Route>
+        <Route path="/disease-list-table">
+          <Route
+            index
+            element={
+              <RequireAuth
+                userRole={getUserRole()}
+                allowedRoles={["head-doctor", "doctor", "admin"]}
+              >
+                <DiseaseTable userRole={getUserRole()} />
+              </RequireAuth>
+            }
+          />
+          <Route path=":user/test" element={<Single />} />
+        </Route>
+        <Route path="/user-list-table">
+          <Route
+            index
+            element={
+              <RequireAuth userRole={getUserRole()} allowedRoles={["admin"]}>
+                <UserTable userRole={getUserRole()} />
+              </RequireAuth>
+            }
+          />
+          <Route path=":user-list-table-id" element={<Single />} />
         </Route>
         <Route path="/appt-request" element={<ApptRequest />} />
         <Route path="/symptom-checker" element={<SymptomChecker />} />

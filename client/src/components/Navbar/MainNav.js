@@ -113,7 +113,7 @@ export default function MainNav() {
                           dropdownVisible ? "visible" : "hidden"
                         }`}
                       >
-                        <NavLink to="/admin-home">Bài viết</NavLink>
+                        <NavLink to="/admin-home">Dashboard</NavLink>
                         <NavLink>Cài đặt</NavLink>
                         <NavLink onClick={handleSignOut}>Đăng xuất</NavLink>
                       </div>

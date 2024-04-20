@@ -2,6 +2,8 @@ import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ArticleIcon from "@mui/icons-material/Article";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -10,7 +12,9 @@ import { useAuth } from "../../AuthContext";
 import axios from "axios";
 
 const Sidebar = () => {
-  const { logout } = useAuth();
+  const { logout, getUserRole } = useAuth();
+  const userRole = getUserRole();
+  const isDoctor = userRole === "head-doctor" || userRole === "doctor";
   const navigate = useNavigate();
 
   // Handle sign out
@@ -61,25 +65,34 @@ const Sidebar = () => {
               <span>Dashboard</span>
             </li>
           </NavLink>
-
-          <NavLink to="/users">
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Bác sĩ</span>
-            </li>
-          </NavLink>
-          <NavLink to="">
+          <NavLink to="/article-list-table">
             <li>
               <ArticleIcon className="icon" />
-              <span>Bài viết</span>
+              <span>Danh sách bài viết</span>
             </li>
           </NavLink>
-          <NavLink to="/appointment-list">
+          <NavLink to="/disease-list-table">
             <li>
-              <ArticleIcon className="icon" />
-              <span>Danh sách đặt hẹn</span>
+              <HeartBrokenIcon className="icon" />
+              <span>Danh sách căn bệnh</span>
             </li>
           </NavLink>
+          {!isDoctor && (
+            <NavLink to="/appointment-list-table">
+              <li>
+                <CalendarMonthIcon className="icon" />
+                <span>Danh sách đặt hẹn</span>
+              </li>
+            </NavLink>
+          )}
+          {!isDoctor && (
+            <NavLink to="/user-list-table">
+              <li>
+                <PersonOutlineIcon className="icon" />
+                <span>Danh sách users</span>
+              </li>
+            </NavLink>
+          )}
           <NavLink>
             <li>
               <SettingsApplicationsIcon className="icon" />

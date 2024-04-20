@@ -1,4 +1,4 @@
-import "./appttable.scss";
+import "./articletable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -8,14 +8,18 @@ const Datatable = () => {
   const [data, setData] = useState([]);
   const { getUserRole } = useAuth();
   const userRole = getUserRole();
-  const isDoctor = userRole === "head-doctor" || userRole === "doctor";
+  const isHeadDoctor = userRole === "head-doctor";
 
   useEffect(() => {
-    fetch("http://localhost:5000/appointment")
+    fetch("http://localhost:5000/article")
       .then((response) => response.json())
       .then((data) => {
+        console.log("Response from server:", data);
         // Add an 'id' field to each data object
-        const dataWithIds = data.map((item) => ({ id: item._id, ...item }));
+        const dataWithIds = data.map((item) => ({
+          id: item._id,
+          ...item,
+        }));
         setData(dataWithIds);
         console.log(dataWithIds);
       })
@@ -34,10 +38,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <NavLink
-              to={`/appointment/${params.row.id}`}
-              style={{ textDecoration: "none" }}
-            >
+            <NavLink to="/users/test" style={{ textDecoration: "none" }}>
               <div className="viewButton">Xem</div>
             </NavLink>
             <div
@@ -52,40 +53,30 @@ const Datatable = () => {
     },
   ];
 
+  const flattenedData = data.map((item) => ({
+    ...item,
+    doctorCreated: item.createInfos ? item.createInfos.doctorCreated : "",
+  }));
+
   const columns = [
-    { field: "phoneNumber", headerName: "SĐT", width: 120 },
-    { field: "fullName", headerName: "Tên bệnh nhân", width: 180 },
-    { field: "date", headerName: "Ngày đặt hẹn", width: 140 },
-    { field: "need", headerName: "Nhu cầu", width: 240 },
-    {
-      field: "dob",
-      headerName: "Ngày sinh",
-      width: 140,
-      renderCell: (params) => {
-        // Split the date by '/' and add a leading zero for date with single digit
-        const parts = params.value.split("/");
-        if (parts[0].length === 1) {
-          parts[0] = "0" + parts[0];
-        }
-        return parts.join("/");
-      },
-    },
-    { field: "email", headerName: "Email", width: 280 },
+    { field: "title", headerName: "Tựa đề", width: 650 },
+    { field: "doctorCreated", headerName: "Tác giả", width: 180 },
+    { field: "diseaseName", headerName: "Bệnh đi kèm", width: 350 },
   ].concat(actionColumn);
 
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Danh sách đặt hẹn
-        {!isDoctor && (
-          <NavLink to="/appt-request" className="add-link">
-            Thêm đặt hẹn
+        Danh sách bài viết
+        {isHeadDoctor && (
+          <NavLink to="/signup" className="add-link">
+            Thêm bài viết
           </NavLink>
         )}
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
+        rows={flattenedData}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

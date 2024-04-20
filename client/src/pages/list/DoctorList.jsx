@@ -1,4 +1,4 @@
-import "./doctorlist.scss";
+import "./list.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
 import DortorDatatable from "../../components/doctortable/DoctorTable";

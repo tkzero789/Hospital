@@ -49,7 +49,7 @@ export default function Options() {
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">
-                    <NavLink className="box-select-link" to="/admin-home">
+                    <NavLink className="box-select-link">
                       <div className="box-icon">
                         <i class="bi bi-question-circle"></i>
                       </div>

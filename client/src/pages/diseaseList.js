@@ -7,6 +7,7 @@ import "../css/disease.css";
 
 export default function DiseaseList({ userInfos }) {
   const [diseases, setDiseases] = useState([]);
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/disease/`)
