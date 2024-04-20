@@ -74,7 +74,7 @@ export default function News() {
                   </div>
                   <div className="news-btn-wrapper">
                     <NavLink className="news-btn-link">
-                      <btn class="news-btn">Xem tất cả tin tức</btn>
+                      <button className="news-btn">Xem tất cả tin tức</button>
                     </NavLink>
                   </div>
                 </div>

@@ -7,7 +7,7 @@ const Datatable = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/article")
+    fetch("http://localhost:5000/doctor")
       .then((response) => response.json())
       .then((data) => {
         console.log("Response from server:", data);

@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
 
-    .link {
+    .add-link {
       text-decoration: none;
       color: rgb(255, 255, 255);
       font-size: 16px;
@@ -57,21 +57,30 @@
   .cellAction {
     display: flex;
     align-items: center;
-    gap: 15px;
+    width: 100%;
+    gap: 0 20px;
+
+    .viewLink {
+      text-decoration: none;
+    }
 
     .viewButton {
-      padding: 2px 5px;
+      padding: 4px 10px;
       border-radius: 5px;
-      color: #006298;
+      color: #ffffff;
+      background-color: #006298;
       border: 1px solid #006298;
+      font-weight: var(--roboto-medium-weight);
       cursor: pointer;
     }
 
     .deleteButton {
-      padding: 2px 5px;
+      padding: 4px 10px;
       border-radius: 5px;
-      color: rgb(255, 0, 0);
-      border: 1px solid rgb(255, 0, 0);
+      color: #ffffff;
+      background-color: #ff0000;
+      border: 1px solid #ff0000;
+      font-weight: var(--roboto-medium-weight);
       cursor: pointer;
     }
   }

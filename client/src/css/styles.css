@@ -206,7 +206,9 @@
 }
 
 .low-nav-list a {
+  display: block;
   padding: 12px 0;
+  text-decoration: none;
 }
 
 .low-nav-item {
@@ -223,8 +225,26 @@
   font-weight: var(--roboto-medium-weight);
 }
 
-.dropdown-link {
+.dropdown-list-item {
   position: relative;
+}
+
+.dropdown-list-item::after {
+  content: "";
+  position: absolute;
+  top: 68%;
+  left: 0;
+  width: 145px;
+  height: 15px;
+}
+
+.dropdown-list-item:hover .low-nav-text {
+  color: var(--light-blue-hover);
+}
+
+.dropdown-list-box {
+  padding: 12px 0;
+  cursor: pointer;
 }
 
 .dropdown-content {
@@ -257,8 +277,9 @@
   background-color: #d3e6fc;
 }
 
-.dropdown-link:hover .dropdown-content {
+.dropdown-list-item:hover .dropdown-content {
   display: block;
+  cursor: pointer;
 }
 
 .navbar-wrapper {
@@ -556,7 +577,6 @@
 
 .appt .appt-form .c-4 div > input {
   outline: none;
-  cursor: pointer;
 }
 
 .appt-form .c-4 div label > span {
@@ -584,6 +604,7 @@
   padding-left: 8px;
   border-radius: 3px;
   border: 1px solid #d9d9d6;
+  cursor: pointer;
 }
 
 .appt-date-icon {

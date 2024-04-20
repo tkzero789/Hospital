@@ -19,14 +19,14 @@ export default function LowNav() {
             <ul className="low-nav-list">
               {navLinks.map((link) => (
                 <li key={link.link} className="low-nav-item">
-                  <NavLink className="nav-link" to={link.link}>
+                  <NavLink to={link.link}>
                     <div className="low-nav-text">{link.text}</div>
                   </NavLink>
                 </li>
               ))}
               {/* DROPDOWN  */}
-              <li className="low-nav-item dropdown-link">
-                <NavLink className="nav-link" to="">
+              <li className="low-nav-item dropdown-list-item">
+                <div className="dropdown-list-box">
                   <div className="low-nav-text">Khác</div>
                   <div className="dropdown-content">
                     <NavLink>Lịch làm việc</NavLink>
@@ -37,7 +37,7 @@ export default function LowNav() {
                     <NavLink>Viện nghiên cứu</NavLink>
                     <NavLink>Hoạt động vì cộng đồng</NavLink>
                   </div>
-                </NavLink>
+                </div>
               </li>
             </ul>
           </nav>

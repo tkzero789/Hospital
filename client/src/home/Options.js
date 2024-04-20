@@ -24,7 +24,7 @@ export default function Options() {
                   </div>
                   <div className="opt-btn-wrapper">
                     <NavLink className="opt-btn-link" to="/symptom-checker">
-                      <btn className="opt-btn">Chẩn đoán</btn>
+                      <button className="opt-btn">Chẩn đoán</button>
                     </NavLink>
                   </div>
                 </div>
@@ -36,7 +36,7 @@ export default function Options() {
                   </div>
                   <div className="opt-btn-wrapper">
                     <NavLink className="opt-btn-link" to="/appt-request">
-                      <btn className="opt-btn">Đăng ký</btn>
+                      <button className="opt-btn">Đăng ký</button>
                     </NavLink>
                   </div>
                 </div>
@@ -51,7 +51,7 @@ export default function Options() {
                   <div className="box-select">
                     <NavLink className="box-select-link">
                       <div className="box-icon">
-                        <i class="bi bi-question-circle"></i>
+                        <i className="bi bi-question-circle"></i>
                       </div>
                       <div className="box-text">Tư vấn</div>
                     </NavLink>
@@ -59,7 +59,7 @@ export default function Options() {
                   <div className="box-select">
                     <NavLink className="box-select-link">
                       <div className="box-icon">
-                        <i class="bi bi-lungs"></i>
+                        <i className="bi bi-lungs"></i>
                       </div>
                       <div className="box-text">Chuyên khoa</div>
                     </NavLink>
@@ -67,7 +67,7 @@ export default function Options() {
                   <div className="box-select">
                     <NavLink className="box-select-link">
                       <div className="box-icon">
-                        <i class="bi bi-calendar-heart"></i>
+                        <i className="bi bi-calendar-heart"></i>
                       </div>
                       <div className="box-text">Lịch làm việc</div>
                     </NavLink>
@@ -75,7 +75,7 @@ export default function Options() {
                   <div className="box-select">
                     <NavLink className="box-select-link">
                       <div className="box-icon">
-                        <i class="bi bi-file-earmark-medical"></i>
+                        <i className="bi bi-file-earmark-medical"></i>
                       </div>
                       <div className="box-text">Bảng giá</div>
                     </NavLink>

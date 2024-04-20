@@ -34,10 +34,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <NavLink
-              to={`/appointment/${params.row.id}`}
-              style={{ textDecoration: "none" }}
-            >
+            <NavLink className="viewLink" to={`/appointment/${params.row.id}`}>
               <div className="viewButton">Xem</div>
             </NavLink>
             <div

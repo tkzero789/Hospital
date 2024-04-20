@@ -12,15 +12,9 @@ const navLinks = [
 ];
 
 export default function MainNav() {
-  const { loggedIn, logout, getUserInfos, getUserRole } = useAuth();
+  const { loggedIn, logout, getUserInfos } = useAuth();
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false); //toggle dropdown
-
-  // get user infos and role
-  useEffect(() => {
-    console.log("User Infos:", getUserInfos());
-    console.log("User Role:", getUserRole());
-  }, [getUserInfos, getUserRole]);
 
   // get user full name
   const userInfos = getUserInfos();

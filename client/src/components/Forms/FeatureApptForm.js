@@ -247,7 +247,6 @@ export default function FeatureApptForm() {
       window.scrollTo(0, 0); // Scroll to the top of the page
     }
   }, [showModal]);
-
   // --- Modal: End ---
 
   return (
@@ -267,7 +266,7 @@ export default function FeatureApptForm() {
               <div className="c-4 m-12">
                 {/* Name */}
                 <div className="name-form">
-                  <label for="name">
+                  <label htmlFor="name">
                     Họ và tên <span>*</span>
                   </label>
                   <input
@@ -283,7 +282,7 @@ export default function FeatureApptForm() {
                 </div>
                 {/* Phone */}
                 <div className="phone-form">
-                  <label for="phone">
+                  <label htmlFor="phone">
                     Số điện thoại <span>*</span>
                   </label>
                   <input
@@ -300,7 +299,7 @@ export default function FeatureApptForm() {
                 </div>
                 {/* Email */}
                 <div className="email-form">
-                  <label for="email">Email</label>
+                  <label htmlFor="email">Email</label>
                   <input
                     className="appt-input"
                     type="email"
@@ -380,7 +379,7 @@ export default function FeatureApptForm() {
                 </div>
                 {/* Gender */}
                 <div className="gender">
-                  <label for="gender">
+                  <label htmlFor="gender">
                     Giới tính <span>*</span>
                   </label>
                   <select
@@ -399,7 +398,7 @@ export default function FeatureApptForm() {
                 </div>
                 {/* Specialties */}
                 <div className="need">
-                  <label for="need">
+                  <label htmlFor="need">
                     Nhu cầu khám <span>*</span>
                   </label>
                   <select
@@ -425,7 +424,7 @@ export default function FeatureApptForm() {
               <div className="c-4 m-12">
                 {/* Appt Date */}
                 <div className="appt-date">
-                  <label for="appt-date">Đặt lịch khám</label>
+                  <label htmlFor="appt-date">Đặt lịch khám</label>
                   <div className="appt-date-container d-flex">
                     <input
                       className="appt-date-input"
@@ -439,7 +438,7 @@ export default function FeatureApptForm() {
                       required
                     />
                     <div className="appt-date-icon">
-                      <i class="bi bi-calendar"></i>
+                      <i className="bi bi-calendar"></i>
                     </div>
                   </div>
 
@@ -450,13 +449,34 @@ export default function FeatureApptForm() {
                         locale="vi-VN"
                         minDate={new Date()}
                         maxDate={maxDate}
+                        tileClassName={({ date, view }) => {
+                          if (view === "month") {
+                            const currentDate = new Date().setHours(0, 0, 0, 0);
+                            const selectedDate = calendarDate?.getTime();
+                            if (
+                              date.getTime() === currentDate &&
+                              (selectedDate === null ||
+                                selectedDate !== currentDate)
+                            ) {
+                              return "react-calendar__tile--now";
+                            } else if (date.getTime() === selectedDate) {
+                              return "react-calendar__tile--selected";
+                            } else if (
+                              date.getTime() === currentDate &&
+                              selectedDate === currentDate
+                            ) {
+                              return "react-calendar__tile--now-unselected";
+                            }
+                          }
+                          return null;
+                        }}
                       />
                     </div>
                   )}
                 </div>
                 {/* Symptom Description */}
                 <div className="reason-textarea">
-                  <label for="reason">Mô tả vấn đề sức khoẻ</label>
+                  <label htmlFor="reason">Mô tả vấn đề sức khoẻ</label>
                   <textarea
                     placeholder="Nhập mô tả vấn đề sức khoẻ (không bắt buộc)"
                     id="inputReason"

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainNav from "../components/Navbar/MainNav";
 import LowNav from "../components/Navbar/LowNav";
 import Footer from "../components/ForPages/Footer";
@@ -241,9 +240,12 @@ export default function SymptomChecker() {
 
   return (
     <>
-      <Helmet>
-        <title>Chẩn đoán - Phòng khám online</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Chẩn đoán - Phòng khám online</title>
+        </Helmet>
+      </HelmetProvider>
+
       <div>
         <MainNav />
         <LowNav />

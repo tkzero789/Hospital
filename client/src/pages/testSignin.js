@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useAuth } from "../AuthContext";
@@ -74,9 +75,12 @@ export default function TestSignin() {
 
   return (
     <>
-      <Helmet>
-        <title>Đăng nhập</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Đăng nhập</title>
+        </Helmet>
+      </HelmetProvider>
+
       <div className="signin-bg">
         <div className="signin">
           <NavLink to="/home">

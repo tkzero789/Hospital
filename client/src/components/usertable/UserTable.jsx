@@ -35,7 +35,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <NavLink to="/users/test" style={{ textDecoration: "none" }}>
+            <NavLink className="viewLink" to="/users/test">
               <div className="viewButton">Xem</div>
             </NavLink>
             <div
