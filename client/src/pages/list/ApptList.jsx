@@ -1,7 +1,7 @@
-import "./articlelist.scss";
+import "./apptlist.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
-import ArticleDatatable from "../../components/articletable/ArticleTable";
+import AppointmentDatatable from "../../components/appttable/ApptTable";
 
 const List = () => {
   return (
@@ -9,7 +9,7 @@ const List = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        <ArticleDatatable />
+        <AppointmentDatatable />
       </div>
     </div>
   );

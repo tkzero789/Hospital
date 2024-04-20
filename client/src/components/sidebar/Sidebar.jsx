@@ -44,7 +44,7 @@ const Sidebar = () => {
       <div className="top">
         <NavLink
           className="logo-link"
-          to="/admin-home"
+          to="/home"
           style={{ textDecoration: "none" }}
         >
           <div className="admin-logo">
@@ -68,13 +68,18 @@ const Sidebar = () => {
               <span>Bác sĩ</span>
             </li>
           </NavLink>
-          <NavLink to="/article-doctor">
+          <NavLink to="">
             <li>
               <ArticleIcon className="icon" />
               <span>Bài viết</span>
             </li>
           </NavLink>
-
+          <NavLink to="/appointment-list">
+            <li>
+              <ArticleIcon className="icon" />
+              <span>Danh sách đặt hẹn</span>
+            </li>
+          </NavLink>
           <NavLink>
             <li>
               <SettingsApplicationsIcon className="icon" />

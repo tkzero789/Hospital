@@ -32,8 +32,7 @@ import EditArticle from "./pages/editArticle";
 import AdminHome from "./pages/home/AdminHome";
 import Login from "./pages/login/Login";
 import DoctorList from "./pages/list/DoctorList";
-import ArticleList from "./pages/list/ArticleList";
-
+import AppointmentList from "./pages/list/ApptList";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { productInputs, userInputs } from "./formSource";
@@ -61,9 +60,9 @@ const App = () => {
             element={<New inputs={userInputs} title="Add New User" />}
           />
         </Route>
-        <Route path="/article-doctor">
-          <Route index element={<ArticleList />} />
-          <Route path=":article-doctorID" element={<Single />} />
+        <Route path="/appointment-list">
+          <Route index element={<AppointmentList />} />
+          <Route path=":appointment-list-id" element={<Single />} />
           <Route
             path="new"
             element={<New inputs={productInputs} title="Add New Product" />}
