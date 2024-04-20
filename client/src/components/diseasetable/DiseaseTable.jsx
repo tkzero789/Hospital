@@ -68,9 +68,9 @@ const Datatable = () => {
         params.value.map((symptom) => symptom.name).join(", "),
     },
     { field: "medSpecialty", headerName: "Chuyên khoa", width: 160 },
-    { field: "doctorCreated", headerName: "Được tạo bởi", width: 180 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 100 },
-    { field: "timeCreated", headerName: "Ngày tạo", width: 160 },
+    { field: "doctorCreated", headerName: "Tác giả", width: 180 },
+    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
+    { field: "timeCreated", headerName: "Ngày viết", width: 160 },
   ].concat(actionColumn);
 
   return (

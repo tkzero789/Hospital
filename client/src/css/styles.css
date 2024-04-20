@@ -1562,9 +1562,10 @@
 .user-dropdown {
   position: absolute;
   background-color: #fff;
-  min-width: 160px;
+  min-width: 200px;
   top: 50px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 8px;
 }
 
 .user-dropdown a {
@@ -1577,6 +1578,20 @@
 
 .user-dropdown a:hover {
   background-color: #d3e6fc;
+}
+
+.user-dropdown a:first-child:hover {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.user-dropdown a:last-child:hover {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.user-dropdown a span {
+  padding-left: 12px;
 }
 
 .hidden {

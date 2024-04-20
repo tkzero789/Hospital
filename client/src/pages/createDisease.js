@@ -13,6 +13,11 @@ import DiseaseNewSympDes from "../components/DiseaseNewSympDes";
 import DiseaseName from "../components/DiseaseName";
 
 export default function CreateDisease({ userInfos }) {
+  const now = new Date();
+  const formattedDate = `${String(now.getDate()).padStart(2, "0")}/${String(
+    now.getMonth() + 1
+  ).padStart(2, "0")}/${now.getFullYear()}`;
+
   const [disease, setDisease] = useState({
     id: uuidv4(),
     name: "",
@@ -24,10 +29,11 @@ export default function CreateDisease({ userInfos }) {
     createInfos: {
       doctorCreated: userInfos.fullName,
       doctorID: userInfos.doctorID,
-      timeCreated: Date.now(),
+      timeCreated: formattedDate,
       timeEdited: null,
     },
   });
+
   const [dbSymps, setDbSymps] = useState([]);
   // chosenSymps, chosenCats, chosenDes are Symptoms, Categories and Descriptions existing in DB
   // AND have been chosen in the process, only contain id

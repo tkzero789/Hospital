@@ -2,11 +2,9 @@ import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainNav from "../components/Navbar/MainNav";
 import LowNav from "../components/Navbar/LowNav";
-
 import Footer from "../components/ForPages/Footer";
-import FeatureApptForm from "../components/Forms/FeatureApptForm";
-import TestApptForm from "../components/Forms/TestApptForm";
 import MobileNav from "../components/Navbar/MobileNav";
+import ApptForm from "../components/Forms/ApptForm";
 
 export default function ApptRequest() {
   return (
@@ -26,7 +24,7 @@ export default function ApptRequest() {
         </header>
 
         {/* Appointment Form */}
-        <FeatureApptForm />
+        <ApptForm />
         {/* Footer */}
         <Footer />
       </div>

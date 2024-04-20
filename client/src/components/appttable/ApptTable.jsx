@@ -16,8 +16,9 @@ const Datatable = () => {
       .then((data) => {
         // Add an 'id' field to each data object
         const dataWithIds = data.map((item) => ({ id: item._id, ...item }));
-        setData(dataWithIds);
-        console.log(dataWithIds);
+        const reverseData = dataWithIds.reverse();
+        setData(reverseData);
+        console.log(reverseData);
       })
       .catch((error) => console.error("Error:", error));
   }, []);
@@ -52,12 +53,12 @@ const Datatable = () => {
   const columns = [
     { field: "phoneNumber", headerName: "SĐT", width: 120 },
     { field: "fullName", headerName: "Tên bệnh nhân", width: 180 },
-    { field: "date", headerName: "Ngày đặt hẹn", width: 140 },
+    { field: "date", headerName: "Ngày đặt hẹn", width: 160 },
     { field: "need", headerName: "Nhu cầu", width: 240 },
     {
       field: "dob",
       headerName: "Ngày sinh",
-      width: 140,
+      width: 160,
       renderCell: (params) => {
         // Split the date by '/' and add a leading zero for date with single digit
         const parts = params.value.split("/");
@@ -67,7 +68,8 @@ const Datatable = () => {
         return parts.join("/");
       },
     },
-    { field: "email", headerName: "Email", width: 280 },
+    { field: "email", headerName: "Email", width: 240 },
+    { field: "createdAt", headerName: "Ngày khởi tạo", width: 160 },
   ].concat(actionColumn);
 
   return (

@@ -3,6 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
 import BKCsvg from "../../assets/logo/bkcaresvg.svg";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const navLinks = [
   { link: "/home", text: "" },
@@ -107,9 +110,18 @@ export default function MainNav() {
                           dropdownVisible ? "visible" : "hidden"
                         }`}
                       >
-                        <NavLink to="/admin-home">Dashboard</NavLink>
-                        <NavLink>Cài đặt</NavLink>
-                        <NavLink onClick={handleSignOut}>Đăng xuất</NavLink>
+                        <NavLink to="/admin-home">
+                          <SpaceDashboardIcon />
+                          <span>Dashboard</span>
+                        </NavLink>
+                        <NavLink>
+                          <SettingsIcon />
+                          <span>Cài đặt</span>
+                        </NavLink>
+                        <NavLink onClick={handleSignOut}>
+                          <ExitToAppIcon />
+                          <span>Đăng xuất</span>
+                        </NavLink>
                       </div>
                     </NavLink>
                   </div>
