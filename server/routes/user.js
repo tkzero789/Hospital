@@ -5,6 +5,16 @@ const userRoutes = express.Router();
 const dbo = require("../db/conn");
 const SECRET_JWT_KEY = process.env.SECRET_JWT_KEY;
 
+userRoutes.route("/user-table").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const result = await db_connect.collection("users").find({}).toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
 userRoutes.route("/signup").post(async function (req, res) {
   console.log(req.body);
   try {

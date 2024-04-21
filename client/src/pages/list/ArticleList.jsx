@@ -1,4 +1,4 @@
-import "./articlelist.scss";
+import "./list.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
 import ArticleDatatable from "../../components/articletable/ArticleTable";

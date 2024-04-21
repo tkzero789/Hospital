@@ -110,10 +110,10 @@
   color: var(--text-white);
 }
 
-.nav-link-first {
+/* .nav-link-first {
   display: flex;
   align-items: center;
-}
+} */
 
 .main-nav-text {
   font-size: 18px;
@@ -206,7 +206,9 @@
 }
 
 .low-nav-list a {
+  display: block;
   padding: 12px 0;
+  text-decoration: none;
 }
 
 .low-nav-item {
@@ -223,8 +225,26 @@
   font-weight: var(--roboto-medium-weight);
 }
 
-.dropdown-link {
+.dropdown-list-item {
   position: relative;
+}
+
+.dropdown-list-item::after {
+  content: "";
+  position: absolute;
+  top: 68%;
+  left: 0;
+  width: 145px;
+  height: 15px;
+}
+
+.dropdown-list-item:hover .low-nav-text {
+  color: var(--light-blue-hover);
+}
+
+.dropdown-list-box {
+  padding: 12px 0;
+  cursor: pointer;
 }
 
 .dropdown-content {
@@ -257,8 +277,9 @@
   background-color: #d3e6fc;
 }
 
-.dropdown-link:hover .dropdown-content {
+.dropdown-list-item:hover .dropdown-content {
   display: block;
+  cursor: pointer;
 }
 
 .navbar-wrapper {
@@ -556,7 +577,6 @@
 
 .appt .appt-form .c-4 div > input {
   outline: none;
-  cursor: pointer;
 }
 
 .appt-form .c-4 div label > span {
@@ -584,6 +604,7 @@
   padding-left: 8px;
   border-radius: 3px;
   border: 1px solid #d9d9d6;
+  cursor: pointer;
 }
 
 .appt-date-icon {
@@ -1519,4 +1540,71 @@
 .signin-footer a {
   color: var(--text-white);
   margin: 0 8px;
+}
+
+/* User Dropdown */
+.user-login {
+  position: relative;
+}
+
+.user-login a {
+  display: flex;
+  text-decoration: none;
+  color: var(--text-color);
+  align-items: center;
+}
+
+.user-icon-dropdown {
+  font-size: 20px;
+  padding-left: 6px;
+}
+
+.user-dropdown {
+  position: absolute;
+  background-color: #fff;
+  min-width: 200px;
+  top: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 8px;
+}
+
+.user-dropdown a {
+  display: block;
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 12px 12px;
+  font-size: 18px;
+}
+
+.user-dropdown a:hover {
+  background-color: #d3e6fc;
+}
+
+.user-dropdown a:first-child:hover {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.user-dropdown a:last-child:hover {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.user-dropdown a span {
+  padding-left: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.toast-noti {
+  height: 50px;
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 150px;
 }

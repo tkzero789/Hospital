@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import BKCsvg from "../assets/logo/bkcaresvg.svg";
+import { Toaster, toast } from "sonner";
 
 export default function TestSignin() {
   // User
@@ -55,7 +57,7 @@ export default function TestSignin() {
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
-          window.alert("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
+          toast.error("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
         } else {
           const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
@@ -74,9 +76,12 @@ export default function TestSignin() {
 
   return (
     <>
-      <Helmet>
-        <title>Đăng nhập</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Đăng nhập</title>
+        </Helmet>
+      </HelmetProvider>
+
       <div className="signin-bg">
         <div className="signin">
           <NavLink to="/home">
@@ -153,6 +158,13 @@ export default function TestSignin() {
                       </form>
                     </div>
                     <div className="signin-right-btn">
+                      <Toaster
+                        toastOptions={{
+                          className: "toast-noti",
+                        }}
+                        position="top-center"
+                        richColors
+                      />
                       <button
                         type="button"
                         onClick={(e) => {

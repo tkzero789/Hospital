@@ -1,11 +1,30 @@
 import "./articletable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../adminArticleList";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../AuthContext";
 
 const Datatable = () => {
-  const [data, setData] = useState(userRows);
+  const [data, setData] = useState([]);
+  const { getUserRole } = useAuth();
+  const userRole = getUserRole();
+  const isHeadDoctor = userRole === "head-doctor";
+
+  useEffect(() => {
+    fetch("http://localhost:5000/article")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Response from server:", data);
+        // Add an 'id' field to each data object
+        const dataWithIds = data.map((item) => ({
+          id: item._id,
+          ...item,
+        }));
+        setData(dataWithIds);
+        console.log(dataWithIds);
+      })
+      .catch((error) => console.error("Error:", error));
+  }, []);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -19,7 +38,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <NavLink to="/users/test" style={{ textDecoration: "none" }}>
+            <NavLink className="viewLink" to="/users/test">
               <div className="viewButton">Xem</div>
             </NavLink>
             <div
@@ -33,18 +52,32 @@ const Datatable = () => {
       },
     },
   ];
+
+  const flattenedData = data.map((item) => ({
+    ...item,
+    doctorCreated: item.createInfos ? item.createInfos.doctorCreated : "",
+  }));
+
+  const columns = [
+    { field: "title", headerName: "Tựa đề", width: 650 },
+    { field: "doctorCreated", headerName: "Tác giả", width: 180 },
+    { field: "diseaseName", headerName: "Bệnh đi kèm", width: 350 },
+  ].concat(actionColumn);
+
   return (
     <div className="datatable">
       <div className="datatableTitle">
         Danh sách bài viết
-        <NavLink to="/users/new" className="link">
-          Thêm bài viết
-        </NavLink>
+        {isHeadDoctor && (
+          <NavLink to="/signup" className="add-link">
+            Thêm bài viết
+          </NavLink>
+        )}
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
-        columns={userColumns.concat(actionColumn)}
+        rows={flattenedData}
+        columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection

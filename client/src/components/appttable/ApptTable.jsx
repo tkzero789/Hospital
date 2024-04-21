@@ -1,20 +1,24 @@
-import "./doctortable.scss";
+import "./appttable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../AuthContext";
 
 const Datatable = () => {
   const [data, setData] = useState([]);
+  const { getUserRole } = useAuth();
+  const userRole = getUserRole();
+  const isDoctor = userRole === "head-doctor" || userRole === "doctor";
 
   useEffect(() => {
-    fetch("http://localhost:5000/doctor")
+    fetch("http://localhost:5000/appointment")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Response from server:", data);
         // Add an 'id' field to each data object
         const dataWithIds = data.map((item) => ({ id: item._id, ...item }));
-        setData(dataWithIds);
-        console.log(dataWithIds);
+        const reverseData = dataWithIds.reverse();
+        setData(reverseData);
+        console.log(reverseData);
       })
       .catch((error) => console.error("Error:", error));
   }, []);
@@ -31,7 +35,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <NavLink to="/users/test" style={{ textDecoration: "none" }}>
+            <NavLink className="viewLink" to={`/appointment/${params.row.id}`}>
               <div className="viewButton">Xem</div>
             </NavLink>
             <div
@@ -47,17 +51,36 @@ const Datatable = () => {
   ];
 
   const columns = [
-    { field: "id", headerName: "ID", width: 200 },
     { field: "phoneNumber", headerName: "SĐT", width: 120 },
+    { field: "fullName", headerName: "Tên bệnh nhân", width: 180 },
+    { field: "date", headerName: "Ngày đặt hẹn", width: 160 },
+    { field: "need", headerName: "Nhu cầu", width: 240 },
+    {
+      field: "dob",
+      headerName: "Ngày sinh",
+      width: 160,
+      renderCell: (params) => {
+        // Split the date by '/' and add a leading zero for date with single digit
+        const parts = params.value.split("/");
+        if (parts[0].length === 1) {
+          parts[0] = "0" + parts[0];
+        }
+        return parts.join("/");
+      },
+    },
+    { field: "email", headerName: "Email", width: 240 },
+    { field: "createdAt", headerName: "Ngày khởi tạo", width: 160 },
   ].concat(actionColumn);
 
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Danh sách bác sĩ
-        <NavLink to="/signup" className="add-link">
-          Thêm bác sĩ
-        </NavLink>
+        Danh sách đặt hẹn
+        {!isDoctor && (
+          <NavLink to="/appt-request" className="add-link">
+            Thêm đặt hẹn
+          </NavLink>
+        )}
       </div>
       <DataGrid
         className="datagrid"

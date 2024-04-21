@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainNav from "../components/Navbar/MainNav";
 import LowNav from "../components/Navbar/LowNav";
 import Footer from "../components/ForPages/Footer";
@@ -11,6 +10,7 @@ import PatientFormDes from "../components/Forms/PatientFormDes";
 import PatientFormResult from "../components/Forms/PatientFormResult";
 import axios from "axios";
 import MobileNav from "../components/Navbar/MobileNav";
+import { Toaster, toast } from "sonner";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -179,14 +179,14 @@ export default function SymptomChecker() {
     if (step === 2) {
       console.log(patientForm.chosenSymps);
       if (patientForm.chosenSymps.length === 0) {
-        window.alert("Hãy chọn ít nhất 1 triệu chứng");
+        toast.error("Hãy chọn ít nhất 1 triệu chứng");
         return;
       } else {
         return handleNext();
       }
     } else if (step === 3) {
       if (patientForm.chosenDes.length === 0) {
-        window.alert("Hãy chọn ít nhất 1 mô tả");
+        toast.error("Hãy chọn ít nhất 1 mô tả");
         return;
       } else {
         return handleNext();
@@ -241,9 +241,12 @@ export default function SymptomChecker() {
 
   return (
     <>
-      <Helmet>
-        <title>Chẩn đoán - Phòng khám online</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Chẩn đoán - Phòng khám online</title>
+        </Helmet>
+      </HelmetProvider>
+
       <div>
         <MainNav />
         <LowNav />
@@ -304,13 +307,22 @@ export default function SymptomChecker() {
                           ĐẶT LỊCH KHÁM
                         </Link>
                       ) : (
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary"
-                          onClick={checkHandleNext}
-                        >
-                          {step === 3 ? "Xem kết quả" : "Tiếp theo"}
-                        </button>
+                        <>
+                          <Toaster
+                            toastOptions={{
+                              className: "toast-noti",
+                            }}
+                            position="top-center"
+                            richColors
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-outline-primary"
+                            onClick={checkHandleNext}
+                          >
+                            {step === 3 ? "Xem kết quả" : "Tiếp theo"}
+                          </button>
+                        </>
                       )}
                     </div>
                   </div>

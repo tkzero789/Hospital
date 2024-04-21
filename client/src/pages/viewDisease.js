@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams, NavLink } from "react-router-dom";
 import axios from "axios";
-
 import DoctorNav from "../components/Navbar/DoctorNav";
 import AdminNavBar from "../components/Navbar/AdminNavBar";
 import DiseaseName from "../components/DiseaseName";

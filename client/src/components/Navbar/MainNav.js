@@ -3,6 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
 import BKCsvg from "../../assets/logo/bkcaresvg.svg";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const navLinks = [
   { link: "/home", text: "" },
@@ -12,25 +15,15 @@ const navLinks = [
 ];
 
 export default function MainNav() {
-  const { loggedIn, logout, userId } = useAuth();
+  const { loggedIn, logout, getUserInfos } = useAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false); //toggle dropdown
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`/user/${userId}`);
-        setUser(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  // get user full name
+  const userInfos = getUserInfos();
+  const fullName = userInfos ? userInfos.fullName : null;
 
-    if (loggedIn && userId) {
-      fetchUserData();
-    }
-  }, [loggedIn, userId]);
-
+  // Handle sign out
   const handleSignOut = async () => {
     try {
       const token = localStorage.getItem("userToken");
@@ -55,6 +48,22 @@ export default function MainNav() {
       window.alert(message);
     }
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".user-login")) {
+        setDropdownVisible(false);
+      }
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
@@ -83,12 +92,39 @@ export default function MainNav() {
 
               {loggedIn ? (
                 <li key={"signin"}>
-                  <NavLink
-                    className="nav-link nav-link-first"
-                    onClick={handleSignOut}
+                  <div
+                    className="nav-link nav-link-first user-login"
+                    onClick={() => setDropdownVisible(!dropdownVisible)}
                   >
-                    <div className="main-nav-text">Đăng xuất</div>
-                  </NavLink>
+                    <NavLink>
+                      <div className="main-nav-text">{fullName}</div>
+                      <div className="user-icon-dropdown">
+                        {dropdownVisible ? (
+                          <i className="left-dropdown-icon bi bi-caret-down-fill"></i>
+                        ) : (
+                          <i className="down-dropdown-icon bi bi-caret-left-fill"></i>
+                        )}
+                      </div>
+                      <div
+                        className={`user-dropdown ${
+                          dropdownVisible ? "visible" : "hidden"
+                        }`}
+                      >
+                        <NavLink to="/admin-home">
+                          <SpaceDashboardIcon />
+                          <span>Dashboard</span>
+                        </NavLink>
+                        <NavLink>
+                          <SettingsIcon />
+                          <span>Cài đặt</span>
+                        </NavLink>
+                        <NavLink onClick={handleSignOut}>
+                          <ExitToAppIcon />
+                          <span>Đăng xuất</span>
+                        </NavLink>
+                      </div>
+                    </NavLink>
+                  </div>
                 </li>
               ) : (
                 <li key={"signout"}>
