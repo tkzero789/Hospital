@@ -5,6 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import "../../css/calendar.css";
 import { useNavigate } from "react-router-dom";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
+import { Toaster, toast } from "sonner";
 
 export default function ApptForm() {
   // --- DOB: Start ---
@@ -205,21 +206,21 @@ export default function ApptForm() {
     const inputFullName = document.getElementById("inputFullName");
     const inputEmail = document.getElementById("inputEmail");
     if (!inputFullName.checkValidity()) {
-      alert("Thiếu Họ và tên");
+      toast.warning("Thiếu họ và tên");
     } else if (appt.phoneNumber === "") {
-      alert("Số điện thoại không hợp lệ");
+      toast.warning("Số điện thoại không hợp lệ");
     } else if (!inputEmail.checkValidity()) {
-      alert("Email không hợp lệ");
+      toast.warning("Email không hợp lệ");
     } else if (!date) {
-      alert("Vui lòng chọn ngày");
+      toast.warning("Vui lòng chọn ngày");
     } else if (!month) {
-      alert("Vui lòng chọn tháng");
+      toast.warning("Vui lòng chọn tháng");
     } else if (!year) {
-      alert("Vui lòng chọn năm");
+      toast.warning("Vui lòng chọn năm");
     } else if (appt.gender === "") {
-      alert("Vui lòng chọn giới tính");
+      toast.warning("Vui lòng chọn giới tính");
     } else if (appt.need === "") {
-      alert("Vui lòng chọn Nhu cầu khám");
+      toast.warning("Vui lòng chọn Nhu cầu khám");
     } else {
       displayModal();
       console.log(appt);
@@ -499,6 +500,13 @@ export default function ApptForm() {
                 gian khám chính xác tới quý khách sau khi quý khách đặt hẹn.
               </span>
               <div className="appt-btn">
+                <Toaster
+                  toastOptions={{
+                    className: "toast-noti",
+                  }}
+                  position="top-center"
+                  richColors
+                />
                 <button onClick={validateInput}>Tiếp tục</button>
               </div>
             </div>

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import BKCsvg from "../assets/logo/bkcaresvg.svg";
+import { Toaster, toast } from "sonner";
 
 export default function TestSignin() {
   // User
@@ -56,7 +57,7 @@ export default function TestSignin() {
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
-          window.alert("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
+          toast.error("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
         } else {
           const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
@@ -157,6 +158,13 @@ export default function TestSignin() {
                       </form>
                     </div>
                     <div className="signin-right-btn">
+                      <Toaster
+                        toastOptions={{
+                          className: "toast-noti",
+                        }}
+                        position="top-center"
+                        richColors
+                      />
                       <button
                         type="button"
                         onClick={(e) => {
