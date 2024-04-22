@@ -66,80 +66,75 @@ export default function MainNav() {
   }, []);
 
   return (
-    <>
-      <div className="w-100 nav-bg">
-        <div className="nav-container">
-          <nav className="nav-bg py-0 d-none d-lg-block d-xl-block">
-            <ul className="main-nav-list">
-              {navLinks.map((link, index) => (
-                <li
-                  key={link.link}
-                  className={`nav-item item ${
-                    index === navLinks.length - 1 ? "nav-item-last" : ""
-                  }`}
+    <div className="w-100 nav-bg">
+      <div className="nav-container">
+        <nav className="nav-bg py-0 d-none d-lg-block d-xl-block">
+          <ul className="main-nav-list">
+            {navLinks.map((link, index) => (
+              <li
+                key={link.link}
+                className={`nav-item item ${
+                  index === navLinks.length - 1 ? "nav-item-last" : ""
+                }`}
+              >
+                <NavLink className="nav-link nav-link-first" to={link.link}>
+                  {index === 0 && (
+                    <div className="home-logo">
+                      <img src={BKCsvg} alt="BKCare logo"></img>
+                    </div>
+                  )}
+
+                  <div className="main-nav-text">{link.text}</div>
+                </NavLink>
+              </li>
+            ))}
+
+            {loggedIn ? (
+              <li key={"signin"}>
+                <div
+                  className="nav-link nav-link-first user-login"
+                  onClick={() => setDropdownVisible(!dropdownVisible)}
                 >
-                  <NavLink className="nav-link nav-link-first" to={link.link}>
-                    {index === 0 && (
-                      <div className="home-logo">
-                        <img src={BKCsvg} alt="BKCare logo"></img>
-                      </div>
-                    )}
-
-                    <div className="main-nav-text">{link.text}</div>
+                  <NavLink>
+                    <div className="main-nav-text">{fullName}</div>
+                    <div className="user-icon-dropdown">
+                      {dropdownVisible ? (
+                        <i className="left-dropdown-icon bi bi-caret-down-fill"></i>
+                      ) : (
+                        <i className="down-dropdown-icon bi bi-caret-left-fill"></i>
+                      )}
+                    </div>
+                    <div
+                      className={`user-dropdown ${
+                        dropdownVisible ? "visible" : "hidden"
+                      }`}
+                    >
+                      <NavLink to="/workspace/dashboard">
+                        <SpaceDashboardIcon />
+                        <span>Dashboard</span>
+                      </NavLink>
+                      <NavLink>
+                        <SettingsIcon />
+                        <span>Cài đặt</span>
+                      </NavLink>
+                      <NavLink onClick={handleSignOut}>
+                        <ExitToAppIcon />
+                        <span>Đăng xuất</span>
+                      </NavLink>
+                    </div>
                   </NavLink>
-                </li>
-              ))}
-
-              {loggedIn ? (
-                <li key={"signin"}>
-                  <div
-                    className="nav-link nav-link-first user-login"
-                    onClick={() => setDropdownVisible(!dropdownVisible)}
-                  >
-                    <NavLink>
-                      <div className="main-nav-text">{fullName}</div>
-                      <div className="user-icon-dropdown">
-                        {dropdownVisible ? (
-                          <i className="left-dropdown-icon bi bi-caret-down-fill"></i>
-                        ) : (
-                          <i className="down-dropdown-icon bi bi-caret-left-fill"></i>
-                        )}
-                      </div>
-                      <div
-                        className={`user-dropdown ${
-                          dropdownVisible ? "visible" : "hidden"
-                        }`}
-                      >
-                        <NavLink to="/admin-home">
-                          <SpaceDashboardIcon />
-                          <span>Dashboard</span>
-                        </NavLink>
-                        <NavLink>
-                          <SettingsIcon />
-                          <span>Cài đặt</span>
-                        </NavLink>
-                        <NavLink onClick={handleSignOut}>
-                          <ExitToAppIcon />
-                          <span>Đăng xuất</span>
-                        </NavLink>
-                      </div>
-                    </NavLink>
-                  </div>
-                </li>
-              ) : (
-                <li key={"signout"}>
-                  <NavLink
-                    className="nav-link nav-link-first"
-                    to="/test-signin"
-                  >
-                    <div className="main-nav-text">Đăng nhập</div>
-                  </NavLink>
-                </li>
-              )}
-            </ul>
-          </nav>
-        </div>
+                </div>
+              </li>
+            ) : (
+              <li key={"signout"}>
+                <NavLink className="nav-link nav-link-first" to="/test-signin">
+                  <div className="main-nav-text">Đăng nhập</div>
+                </NavLink>
+              </li>
+            )}
+          </ul>
+        </nav>
       </div>
-    </>
+    </div>
   );
 }
