@@ -29,7 +29,6 @@ import UserTable from "./pages/workspace/userTable";
 import GuestLayout from "./pages/layout/GuestLayout";
 import SymptomChecker from "./pages/guest/symptomChecker";
 import Home from "./pages/guest/home";
-import TestHome from "./pages/guest/testHome";
 import ApptRequest from "./pages/guest/apptRequest";
 import ArticlePatientView from "./pages/guest/articlePatientView";
 
@@ -227,7 +226,6 @@ export default function Layouts({ userRole, userInfos }) {
           <Routes>
             {/* guest pages */}
             <Route path="/home" element={<Home />} />
-            <Route path="/test-home" element={<TestHome />} />
             <Route path="/symptom-checker" element={<SymptomChecker />} />
             <Route
               path="/articles/:articleId"

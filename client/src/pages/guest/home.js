@@ -1,5 +1,4 @@
 import React from "react";
-
 import Carousel from "../../components/ForPages/Carousel";
 import Options from "../../home/Options";
 import About from "../../home/About";

@@ -7,6 +7,7 @@ import "./css/styles.css";
 import "./css/responsive.css";
 import "./css/base.css";
 import { useAuth } from "./AuthContext";
+import RequireAuth from "./RequireAuth";
 import ScrollToTop from "./components/Functionals/ScrollToTop";
 // auth pages
 import Signup from "./pages/auth/signup";
@@ -16,6 +17,7 @@ import Login from "./pages/login/Login";
 import TestSignin from "./pages/auth/testSignin";
 // routes
 import Layouts from "./Layouts";
+import StaffHome from "./pages/guest/staffHome";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();
@@ -36,6 +38,17 @@ const App = () => {
         <Route
           path="/*"
           element={<Layouts userRole={userRole} userInfos={userInfos} />}
+        />
+        <Route
+          path="/staff-home"
+          element={
+            <RequireAuth
+              userRole={userRole}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <StaffHome />
+            </RequireAuth>
+          }
         />
       </Routes>
     </div>
