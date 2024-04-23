@@ -56,13 +56,19 @@
 }
 
 /* NAVBAR */
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
 .navbar-wrapper {
   z-index: 999;
   position: fixed;
 }
 
 #main {
-  margin-top: 99px;
+  padding-top: 129px;
 }
 
 .nav-container {
@@ -497,9 +503,13 @@
 }
 
 /* REQUEST APPOINTMENT FORM */
+.appt-req-body {
+  padding-top: 129px;
+}
+
 .appt-img {
   max-width: 100%;
-  height: 380px;
+  height: 250px;
 }
 
 .appt-img img {
@@ -691,12 +701,14 @@
 }
 
 .appt-modal-data {
-  margin-bottom: 20px;
+  display: flex;
+  padding-bottom: 16px;
 }
 
 .appt-modal-data span {
   color: #a1a1a1;
   font-weight: var(--roboto-medium-weight);
+  width: 220px;
 }
 
 .appt-modal-data p {
@@ -704,6 +716,7 @@
   font-weight: var(--roboto-regular-weight);
   white-space: normal;
   overflow-wrap: break-word;
+  width: calc(100% - 220px);
 }
 
 .appt-modal-btn {
@@ -743,7 +756,6 @@
 
 /* OPTIONS SECTION */
 .options {
-  background-color: #ffffff;
   background-image: url("../assets/background/options-bg.png");
   background-repeat: no-repeat;
   background-position: 12% 60%;
@@ -963,6 +975,7 @@
 
 .syst-card-link {
   text-decoration: none;
+  pointer-events: none;
 }
 
 .syst-card-img {
@@ -1336,6 +1349,10 @@
 }
 
 /* SYMPTOM CHECKER PAGE */
+.symp-checker {
+  padding-top: 129px;
+}
+
 .symp-checker h3 {
   margin-top: 40px;
   color: var(--header-color);

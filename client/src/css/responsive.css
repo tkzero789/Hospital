@@ -21,7 +21,7 @@
   }
 
   #main {
-    margin-top: 0;
+    padding-top: 58px;
   }
 
   .mobile-nav {
@@ -70,7 +70,7 @@
   }
 
   #main {
-    margin-top: 0;
+    padding-top: 72px;
   }
 
   .navbar-wrapper {
@@ -353,6 +353,11 @@
   .appt .content-container {
     padding: 0;
   }
+
+  .appt-req-body {
+    padding-top: 58px;
+  }
+
   .appt-wrapper {
     padding: 8px 8px;
     box-shadow: none;

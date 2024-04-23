@@ -150,56 +150,39 @@ export default function ApptForm() {
   const navigate = useNavigate();
 
   async function confirmSetAppt(e) {
-    const inputFullName = document.getElementById("inputFullName");
-    const inputPhoneNumber = document.getElementById("inputPhoneNumber");
-    const inputEmail = document.getElementById("inputEmail");
-    if (!inputFullName.checkValidity()) {
-      alert("Thiếu Họ và tên");
-    } else if (appt.phoneNumber === "") {
-      alert("Số điện thoại không hợp lệ");
-    } else if (!inputPhoneNumber.checkValidity()) {
-      alert("Số điện thoại không hợp lệ");
-    } else if (!inputEmail.checkValidity()) {
-      alert("Email không hợp lệ");
-    } else if (appt.gender === "") {
-      alert("Vui lòng chọn giới tính");
-    } else if (appt.need === "") {
-      alert("Vui lòng chọn Nhu cầu khám");
-    } else {
-      e.preventDefault();
-      const updatedAppt = {
-        ...appt,
-        createdAt: new Date().toLocaleDateString("vi-VN", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }),
-      };
+    e.preventDefault();
+    const updatedAppt = {
+      ...appt,
+      createdAt: new Date().toLocaleDateString("vi-VN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }),
+    };
 
-      axios
-        .post("http://localhost:5000/appointment/add", updatedAppt)
-        .then((res) => {
-          console.log("Appointment set");
-          console.log(res.data);
-          setAppt({
-            fullName: "",
-            phoneNumber: "",
-            email: "",
-            dob: "",
-            gender: "",
-            need: "",
-            date: "",
-            reason: "",
-            createdAt: null,
-          });
-          navigate("/");
-        })
-        .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
-          window.alert(message);
-          return;
+    axios
+      .post("http://localhost:5000/appointment/add", updatedAppt)
+      .then((res) => {
+        console.log("Appointment set");
+        console.log(res.data);
+        setAppt({
+          fullName: "",
+          phoneNumber: "",
+          email: "",
+          dob: "",
+          gender: "",
+          need: "",
+          date: "",
+          reason: "",
+          createdAt: null,
         });
-    }
+        navigate("/");
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+        return;
+      });
   }
 
   const validateInput = () => {
@@ -213,17 +196,16 @@ export default function ApptForm() {
       toast.warning("Email không hợp lệ");
     } else if (!date) {
       toast.warning("Vui lòng chọn ngày");
-    } else if (!month) {
+    } else if (!month || month === "00") {
       toast.warning("Vui lòng chọn tháng");
     } else if (!year) {
       toast.warning("Vui lòng chọn năm");
-    } else if (appt.gender === "") {
+    } else if (appt.gender === "" || appt.gender === "Chọn giới tính") {
       toast.warning("Vui lòng chọn giới tính");
-    } else if (appt.need === "") {
+    } else if (appt.need === "" || appt.need === "Chọn nhu cầu") {
       toast.warning("Vui lòng chọn Nhu cầu khám");
     } else {
       displayModal();
-      console.log(appt);
     }
   };
   // --- Validate: End ---
@@ -532,7 +514,9 @@ export default function ApptForm() {
                     <span>Số điện thoại:</span>
                     <p>{appt.phoneNumber}</p>
                   </div>
-                  <div className="appt-modal-data">
+                  <div
+                    className={`appt-modal-data ${!appt.email ? "hidden" : ""}`}
+                  >
                     {appt.email ? (
                       <>
                         <span>Email:</span>
@@ -554,7 +538,9 @@ export default function ApptForm() {
                     <span>Nhu cầu khám:</span>
                     <p>{appt.need}</p>
                   </div>
-                  <div className="appt-modal-data">
+                  <div
+                    className={`appt-modal-data ${!appt.date ? "hidden" : ""}`}
+                  >
                     {appt.date ? (
                       <>
                         <span>Ngày đặt khám:</span>
@@ -562,7 +548,11 @@ export default function ApptForm() {
                       </>
                     ) : null}
                   </div>
-                  <div className="appt-modal-data">
+                  <div
+                    className={`appt-modal-data ${
+                      !appt.reason ? "hidden" : ""
+                    }`}
+                  >
                     {appt.reason ? (
                       <>
                         <span>Mô tả vấn đề sức khoẻ:</span>
@@ -570,7 +560,7 @@ export default function ApptForm() {
                       </>
                     ) : null}
                   </div>
-                  <hr style={{ marginTop: "4rem" }} />
+                  <hr style={{ marginTop: "3rem" }} />
                   <div className="attention-text">
                     <p>
                       Tổng đài BKCare sẽ liên hệ Quý khách trong thời gian sớm

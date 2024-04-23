@@ -6,6 +6,7 @@ import PatientFormDes from "../../components/SymptomCheckerParts/PatientFormDes"
 import PatientFormResult from "../../components/SymptomCheckerParts/PatientFormResult";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
+import Footer from "../../components/ForPages/Footer";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -317,6 +318,7 @@ export default function SymptomChecker() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
