@@ -1,23 +1,24 @@
-import React from "react";
+import { useState, useRef, useEffect } from "react";
+import "../../css/sympchecker.css";
+import removeAccents from "remove-accents";
+import MaleFigure from "../../components/MaleFigure/MaleFigure";
 
 const Symptom = (props) => {
   return (
-    <div className="col-3 pb-3">
-      <div className="form">
-        <label className="d-flex">
-          <input
-            type="checkbox"
-            style={{ marginRight: "5px" }}
-            checked={props.isChecked}
-            onChange={() => {
-              props.onCheck(props.symptom._id, props.symptom.name);
-            }}
-          />
-          <span className="text-black-1 fw-reg fs-18">
-            <div style={{ marginBottom: "1px" }}>{props.symptom.name}</div>
-          </span>
-        </label>
-      </div>
+    <div className="form">
+      <label className="d-flex">
+        <input
+          type="checkbox"
+          style={{ marginRight: "5px" }}
+          checked={props.isChecked}
+          onChange={() => {
+            props.onCheck(props.symptom._id, props.symptom.name);
+          }}
+        />
+        <span className="text-black-1 fw-reg fs-18">
+          <div>{props.symptom.name}</div>
+        </span>
+      </label>
     </div>
   );
 };
@@ -45,6 +46,88 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     }
   };
 
+  // Search
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter symptoms based on search term
+  const filteredSymps = dbSymps.filter((symptom) =>
+    removeAccents(symptom.name)
+      .toLowerCase()
+      .includes(removeAccents(searchTerm).toLowerCase())
+  );
+
+  // Delele selected symptoms
+  const handleDelete = (event, symptomId) => {
+    event.preventDefault();
+    setPatientForm({
+      ...patientForm,
+      chosenSymps: patientForm.chosenSymps.filter(
+        (chosenId) => chosenId !== symptomId
+      ),
+    });
+  };
+
+  // Click outside to close search result (selected-symp-box)
+  const inputRef = useRef();
+  const searchSympRef = useRef();
+  const [displaySearch, setDisplaySearch] = useState(false);
+
+  const handleClickOutside = (event) => {
+    if (
+      searchSympRef.current &&
+      !searchSympRef.current.contains(event.target) &&
+      inputRef.current &&
+      !inputRef.current.contains(event.target)
+    ) {
+      setDisplaySearch(false);
+    }
+  };
+
+  // Figure
+  // For displaying symptoms box next to figure
+  const [showHeadSymptoms, setShowHeadSymptoms] = useState(false);
+
+  // Display head symptoms box on/off
+  const toggleHeadSymptoms = () => {
+    setShowHeadSymptoms(!showHeadSymptoms);
+  };
+
+  // Click outside of search and search result
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Click outside of symptoms box on figure
+  const handleClickOutsideFigure = (event) => {
+    if (event.target.closest("#body-model-head")) {
+      return;
+    }
+    if (showHeadSymptoms && !event.target.closest(".head-symptoms")) {
+      setShowHeadSymptoms(false);
+    }
+  };
+
+  // Click outside of symptoms box on figure
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideFigure);
+    return () => {
+      document.removeEventListener("click", handleClickOutsideFigure);
+    };
+  }, [showHeadSymptoms]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      setDisplaySearch(true);
+    } else {
+      setDisplaySearch(false);
+    }
+  }, [searchTerm]);
+
+  console.log(showHeadSymptoms);
+
   return (
     <div>
       <div className="pb-5 text-center">
@@ -55,18 +138,80 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       <h5 className="card-title text-blue-1 fw-med text-blue-2">
         Triệu chứng phổ biến
       </h5>
-      <div className="row pt-3 pb-3">
-        {dbSymps.map((symptom) => {
-          return (
-            <Symptom
-              symptom={symptom}
-              onCheck={() => onCheck(symptom.id)}
-              isChecked={patientForm.chosenSymps.includes(symptom.id)}
-              key={symptom.id}
-            />
-          );
-        })}
+      <div className="symp-big-box">
+        <div className="big-box-wrapper">
+          <div className="symp-left-box">
+            <div className="left-box-wrapper">
+              {/* Search */}
+              <div className="search-symp-input">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="Search for symptoms..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              {/* Search results*/}
+              {searchTerm && displaySearch && (
+                <div className="search-symp-display" ref={searchSympRef}>
+                  {filteredSymps.map((symptom) => {
+                    return (
+                      <Symptom
+                        symptom={symptom}
+                        onCheck={() => onCheck(symptom.id)}
+                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        key={symptom.id}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+              {/* Display selected symptoms */}
+              <div className="selected-symp-box">
+                {patientForm.chosenSymps.map((symptomId) => {
+                  const symptom = dbSymps.find(
+                    (symptom) => symptom.id === symptomId
+                  );
+                  return (
+                    <div className="selected-symp-item">
+                      <div className="selected-symp-name" key={symptomId}>
+                        {symptom.name}
+                      </div>
+                      <button
+                        onClick={(event) => handleDelete(event, symptomId)}
+                      >
+                        <i class="bi bi-x-circle-fill"></i>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="symp-right-box">
+            <div className="right-box-wrapper">
+              <div className="human-figure">
+                <MaleFigure toggleHeadSymptoms={toggleHeadSymptoms} />
+                {/* Head */}
+                {showHeadSymptoms && (
+                  <div className="head-symptoms-list">
+                    {dbSymps.map((symptom) => (
+                      <Symptom
+                        symptom={symptom}
+                        onCheck={() => onCheck(symptom.id)}
+                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        key={symptom.id}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <div className="row pt-3 pb-3"></div>
     </div>
   );
 };

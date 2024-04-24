@@ -1,0 +1,128 @@
+.symp-big-box {
+  width: 100%;
+  height: 800px;
+  background-color: rgb(92, 167, 167);
+}
+
+.big-box-wrapper {
+  display: flex;
+  height: 100%;
+}
+
+/* Left box for search bar */
+.symp-left-box {
+  width: 40%;
+  height: 100%;
+  background-color: rgb(143, 151, 151);
+}
+
+.left-box-wrapper {
+  height: 100%;
+  position: relative;
+}
+
+/* Search input and search results */
+.search-symp-input input {
+  width: 80%;
+  height: 60px;
+  border-radius: 8px;
+  border: 1px solid #d5d5d5;
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.06);
+}
+
+.search-symp-display {
+  max-height: 220px;
+  width: 100%;
+  background-color: antiquewhite;
+  overflow-y: auto;
+}
+
+/* Display selected symptoms box */
+.selected-symp-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 300px;
+  padding: 12px;
+  background-color: #caccce;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.selected-symp-item {
+  display: flex;
+  background-color: royalblue;
+  padding: 4px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  height: fit-content;
+}
+
+.selected-symp-name {
+  margin-right: auto;
+  color: var(--text-white);
+}
+
+.selected-symp-item button {
+  border: none;
+  background-color: rgb(233, 14, 14);
+  color: var(--text-white);
+  border-radius: 6px;
+}
+
+/* Right box for human figure */
+.symp-right-box {
+  width: 60%;
+  background-color: rgb(158, 233, 196);
+}
+
+.right-box-wrapper {
+  height: 100%;
+}
+
+.human-figure {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.sc-body-model-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sc-body-model-svg__path {
+  fill: rgba(0, 0, 0, 0);
+}
+
+.sc-body-model-svg__path:hover {
+  fill: #4bc4e9;
+  stroke: #4bc4e9;
+}
+
+.sc-body-model-svg__stroke {
+  fill: #155ecc;
+  pointer-events: none;
+}
+
+/* Symptoms box next to figure */
+.head-symptoms-list {
+  position: absolute;
+  top: 0;
+  background-color: bisque;
+  width: 220px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.human-figure ul {
+  list-style: none;
+  border-radius: 8px;
+}
+
+.human-figure ul li {
+  padding: 8px;
+}
+
+.human-figure ul li:hover {
+  background-color: #d3e6fc;
+}
