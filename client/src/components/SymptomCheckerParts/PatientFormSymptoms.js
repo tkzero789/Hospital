@@ -15,9 +15,7 @@ const Symptom = (props) => {
             props.onCheck(props.symptom._id, props.symptom.name);
           }}
         />
-        <span className="text-black-1 fw-reg fs-18">
-          <div>{props.symptom.name}</div>
-        </span>
+        <span className="text-black-1 fw-reg fs-18">{props.symptom.name}</span>
       </label>
     </div>
   );
@@ -84,12 +82,42 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   };
 
   // Figure
+  // Ref
+  const headRef = useRef();
+  const noseRef = useRef();
+
   // For displaying symptoms box next to figure
   const [showHeadSymptoms, setShowHeadSymptoms] = useState(false);
+  const [showNoseSymptoms, setShowNoseSymptoms] = useState(false);
+
+  // Click outside to close symptoms box next to figure
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (headRef.current && !headRef.current.contains(event.target)) {
+        setShowHeadSymptoms(false);
+      }
+      if (noseRef.current && !noseRef.current.contains(event.target)) {
+        setShowNoseSymptoms(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Display head symptoms box on/off
   const toggleHeadSymptoms = () => {
     setShowHeadSymptoms(!showHeadSymptoms);
+    setShowNoseSymptoms(false);
+  };
+
+  const toggleNoseSymptoms = () => {
+    setShowNoseSymptoms(!showNoseSymptoms);
+    setShowHeadSymptoms(false);
   };
 
   // Click outside of search and search result
@@ -99,24 +127,6 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  // Click outside of symptoms box on figure
-  const handleClickOutsideFigure = (event) => {
-    if (event.target.closest("#body-model-head")) {
-      return;
-    }
-    if (showHeadSymptoms && !event.target.closest(".head-symptoms")) {
-      setShowHeadSymptoms(false);
-    }
-  };
-
-  // Click outside of symptoms box on figure
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutsideFigure);
-    return () => {
-      document.removeEventListener("click", handleClickOutsideFigure);
-    };
-  }, [showHeadSymptoms]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -192,18 +202,42 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
           <div className="symp-right-box">
             <div className="right-box-wrapper">
               <div className="human-figure">
-                <MaleFigure toggleHeadSymptoms={toggleHeadSymptoms} />
+                <MaleFigure
+                  toggleHeadSymptoms={toggleHeadSymptoms}
+                  toggleNoseSymptoms={toggleNoseSymptoms}
+                />
                 {/* Head */}
                 {showHeadSymptoms && (
-                  <div className="head-symptoms-list">
-                    {dbSymps.map((symptom) => (
-                      <Symptom
-                        symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                        key={symptom.id}
-                      />
-                    ))}
+                  <div ref={headRef} className="head-symptoms-list">
+                    {dbSymps
+                      .filter((symptom) => symptom.position === "Đầu")
+                      .map((symptom) => (
+                        <Symptom
+                          symptom={symptom}
+                          onCheck={() => onCheck(symptom.id)}
+                          isChecked={patientForm.chosenSymps.includes(
+                            symptom.id
+                          )}
+                          key={symptom.id}
+                        />
+                      ))}
+                  </div>
+                )}
+                {/* Nose */}
+                {showNoseSymptoms && (
+                  <div ref={noseRef} className="nose-symptoms-list">
+                    {dbSymps
+                      .filter((symptom) => symptom.position === "Mũi")
+                      .map((symptom) => (
+                        <Symptom
+                          symptom={symptom}
+                          onCheck={() => onCheck(symptom.id)}
+                          isChecked={patientForm.chosenSymps.includes(
+                            symptom.id
+                          )}
+                          key={symptom.id}
+                        />
+                      ))}
                   </div>
                 )}
               </div>

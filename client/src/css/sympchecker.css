@@ -1,6 +1,6 @@
 .symp-big-box {
   width: 100%;
-  height: 800px;
+  height: 520px;
   background-color: rgb(92, 167, 167);
 }
 
@@ -106,13 +106,6 @@
 }
 
 /* Symptoms box next to figure */
-.head-symptoms-list {
-  position: absolute;
-  top: 0;
-  background-color: bisque;
-  width: 220px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
 
 .human-figure ul {
   list-style: none;
@@ -125,4 +118,20 @@
 
 .human-figure ul li:hover {
   background-color: #d3e6fc;
+}
+
+.head-symptoms-list {
+  position: absolute;
+  top: 0;
+  background-color: bisque;
+  width: 220px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.nose-symptoms-list {
+  position: absolute;
+  top: 0;
+  background-color: rgb(76, 103, 255);
+  width: 220px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
