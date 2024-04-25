@@ -263,3 +263,14 @@
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+/* Chest */
+.chest-symptoms-list {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

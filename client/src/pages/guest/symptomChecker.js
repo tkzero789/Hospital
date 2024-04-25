@@ -233,6 +233,7 @@ export default function SymptomChecker() {
     return stepNames.map((stepName) => {
       return (
         <StepName
+          key={stepName.number}
           number={stepName.number}
           currStep={step}
           name={stepName.name}
