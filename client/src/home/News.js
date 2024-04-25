@@ -1,6 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import NewsIMG1 from "../assets/home/newsImg1.jpg";
+import NewsIMG1 from "../assets/home/newsImg1.png";
+import NewsIMG2 from "../assets/home/newsImg2.jpg";
+import NewsIMG3 from "../assets/home/newsImg3.jpg";
+import NewsIMG4 from "../assets/home/newsImg4.jpg";
 
 export default function News() {
   return (
@@ -8,7 +11,7 @@ export default function News() {
       <section className="news w-100">
         <div className="content-container">
           <div className="news-wrapper">
-            <div className="news-header">Tin tức mới nhất</div>
+            <div className="news-header">Tin tức y học mới nhất</div>
             <div className="news-section">
               <div className="c-7 m-12">
                 <div className="news-section-left">
@@ -22,8 +25,8 @@ export default function News() {
                         ></img>
                       </div>
                       <div className="news-title-left">
-                        Hội nghị Hợp tác Y tế Quốc tế, kỷ niệm 50 năm Thiết lập
-                        Quan hệ Ngoại giao Việt Nam - Nhật Bản
+                        Thoát vị đĩa đệm cột sống thắt lưng là bệnh gì? Cách
+                        phòng tránh hiệu quả
                       </div>
                     </NavLink>
                   </div>
@@ -36,39 +39,38 @@ export default function News() {
                       <div className="img-container-right">
                         <img
                           className="news-img-right"
-                          src={NewsIMG1}
+                          src={NewsIMG2}
                           alt="News 1"
                         ></img>
                       </div>
                       <div className="news-title-right">
-                        Hội nghị Hợp tác Y tế Quốc tế, kỷ niệm 50 năm Thiết lập
-                        Quan hệ Ngoại giao Việt Nam - Nhật Bản
+                        Giải pháp chăm sóc sức khoẻ cho cả gia đình
                       </div>
                     </NavLink>
                     <NavLink className="news-link-right">
                       <div className="img-container-right">
                         <img
                           className="news-img-right"
-                          src={NewsIMG1}
+                          src={NewsIMG3}
                           alt="News 1"
                         ></img>
                       </div>
                       <div className="news-title-right">
-                        Hội nghị Hợp tác Y tế Quốc tế, kỷ niệm 50 năm Thiết lập
-                        Quan hệ Ngoại giao Việt Nam - Nhật Bản
+                        Nâng cao công tác chăm sóc sức khỏe nhân dân trong tình
+                        hình mới
                       </div>
                     </NavLink>
                     <NavLink className="news-link-right">
                       <div className="img-container-right">
                         <img
                           className="news-img-right"
-                          src={NewsIMG1}
+                          src={NewsIMG4}
                           alt="News 1"
                         ></img>
                       </div>
                       <div className="news-title-right">
-                        Hội nghị Hợp tác Y tế Quốc tế, kỷ niệm 50 năm Thiết lập
-                        Quan hệ Ngoại giao Việt Nam - Nhật Bản
+                        Hợp tác chuyên môn nhằm nâng cao chất lượng khám, chữa
+                        bệnh của hệ thống
                       </div>
                     </NavLink>
                   </div>

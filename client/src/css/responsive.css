@@ -283,7 +283,7 @@
 
   .splty-btn-wrapper {
     margin-top: 0;
-    padding-top: 32px;
+    padding-top: 40px;
   }
 
   /* News section */
@@ -292,12 +292,20 @@
     padding-top: 32px;
   }
 
-  .news-link-wrapper {
-    display: none;
+  .news-title-left {
+    font-size: 16px;
+  }
+
+  .news-section-right {
+    padding-top: 36px;
+  }
+
+  .news-link-right:hover .news-title-right {
+    color: var(--text-color);
   }
 
   .news-btn-wrapper {
-    padding-top: 32px;
+    padding-top: 40px;
     text-align: center;
   }
 
@@ -421,6 +429,21 @@
 
   .appt-modal-info {
     padding: 0 16px;
+  }
+
+  .appt-modal-data {
+    display: block;
+    padding-bottom: 20px;
+  }
+
+  .appt-modal-data span {
+    display: block;
+    font-size: 20px;
+  }
+
+  .appt-modal-data p {
+    display: block;
+    width: 100%;
   }
 
   .appt-btn button {

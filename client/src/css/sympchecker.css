@@ -26,7 +26,7 @@
   height: 50px;
   padding-left: 20px;
   border-radius: 4px;
-  border: 1px solid #d5d5d5;
+  border: 1px solid #5ca8ff;
   box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.06);
 }
 
@@ -84,9 +84,10 @@
   bottom: 0;
   width: 100%;
   height: 300px;
-  padding: 12px;
+  padding-bottom: 12px;
   background-color: #c0e8ff;
   border-radius: 8px;
+  border: 1px solid rgb(47, 150, 182);
   overflow-y: auto;
 }
 
@@ -106,12 +107,27 @@
   background: #7e7e7e; /* Color of the scroll thumb on hover */
 }
 
+.selected-symp-header {
+  width: 100%;
+  background-color: #dfdfdf;
+  padding: 8px;
+  margin-bottom: 12px;
+  text-align: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.selected-symp-header span {
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: var(--roboto-medium-weight);
+}
+
 .selected-symp-item {
   display: flex;
   background-color: #2c99f1;
   padding: 4px 8px 4px 20px;
   border-radius: 8px;
-  margin-bottom: 4px;
+  margin: 0 12px 4px 12px;
   height: fit-content;
 }
 
@@ -182,6 +198,7 @@
   background-color: #d3e6fc;
 }
 
+/* Head */
 .head-symptoms-list {
   position: absolute;
   top: 0;
@@ -192,6 +209,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+/* Eyes */
 .eyes-symptoms-list {
   position: absolute;
   top: 20px;
@@ -202,10 +220,44 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+/* Ears */
+.ears-symptoms-list {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Nose */
 .nose-symptoms-list {
   position: absolute;
   top: 30px;
   left: 40px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Mouth */
+.mouth-symptoms-list {
+  position: absolute;
+  top: 35px;
+  left: 30px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Neck */
+.neck-symptoms-list {
+  position: absolute;
+  top: 60px;
+  left: 30px;
   background-color: #ffffff;
   width: 220px;
   border-radius: 6px;
