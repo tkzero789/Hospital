@@ -1,4 +1,8 @@
-export default function MaleFigure({ toggleHeadSymptoms, toggleNoseSymptoms }) {
+export default function MaleFigure({
+  toggleHeadSymptoms,
+  toggleEyesSymptoms,
+  toggleNoseSymptoms,
+}) {
   return (
     <>
       <svg
@@ -23,6 +27,7 @@ export default function MaleFigure({ toggleHeadSymptoms, toggleNoseSymptoms }) {
             d="M77.5 15c2.484 0 4.5 1.456 4.5 3.25s-2.016 3.25-4.5 3.25-4.5-1.456-4.5-3.25S75.016 15 77.5 15zm11.25 0c2.346 0 4.25 1.456 4.25 3.25s-1.904 3.25-4.25 3.25-4.25-1.456-4.25-3.25S86.404 15 88.75 15z"
             className="sc-body-model-svg__path"
             id="body-model-eyes"
+            onClick={toggleEyesSymptoms}
           ></path>
 
           <path

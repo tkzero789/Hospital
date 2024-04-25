@@ -6,16 +6,16 @@ import MaleFigure from "../../components/MaleFigure/MaleFigure";
 const Symptom = (props) => {
   return (
     <div className="form">
-      <label className="d-flex">
+      <label className="form-check-label">
         <input
+          className="form-check-input"
           type="checkbox"
-          style={{ marginRight: "5px" }}
           checked={props.isChecked}
           onChange={() => {
             props.onCheck(props.symptom._id, props.symptom.name);
           }}
         />
-        <span className="text-black-1 fw-reg fs-18">{props.symptom.name}</span>
+        <span className="search-symp-name">{props.symptom.name}</span>
       </label>
     </div>
   );
@@ -81,14 +81,16 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     }
   };
 
-  // Figure
+  // Human figure
   // Ref
   const headRef = useRef();
+  const eyesRef = useRef();
   const noseRef = useRef();
 
   // For displaying symptoms box next to figure
   const [showHeadSymptoms, setShowHeadSymptoms] = useState(false);
   const [showNoseSymptoms, setShowNoseSymptoms] = useState(false);
+  const [showEyesSymptoms, setShowEyesSymptoms] = useState(false);
 
   // Click outside to close symptoms box next to figure
   useEffect(() => {
@@ -98,6 +100,9 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       }
       if (noseRef.current && !noseRef.current.contains(event.target)) {
         setShowNoseSymptoms(false);
+      }
+      if (eyesRef.current && !eyesRef.current.contains(event.target)) {
+        setShowEyesSymptoms(false);
       }
     }
 
@@ -112,12 +117,18 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   // Display head symptoms box on/off
   const toggleHeadSymptoms = () => {
     setShowHeadSymptoms(!showHeadSymptoms);
+    setShowEyesSymptoms(false);
     setShowNoseSymptoms(false);
   };
-
+  const toggleEyesSymptoms = () => {
+    setShowEyesSymptoms(!showEyesSymptoms);
+    setShowHeadSymptoms(false);
+    setShowNoseSymptoms(false);
+  };
   const toggleNoseSymptoms = () => {
     setShowNoseSymptoms(!showNoseSymptoms);
     setShowHeadSymptoms(false);
+    setShowEyesSymptoms(false);
   };
 
   // Click outside of search and search result
@@ -157,7 +168,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Search for symptoms..."
+                  placeholder="Tìm kiếm triệu chứng..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -204,6 +215,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="human-figure">
                 <MaleFigure
                   toggleHeadSymptoms={toggleHeadSymptoms}
+                  toggleEyesSymptoms={toggleEyesSymptoms}
                   toggleNoseSymptoms={toggleNoseSymptoms}
                 />
                 {/* Head */}
@@ -211,6 +223,23 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                   <div ref={headRef} className="head-symptoms-list">
                     {dbSymps
                       .filter((symptom) => symptom.position === "Đầu")
+                      .map((symptom) => (
+                        <Symptom
+                          symptom={symptom}
+                          onCheck={() => onCheck(symptom.id)}
+                          isChecked={patientForm.chosenSymps.includes(
+                            symptom.id
+                          )}
+                          key={symptom.id}
+                        />
+                      ))}
+                  </div>
+                )}
+                {/* Eyes */}
+                {showEyesSymptoms && (
+                  <div ref={eyesRef} className="eyes-symptoms-list">
+                    {dbSymps
+                      .filter((symptom) => symptom.position === "Mắt")
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
