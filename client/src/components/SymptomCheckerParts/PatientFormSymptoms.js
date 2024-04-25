@@ -91,6 +91,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   const mouthRef = useRef(); // 5. Mouth
   const neckRef = useRef(); // 6. Neck
   const chestRef = useRef(); // 7. Chest
+  const upperArmRef = useRef(); // 8. UpperArm
 
   // For displaying symptoms box next to figure
   const [showHeadSymptoms, setShowHeadSymptoms] = useState(false); // 1. Head
@@ -100,6 +101,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   const [showMouthSymptoms, setShowMouthSymptoms] = useState(false); // 5. Mouth
   const [showNeckSymptoms, setShowNeckSymptoms] = useState(false); // 6. Neck
   const [showChestSymptoms, setShowChestSymptoms] = useState(false); // 7. Chest
+  const [showUpperArmSymptoms, setShowUpperArmSymptoms] = useState(false); // 8. UpperArm
 
   // Click outside to close symptoms box next to figure
   useEffect(() => {
@@ -132,6 +134,10 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       if (chestRef.current && !chestRef.current.contains(event.target)) {
         setShowChestSymptoms(false);
       }
+      // 8. UpperArm
+      if (upperArmRef.current && !upperArmRef.current.contains(event.target)) {
+        setShowUpperArmSymptoms(false);
+      }
     }
 
     // Bind the event listener
@@ -151,6 +157,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowMouthSymptoms(false); // 5. Mouth
     setShowNeckSymptoms(false); // 6. Neck
     setShowChestSymptoms(false); // 7. Chest
+    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleEyesSymptoms = () => {
     setShowEyesSymptoms(!showEyesSymptoms); // 2. Eyes
@@ -160,6 +167,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowMouthSymptoms(false); // 5. Mouth
     setShowNeckSymptoms(false); // 6. Neck
     setShowChestSymptoms(false); // 7. Chest
+    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleEarsSymptoms = () => {
     setShowEarsSymptoms(!showEarsSymptoms); // 3. Ears
@@ -169,6 +177,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowMouthSymptoms(false); // 5. Mouth
     setShowNeckSymptoms(false); // 6. Neck
     setShowChestSymptoms(false); // 7. Chest
+    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleNoseSymptoms = () => {
     setShowNoseSymptoms(!showNoseSymptoms); // 4. Nose
@@ -178,6 +187,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowMouthSymptoms(false); // 5. Mouth
     setShowNeckSymptoms(false); // 6. Neck
     setShowChestSymptoms(false); // 7. Chest
+    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleMouthSymptoms = () => {
     setShowMouthSymptoms(!showMouthSymptoms); // 5. Mouth
@@ -187,6 +197,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowNoseSymptoms(false); // 4. Nose
     setShowNeckSymptoms(false); // 6. Neck
     setShowChestSymptoms(false); // 7. Chest
+    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleNeckSymptoms = () => {
     setShowNeckSymptoms(!showNeckSymptoms); // 6. Neck
@@ -196,6 +207,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowNoseSymptoms(false); // 4. Nose
     setShowMouthSymptoms(false); // 5. Mouth
     setShowChestSymptoms(false); // 7. Chest
+    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleChestSymptoms = () => {
     setShowChestSymptoms(!showChestSymptoms); // 7. Chest
@@ -205,6 +217,17 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setShowNoseSymptoms(false); // 4. Nose
     setShowMouthSymptoms(false); // 5. Mouth
     setShowNeckSymptoms(false); // 6. Neck
+    setShowUpperArmSymptoms(false); // 8. UpperArm
+  };
+  const toggleUpperArmSymptoms = () => {
+    setShowUpperArmSymptoms(!showUpperArmSymptoms); // 8. UpperArm
+    setShowHeadSymptoms(false); // 1. Head
+    setShowEyesSymptoms(false); // 2. Eyes
+    setShowEarsSymptoms(false); // 3. Ears
+    setShowNoseSymptoms(false); // 4. Nose
+    setShowMouthSymptoms(false); // 5. Mouth
+    setShowNeckSymptoms(false); // 6. Neck
+    setShowChestSymptoms(false); // 7. Chest
   };
 
   // Click outside of search bar and search results box to close search results
@@ -297,6 +320,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                   toggleMouthSymptoms={toggleMouthSymptoms}
                   toggleNeckSymptoms={toggleNeckSymptoms}
                   toggleChestSymptoms={toggleChestSymptoms}
+                  toggleUpperArmSymptoms={toggleUpperArmSymptoms}
                 />
                 {/* 1. Head */}
                 {showHeadSymptoms && (
@@ -405,6 +429,23 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                   <div ref={chestRef} className="chest-symptoms-list">
                     {dbSymps
                       .filter((symptom) => symptom.position === "Ngực")
+                      .map((symptom) => (
+                        <Symptom
+                          symptom={symptom}
+                          onCheck={() => onCheck(symptom.id)}
+                          isChecked={patientForm.chosenSymps.includes(
+                            symptom.id
+                          )}
+                          key={symptom.id}
+                        />
+                      ))}
+                  </div>
+                )}
+                {/* 8. UpperArm */}
+                {showUpperArmSymptoms && (
+                  <div ref={upperArmRef} className="upperArm-symptoms-list">
+                    {dbSymps
+                      .filter((symptom) => symptom.position === "Vai")
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}

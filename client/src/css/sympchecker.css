@@ -274,3 +274,14 @@
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+/* UpperArm */
+.upperArm-symptoms-list {
+  position: absolute;
+  top: 90px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
