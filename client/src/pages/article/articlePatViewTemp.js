@@ -2,29 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 
-export default function ArticlePatientView({ userRole, userInfos }) {
+export default function ArticlePatViewTemp({ userRole, userInfos }) {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { articleId } = useParams();
+  const { articleId, diseaseId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/article/${articleId}`)
+      .get(`http://localhost:5000/article-temp/${articleId}`)
       .then((res) => {
-        const dbarticle = res.data;
-        if (!dbarticle) {
+        const article = res.data;
+        if (!article) {
           window.alert(`Article with id ${articleId} not found`);
-          if (!userInfos) {
-            navigate("/symptom-checker");
-          } else {
-            console.log(userInfos);
-            navigate(-1);
-          }
+          navigate(`/disease/${diseaseId}/article-temp/${articleId}/view`);
           return;
         }
-        console.log(dbarticle);
-        setArticle(dbarticle);
+        setArticle(article);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -73,20 +67,18 @@ export default function ArticlePatientView({ userRole, userInfos }) {
               <ArticleContent element={trm} key={trm.id} />
             ))}
             <hr></hr>
-            <div className="row">
-              <p className="d-flex justify-content-end">
+            <div className="row d-flex pt-3 pb-3">
+              <div className="col-6 d-grid gap-2 justify-content-start">
+                <NavLink
+                  className="btn btn-outline-primary"
+                  to={`/disease/${article.diseaseId}/article-temp/${article.id}/approve`}
+                >
+                  QUAY LẠI
+                </NavLink>
+              </div>
+              <p className="col-6 d-grid gap-2 justify-content-end">
                 Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
               </p>
-              {userRole && (
-                <div className="col-6 d-grid gap-2 justify-content-start">
-                  <NavLink
-                    className="btn btn-outline-primary"
-                    to={`/article-table`}
-                  >
-                    QUAY LẠI
-                  </NavLink>
-                </div>
-              )}
             </div>
           </div>
         </div>

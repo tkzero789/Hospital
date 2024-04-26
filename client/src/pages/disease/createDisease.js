@@ -50,11 +50,10 @@ export default function CreateDisease({ userInfos }) {
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
-        return;
       });
   }, []);
 
-  const StepDisplay = () => {
+  function StepDisplay() {
     if (step === 1) {
       return <DiseaseAgeGen disease={disease} setDisease={setDisease} />;
     } else if (step === 2) {
@@ -104,66 +103,73 @@ export default function CreateDisease({ userInfos }) {
         />
       );
     }
-  };
+  }
 
-  const handlePrev = () => {
+  function handlePrev() {
     setStep((step) => step - 1);
-  };
-  const handleNext = () => {
+  }
+  function handleNext() {
     setStep((step) => step + 1);
-  };
+  }
 
-  const checkNewSympDes = () => {
+  function checkNewSympDes() {
     if (disease.symptoms.length > 0) {
       const dbSympNames = dbSymps.map((dbSymp) => dbSymp.name);
       for (const symp of disease.symptoms) {
-        if (symp.name === "") {
-          window.alert(`Vui lòng điền triệu chứng`);
-          return;
-        } else if (!chosenSymps.includes(symp.id)) {
-          if (dbSympNames.includes(symp.name)) {
-            window.alert(`Triệu chứng ${symp.name} đã tồn tại!`);
-            return;
-          } else continue;
-        }
-        if (symp.categories.length > 0) {
-          let dbCats = dbSymps.filter((dbSymp) => dbSymp.name === symp.name)[0]
-            .categories;
-          console.log(dbCats);
-          let dbCatNames = dbCats.map((dbCat) => dbCat.categoryName);
+        if (chosenSymps.includes(symp.id)) {
+          const dbCats = dbSymps.filter(
+            (dbSymp) => dbSymp.name === symp.name
+          )[0].categories;
+          const dbCatNames = dbCats.map((dbCat) => dbCat.categoryName);
           for (const cat of symp.categories) {
-            if (!chosenCats.includes(cat.id)) {
-              if (dbCatNames.includes(cat.categoryName)) {
-                window.alert(
-                  `Thuộc tính ${cat.categoryName} của triệu chứng ${symp.name} đã tồn tại!`
-                );
-                return;
-              } else continue;
-            }
-            if (cat.descriptions.length > 0) {
-              console.log(cat.categoryName);
-              console.log(
-                dbCats.filter(
-                  (dbCat) => dbCat.categoryName === cat.categoryName
-                )
-              );
-              let dbDes = dbCats.filter(
+            if (chosenCats.includes(cat.id)) {
+              const dbDes = dbCats.filter(
                 (dbCat) => dbCat.categoryName === cat.categoryName
               )[0].descriptions;
-              let dbDesDetail = dbDes.map((dbDes) => dbDes.descriptionDetail);
+              const dbDesDetail = dbDes.map((dbDes) => dbDes.descriptionDetail);
               for (const des of cat.descriptions) {
-                if (symp.name === "") {
-                  window.alert(`Vui lòng điền mô tả`);
-
-                  return;
-                } else if (!chosenDes.includes(des.id)) {
+                if (!chosenDes.includes(des.id)) {
+                  if (des.descriptionDetail === "") {
+                    window.alert(`Vui lòng điền mô tả`);
+                    return;
+                  }
                   if (dbDesDetail.includes(des.descriptionDetail)) {
                     window.alert(
                       `Mô tả ${des.descriptionDetail} của thuộc tính ${cat.categoryName} của triệu chứng ${symp.name} đã tồn tại!`
                     );
                     return;
-                  } else continue;
+                  }
                 }
+              }
+            } else if (!chosenCats.includes(cat.id)) {
+              if (dbCatNames.includes(cat.categoryName)) {
+                window.alert(
+                  `Thuộc tính ${cat.categoryName} của triệu chứng ${symp.name} đã tồn tại!`
+                );
+                return;
+              }
+              for (const des of cat.descriptions) {
+                if (des.descriptionDetail === "") {
+                  window.alert(`Vui lòng điền mô tả`);
+                  return;
+                }
+              }
+            }
+          }
+        } else if (!chosenSymps.includes(symp.id)) {
+          if (symp.name === "") {
+            window.alert(`Vui lòng điền triệu chứng`);
+            return;
+          }
+          if (dbSympNames.includes(symp.name)) {
+            window.alert(`Triệu chứng ${symp.name} đã tồn tại!`);
+            return;
+          }
+          for (const cat of symp.categories) {
+            for (const des of cat.descriptions) {
+              if (des.descriptionDetail === "") {
+                window.alert(`Vui lòng điền mô tả`);
+                return;
               }
             }
           }
@@ -171,7 +177,7 @@ export default function CreateDisease({ userInfos }) {
       }
       handleNext();
     }
-  };
+  }
 
   async function confirmCreate(e) {
     e.preventDefault();
@@ -188,95 +194,115 @@ export default function CreateDisease({ userInfos }) {
       window.alert("Chưa có triệu chứng");
       return;
     }
-    let editedSymptoms = [];
-    let newSymptoms = [];
-    if (chosenSymps.length > 0) {
-      console.log(chosenSymps);
-      editedSymptoms = disease.symptoms.filter((symptom) =>
+    const editedSymptoms = disease.symptoms
+      .filter((symptom) =>
         chosenSymps.some((existSymp) => existSymp === symptom.id)
-      );
-      console.log(editedSymptoms);
-      newSymptoms = disease.symptoms.filter(
-        (symptom) => !chosenSymps.some((existSymp) => existSymp === symptom.id)
-      );
-      console.log(newSymptoms);
-    } else {
-      newSymptoms = disease.symptoms;
-    }
-    const newDisease = { ...disease };
+      )
+      .map((item) => ({
+        ...item,
+        diseaseId: disease.id,
+        status: "Pending Update",
+      }));
+    const newSymptoms = disease.symptoms
+      .filter((symptom) =>
+        chosenSymps.some((existSymp) => existSymp !== symptom.id)
+      )
+      .map((item) => ({
+        ...item,
+        diseaseId: disease.id,
+        status: "Pending Create",
+      }));
+    const updatePromises = [];
     // update edited symptoms
     if (editedSymptoms.length > 0) {
-      for (const editedSymptom of editedSymptoms) {
-        axios
-          .post(
-            `http://localhost:5000/symptom/update-from-disease/${editedSymptom.id}`,
-            editedSymptom
-          )
-          .then((res) => {
-            console.log("Symptom edited");
-            console.log(res.data);
-          })
-          .catch((err) => {
-            const message = `Có lỗi xảy ra: ${err}`;
-            window.alert(message);
-            return;
-          });
+      for (const editedSymp of editedSymptoms) {
+        updatePromises.push(
+          axios
+            .post(`http://localhost:5000/symptom-temp/add`, editedSymp)
+            .then((res) => {
+              console.log(
+                "Triệu chứng sẽ được chỉnh sửa sau khi được admin chấp thuận",
+                res.data
+              );
+            })
+            .catch((err) => {
+              const message = `Có lỗi xảy ra: ${err}`;
+              window.alert(message);
+            })
+        );
       }
     }
     // create new symptoms from disease
+    const createPromises = [];
     if (newSymptoms.length > 0) {
-      for (const newSymptom of newSymptoms) {
-        axios
-          .post("http://localhost:5000/symptom/add", newSymptom)
-          .then((res) => {
-            if (res.data && res.data.message === "Symptom already exists") {
-              window.alert("Triệu chứng đã tồn tại!");
-            } else {
-              console.log("Symptom created");
-              console.log(res.data);
-            }
-          })
-          .catch((err) => {
-            const message = `Có lỗi xảy ra: ${err}`;
-            window.alert(message);
-            return;
-          });
+      for (const newSymp of newSymptoms) {
+        createPromises.push(
+          axios
+            .post("http://localhost:5000/symptom-temp/add", newSymp)
+            .then((res) => {
+              if (res.data && res.data.message === "Symptom already exists") {
+                window.alert(
+                  "Triệu chứng cùng tên đang được người khác thêm vào!"
+                );
+              } else {
+                console.log(
+                  "Triệu chứng sẽ được thêm vào sau khi được admin chấp thuận",
+                  res.data
+                );
+              }
+            })
+            .catch((err) => {
+              const message = `Có lỗi xảy ra: ${err}`;
+              window.alert(message);
+            })
+        );
       }
     }
     // create new disease
-    axios
-      .post("http://localhost:5000/disease/add", newDisease)
-      .then((res) => {
-        if (res.data && res.data.message === "Disease already exists") {
-          window.alert("Căn bệnh đã tồn tại!");
-          return;
-        } else {
-          console.log("Disease created");
-          console.log(res.data);
-          setDisease({
-            id: uuidv4(),
-            name: "",
-            ageRanges: [],
-            genders: [],
-            symptoms: [],
-            medSpecialty: userInfos.medSpecialty,
-            relatedArticles: [],
-            createInfos: {
-              doctorCreated: userInfos.fullName,
-              doctorID: userInfos.doctorID,
-              timeCreated: Date.now(),
-              timeEdited: null,
-            },
-          });
-          setStep(1);
-          navigate("/disease-table");
-        }
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-        return;
-      });
+    const newDisease = {
+      ...disease,
+      symptoms: disease.symptoms.map((symptom) => ({
+        id: symptom.id,
+        name: symptom.name,
+        categories: symptom.categories,
+      })),
+      status: "Pending Create",
+    };
+    try {
+      await Promise.all([...updatePromises, ...createPromises]);
+      const response = await axios.post(
+        "http://localhost:5000/disease-temp/add",
+        newDisease
+      );
+      if (response.data && response.data.message === "Disease already exists") {
+        window.alert("Căn bệnh cùng tên đang được người khác thêm vào!");
+      } else {
+        console.log(
+          "Căn bệnh sẽ được thêm vào sau khi được admin chấp thuận",
+          response.data
+        );
+        setDisease({
+          id: uuidv4(),
+          name: "",
+          ageRanges: [],
+          genders: [],
+          symptoms: [],
+          medSpecialty: userInfos.medSpecialty,
+          relatedArticles: [],
+          createInfos: {
+            doctorCreated: userInfos.fullName,
+            doctorID: userInfos.doctorID,
+            timeCreated: formattedDate,
+            timeEdited: null,
+          },
+        });
+        setStep(1);
+        navigate("/disease-table");
+      }
+    } catch (err) {
+      console.error("Error during symptom updates/creations:", err);
+      window.alert("Có lỗi xảy ra khi cập nhật/tạo triệu chứng!");
+    }
   }
 
   return (

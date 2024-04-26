@@ -5,7 +5,7 @@ import axios from "axios";
 
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 
-export default function ViewDisease({ userInfos }) {
+export default function ViewDisease({ userRole, userInfos }) {
   const [disease, setDisease] = useState({
     id: "",
     name: "",
@@ -30,6 +30,7 @@ export default function ViewDisease({ userInfos }) {
       .get(`http://localhost:5000/disease/${diseaseId}`)
       .then((res) => {
         const dbdisease = res.data;
+        console.log(dbdisease);
         if (!dbdisease) {
           window.alert(`Không tìm thấy căn bệnh với id ${diseaseId}`);
           navigate("/disease-table");
@@ -44,10 +45,10 @@ export default function ViewDisease({ userInfos }) {
   }, [diseaseId, navigate]);
 
   // delete disease
-  async function onDelete(id) {
+  async function onDelete(diseaseId) {
     if (window.confirm("Bạn có chắc muốn xóa căn bệnh này?")) {
       axios
-        .delete(`http://localhost:5000/disease/${id}`)
+        .delete(`http://localhost:5000/disease/${diseaseId}`)
         .then(() => {
           navigate("/disease-table");
         })
@@ -99,12 +100,13 @@ export default function ViewDisease({ userInfos }) {
                   DANH SÁCH BÀI VIẾT
                 </NavLink>
               </div>
-              {userInfos.doctorID === disease.createInfos.doctorID && (
+              {(userInfos.doctorID === disease.createInfos.doctorID ||
+                userRole === "admin") && (
                 <div className="col-3 d-grid gap-2">
                   <button
                     type="button"
                     className="btn btn-outline-danger"
-                    onClick={() => onDelete(disease.id)}
+                    onClick={() => onDelete(diseaseId)}
                   >
                     XÓA CĂN BỆNH
                   </button>

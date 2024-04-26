@@ -15,6 +15,11 @@ export default function SymptomChecker() {
     chosenCats: [],
     chosenDes: [],
   });
+  const [feedback, setFeedback] = useState({
+    stars: 0,
+    comment: "",
+    isSent: false,
+  });
   // get all symptoms from DB
   const [dbSymps, setDbSymps] = useState([]);
   // keep patient result updated every step, contain disease objects from dbDiseases
@@ -56,7 +61,7 @@ export default function SymptomChecker() {
 
   useEffect(() => {
     if (prevStep === 1) {
-      let age = patientForm.age;
+      const age = patientForm.age;
       if (age !== "") {
         if (age <= 1) {
           age = "Dưới 1 tuổi";
@@ -78,7 +83,7 @@ export default function SymptomChecker() {
           age = "Trên 65 tuổi";
         }
       }
-      let gender = patientForm.gender;
+      const gender = patientForm.gender;
       const _patientResult = patientResult.filter((disease) => {
         return (
           (age === "" ||
@@ -165,7 +170,13 @@ export default function SymptomChecker() {
         />
       );
     } else {
-      return <PatientFormResult patientResult={patientResult} />;
+      return (
+        <PatientFormResult
+          patientResult={patientResult}
+          feedback={feedback}
+          setFeedback={setFeedback}
+        />
+      );
     }
   };
 

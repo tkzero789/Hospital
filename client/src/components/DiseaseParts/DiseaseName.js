@@ -27,9 +27,7 @@ const Details = (props) => {
 
 const DiseaseName = ({ disease, setDisease, editMode }) => {
   const updateField = (event) => {
-    let _disease = { ...disease };
-    _disease[event.target.name] = event.target.value;
-    setDisease(_disease);
+    setDisease({ ...disease, name: event.target.value });
   };
 
   return (

@@ -38,12 +38,40 @@ articleRoutes.route("/article").get(async function (req, res) {
   }
 });
 
+// get all articles in temp
+articleRoutes.route("/article-temp").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const result = await db_connect
+      .collection("articles-temp")
+      .find({})
+      .toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
 // get article by id
 articleRoutes.route("/article/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myquery = { id: req.params.id };
     const result = await db_connect.collection("articles").findOne(myquery);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// get article by id in temp
+articleRoutes.route("/article-temp/:id").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { id: req.params.id };
+    const result = await db_connect
+      .collection("articles-temp")
+      .findOne(myquery);
     res.json(result);
   } catch (err) {
     throw err;
@@ -58,6 +86,54 @@ articleRoutes.route("/article/by-ids").post(async function (req, res) {
       .collection("articles")
       .find({ id: { $in: req.body.ids } })
       .toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// get articles by many ids  in temp
+articleRoutes.route("/article-temp/by-ids").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const result = await db_connect
+      .collection("articles-temp")
+      .find({ id: { $in: req.body.ids } })
+      .toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// get default display article
+articleRoutes.route("/article/get-isdisplay").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const result = await db_connect
+      .collection("articles")
+      .findOne({ diseaseId: req.body.diseaseId, isDisplay: true });
+    console.log(result);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// set default display article
+articleRoutes.route("/article/set-isdisplay").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { id: req.body.id };
+    const newvalues = {
+      $set: {
+        isDisplay: req.body.isDisplay,
+      },
+    };
+    const result = await db_connect
+      .collection("articles")
+      .updateOne(myquery, newvalues);
+    console.log(result);
     res.json(result);
   } catch (err) {
     throw err;
@@ -97,11 +173,46 @@ articleRoutes.route("/article/add").post(async function (req, res) {
       title: req.body.title,
       diseaseId: req.body.diseaseId,
       diseaseName: req.body.diseaseName,
+      medSpecialty: req.body.medSpecialty,
       infos: req.body.infos,
       treatments: req.body.treatments,
       createInfos: req.body.createInfos,
+      isDisplay: false,
+      status: req.body.status,
     };
     const result = await db_connect.collection("articles").insertOne(myobj);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// add article in temp
+articleRoutes.route("/article-temp/add").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const { title, diseaseId } = req.body;
+    const dupCheck = await db_connect
+      .collection("articles-temp")
+      .findOne({ title, diseaseId });
+    if (dupCheck) {
+      return res.json({ message: "Article already exists" });
+    }
+    const myobj = {
+      id: req.body.id,
+      title: req.body.title,
+      diseaseId: req.body.diseaseId,
+      diseaseName: req.body.diseaseName,
+      medSpecialty: req.body.medSpecialty,
+      infos: req.body.infos,
+      treatments: req.body.treatments,
+      createInfos: req.body.createInfos,
+      isDisplay: false,
+      status: req.body.status,
+    };
+    const result = await db_connect
+      .collection("articles-temp")
+      .insertOne(myobj);
     res.json(result);
   } catch (err) {
     throw err;
@@ -118,9 +229,11 @@ articleRoutes.route("/article/update/:id").post(async function (req, res) {
         title: req.body.title,
         diseaseId: req.body.diseaseId,
         diseaseName: req.body.diseaseName,
+        medSpecialty: req.body.medSpecialty,
         infos: req.body.infos,
         treatments: req.body.treatments,
         createInfos: req.body.createInfos,
+        status: req.body.status,
       },
     };
     const result = await db_connect
@@ -144,71 +257,15 @@ articleRoutes.route("/article/:id").delete(async function (req, res) {
   }
 });
 
-// OUTDATED -> REMOVE
-articleRoutes.route("/suit-articles").post(async function (req, res) {
+// delete article by id
+articleRoutes.route("/article-temp/:id").delete(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const articles = await db_connect.collection("articles").find({}).toArray();
-    const patientForm = { ...req.body };
-    const matchingArticles = articles
-      .filter((article) => {
-        // Count matching details for each article
-        const matchingDetailsCount = article.diseaseSymptoms.reduce(
-          (count, symptom) => {
-            return (
-              count +
-              patientForm.patientSymptoms.reduce(
-                (innerCount, patientSymptom) => {
-                  if (patientSymptom.symptomName === symptom.symptomName) {
-                    return (
-                      innerCount +
-                      symptom.categories.reduce((categoryCount, category) => {
-                        return (
-                          categoryCount +
-                          category.descriptions.reduce(
-                            (descriptionCount, description) => {
-                              // Check for any match between patient and article descriptions
-                              const patientMatches = patientSymptom.categories
-                                .flatMap((cat) => cat.descriptions)
-                                .some((pd) =>
-                                  description.descriptionDetail.includes(
-                                    pd.descriptionDetail
-                                  )
-                                );
-                              return (
-                                descriptionCount + (patientMatches ? 1 : 0)
-                              );
-                            },
-                            0
-                          )
-                        );
-                      }, 0)
-                    );
-                  }
-                  return innerCount;
-                },
-                0
-              )
-            );
-          },
-          0
-        );
-
-        article.matchingDetailsCount = matchingDetailsCount;
-
-        // Filter articles with at least one matching detail
-        return matchingDetailsCount > 0;
-      })
-      .sort((article1, article2) => {
-        // Sort by matching details count (descending) and then by article name (ascending)
-        const countDiff =
-          article2.matchingDetailsCount - article1.matchingDetailsCount;
-        if (countDiff !== 0) return countDiff;
-        return article1.diseaseName.localeCompare(article2.diseaseName);
-      });
-
-    // Add matchingDetailsCount property to each article in the result
-    res.json(matchingArticles);
+    const myquery = { id: req.params.id };
+    const result = await db_connect
+      .collection("articles-temp")
+      .deleteOne(myquery);
+    res.json(result);
   } catch (err) {
     throw err;
   }

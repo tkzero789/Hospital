@@ -12,13 +12,13 @@ export default function ApptTable({ userRole, userInfos }) {
     axios
       .get("http://localhost:5000/appointment")
       .then((res) => {
+        const reverseData = res.data.reverse();
         // Add an 'id' field to each appts object
-        const apptsWithIds = res.data.map((item) => ({
-          id: item._id,
+        const reverseDataWithNo = res.data.map((item, index) => ({
           ...item,
+          number: index + 1,
         }));
-        const reverseData = apptsWithIds.reverse();
-        setAppts(reverseData);
+        setAppts(reverseDataWithNo);
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
@@ -32,12 +32,18 @@ export default function ApptTable({ userRole, userInfos }) {
       headerName: "Trạng thái",
       width: 200,
       renderCell: (params) => {
+        const appt = params.row;
         return (
           // need to edit here
           <div className="cellAction">
-            <NavLink className="viewLink" to={`/appointment/${params.row.id}`}>
+            <NavLink className="viewLink" to={`/appointment/${appt.id}/view`}>
               <div className="viewButton">Xem</div>
             </NavLink>
+            {appt.status === "Spam" && (
+              <button type="button" className="viewLink">
+                Xóa
+              </button>
+            )}
           </div>
         );
       },
@@ -45,24 +51,14 @@ export default function ApptTable({ userRole, userInfos }) {
   ];
 
   const columns = [
+    { field: "number", headerName: "Stt", width: 50 },
     { field: "phoneNumber", headerName: "SĐT", width: 120 },
-    { field: "fullName", headerName: "Tên bệnh nhân", width: 180 },
+    { field: "fullName", headerName: "Tên bệnh nhân", width: 200 },
     { field: "date", headerName: "Ngày đặt hẹn", width: 160 },
     { field: "need", headerName: "Nhu cầu", width: 240 },
-    {
-      field: "dob",
-      headerName: "Ngày sinh",
-      width: 160,
-      renderCell: (params) => {
-        const parts = params.value.split("/");
-        if (parts[0].length === 1) {
-          parts[0] = "0" + parts[0];
-        }
-        return parts.join("/");
-      },
-    },
     { field: "email", headerName: "Email", width: 240 },
     { field: "createdAt", headerName: "Ngày khởi tạo", width: 160 },
+    { field: "status", headerName: "Trạng thái", width: 160 },
   ].concat(actionColumn);
 
   return (
@@ -71,6 +67,7 @@ export default function ApptTable({ userRole, userInfos }) {
       <DataGrid
         className="datagrid"
         rows={appts}
+        getRowId={(row) => row._id}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

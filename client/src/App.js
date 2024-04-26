@@ -7,6 +7,7 @@ import "./css/styles.css";
 import "./css/responsive.css";
 import "./css/base.css";
 import { useAuth } from "./AuthContext";
+import RequireAuth from "./RequireAuth";
 import ScrollToTop from "./components/Functionals/ScrollToTop";
 // auth pages
 import Signup from "./pages/auth/signup";
@@ -28,7 +29,17 @@ const App = () => {
       <Routes>
         {/* auth pages */}
         <Route path="/signup" element={<Signup />} />
-        <Route path="/signup-doctor" element={<SignupDoctor />} />
+        <Route
+          path="/signup-doctor"
+          element={
+            <RequireAuth
+              userRole={userRole}
+              allowedRoles={["admin", "doctor", "head-doctor"]}
+            >
+              <SignupDoctor userRole={userRole} userInfos={userInfos} />
+            </RequireAuth>
+          }
+        />
         <Route path="/signin" element={<Signin />} />
         <Route path="/test-signin" element={<TestSignin />} />
         <Route path="/login" element={<Login />} />

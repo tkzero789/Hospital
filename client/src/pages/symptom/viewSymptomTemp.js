@@ -5,7 +5,7 @@ import axios from "axios";
 
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
 
-export default function ViewSymptom({ userRole, userInfos }) {
+export default function ViewSymptomTemp({ userRole, userInfos }) {
   const [symptom, setSymptom] = useState({
     id: "",
     name: "",
@@ -22,22 +22,15 @@ export default function ViewSymptom({ userRole, userInfos }) {
         ],
       },
     ],
-    createInfos: {
-      doctorCreated: "",
-      doctorId: "",
-      timeCreated: "",
-      timeEdited: "",
-    },
   });
   const { symptomId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/symptom/${symptomId}`)
+      .get(`http://localhost:5000/symptom-temp/${symptomId}`)
       .then((res) => {
         const dbsymptom = res.data;
-        console.log(dbsymptom);
         if (!dbsymptom) {
           const id = symptomId;
           window.alert(`Symptom with id ${id} not found`);
@@ -73,16 +66,6 @@ export default function ViewSymptom({ userRole, userInfos }) {
                   QUAY LẠI
                 </NavLink>
               </div>
-              {userRole === "admin" && (
-                <div className="col-3 d-grid gap-2">
-                  <NavLink
-                    className="btn btn-outline-primary"
-                    to={`/symptom/${symptomId}/edit`}
-                  >
-                    CHỈNH SỬA
-                  </NavLink>
-                </div>
-              )}
             </div>
           </form>
         </div>

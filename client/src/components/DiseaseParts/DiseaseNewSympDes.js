@@ -14,11 +14,51 @@ const DiseaseNewSympDes = ({
     now.getMonth() + 1
   ).padStart(2, "0")}/${now.getFullYear()}`;
 
-  const addSymptomField = () => {
-    let _symptoms = disease.symptoms;
-    _symptoms.push({
+  const categoryOptions = [
+    { value: "Vị trí", label: "Vị trí" },
+    { value: "Mức độ", label: "Mức độ" },
+    { value: "Như thế nào", label: "Như thế nào" },
+    {
+      value: "Thời gian bị và tần suất xảy ra",
+      label: "Thời gian bị và tần suất xảy ra",
+    },
+    {
+      value: "Tình trạng trước kia và sự kiện dẫn đến",
+      label: "Tình trạng trước kia và sự kiện dẫn đến",
+    },
+    {
+      value: "Xảy ra hoặc tồi tệ hơn khi",
+      label: "Xảy ra hoặc tồi tệ hơn khi",
+    },
+    { value: "Yếu tố làm thuyên giảm", label: "Yếu tố làm thuyên giảm" },
+    { value: "Các triệu chứng đi kèm", label: "Các triệu chứng đi kèm" },
+  ];
+
+  const positionOptions = [
+    { value: "Đầu", label: "Đầu" },
+    { value: "Mắt", label: "Mắt" },
+    { value: "Tai", label: "Tai" },
+    { value: "Mũi", label: "Mũi" },
+    { value: "Miệng", label: "Miệng" },
+    { value: "Cổ", label: "Cổ" },
+    { value: "Vai", label: "Vai" },
+    { value: "Ngực", label: "Ngực" },
+    { value: "Bụng", label: "Bụng" },
+    { value: "Hông, đùi và mông", label: "Hông, đùi và mông" },
+    { value: "Cánh tay", label: "Cánh tay" },
+    { value: "Bàn tay", label: "Bàn tay" },
+    { value: "Vùng dưới", label: "Vùng dưới" },
+    { value: "Đầu gối", label: "Đầu gối" },
+    { value: "Cẳng chân", label: "Cẳng chân" },
+    { value: "Bàn chân", label: "Bàn chân" },
+  ];
+
+  function addSymptomField() {
+    const newSymptom = {
       id: uuidv4(),
+      diseaseId: disease.id,
       name: "",
+      position: "Đầu",
       categories: [
         {
           id: uuidv4(),
@@ -27,6 +67,7 @@ const DiseaseNewSympDes = ({
             {
               id: uuidv4(),
               descriptionDetail: "",
+              descriptionImg: "",
             },
           ],
         },
@@ -37,130 +78,271 @@ const DiseaseNewSympDes = ({
         timeCreated: formattedDate,
         timeEdited: null,
       },
+      status: "Pending Create",
+    };
+    setDisease({
+      ...disease,
+      symptoms: [...disease.symptoms, newSymptom],
     });
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+  }
 
-  const updateSymptomField = (symptomId, event) => {
-    if (chosenSymps.includes(event.target.value)) {
-      window.alert("Triệu chứng đang trùng tên đã có sẵn. Vui lòng chỉnh sửa.");
-    }
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
-    );
-
-    _symptoms[symptomIndex][event.target.name] = event.target.value;
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
-
-  const deleteSymptomField = (symptomId) => {
-    if (chosenSymps.includes(symptomId)) {
-      window.alert(
-        "Triệu chứng trùng tên đã có sẵn. Vui lòng chỉnh sửa trước khi xóa."
-      );
+  function updateSymptomField(symptomId, event) {
+    if (!symptomId) {
       return;
     }
-    let _symptoms = disease.symptoms.filter(
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const updatedSymptom = {
+      ...symptoms[sympIndex],
+      [event.target.name]: event.target.value,
+    };
+    setDisease({
+      ...disease,
+      symptoms: [
+        ...symptoms.slice(0, sympIndex),
+        updatedSymptom,
+        ...symptoms.slice(sympIndex + 1),
+      ],
+    });
+  }
+
+  function deleteSymptomField(symptomId) {
+    if (!symptomId) {
+      return;
+    }
+    const symptoms = disease.symptoms;
+    const updatedSymptoms = symptoms.filter(
       (symptom) => symptom.id !== symptomId
     );
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+    setDisease({ ...disease, symptoms: updatedSymptoms });
+  }
 
-  const addCategoryField = (symptomId) => {
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
-    );
-    _symptoms[symptomIndex].categories.push({
+  function addCategoryField(symptomId) {
+    if (!symptomId) {
+      return;
+    }
+    const newCategory = {
       id: uuidv4(),
       categoryName: "Vị trí",
       descriptions: [
         {
           id: uuidv4(),
           descriptionDetail: "",
+          descriptionImg: "",
         },
       ],
+    };
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const updatedSymptom = {
+      ...symptoms[sympIndex],
+      categories: [...symptoms[sympIndex].categories, newCategory],
+      status: "Pending Update",
+    };
+    setDisease({
+      ...disease,
+      symptoms: [
+        ...symptoms.slice(0, sympIndex),
+        updatedSymptom,
+        ...symptoms.slice(sympIndex + 1),
+      ],
     });
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+  }
 
-  const updateCategoryField = (symptomId, categoryId, event) => {
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
-    );
-    const categoryIndex = _symptoms[symptomIndex].categories.findIndex(
+  function updateCategoryField(symptomId, categoryId, event) {
+    if (!symptomId || !categoryId) {
+      return;
+    }
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const catIndex = symptoms[sympIndex].categories.findIndex(
       (category) => category.id === categoryId
     );
-    _symptoms[symptomIndex].categories[categoryIndex][event.target.name] =
-      event.target.value;
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+    const updatedSymptom = {
+      ...symptoms[sympIndex],
+      categories: [
+        ...symptoms[sympIndex].categories.slice(0, catIndex),
+        {
+          ...symptoms[sympIndex].categories[catIndex],
+          categoryName: event.target.value,
+        },
+        ...symptoms[sympIndex].categories.slice(catIndex + 1),
+      ],
+    };
+    setDisease({
+      ...disease,
+      symptoms: [
+        ...symptoms.slice(0, sympIndex),
+        updatedSymptom,
+        ...symptoms.slice(sympIndex + 1),
+      ],
+    });
+  }
 
-  const deleteCategoryField = (symptomId, categoryId) => {
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
+  function deleteCategoryField(symptomId, categoryId) {
+    if (!symptomId || !categoryId) {
+      return;
+    }
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const updatedCategories = symptoms[sympIndex].categories.filter(
+      (category) => category.id !== categoryId
     );
-    _symptoms[symptomIndex].categories = _symptoms[
-      symptomIndex
-    ].categories.filter((category) => category.id !== categoryId);
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+    const updatedSymptom = {
+      ...symptoms[sympIndex],
+      categories: updatedCategories,
+    };
+    setDisease({
+      ...disease,
+      symptoms: [
+        ...symptoms.slice(0, sympIndex),
+        updatedSymptom,
+        ...symptoms.slice(sympIndex + 1),
+      ],
+    });
+  }
 
-  const addDescriptionField = (symptomId, categoryId) => {
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
-    );
-    const categoryIndex = _symptoms[symptomIndex].categories.findIndex(
-      (category) => category.id === categoryId
-    );
-    _symptoms[symptomIndex].categories[categoryIndex].descriptions.push({
+  function addDescriptionField(symptomId, categoryId) {
+    if (!symptomId || !categoryId) {
+      return;
+    }
+    const newDescription = {
       id: uuidv4(),
       descriptionDetail: "",
+      descriptionImg: "",
+    };
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const catIndex = symptoms[sympIndex].categories.findIndex(
+      (category) => category.id === categoryId
+    );
+    const updatedSymptom = {
+      ...symptoms[sympIndex],
+      categories: [
+        ...symptoms[sympIndex].categories.slice(0, catIndex),
+        {
+          ...symptoms[sympIndex].categories[catIndex],
+          descriptions: [
+            ...symptoms[sympIndex].categories[catIndex].descriptions,
+            newDescription,
+          ],
+        },
+        ...symptoms[sympIndex].categories.slice(catIndex + 1),
+      ],
+      status: "Pending Update",
+    };
+    setDisease({
+      ...disease,
+      symptoms: [
+        ...symptoms.slice(0, sympIndex),
+        updatedSymptom,
+        ...symptoms.slice(sympIndex + 1),
+      ],
     });
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+  }
 
-  const updateDescriptionsField = (
+  function updateDescriptionsField(
     symptomId,
     categoryId,
     descriptionId,
     event
-  ) => {
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
-    );
-    const categoryIndex = _symptoms[symptomIndex].categories.findIndex(
+  ) {
+    if (!symptomId || !categoryId || !descriptionId) {
+      return;
+    }
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const catIndex = symptoms[sympIndex].categories.findIndex(
       (category) => category.id === categoryId
     );
-    const descriptionIndex = _symptoms[symptomIndex].categories[
-      categoryIndex
+    const desIndex = symptoms[sympIndex].categories[
+      catIndex
     ].descriptions.findIndex((description) => description.id === descriptionId);
-    _symptoms[symptomIndex].categories[categoryIndex].descriptions[
-      descriptionIndex
-    ][event.target.name] = event.target.value;
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+    const updatedSymptom = {
+      ...symptoms[sympIndex],
+      categories: [
+        ...symptoms[sympIndex].categories.slice(0, catIndex),
+        {
+          ...symptoms[sympIndex].categories[catIndex],
+          descriptions: [
+            ...symptoms[sympIndex].categories[catIndex].descriptions.slice(
+              0,
+              desIndex
+            ),
+            {
+              ...symptoms[sympIndex].categories[catIndex].descriptions[
+                desIndex
+              ],
+              descriptionDetail: event.target.value,
+            },
+            ...symptoms[sympIndex].categories[catIndex].descriptions.slice(
+              desIndex + 1
+            ),
+          ],
+        },
+        ...symptoms[sympIndex].categories.slice(catIndex + 1),
+      ],
+    };
+    setDisease({
+      ...disease,
+      symptoms: [
+        ...symptoms.slice(0, sympIndex),
+        updatedSymptom,
+        ...symptoms.slice(sympIndex + 1),
+      ],
+    });
+  }
 
-  const deleteDescriptionsField = (symptomId, categoryId, descriptionId) => {
-    let _symptoms = disease.symptoms;
-    const symptomIndex = _symptoms.findIndex(
-      (symptom) => symptom.id === symptomId
-    );
-    const categoryIndex = _symptoms[symptomIndex].categories.findIndex(
+  function deleteDescriptionsField(symptomId, categoryId, descriptionId) {
+    if (!symptomId || !categoryId || !descriptionId) {
+      return;
+    }
+    const symptoms = disease.symptoms;
+    const sympIndex = symptoms.findIndex((symptom) => symptom.id === symptomId);
+    const catIndex = symptoms[sympIndex].categories.findIndex(
       (category) => category.id === categoryId
     );
-    _symptoms[symptomIndex].categories[categoryIndex].descriptions = _symptoms[
-      symptomIndex
-    ].categories[categoryIndex].descriptions.filter(
-      (description) => description.id !== descriptionId
-    );
-    setDisease({ ...disease, symptoms: _symptoms });
-  };
+    const updatedDescriptions = symptoms[sympIndex].categories[
+      catIndex
+    ].descriptions.filter((description) => description.id !== descriptionId);
+    if (updatedDescriptions.length === 0) {
+      const updatedCategories = symptoms[sympIndex].categories.filter(
+        (category) => category.id !== categoryId
+      );
+      const updatedSymptom = {
+        ...symptoms[sympIndex],
+        categories: updatedCategories,
+      };
+      setDisease({
+        ...disease,
+        symptoms: [
+          ...symptoms.slice(0, sympIndex),
+          updatedSymptom,
+          ...symptoms.slice(sympIndex + 1),
+        ],
+      });
+    } else {
+      const updatedSymptom = {
+        ...symptoms[sympIndex],
+        categories: [
+          ...symptoms[sympIndex].categories.slice(0, catIndex),
+          {
+            ...symptoms[sympIndex].categories[catIndex],
+            descriptions: updatedDescriptions,
+          },
+          ...symptoms[sympIndex].categories.slice(catIndex + 1),
+        ],
+      };
+      setDisease({
+        ...disease,
+        symptoms: [
+          ...symptoms.slice(0, sympIndex),
+          updatedSymptom,
+          ...symptoms.slice(sympIndex + 1),
+        ],
+      });
+    }
+  }
 
   return (
     <div className="row pt-3 pb-3">
@@ -184,6 +366,24 @@ const DiseaseNewSympDes = ({
               onChange={(e) => updateSymptomField(symptom.id, e)}
             />
           </div>
+          {chosenSymps.includes(symptom.id) ? null : (
+            <div className="form-group row pb-5">
+              <h4 className="card-title text-body col-3">Vị trí:</h4>
+              <select
+                name="position"
+                value={symptom.position}
+                className="form-select border-secondary-subtle col"
+                disabled={chosenSymps.includes(symptom.id)}
+                onChange={(e) => updateSymptomField(symptom.id, e)}
+              >
+                {positionOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <h4 className="card-title text-body">Mô tả chi tiết:</h4>
           {symptom.categories.map((category) => {
             return (
@@ -210,15 +410,11 @@ const DiseaseNewSympDes = ({
                       updateCategoryField(symptom.id, category.id, e)
                     }
                   >
-                    <option value="Vị trí">Vị trí</option>
-                    <option value="Mức độ">Mức độ</option>
-                    <option value="Liều lượng">Liều lượng</option>
-                    <option value="Thời gian">Thời gian</option>
-                    <option value="Khởi phát">Khởi phát</option>
-                    <option value="Yếu tố làm tăng/giảm">
-                      Yếu tố làm tăng/giảm
-                    </option>
-                    <option value="Dấu hiệu kèm theo">Dấu hiệu kèm theo</option>
+                    {categoryOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="row">

@@ -1,40 +1,64 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 
 import "./table.scss";
 
-export default function ArticleTable({ userRole, userInfos }) {
-  const [part, setPart] = useState(1);
+export default function ArticleTableByDisease({ userRole, userInfos }) {
+  const [diseaseName, setDiseaseName] = useState("");
   const [articles, setArticles] = useState([]);
   const [tempArticles, setTempArticles] = useState([]);
+  const [isProcessing, setIsProcessing] = useState(true);
+  const { diseaseId } = useParams();
 
+  // get disease from DB by diseaseId
   useEffect(() => {
+    setIsProcessing(true);
     axios
-      .get(`http://localhost:5000/article/`)
+      .get(`http://localhost:5000/disease/${diseaseId}`)
       .then((res) => {
-        const articles = res.data;
-        setArticles(articles);
+        const dbdisease = res.data;
+        setDiseaseName(dbdisease.name);
+        getArticles(dbdisease);
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
       });
-  }, []);
+  }, [diseaseId]);
+
+  // get articles from DB by diseaseId
+  function getArticles(disease) {
+    const articleIds = disease.relatedArticles.map((article) => article.id);
+    axios
+      .post(`http://localhost:5000/article/by-ids`, { ids: articleIds })
+      .then((res) => {
+        if (res.data.length > 0) {
+          setArticles(res.data);
+        }
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+    setIsProcessing(false);
+  }
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/article-temp/`)
       .then((res) => {
         const articles = res.data;
-        setTempArticles(articles);
+        setTempArticles(
+          articles.filter((article) => article.diseaseId === diseaseId)
+        );
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
       });
-  }, []);
+  }, [diseaseId]);
 
   const flatData = [...tempArticles, ...articles].map((item, index) => {
     const createInfos = item.createInfos || {};
@@ -49,10 +73,6 @@ export default function ArticleTable({ userRole, userInfos }) {
 
   const doctorFlatData = flatData
     .filter((item) => item.medSpecialty === userInfos.medSpecialty)
-    .map((item, index) => ({ ...item, number: index + 1 }));
-
-  const doctorOwnFlatData = doctorFlatData
-    .filter((item) => item.createInfos.doctorID === userInfos.doctorID)
     .map((item, index) => ({ ...item, number: index + 1 }));
 
   const actionColumn = [
@@ -107,28 +127,25 @@ export default function ArticleTable({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "Stt", width: 50 },
-    { field: "id", headerName: "ID", width: 150 },
-    { field: "title", headerName: "Tựa đề", width: 200 },
+    { field: "id", headerName: "ID", width: 200 },
+    { field: "title", headerName: "Tựa đề", width: 300 },
     { field: "diseaseName", headerName: "Bệnh đi kèm", width: 200 },
     { field: "doctorCreated", headerName: "Tác giả", width: 180 },
     { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
     { field: "timeCreated", headerName: "Ngày viết", width: 160 },
-    { field: "status", headerName: "Trạng thái", width: 120 },
   ].concat(actionColumn);
 
   return (
     <div className="datatable">
       <div className="datatableTitle">
         Danh sách bài viết
-        {userRole !== "admin" && part === 1 && (
-          <button type="button" className="add-link" onClick={() => setPart(2)}>
-            Của tôi
-          </button>
-        )}
-        {userRole !== "admin" && part === 2 && (
-          <button type="button" className="add-link" onClick={() => setPart(1)}>
-            Quay lại
-          </button>
+        {userRole !== "admin" && (
+          <NavLink
+            to={`/disease/${diseaseId}/article/create`}
+            className="add-link"
+          >
+            Thêm bài viết
+          </NavLink>
         )}
       </div>
       {userRole === "admin" && (
@@ -142,21 +159,10 @@ export default function ArticleTable({ userRole, userInfos }) {
           checkboxSelection
         />
       )}
-      {userRole !== "admin" && part === 1 && (
+      {userRole !== "admin" && (
         <DataGrid
           className="datagrid"
           rows={doctorFlatData}
-          getRowId={(row) => row._id}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          checkboxSelection
-        />
-      )}
-      {userRole !== "admin" && part === 2 && (
-        <DataGrid
-          className="datagrid"
-          rows={doctorOwnFlatData}
           getRowId={(row) => row._id}
           columns={columns}
           pageSize={10}

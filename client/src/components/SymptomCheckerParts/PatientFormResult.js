@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const PatientFormResult = ({ patientResult }) => {
+const PatientFormResult = ({ patientResult, feedback, setFeedback }) => {
   const [isProcessing, setIsProcessing] = useState(true);
   // set disease choosing from user, it is the first disease in patientResult (sorted) initially
   const [choosingDisease, setChoosingDisease] = useState({});
@@ -14,13 +14,11 @@ const PatientFormResult = ({ patientResult }) => {
   const [part, setPart] = useState(1);
 
   useEffect(() => {
-    console.log(patientResult[0]);
     if (patientResult.length > 0) setChoosingDisease(patientResult[0]);
     chooseDisease(patientResult[0]);
   }, [patientResult]);
 
-  const chooseDisease = (disease) => {
-    console.log("Choose disease", disease);
+  function chooseDisease(disease) {
     setChoosingDisease(disease);
     const articleIds = disease.relatedArticles.map((article) => article.id);
     axios
@@ -36,15 +34,13 @@ const PatientFormResult = ({ patientResult }) => {
         window.alert(message);
       });
     setIsProcessing(false);
-  };
+  }
 
-  const chooseArticle = (article) => {
-    console.log("Choose artile", article);
+  function chooseArticle(article) {
     setChoosingArticle(article);
-  };
+  }
 
-  const SuitDiseases = ({ disease }) => {
-    console.log("Disease: ", disease);
+  function SuitDiseases({ disease }) {
     return (
       <div
         className="button col-12 mb-3 p-3 box-shadow-1"
@@ -61,16 +57,16 @@ const PatientFormResult = ({ patientResult }) => {
         </h6>
       </div>
     );
-  };
+  }
 
-  const handlePrev = () => {
+  function handlePrev() {
     setPart((part) => part - 1);
-  };
-  const handleNext = () => {
+  }
+  function handleNext() {
     setPart((part) => part + 1);
-  };
+  }
 
-  const SwitchPartButton = () => {
+  function SwitchPartButton() {
     return (
       <div className="row pb-3">
         <div className="col-6 d-grid gap-2">
@@ -95,46 +91,47 @@ const PatientFormResult = ({ patientResult }) => {
         </div>
       </div>
     );
-  };
+  }
 
-  const PartDisplay = (articleFirstInfo, articleFirstTrm) => {
+  function PartDisplay(article) {
     if (part === 1) {
-      const firstInfoRows = articleFirstInfo.split("\n");
       return (
         <div>
-          {firstInfoRows.map((row) => (
-            <p
-              className="pt-1 fw-reg"
-              style={{ marginBottom: "1px" }}
-              key={row.slice(0, 10)}
-            >
-              {row}
-            </p>
-          ))}
+          {article.infos.map((info) => {
+            const about = info.about;
+            const overview = info.overview;
+            return (
+              <div>
+                <h5>{about}</h5>
+                <br></br>
+                <p>{overview}</p>
+                <br></br>
+              </div>
+            );
+          })}
         </div>
       );
     } else {
-      const firstTrmRows = articleFirstTrm.split("\n");
       return (
         <div>
-          {firstTrmRows.map((row) => (
-            <p
-              className="pt-1 fw-reg"
-              style={{ marginBottom: "1px" }}
-              key={row.slice(0, 10)}
-            >
-              {row}
-            </p>
-          ))}
+          {article.treatments.map((trm) => {
+            const about = trm.about;
+            const overview = trm.overview;
+            return (
+              <div>
+                <h5>{about}</h5>
+                <br></br>
+                <p>{overview}</p>
+                <br></br>
+              </div>
+            );
+          })}
         </div>
       );
     }
-  };
+  }
 
-  const DisplayedArticle = ({ article }) => {
-    console.log(article);
-    const articleFirstInfo = article.infos[0].detail.split("\n\n")[1];
-    const articleFirstTrm = article.treatments[0].detail.split("\n\n")[1];
+  function DisplayedArticle({ article }) {
     return (
       <div className="col-12 mb-3 p-3 box-shadow-1">
         <h5
@@ -144,7 +141,7 @@ const PatientFormResult = ({ patientResult }) => {
           {article.title}
         </h5>
         {SwitchPartButton()}
-        {PartDisplay(articleFirstInfo, articleFirstTrm)}
+        {PartDisplay(article)}
         <Link
           to={`/articles/${article.id}`}
           target="_blank"
@@ -155,9 +152,9 @@ const PatientFormResult = ({ patientResult }) => {
         </Link>
       </div>
     );
-  };
+  }
 
-  const OtherArticle = ({ article }) => {
+  function OtherArticle({ article }) {
     return (
       <div
         className="button col-12 mb-3 p-3 box-shadow-1"
@@ -171,7 +168,20 @@ const PatientFormResult = ({ patientResult }) => {
         </h6>
       </div>
     );
-  };
+  }
+
+  function updateStarField(newRating) {
+    setFeedback({ ...feedback, stars: newRating });
+  }
+
+  function updateCmtField(event) {
+    setFeedback({ ...feedback, comment: event.target.value });
+  }
+
+  function submitFeedback(e) {
+    e.preventDefault();
+    setFeedback({ ...feedback, isSent: true });
+  }
 
   return (
     <div>
@@ -198,6 +208,41 @@ const PatientFormResult = ({ patientResult }) => {
                   key={choosingArticle.id}
                 />
               )}
+              <div className="col-12 mb-3 p-3 box-shadow-1">
+                <h4
+                  className="fw-med text-blue-2 d-flex justify-content-center pb-3"
+                  style={{ marginBottom: "1px" }}
+                >
+                  Chức năng này có hữu ích không?
+                </h4>
+                <div className="row">
+                  <div className="d-flex col">
+                    {[...Array(5)].map((_, index) => (
+                      <span
+                        className="mr-5 pe-auto "
+                        key={index}
+                        onClick={() => updateStarField(index + 1)}
+                      >
+                        {feedback.stars >= index + 1 ? "★" : "☆"}
+                      </span>
+                    ))}
+                  </div>
+                  <textarea
+                    className="form-control border-primary-subtle col-12"
+                    value={feedback.comment}
+                    rows={3}
+                    onChange={(e) => updateCmtField(e)}
+                    placeholder="Ý kiến của bạn"
+                  />
+                  <button
+                    className="btn btn-outline-primary col-12 mt-3"
+                    disabled={feedback.isSent}
+                    onClick={(e) => submitFeedback(e)}
+                  >
+                    Gửi feedback
+                  </button>
+                </div>
+              </div>
               {diseaseArticles.length > 1 &&
                 diseaseArticles
                   .filter((article) => article.id !== choosingArticle.id)

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
-import AdminNavBar from "../../components/Navbar/AdminNavBar";
-import SignupLogo from "../../assets/logo/signup-logo.png";
-import { useAuth } from "../../AuthContext";
 import axios from "axios";
+
+import { useAuth } from "../../AuthContext";
+import SignupLogo from "../../assets/logo/signup-logo.png";
 
 export default function Signin() {
   const [user, setUser] = useState({
@@ -63,74 +63,66 @@ export default function Signin() {
   }
 
   return (
-    <div>
-      <AdminNavBar />
-      <div className="row">
-        <div className="col-4 d-flex justify-content-center align-items-center pt-5">
-          <img alt="Sign up" style={{ width: 75 + "%" }} src={SignupLogo}></img>
-        </div>
-        <div className="col-8">
-          <h3 className="container text-center text-danger pt-5">ĐĂNG NHẬP</h3>
-          <div className="container p-5">
-            <div className="card border-danger-subtle p-3 pt-4">
-              <form className="needs-validation" noValidate>
-                <div className="row pb-3">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
-                    Email/Số điện thoại:
-                  </h6>
-                  <div className="col-9">
-                    <input
-                      type="text"
-                      className="form-control border-danger-subtle px-2"
-                      id="inputEmailOrPhone"
-                      name=""
-                      required
-                      onChange={(e) => updateEmailOrPhoneField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-3">
-                  <h6 className="col-3 d-flex justify-content-end align-items-center">
-                    Mật khẩu
-                  </h6>
-                  <div className="col-9">
-                    <input
-                      type="password"
-                      className="form-control border-danger-subtle px-2"
-                      id="inputPassword"
-                      name="password"
-                      minLength="8"
-                      required
-                      onChange={(e) => updatePasswordField(e)}
-                    />
-                  </div>
-                </div>
-
-                <div className="row pt-3 pb-3 justify-content-center">
-                  <div className="col-3 d-grid gap-2">
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger"
-                      onClick={(e) => confirmSignin(e)}
-                    >
-                      ĐĂNG NHẬP
-                    </button>
-                  </div>
-                </div>
-                <div className="row pb-3 justify-content-center">
-                  <div className="col-12 d-flex justify-content-center">
-                    Bạn chưa có tài khoản? &nbsp;
-                    <NavLink
-                      className="text-danger text-decoration-underline"
-                      to="/signup"
-                    >
-                      Đăng ký ngay
-                    </NavLink>
-                  </div>
-                </div>
-              </form>
+    <div className="m-5">
+      <h3 className="container text-center text-primary pt-5">ĐĂNG NHẬP</h3>
+      <div className="container p-5">
+        <div className="card border-primary-subtle p-3 pt-4">
+          <form className="needs-validation" noValidate>
+            <div className="row pb-3">
+              <h6 className="col-3 d-flex justify-content-end align-items-center">
+                Email/Số điện thoại:
+              </h6>
+              <div className="col-9">
+                <input
+                  type="text"
+                  className="form-control border-primary-subtle px-2"
+                  id="inputEmailOrPhone"
+                  name=""
+                  required
+                  onChange={(e) => updateEmailOrPhoneField(e)}
+                />
+              </div>
             </div>
-          </div>
+            <div className="row pb-3">
+              <h6 className="col-3 d-flex justify-content-end align-items-center">
+                Mật khẩu
+              </h6>
+              <div className="col-9">
+                <input
+                  type="password"
+                  className="form-control border-primary-subtle px-2"
+                  id="inputPassword"
+                  name="password"
+                  minLength="8"
+                  required
+                  onChange={(e) => updatePasswordField(e)}
+                />
+              </div>
+            </div>
+
+            <div className="row pt-3 pb-3 justify-content-center">
+              <div className="col-3 d-grid gap-2">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={(e) => confirmSignin(e)}
+                >
+                  ĐĂNG NHẬP
+                </button>
+              </div>
+            </div>
+            <div className="row pb-3 justify-content-center">
+              <div className="col-12 d-flex justify-content-center">
+                Bạn chưa có tài khoản? &nbsp;
+                <NavLink
+                  className="text-primary text-decoration-underline"
+                  to="/signup"
+                >
+                  Đăng ký ngay
+                </NavLink>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 
-export default function ViewArticle({ userRole, userInfos }) {
+export default function ViewArticleTemp({ userRole, userInfos }) {
   const [article, setArticle] = useState({
     id: "",
     title: "",
@@ -28,7 +28,7 @@ export default function ViewArticle({ userRole, userInfos }) {
   // get article from DB by articleId
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/article/${articleId}`)
+      .get(`http://localhost:5000/article-temp/${articleId}`)
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
@@ -44,24 +44,68 @@ export default function ViewArticle({ userRole, userInfos }) {
       });
   }, [articleId, navigate]);
 
-  // delete article by articleId
-  async function onDelete(articleId) {
-    if (window.confirm("Bạn có chắc muốn xóa bài viết này?")) {
-      // delte article in disease
+  async function onApprove() {
+    // create new article
+    const newArticle = { ...article, status: "Approved" };
+    axios
+      .post("http://localhost:5000/article/add", newArticle)
+      .then((res) => {
+        if (res.data && res.data.message === "Article already exists") {
+          window.alert("Bài viết cùng tên cho bệnh này đã tồn tại!");
+        } else {
+          console.log("Article created:", res.data);
+          setArticle({
+            id: "",
+            title: "",
+            diseaseId: "",
+            diseaseName: "",
+            infos: [],
+            treatments: [],
+            medSpecialty: "",
+            createInfos: {
+              doctorCreated: "",
+              doctorID: "",
+              timeCreated: "",
+              timeEdited: "",
+            },
+            isDisplay: false,
+            status: "",
+          });
+        }
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+    // update disease article
+    const newArtShort = {
+      id: newArticle.id,
+      title: newArticle.title,
+      doctorID: newArticle.createInfos.doctorID,
+    };
+    axios
+      .post(
+        `http://localhost:5000/disease/add-article/${diseaseId}`,
+        newArtShort
+      )
+      .then((res) => {
+        console.log("Disease relatedArticle Added:", res.data);
+        navigate(`/article-table`);
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+    // delete article in temp
+    onDelete();
+  }
+
+  async function onDelete() {
+    if (
+      window.confirm("Bạn có chắc muốn xóa bài viết này trong bộ nhớ tạm thời?")
+    ) {
       axios
-        .post(`http://localhost:5000/disease/delete-article/${diseaseId}`, {
-          id: articleId,
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
-          window.alert(message);
-        });
-      // delete article
-      axios
-        .delete(`http://localhost:5000/article/${articleId}`)
+        .delete(`http://localhost:5000/article-temp/${articleId}`)
         .then((res) => {
           console.log(res.data);
         })
@@ -70,50 +114,6 @@ export default function ViewArticle({ userRole, userInfos }) {
           window.alert(message);
         });
       navigate(`/article-table`);
-    }
-  }
-
-  async function setDisplay() {
-    let existArticleId = "";
-    // get article is set default displaying
-    console.log(article);
-    await axios
-      .post(`http://localhost:5000/article/get-isdisplay`, {
-        diseaseId: article.diseaseId,
-      })
-      .then((res) => {
-        if (res.data) existArticleId = res.data.id;
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-      });
-    await axios
-      .post(`http://localhost:5000/article/set-isdisplay`, {
-        id: article.id,
-        isDisplay: true,
-      })
-      .then(() => {
-        window.alert("Bài viết đã được đặt mặc định");
-        setArticle({
-          ...article,
-          isDisplay: true,
-        });
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-      });
-    if (existArticleId !== "") {
-      await axios
-        .post(`http://localhost:5000/article/set-isdisplay`, {
-          id: existArticleId,
-          isDisplay: false,
-        })
-        .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
-          window.alert(message);
-        });
     }
   }
 
@@ -132,20 +132,6 @@ export default function ViewArticle({ userRole, userInfos }) {
                 />
               }
             </div>
-            {userRole === "head-doctor" && (
-              <div className="row pt-3 pb-3 gap-2 justify-content-center">
-                <button
-                  type="button"
-                  className="btn btn-outline-primary"
-                  disabled={article.isDisplay === true}
-                  onClick={() => setDisplay()}
-                >
-                  {article.isDisplay === true
-                    ? "ĐANG LÀ BÀI VIẾT MẶC ĐỊNH"
-                    : "ĐẶT LÀM BÀI VIẾT MẶC ĐỊNH"}
-                </button>
-              </div>
-            )}
             <div className="row pt-3 pb-3 justify-content-end">
               <div className="col-3 d-grid gap-2">
                 <NavLink
@@ -155,30 +141,32 @@ export default function ViewArticle({ userRole, userInfos }) {
                   QUAY LẠI
                 </NavLink>
               </div>
-              {userInfos.doctorID === article.createInfos.doctorID && (
-                <div className="col-3 d-grid gap-2">
-                  <NavLink
-                    className="btn btn-outline-primary"
-                    to={`/disease/${diseaseId}/article/${articleId}/edit`}
-                  >
-                    CHỈNH SỬA BÀI VIẾT
-                  </NavLink>
-                </div>
-              )}
               <div className="col-3 d-grid gap-2">
                 <NavLink
                   className="btn btn-outline-primary"
-                  to={`/articles/${articleId}`}
+                  to={`/disease/${diseaseId}/article-temp/${articleId}/pat-view`}
                 >
                   XEM CHẾ ĐỘ NGƯỜI DÙNG
                 </NavLink>
               </div>
-              {userInfos.doctorID === article.createInfos.doctorID && (
+              {userRole === "head-doctor" && (
+                <div className="col-3 d-grid gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => onApprove()}
+                  >
+                    DUYỆT BÀI VIẾT
+                  </button>
+                </div>
+              )}
+              {(userRole === "head-doctor" ||
+                userInfos.doctorID === article.createInfos.doctorID) && (
                 <div className="col-3 d-grid gap-2">
                   <button
                     type="button"
                     className="btn btn-outline-danger"
-                    onClick={() => onDelete(article.id)}
+                    onClick={() => onDelete()}
                   >
                     XÓA BÀI VIẾT
                   </button>

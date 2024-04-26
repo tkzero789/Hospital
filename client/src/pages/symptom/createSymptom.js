@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { NavLink, useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
+import { NavLink } from "react-router-dom";
 
-export default function EditSymptom() {
+export default function CreateSymptom({ userRole, userInfos }) {
   const now = new Date();
   const formattedDate = `${String(now.getDate()).padStart(2, "0")}/${String(
     now.getMonth() + 1
   ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [symptom, setSymptom] = useState({
-    id: "",
+    id: uuidv4(),
     name: "",
     position: "Đầu",
     categories: [
       {
-        id: "",
+        id: uuidv4(),
         categoryName: "Vị trí",
         descriptions: [
           {
-            id: "",
+            id: uuidv4(),
             descriptionDetail: "",
             descriptionImg: "",
           },
@@ -29,47 +29,41 @@ export default function EditSymptom() {
       },
     ],
     createInfos: {
-      doctorCreated: "",
-      doctorId: "",
-      timeCreated: "",
-      timeEdited: "",
+      doctorCreated: "admin",
+      doctorId: "admin",
+      timeCreated: formattedDate,
+      timeEdited: null,
     },
+    status: "Approved",
   });
-  const { symptomId } = useParams();
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/symptom/${symptomId}`)
-      .then((res) => {
-        const dbsymptom = res.data;
-        if (!dbsymptom) {
-          const id = symptomId;
-          window.alert(`Symptom with id ${id} not found`);
-          navigate("/symptom-table");
-          return;
-        }
-        setSymptom({
-          ...dbsymptom,
-          createInfos: {
-            ...dbsymptom.createInfos,
-            timeEdited: formattedDate,
-          },
-        });
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-      });
-  }, [symptomId, navigate]);
-
-  async function confirmEdit(e) {
+  async function confirmCreate(e) {
     e.preventDefault();
-    const editedSymptom = { ...symptom };
+    const newSymptom = { ...symptom };
     axios
-      .post(`http://localhost:5000/symptom/update/${symptomId}`, editedSymptom)
+      .post("http://localhost:5000/symptom/add", newSymptom)
       .then((res) => {
-        console.log("Symptom edited", res.data);
+        console.log("Symptom created", res.data);
+        setSymptom({
+          id: uuidv4(),
+          name: "",
+          position: "Đầu",
+          categories: [
+            {
+              index: uuidv4(),
+              categoryName: "Vị trí",
+              descriptions: [
+                {
+                  index: uuidv4(),
+                  descriptionDetail: "",
+                },
+              ],
+            },
+          ],
+          status: "Approved",
+        });
         navigate("/symptom-table");
       })
       .catch((err) => {
@@ -81,7 +75,7 @@ export default function EditSymptom() {
   return (
     <div>
       <h3 className="container text-center text-body pt-5">
-        CHỈNH SỬA TRIỆU CHỨNG VÀ MÔ TẢ
+        TẠO TRIỆU CHỨNG VÀ MÔ TẢ
       </h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
@@ -107,7 +101,7 @@ export default function EditSymptom() {
                   type="button"
                   className="btn btn-outline-primary"
                   onClick={(e) => {
-                    confirmEdit(e);
+                    confirmCreate(e);
                   }}
                 >
                   XÁC NHẬN TẠO
