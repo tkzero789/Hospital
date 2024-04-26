@@ -63,7 +63,7 @@
 
 .form-check-label {
   display: block;
-  padding: 4px 28px;
+  padding: 4px 0 4px 20px;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -74,7 +74,7 @@
 .form-check-label span {
   padding-left: 10px;
   color: #4e4e4e;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -198,7 +198,7 @@
   background-color: #d3e6fc;
 }
 
-/* Head */
+/* 1. Head */
 .head-symptoms-list {
   position: absolute;
   top: 0;
@@ -209,7 +209,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Eyes */
+/* 2. Eyes */
 .eyes-symptoms-list {
   position: absolute;
   top: 20px;
@@ -220,7 +220,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Ears */
+/* 3. Ears */
 .ears-symptoms-list {
   position: absolute;
   top: 20px;
@@ -231,7 +231,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Nose */
+/* 4. Nose */
 .nose-symptoms-list {
   position: absolute;
   top: 30px;
@@ -242,7 +242,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Mouth */
+/* 5. Mouth */
 .mouth-symptoms-list {
   position: absolute;
   top: 35px;
@@ -253,7 +253,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Neck */
+/* 6. Neck */
 .neck-symptoms-list {
   position: absolute;
   top: 60px;
@@ -264,7 +264,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Chest */
+/* 7. Chest */
 .chest-symptoms-list {
   position: absolute;
   top: 70px;
@@ -275,10 +275,32 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* UpperArm */
+/* 8. UpperArm */
 .upperArm-symptoms-list {
   position: absolute;
   top: 90px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 9. ForeArm */
+.foreArm-symptoms-list {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 10. MidAb */
+.midAb-symptoms-list {
+  position: absolute;
+  top: 200px;
   right: 0;
   background-color: #ffffff;
   width: 220px;

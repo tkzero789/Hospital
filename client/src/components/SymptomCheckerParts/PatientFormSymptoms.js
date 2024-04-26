@@ -92,6 +92,8 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   const neckRef = useRef(); // 6. Neck
   const chestRef = useRef(); // 7. Chest
   const upperArmRef = useRef(); // 8. UpperArm
+  const foreArmRef = useRef(); // 9. ForeArm
+  const midAbRef = useRef(); // 10. MidAb
 
   // For displaying symptoms box next to figure
   const [showHeadSymptoms, setShowHeadSymptoms] = useState(false); // 1. Head
@@ -102,132 +104,67 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   const [showNeckSymptoms, setShowNeckSymptoms] = useState(false); // 6. Neck
   const [showChestSymptoms, setShowChestSymptoms] = useState(false); // 7. Chest
   const [showUpperArmSymptoms, setShowUpperArmSymptoms] = useState(false); // 8. UpperArm
+  const [showForeArmSymptoms, setShowForeArmSymptoms] = useState(false); // 9. Forearm
+  const [showMidAbSymptoms, setShowMidAbSymptoms] = useState(false); // 10/ MidAb
 
   // Click outside to close symptoms box next to figure
   useEffect(() => {
-    function handleClickOutside(event) {
-      // 1. Head
-      if (headRef.current && !headRef.current.contains(event.target)) {
-        setShowHeadSymptoms(false);
-      }
-      // 2. Eyes
-      if (eyesRef.current && !eyesRef.current.contains(event.target)) {
-        setShowEyesSymptoms(false);
-      }
-      // 3. Ears
-      if (earsRef.current && !earsRef.current.contains(event.target)) {
-        setShowEarsSymptoms(false);
-      }
-      // 4. Nose
-      if (noseRef.current && !noseRef.current.contains(event.target)) {
-        setShowNoseSymptoms(false);
-      }
-      // 5. Mouth
-      if (mouthRef.current && !mouthRef.current.contains(event.target)) {
-        setShowMouthSymptoms(false);
-      }
-      // 6. Neck
-      if (neckRef.current && !neckRef.current.contains(event.target)) {
-        setShowNeckSymptoms(false);
-      }
-      // 7. Chest
-      if (chestRef.current && !chestRef.current.contains(event.target)) {
-        setShowChestSymptoms(false);
-      }
-      // 8. UpperArm
-      if (upperArmRef.current && !upperArmRef.current.contains(event.target)) {
-        setShowUpperArmSymptoms(false);
-      }
-    }
+    const handleClickOutside = (event) => {
+      const closeSymptoms = (ref, setShowSymptoms) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setShowSymptoms(false);
+        }
+      };
 
-    // Bind the event listener
+      closeSymptoms(headRef, setShowHeadSymptoms); // 1. Head
+      closeSymptoms(eyesRef, setShowEyesSymptoms); // 2. Eyes
+      closeSymptoms(earsRef, setShowEarsSymptoms); // 3. Ears
+      closeSymptoms(noseRef, setShowNoseSymptoms); // 4. Nose
+      closeSymptoms(mouthRef, setShowMouthSymptoms); // 5. Mouth
+      closeSymptoms(neckRef, setShowNeckSymptoms); // 6. Neck
+      closeSymptoms(chestRef, setShowChestSymptoms); // 7. Chest
+      closeSymptoms(upperArmRef, setShowUpperArmSymptoms); // 8. UpperArm
+      closeSymptoms(foreArmRef, setShowForeArmSymptoms); // 9. Forearm
+      closeSymptoms(midAbRef, setShowMidAbSymptoms); // 10/ MidAb
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  // Toggle symptoms box next to figure
+  // Toggle symptoms box next to figure ************
   const toggleHeadSymptoms = () => {
     setShowHeadSymptoms(!showHeadSymptoms); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowChestSymptoms(false); // 7. Chest
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleEyesSymptoms = () => {
     setShowEyesSymptoms(!showEyesSymptoms); // 2. Eyes
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowChestSymptoms(false); // 7. Chest
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleEarsSymptoms = () => {
     setShowEarsSymptoms(!showEarsSymptoms); // 3. Ears
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowChestSymptoms(false); // 7. Chest
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleNoseSymptoms = () => {
     setShowNoseSymptoms(!showNoseSymptoms); // 4. Nose
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowChestSymptoms(false); // 7. Chest
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleMouthSymptoms = () => {
     setShowMouthSymptoms(!showMouthSymptoms); // 5. Mouth
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowChestSymptoms(false); // 7. Chest
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleNeckSymptoms = () => {
     setShowNeckSymptoms(!showNeckSymptoms); // 6. Neck
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowChestSymptoms(false); // 7. Chest
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleChestSymptoms = () => {
     setShowChestSymptoms(!showChestSymptoms); // 7. Chest
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowUpperArmSymptoms(false); // 8. UpperArm
   };
   const toggleUpperArmSymptoms = () => {
     setShowUpperArmSymptoms(!showUpperArmSymptoms); // 8. UpperArm
-    setShowHeadSymptoms(false); // 1. Head
-    setShowEyesSymptoms(false); // 2. Eyes
-    setShowEarsSymptoms(false); // 3. Ears
-    setShowNoseSymptoms(false); // 4. Nose
-    setShowMouthSymptoms(false); // 5. Mouth
-    setShowNeckSymptoms(false); // 6. Neck
-    setShowChestSymptoms(false); // 7. Chest
+  };
+  const toggleForeArmSymptoms = () => {
+    setShowForeArmSymptoms(!showForeArmSymptoms); // 9. ForeArm
+  };
+  const toggleMidAbSymptoms = () => {
+    setShowMidAbSymptoms(!showMidAbSymptoms); // 10. MidAb
   };
 
   // Click outside of search bar and search results box to close search results
@@ -321,6 +258,8 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                   toggleNeckSymptoms={toggleNeckSymptoms}
                   toggleChestSymptoms={toggleChestSymptoms}
                   toggleUpperArmSymptoms={toggleUpperArmSymptoms}
+                  toggleForeArmSymptoms={toggleForeArmSymptoms}
+                  toggleMidAbSymptoms={toggleMidAbSymptoms}
                 />
                 {/* 1. Head */}
                 {showHeadSymptoms && (
@@ -446,6 +385,40 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                   <div ref={upperArmRef} className="upperArm-symptoms-list">
                     {dbSymps
                       .filter((symptom) => symptom.position === "Vai")
+                      .map((symptom) => (
+                        <Symptom
+                          symptom={symptom}
+                          onCheck={() => onCheck(symptom.id)}
+                          isChecked={patientForm.chosenSymps.includes(
+                            symptom.id
+                          )}
+                          key={symptom.id}
+                        />
+                      ))}
+                  </div>
+                )}
+                {/* 9. ForeArm */}
+                {showForeArmSymptoms && (
+                  <div ref={foreArmRef} className="foreArm-symptoms-list">
+                    {dbSymps
+                      .filter((symptom) => symptom.position === "Cánh tay")
+                      .map((symptom) => (
+                        <Symptom
+                          symptom={symptom}
+                          onCheck={() => onCheck(symptom.id)}
+                          isChecked={patientForm.chosenSymps.includes(
+                            symptom.id
+                          )}
+                          key={symptom.id}
+                        />
+                      ))}
+                  </div>
+                )}
+                {/* 10. MidAb */}
+                {showMidAbSymptoms && (
+                  <div ref={midAbRef} className="midAb-symptoms-list">
+                    {dbSymps
+                      .filter((symptom) => symptom.position === "Bụng")
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
