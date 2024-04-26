@@ -173,7 +173,7 @@ export default function SymptomChecker() {
   const handleNext = () => {
     setPrevStep(step);
     setStep((step) => step + 1);
-    window.scrollTo(0, 500);
+    window.scrollTo({ top: 500, left: 0, behavior: "instant" });
   };
 
   const checkHandleNext = () => {
@@ -199,7 +199,7 @@ export default function SymptomChecker() {
   const handlePrev = () => {
     setPrevStep(step);
     setStep((step) => step - 1);
-    window.scrollTo(0, 500);
+    window.scrollTo({ top: 500, left: 0, behavior: "instant" });
   };
 
   const StepName = (props) => {
