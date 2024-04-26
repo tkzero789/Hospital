@@ -1,20 +1,17 @@
-import "./sidebar.scss";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import GridViewIcon from "@mui/icons-material/GridView";
+import FeedIcon from "@mui/icons-material/Feed";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import ArticleIcon from "@mui/icons-material/Article";
-import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { NavLink, useNavigate } from "react-router-dom";
+import "./sidebar.scss";
 import BKCLogo from "../../assets/logo/footerLogo2.svg";
 import { useAuth } from "../../AuthContext";
-import axios from "axios";
 
-const Sidebar = () => {
+export default function Sidebar() {
   const { logout, getUserRole } = useAuth();
   const userRole = getUserRole();
-  const isDoctor = userRole === "head-doctor" || userRole === "doctor";
   const navigate = useNavigate();
 
   // Handle sign out
@@ -48,7 +45,7 @@ const Sidebar = () => {
       <div className="top">
         <NavLink
           className="logo-link"
-          to="/home"
+          to="/staff-home"
           style={{ textDecoration: "none" }}
         >
           <div className="admin-logo">
@@ -59,34 +56,40 @@ const Sidebar = () => {
 
       <div className="center">
         <ul>
-          <NavLink to="/admin-home">
+          <NavLink to="/dashboard">
             <li>
-              <DashboardIcon className="icon" />
+              <GridViewIcon className="icon" />
               <span>Dashboard</span>
             </li>
           </NavLink>
-          <NavLink to="/article-list-table">
+          <NavLink to="/symptom-table">
             <li>
-              <ArticleIcon className="icon" />
-              <span>Danh sách bài viết</span>
+              <FeedIcon className="icon" />
+              <span>Danh sách triệu chứng</span>
             </li>
           </NavLink>
-          <NavLink to="/disease-list-table">
+          <NavLink to="/disease-table">
             <li>
-              <HeartBrokenIcon className="icon" />
+              <FeedIcon className="icon" />
               <span>Danh sách căn bệnh</span>
             </li>
           </NavLink>
-          {!isDoctor && (
-            <NavLink to="/appointment-list-table">
+          <NavLink to="/article-table">
+            <li>
+              <FeedIcon className="icon" />
+              <span>Danh sách bài viết</span>
+            </li>
+          </NavLink>
+          {userRole === "admin" && (
+            <NavLink to="/appointment-table">
               <li>
-                <CalendarMonthIcon className="icon" />
+                <FeedIcon className="icon" />
                 <span>Danh sách đặt hẹn</span>
               </li>
             </NavLink>
           )}
-          {!isDoctor && (
-            <NavLink to="/user-list-table">
+          {userRole === "admin" && (
+            <NavLink to="/user-table">
               <li>
                 <PersonOutlineIcon className="icon" />
                 <span>Danh sách users</span>
@@ -109,6 +112,4 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
-
-export default Sidebar;
+}
