@@ -17,6 +17,7 @@ import Login from "./pages/login/Login";
 import TestSignin from "./pages/auth/testSignin";
 // routes
 import Layouts from "./Layouts";
+import StaffHome from "./pages/guest/staffHome";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();
@@ -47,6 +48,17 @@ const App = () => {
         <Route
           path="/*"
           element={<Layouts userRole={userRole} userInfos={userInfos} />}
+        />
+        <Route
+          path="/staff-home"
+          element={
+            <RequireAuth
+              userRole={userRole}
+              allowedRoles={["head-doctor", "doctor", "admin"]}
+            >
+              <StaffHome />
+            </RequireAuth>
+          }
         />
       </Routes>
     </div>

@@ -109,7 +109,7 @@ export default function MainNav() {
                         dropdownVisible ? "visible" : "hidden"
                       }`}
                     >
-                      <NavLink to="/workspace/dashboard">
+                      <NavLink to="/dashboard">
                         <SpaceDashboardIcon />
                         <span>Dashboard</span>
                       </NavLink>

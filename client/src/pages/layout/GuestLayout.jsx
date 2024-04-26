@@ -2,7 +2,6 @@ import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainNav from "../../components/Navbar/MainNav";
 import LowNav from "../../components/Navbar/LowNav";
-import Footer from "../../components/ForPages/Footer";
 import MobileNav from "../../components/Navbar/MobileNav";
 
 export default function NavbarLayout({ title, children }) {
@@ -13,14 +12,13 @@ export default function NavbarLayout({ title, children }) {
           <title>{title}</title>
         </Helmet>
       </HelmetProvider>
-      <div className="blue-bg-2">
+      <div className="body-bg-2">
         <header>
           <MainNav />
           <LowNav />
           <MobileNav />
         </header>
         {children}
-        <Footer />
       </div>
     </div>
   );

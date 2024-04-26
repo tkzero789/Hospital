@@ -149,17 +149,16 @@ export default function ApptForm({
       toast.warning("Email không hợp lệ");
     } else if (!date) {
       toast.warning("Vui lòng chọn ngày");
-    } else if (!month) {
+    } else if (!month || month === "00") {
       toast.warning("Vui lòng chọn tháng");
     } else if (!year) {
       toast.warning("Vui lòng chọn năm");
-    } else if (appt.gender === "") {
+    } else if (appt.gender === "" || appt.gender === "Chọn giới tính") {
       toast.warning("Vui lòng chọn giới tính");
-    } else if (appt.need === "") {
+    } else if (appt.need === "" || appt.need === "Chọn nhu cầu") {
       toast.warning("Vui lòng chọn Nhu cầu khám");
     } else {
       displayModal();
-      console.log(appt);
     }
   };
   // --- Validate: End ---
@@ -471,7 +470,9 @@ export default function ApptForm({
                     <span>Số điện thoại:</span>
                     <p>{appt.phoneNumber}</p>
                   </div>
-                  <div className="appt-modal-data">
+                  <div
+                    className={`appt-modal-data ${!appt.email ? "hidden" : ""}`}
+                  >
                     {appt.email ? (
                       <>
                         <span>Email:</span>
@@ -493,7 +494,9 @@ export default function ApptForm({
                     <span>Nhu cầu khám:</span>
                     <p>{appt.need}</p>
                   </div>
-                  <div className="appt-modal-data">
+                  <div
+                    className={`appt-modal-data ${!appt.date ? "hidden" : ""}`}
+                  >
                     {appt.date ? (
                       <>
                         <span>Ngày đặt khám:</span>
@@ -501,7 +504,11 @@ export default function ApptForm({
                       </>
                     ) : null}
                   </div>
-                  <div className="appt-modal-data">
+                  <div
+                    className={`appt-modal-data ${
+                      !appt.reason ? "hidden" : ""
+                    }`}
+                  >
                     {appt.reason ? (
                       <>
                         <span>Mô tả vấn đề sức khoẻ:</span>
@@ -509,7 +516,7 @@ export default function ApptForm({
                       </>
                     ) : null}
                   </div>
-                  <hr style={{ marginTop: "4rem" }} />
+                  <hr style={{ marginTop: "3rem" }} />
                   <div className="attention-text">
                     <p>
                       Tổng đài BKCare sẽ liên hệ Quý khách trong thời gian sớm

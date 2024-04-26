@@ -1,0 +1,375 @@
+.symp-big-box {
+  width: 100%;
+  height: 580px;
+  background-color: #ddfeff;
+}
+
+.big-box-wrapper {
+  display: flex;
+  height: 100%;
+}
+
+/* Left box for search bar */
+.symp-left-box {
+  width: 40%;
+  height: 100%;
+}
+
+.left-box-wrapper {
+  height: 100%;
+  position: relative;
+}
+
+/* Search input and search results */
+.search-symp-input input {
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  border-radius: 4px;
+  border: 1px solid #5ca8ff;
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.06);
+}
+
+.search-symp-input input:focus {
+  outline: 2px solid #5ca8ff;
+}
+
+.search-symp-display {
+  max-height: 220px;
+  width: 100%;
+  background-color: #ffffff;
+  overflow-y: auto;
+  z-index: 5;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 8px;
+}
+
+.search-symp-display::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.search-symp-display::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+.search-symp-display::-webkit-scrollbar-thumb {
+  background: #acacac; /* Color of the scroll thumb */
+}
+
+.search-symp-display::-webkit-scrollbar-thumb:hover {
+  background: #7e7e7e; /* Color of the scroll thumb on hover */
+}
+
+.form-check-label {
+  display: block;
+  padding: 4px 0 4px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.form-check-label:hover {
+  background-color: #f5f5f5;
+}
+
+.form-check-label span {
+  padding-left: 10px;
+  color: #4e4e4e;
+  font-size: 16px;
+  font-weight: var(--roboto-medium-weight);
+}
+
+/* Display selected symptoms box */
+.selected-symp-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 300px;
+  padding-bottom: 12px;
+  background-color: #c0e8ff;
+  border-radius: 8px;
+  border: 1px solid rgb(47, 150, 182);
+  overflow-y: auto;
+}
+
+.selected-symp-box::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.selected-symp-box::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+.selected-symp-box::-webkit-scrollbar-thumb {
+  background: #acacac; /* Color of the scroll thumb */
+}
+
+.selected-symp-box::-webkit-scrollbar-thumb:hover {
+  background: #7e7e7e; /* Color of the scroll thumb on hover */
+}
+
+.selected-symp-header {
+  width: 100%;
+  background-color: #dfdfdf;
+  padding: 8px;
+  margin-bottom: 12px;
+  text-align: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.selected-symp-header span {
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: var(--roboto-medium-weight);
+}
+
+.selected-symp-item {
+  display: flex;
+  background-color: #2c99f1;
+  padding: 4px 8px 4px 20px;
+  border-radius: 8px;
+  margin: 0 12px 4px 12px;
+  height: fit-content;
+}
+
+.selected-symp-name {
+  margin-right: auto;
+  color: var(--text-white);
+  word-wrap: normal;
+  word-break: break-word;
+}
+
+.selected-symp-item button {
+  border: none;
+  background-color: #ffffff;
+  color: var(--text-white);
+  border-radius: 6px;
+}
+
+.selected-symp-item button i {
+  color: #858585;
+}
+
+/* Right box for human figure */
+.symp-right-box {
+  width: 60%;
+  background-color: rgb(173, 238, 205);
+}
+
+.right-box-wrapper {
+  height: 100%;
+}
+
+.human-figure {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.sc-body-model-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sc-body-model-svg__path {
+  fill: rgba(0, 0, 0, 0);
+}
+
+.sc-body-model-svg__path:hover {
+  fill: #4bc4e9;
+  stroke: #4bc4e9;
+}
+
+.sc-body-model-svg__stroke {
+  fill: #155ecc;
+  pointer-events: none;
+}
+
+/* Symptoms box next to figure */
+.human-figure ul {
+  list-style: none;
+  border-radius: 8px;
+}
+
+.human-figure ul li {
+  padding: 8px;
+}
+
+.human-figure ul li:hover {
+  background-color: #d3e6fc;
+}
+
+/* 1. Head */
+.head-symptoms-list {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 2. Eyes */
+.eyes-symptoms-list {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 3. Ears */
+.ears-symptoms-list {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 4. Nose */
+.nose-symptoms-list {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 5. Mouth */
+.mouth-symptoms-list {
+  position: absolute;
+  top: 35px;
+  left: 30px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 6. Neck */
+.neck-symptoms-list {
+  position: absolute;
+  top: 60px;
+  left: 30px;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 7. Chest */
+.chest-symptoms-list {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 8. UpperArm */
+.upperArm-symptoms-list {
+  position: absolute;
+  top: 90px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 9. ForeArm */
+.foreArm-symptoms-list {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 10. MidAb */
+.midAb-symptoms-list {
+  position: absolute;
+  top: 200px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 11. LowerAbPrivate */
+.lowerAbPrivate-symptoms-list {
+  position: absolute;
+  top: 240px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 12. Hand */
+.hand-symptoms-list {
+  position: absolute;
+  top: 240px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 13. Thigh */
+.thigh-symptoms-list {
+  position: absolute;
+  top: 280px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 14. Knee */
+.knee-symptoms-list {
+  position: absolute;
+  top: 340px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 15. LowerLeg */
+.lowerLeg-symptoms-list {
+  position: absolute;
+  top: 350px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 16. Foot */
+.foot-symptoms-list {
+  position: absolute;
+  top: 400px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

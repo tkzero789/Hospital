@@ -6,6 +6,7 @@ import PatientFormDes from "../../components/SymptomCheckerParts/PatientFormDes"
 import PatientFormResult from "../../components/SymptomCheckerParts/PatientFormResult";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
+import Footer from "../../components/ForPages/Footer";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -183,6 +184,7 @@ export default function SymptomChecker() {
   const handleNext = () => {
     setPrevStep(step);
     setStep((step) => step + 1);
+    window.scrollTo({ top: 500, left: 0, behavior: "instant" });
   };
 
   const checkHandleNext = () => {
@@ -208,6 +210,7 @@ export default function SymptomChecker() {
   const handlePrev = () => {
     setPrevStep(step);
     setStep((step) => step - 1);
+    window.scrollTo({ top: 500, left: 0, behavior: "instant" });
   };
 
   const StepName = (props) => {
@@ -241,6 +244,7 @@ export default function SymptomChecker() {
     return stepNames.map((stepName) => {
       return (
         <StepName
+          key={stepName.number}
           number={stepName.number}
           currStep={step}
           name={stepName.name}
@@ -328,6 +332,7 @@ export default function SymptomChecker() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
