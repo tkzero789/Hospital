@@ -152,7 +152,7 @@
 /* Right box for human figure */
 .symp-right-box {
   width: 60%;
-  background-color: rgb(158, 233, 196);
+  background-color: rgb(173, 238, 205);
 }
 
 .right-box-wrapper {
@@ -301,6 +301,72 @@
 .midAb-symptoms-list {
   position: absolute;
   top: 200px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 11. LowerAbPrivate */
+.lowerAbPrivate-symptoms-list {
+  position: absolute;
+  top: 240px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 12. Hand */
+.hand-symptoms-list {
+  position: absolute;
+  top: 240px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 13. Thigh */
+.thigh-symptoms-list {
+  position: absolute;
+  top: 280px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 14. Knee */
+.knee-symptoms-list {
+  position: absolute;
+  top: 340px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 15. LowerLeg */
+.lowerLeg-symptoms-list {
+  position: absolute;
+  top: 350px;
+  right: 0;
+  background-color: #ffffff;
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* 16. Foot */
+.foot-symptoms-list {
+  position: absolute;
+  top: 400px;
   right: 0;
   background-color: #ffffff;
   width: 220px;
