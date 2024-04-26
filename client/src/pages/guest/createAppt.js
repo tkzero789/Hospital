@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import ApptForm from "../../components/ApptParts/ApptForm";
+import Footer from "../../components/ForPages/Footer";
 
 export default function CreateAppt() {
   const [appt, setAppt] = useState({
@@ -78,8 +79,7 @@ export default function CreateAppt() {
   };
 
   return (
-    <div>
-      {console.log(appt)}
+    <div className="appt-req-body">
       <ApptForm
         appt={appt}
         setAppt={setAppt}
@@ -95,6 +95,7 @@ export default function CreateAppt() {
           Đăng ký khám
         </button>{" "}
       </div>
+      <Footer />
     </div>
   );
 }
