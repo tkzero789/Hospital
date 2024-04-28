@@ -518,10 +518,18 @@
     margin-top: 12px;
   }
 
+  .select-age input {
+    width: 60%;
+  }
+
   .select-gender {
     width: 100%;
     padding: 0;
     margin-top: 12px;
+  }
+
+  .select-gender select {
+    width: 60%;
   }
 
   .symp-checker-steps {
@@ -557,6 +565,7 @@
   /* Step 2 */
   .symp-checker-board .card {
     padding: 4px;
+    border: none;
   }
 
   .symp-big-box {

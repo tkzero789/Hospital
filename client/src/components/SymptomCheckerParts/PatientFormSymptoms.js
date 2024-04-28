@@ -4,6 +4,7 @@ import MaleFigure from "../../components/MaleFigure/MaleFigure";
 import FemaleFigure from "../FemaleFigure/FemaleFigure";
 import "../../css/sympchecker.css";
 import MobileFemaleFigure from "../FemaleFigure/MobileFemaleFigure";
+import MobileMaleFigure from "../MaleFigure/MobileMaleFigure";
 
 // Render each symptom
 const Symptom = (props) => {
@@ -308,13 +309,13 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   // The UI
   return (
     <div>
-      <div className="pb-5 text-center">
+      <div className="pb-2 pb-md-5 text-center">
         <h4 className="text-blue-1 fw-med">
           Hãy chọn triệu chứng mà bạn đang gặp phải
         </h4>
       </div>
       <h5 className="card-title text-blue-1 fw-med text-blue-2">
-        Triệu chứng phổ biến
+        Tìm kiếm các triệu chứng
       </h5>
       <div className="switch-button">
         <button
@@ -379,21 +380,23 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 <div className="selected-symp-header">
                   <span>Các triệu chứng đã chọn:</span>
                 </div>
-                {patientForm.chosenSymps.map((symptomId) => {
-                  const symptom = dbSymps.find(
-                    (symptom) => symptom.id === symptomId
-                  );
-                  return (
-                    <div className="selected-symp-item" key={symptomId}>
-                      <div className="selected-symp-name">{symptom.name}</div>
-                      <button
-                        onClick={(event) => handleDelete(event, symptomId)}
-                      >
-                        <i className="bi bi-x-circle-fill"></i>
-                      </button>
-                    </div>
-                  );
-                })}
+                <div className="selected-symp-box-wrapper">
+                  {[...patientForm.chosenSymps].reverse().map((symptomId) => {
+                    const symptom = dbSymps.find(
+                      (symptom) => symptom.id === symptomId
+                    );
+                    return (
+                      <div className="selected-symp-item" key={symptomId}>
+                        <div className="selected-symp-name">{symptom.name}</div>
+                        <button
+                          onClick={(event) => handleDelete(event, symptomId)}
+                        >
+                          <i className="bi bi-x-circle-fill"></i>
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -730,6 +733,22 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="human-figure">
                 {patientForm.patientGender === "Nữ" && (
                   <MobileFemaleFigure
+                    toggleWholeHeadM={toggleWholeHeadM}
+                    toggleNeckM={toggleNeckM}
+                    toggleChestM={toggleChestM}
+                    toggleUpperArmM={toggleUpperArmM}
+                    toggleForeArmM={toggleForeArmM}
+                    toggleMidAbM={toggleMidAbM}
+                    toggleLowerAbM={toggleLowerAbM}
+                    toggleHandM={toggleHandM}
+                    toggleThighM={toggleThighM}
+                    toggleKneeM={toggleKneeM}
+                    toggleLowerLegM={toggleLowerLegM}
+                    toggleFootM={toggleFootM}
+                  />
+                )}
+                {patientForm.patientGender === "Nam" && (
+                  <MobileMaleFigure
                     toggleWholeHeadM={toggleWholeHeadM}
                     toggleNeckM={toggleNeckM}
                     toggleChestM={toggleChestM}
@@ -1270,17 +1289,19 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
         <div className="selected-symp-header">
           <span>Các triệu chứng đã chọn:</span>
         </div>
-        {patientForm.chosenSymps.map((symptomId) => {
-          const symptom = dbSymps.find((symptom) => symptom.id === symptomId);
-          return (
-            <div className="selected-symp-item" key={symptomId}>
-              <div className="selected-symp-name">{symptom.name}</div>
-              <button onClick={(event) => handleDelete(event, symptomId)}>
-                <i className="bi bi-x-circle-fill"></i>
-              </button>
-            </div>
-          );
-        })}
+        <div className="selected-symp-box-wrapper">
+          {[...patientForm.chosenSymps].reverse().map((symptomId) => {
+            const symptom = dbSymps.find((symptom) => symptom.id === symptomId);
+            return (
+              <div className="selected-symp-item" key={symptomId}>
+                <div className="selected-symp-name">{symptom.name}</div>
+                <button onClick={(event) => handleDelete(event, symptomId)}>
+                  <i className="bi bi-x-circle-fill"></i>
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className="row pt-3 pb-3"></div>
     </div>

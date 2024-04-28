@@ -21,12 +21,12 @@ const PatientFormAgeGen = ({ patientForm, setPatientForm }) => {
         </h4>
       </div>
       <div className="steps-info-section">
-        <div className="form-group row pb-5">
+        <div className="form-group pb-5">
           <h5 className="fw-med text-blue-2">Tuổi tác</h5>
           <div className="select-age">
             <input
               type="number"
-              className="form-control blue-border-1 col-12 fw-reg"
+              className="form-control fw-reg"
               name="patientAge"
               placeholder="Nhập độ tuổi"
               value={patientForm.patientAge}
@@ -34,13 +34,13 @@ const PatientFormAgeGen = ({ patientForm, setPatientForm }) => {
             />
           </div>
         </div>
-        <div className="form-group row pb-5">
+        <div className="form-group pb-5">
           <h5 className="fw-med text-blue-2">Giới tính</h5>
           <div className="select-gender">
             <select
               name="patientGender"
               value={patientForm.patientGender}
-              className="form-select blue-border-1 col-12 fw-reg"
+              className="form-select blue-border-1 fw-reg"
               onChange={(e) => updateGenField(e)}
             >
               <option value="">Chọn giới tính</option>
