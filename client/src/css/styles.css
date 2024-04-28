@@ -1644,8 +1644,8 @@ header {
 .select-age input {
   width: 40%;
   margin: 0 auto;
-  border: 1px solid #5ca8ff;
-  background-color: #f8f8f8;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .select-gender {
@@ -1656,8 +1656,8 @@ header {
 .select-gender select {
   width: 40%;
   margin: 0 auto;
-  border: 1px solid #5ca8ff;
-  background-color: #f8f8f8;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .progress-bar-step {

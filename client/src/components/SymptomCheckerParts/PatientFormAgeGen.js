@@ -40,7 +40,7 @@ const PatientFormAgeGen = ({ patientForm, setPatientForm }) => {
             <select
               name="patientGender"
               value={patientForm.patientGender}
-              className="form-select blue-border-1 fw-reg"
+              className="form-select fw-reg"
               onChange={(e) => updateGenField(e)}
             >
               <option value="">Chọn giới tính</option>

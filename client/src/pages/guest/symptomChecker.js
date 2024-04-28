@@ -326,7 +326,12 @@ export default function SymptomChecker() {
                         />
                         <button
                           type="button"
-                          className="btn btn-outline-primary"
+                          className="btn btn-primary"
+                          disabled={
+                            step === 1 &&
+                            (!patientForm.patientAge ||
+                              !patientForm.patientGender)
+                          }
                           onClick={checkHandleNext}
                         >
                           {step === 3 ? "Xem kết quả" : "Tiếp theo"}
