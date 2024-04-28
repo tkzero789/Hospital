@@ -295,7 +295,13 @@ export default function SymptomChecker() {
                       type="button"
                       className="btn btn-outline-secondary"
                       disabled={step === 1}
-                      onClick={handlePrev}
+                      onClick={() => {
+                        if (step === 2) {
+                          window.location.reload();
+                        } else {
+                          handlePrev();
+                        }
+                      }}
                     >
                       Quay lại
                     </button>

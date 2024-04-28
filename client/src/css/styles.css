@@ -449,10 +449,6 @@ header {
   transition-duration: 0.4s;
 }
 
-.navbar-slider {
-  /* display: none; */
-}
-
 .mobile-logo-link {
   margin-right: auto;
 }

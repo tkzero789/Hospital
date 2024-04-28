@@ -135,6 +135,7 @@
 .selected-symp-box-wrapper {
   overflow-y: auto;
   height: calc(100% - 43px);
+  padding-top: 6px;
 }
 
 .selected-symp-box-wrapper::-webkit-scrollbar {
@@ -434,16 +435,26 @@
   touch-action: none;
 }
 
-/* 6. Mobile Neck */
+/***** Mobile symptoms list *****/
 .mobile-symptoms-list {
   position: fixed;
   bottom: 0;
-  left: 0;
   background-color: #ffffff;
   width: 100%;
   height: calc(100% - 58px);
   border-radius: 6px;
   overflow-y: auto;
+  animation: slidein 0.4s;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
 }
 
 .mobile-symptoms-list > span {
@@ -467,7 +478,11 @@
 
 .mobile-symp-list-button button:first-child {
   color: var(--text-color);
-  border: 1px solid #c4c4c4;
+  border-right: 1px solid #d1d1d1;
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+  background-color: #ebebeb;
   padding: 8px 12px;
   font-weight: var(--roboto-regular-weight);
 }
@@ -475,6 +490,14 @@
 .mobile-symp-list-button button:last-child {
   color: var(--text-white);
   background-color: #3498db;
+  border: none;
+  padding: 8px 12px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.mobile-symp-list-button button:last-child:disabled {
+  color: #d1d1d1;
+  background-color: #f0f0f0;
   border: none;
   padding: 8px 12px;
   font-weight: var(--roboto-regular-weight);

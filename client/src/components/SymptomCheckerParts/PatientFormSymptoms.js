@@ -5,6 +5,7 @@ import FemaleFigure from "../FemaleFigure/FemaleFigure";
 import "../../css/sympchecker.css";
 import MobileFemaleFigure from "../FemaleFigure/MobileFemaleFigure";
 import MobileMaleFigure from "../MaleFigure/MobileMaleFigure";
+import { MobileSympBtn } from "../MobileSympBtn/MobileSympBtn";
 
 // Render each symptom
 const Symptom = (props) => {
@@ -832,26 +833,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      {/* Button */}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleWholeHeadM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleWholeHeadM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleWholeHeadM}
+                        position={["Đầu", "Mắt", "Tai", "Mũi", "Miệng"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -871,25 +858,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleNeckM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleNeckM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleNeckM}
+                        position={["Cổ"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -909,25 +883,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleChestM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleChestM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleChestM}
+                        position={["Ngực"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -947,25 +908,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleUpperArmM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleUpperArmM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleUpperArmM}
+                        position={["Vai"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -985,25 +933,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleForeArmM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleForeArmM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleForeArmM}
+                        position={["Cánh tay"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1023,25 +958,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleMidAbM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleMidAbM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleMidAbM}
+                        position={["Bụng"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1061,25 +983,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleLowerAbM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleLowerAbM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleLowerAbM}
+                        position={["Vùng dưới"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1099,25 +1008,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleHandM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleHandM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleHandM}
+                        position={["Bàn tay"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1139,25 +1035,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleThighM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleThighM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleThighM}
+                        position={["Hông, đùi và mông"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1177,25 +1060,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleKneeM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleKneeM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleKneeM}
+                        position={["Đầu gối"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1215,25 +1085,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleLowerLegM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleLowerLegM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleLowerLegM}
+                        position={["Cẳng chân"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
@@ -1253,25 +1110,12 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                             key={symptom.id}
                           />
                         ))}
-                      <div className="mobile-symp-list-button">
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleFootM();
-                          }}
-                        >
-                          Huỷ
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleFootM();
-                            window.scrollTo({ top: 800, left: 0 });
-                          }}
-                        >
-                          Xác nhận chọn
-                        </button>
-                      </div>
+                      <MobileSympBtn
+                        toggleFunction={toggleFootM}
+                        position={["Bàn chân"]}
+                        patientForm={patientForm}
+                        dbSymps={dbSymps}
+                      />
                     </div>
                   </div>
                 )}
