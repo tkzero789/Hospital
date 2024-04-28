@@ -1625,3 +1625,48 @@ header {
   font-size: 16px;
   min-width: 150px;
 }
+
+/* Symptom checker */
+.symp-checker-board .card {
+  padding: 36px;
+}
+
+.symp-checker-board form {
+  padding-top: 20px;
+}
+
+.select-age {
+  width: 20%;
+}
+
+.select-gender {
+  width: 20%;
+}
+
+.progress-bar-step {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.steps-button-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+.steps-back-button button {
+  width: 200px;
+}
+
+.steps-next-button {
+  padding-left: 24px;
+}
+
+.steps-next-button button {
+  width: 200px;
+}
+
+.steps-next-button a {
+  width: 200px;
+}

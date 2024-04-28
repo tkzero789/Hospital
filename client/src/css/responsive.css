@@ -493,4 +493,85 @@
   .signin-right-btn button {
     width: 100%;
   }
+
+  /* Symptom Checker */
+  /* Step 1 */
+  .symp-checker-board {
+    padding: 0;
+  }
+
+  .steps-info-section {
+    padding: 32px;
+  }
+
+  .steps-info-section h5 {
+    padding: 0;
+  }
+
+  .symp-checker-board form {
+    padding: 0;
+  }
+
+  .select-age {
+    width: 100%;
+    padding: 0;
+    margin-top: 12px;
+  }
+
+  .select-gender {
+    width: 100%;
+    padding: 0;
+    margin-top: 12px;
+  }
+
+  .symp-checker-steps {
+    display: none;
+  }
+
+  .progress-bar-step {
+    display: none;
+  }
+
+  .steps-button-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 16px 36px;
+  }
+
+  .steps-back-button {
+    padding-bottom: 16px;
+  }
+
+  .steps-back-button button {
+    width: 100%;
+  }
+
+  .steps-next-button {
+    padding: 0;
+  }
+
+  .steps-next-button button {
+    width: 100%;
+  }
+
+  /* Step 2 */
+  .symp-checker-board .card {
+    padding: 4px;
+  }
+
+  .symp-big-box {
+    height: 820px !important;
+  }
+
+  .symp-left-box {
+    width: 100% !important;
+  }
+
+  .search-symp-display {
+    max-height: 320px !important;
+  }
+
+  .symp-right-box {
+    display: none;
+  }
 }
