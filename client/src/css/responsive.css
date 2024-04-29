@@ -569,15 +569,16 @@
   }
 
   .symp-big-box {
-    height: 820px !important;
+    display: none;
   }
 
   .symp-left-box {
     width: 100% !important;
+    display: none;
   }
 
   .search-symp-display {
-    max-height: 320px !important;
+    max-height: calc(100% - 180px) !important;
   }
 
   .symp-right-box {

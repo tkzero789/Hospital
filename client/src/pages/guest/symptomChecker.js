@@ -62,7 +62,7 @@ export default function SymptomChecker() {
 
   useEffect(() => {
     if (prevStep === 1) {
-      const age = patientForm.age;
+      let age = patientForm.age;
       if (age !== "") {
         if (age <= 1) {
           age = "Dưới 1 tuổi";

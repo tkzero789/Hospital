@@ -24,6 +24,14 @@
 }
 
 /* Search input and search results */
+.mobile-add-symp-wrapper {
+  display: none;
+}
+
+.mobile-add-symp-wrapper .selected-symp-box {
+  display: none;
+}
+
 .search-symp-input {
   position: relative;
 }
@@ -416,6 +424,7 @@
 }
 
 .mobile-selected-symp-box {
+  display: none;
   width: 100%;
   height: 300px;
   padding-bottom: 12px;
@@ -503,6 +512,7 @@
   font-weight: var(--roboto-regular-weight);
 }
 
+/* MOBILE RESPONSIVE */
 @media only screen and (max-width: 767px) {
   /* Symptom Checker */
   h4 {
@@ -522,7 +532,7 @@
     display: block;
     width: 100%;
     height: 48px;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
   }
 
   .switch-button button {
@@ -539,6 +549,109 @@
   .switch-button button:last-child {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+
+  .left-box-wrapper {
+    height: 50%;
+  }
+
+  .mobile-search-background {
+    width: 100%;
+    height: calc(100% - 58px);
+    background-color: #ffffff;
+    position: fixed;
+    top: 58px;
+    left: 0;
+    z-index: 10;
+    animation: slidein 0.5s;
+  }
+
+  .mobile-add-symp-wrapper {
+    display: block;
+  }
+
+  .add-symp-btn {
+    display: flex;
+    justify-content: center;
+  }
+
+  .add-symp-btn > button {
+    color: var(--text-white);
+    background-color: #004ad3;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .add-symp-btn button span {
+    padding-right: 8px;
+  }
+
+  .mobile-add-symp-wrapper .selected-symp-box {
+    position: relative !important;
+  }
+
+  .search-symp-input {
+    display: none;
+  }
+
+  .mobile-search-symp-input {
+    display: block;
+    position: relative;
+    padding: 16px 12px 4px 16px;
+  }
+
+  .mobile-search-symp-input input {
+    width: 100%;
+    height: 50px;
+    padding-left: 20px;
+    border-radius: 4px;
+    border: 1px solid #5ca8ff;
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-search-symp-input .search-symp-button {
+    padding: 24px 20px 0 0;
+  }
+
+  .mobile-search-symp-btn {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 76px;
+    display: flex;
+    background-color: #ffffff;
+  }
+
+  .mobile-search-symp-btn button {
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 16px;
+  }
+
+  .mobile-search-symp-btn button:first-child {
+    color: var(--text-color);
+    border: none;
+    background-color: #ebebeb;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .mobile-search-symp-btn button:last-child:disabled {
+    color: #d1d1d1;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .mobile-search-symp-btn button:last-child {
+    color: var(--text-white);
+    background-color: #3498db;
+    border: none;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
   }
 
   .form-check-label {
@@ -565,5 +678,10 @@
   .selected-symp-item button {
     width: 40px;
     height: 100%;
+  }
+
+  .mobile-selected-symp-box {
+    margin-top: 24px;
+    display: block;
   }
 }
