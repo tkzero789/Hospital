@@ -1,7 +1,10 @@
-import { useRef } from "react";
-import Symptom from "../Symptom/Symptom";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@mui/material";
+import MobileSymptom from "../Symptom/MobileSymptom";
 
 const MobileSearchBarSymp = ({
+  inputRef,
+  searchSympRef,
   searchTerm,
   setSearchTerm,
   displaySearch,
@@ -9,11 +12,21 @@ const MobileSearchBarSymp = ({
   filteredSymps,
   onCheck,
   patientForm,
-  toggleIsAddClick,
+  toggleFunction,
   dbSymps,
+  chosenSymps,
 }) => {
-  const inputRef = useRef(null);
-  const searchSympRef = useRef(null);
+  // Delay 1s on rendering symptom
+  const [delay, setDelay] = useState(false);
+
+  useEffect(() => {
+    setDelay(false);
+    const timer = setTimeout(() => {
+      setDelay(true);
+    }, 500);
+    return () => clearTimeout(timer); // Clean up on component unmount
+  }, [searchTerm]);
+
   return (
     <>
       <div className="mobile-search-background">
@@ -31,26 +44,38 @@ const MobileSearchBarSymp = ({
               onClick={(e) => {
                 e.preventDefault();
                 setDisplaySearch(false);
-                toggleIsAddClick();
+                toggleFunction();
               }}
             >
-              <i className="bi bi-arrow-right-square-fill"></i>
+              <i className="bi bi-x-lg"></i>
             </button>
           </div>
         </div>
         {/* Search results */}
         {searchTerm && displaySearch && (
-          <div className="search-symp-display" ref={searchSympRef}>
-            {filteredSymps.map((symptom) => {
-              return (
-                <Symptom
-                  symptom={symptom}
-                  onCheck={() => onCheck(symptom.id)}
-                  isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                  key={symptom.id}
-                />
-              );
-            })}
+          <div ref={searchSympRef} className="search-symp-display">
+            {delay
+              ? filteredSymps
+                  .filter((symptom) => !chosenSymps.includes(symptom.id)) // Filter out chosen symptoms
+                  .map((symptom) => (
+                    <MobileSymptom
+                      symptom={symptom}
+                      onCheck={onCheck}
+                      key={symptom.id}
+                      toggleFunction={toggleFunction}
+                    />
+                  ))
+              : Array(10)
+                  .fill()
+                  .map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      variant="text"
+                      animation="wave"
+                      sx={{ fontSize: "2rem" }}
+                      style={{ margin: "0 10px" }}
+                    />
+                  ))}
           </div>
         )}
         <div className="mobile-search-symp-btn">
@@ -58,26 +83,11 @@ const MobileSearchBarSymp = ({
             onClick={(e) => {
               e.preventDefault();
               setDisplaySearch(false);
-              toggleIsAddClick();
+              toggleFunction();
               window.scrollTo({ top: 0, left: 0, behavior: "instant" });
             }}
           >
-            Huỷ
-          </button>
-          <button
-            disabled={
-              patientForm.chosenSymps.filter((id) =>
-                dbSymps.some((symptom) => symptom.id === id)
-              ).length === 0
-            }
-            onClick={(e) => {
-              e.preventDefault();
-              setDisplaySearch(false);
-              toggleIsAddClick();
-              window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-            }}
-          >
-            Xác nhận chọn
+            Cancel
           </button>
         </div>
       </div>

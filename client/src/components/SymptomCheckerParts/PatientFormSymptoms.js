@@ -11,6 +11,9 @@ import SearchBarSymp from "../SearchBarSymp/SearchBarSymp";
 import SelectedSympBox from "../SelectedSympBox/SelectedSympBox";
 import MobileSelectedSympBox from "../SelectedSympBox/MobileSelectedSympBox";
 import MobileSearchBarSymp from "../SearchBarSymp/MobileSearchBarSymp";
+import WholeHeadSymp from "../WholeHeadSymp/WholeHeadSymp";
+import { ExtraMobileSympBtn } from "../MobileSympBtn/ExtraMobileSympBtn";
+import MobileSymptom from "../Symptom/MobileSymptom";
 
 const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   const onCheck = (symptomId) => {
@@ -34,6 +37,9 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       });
     }
   };
+
+  console.log(dbSymps);
+  console.log(patientForm.chosenSymps);
 
   // Search
   const [searchTerm, setSearchTerm] = useState("");
@@ -210,9 +216,6 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   }, [searchTerm]);
 
   // ********** Mobile Figure **********
-  const [isVisible, setIsVisible] = useState(true);
-  const [isVisibleM, setIsVisibleM] = useState(false);
-  const [isSwitch, setIsSwitch] = useState(true);
 
   // State for mobile
   const [wholeHeadM, setWholeHeadM] = useState(false);
@@ -231,6 +234,49 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   // State for render full screen search on mobile
   const [isAddClick, setIsAddClick] = useState(false);
 
+  // States for wholeHead
+  const [extraM, setExtraM] = useState(false);
+  const [extraHeadM, setExtraHeadM] = useState(false);
+  const [extraEyesM, setExtraEyesM] = useState(false);
+  const [extraEarsM, setExtraEarsM] = useState(false);
+  const [extraNoseM, setExtraNoseM] = useState(false);
+  const [extraMouthM, setExtraMouthM] = useState(false);
+
+  // Toggle for wholeHead (extraM, extraHeadM ... extraMouthM)
+  const toggleExtraM = () => {
+    setExtraM(!extraM);
+    setExtraHeadM(false);
+    setExtraEyesM(false);
+    setExtraEarsM(false);
+    setExtraNoseM(false);
+    setExtraMouthM(false);
+  };
+
+  const toggleExtraHeadM = () => {
+    setExtraHeadM(!extraHeadM);
+    setExtraM(!extraM);
+  };
+
+  const toggleExtraEyesM = () => {
+    setExtraEyesM(!extraEyesM);
+    setExtraM(!extraM);
+  };
+
+  const toggleExtraEarsM = () => {
+    setExtraEarsM(!extraEarsM);
+    setExtraM(!extraM);
+  };
+
+  const toggleExtraNoseM = () => {
+    setExtraNoseM(!extraNoseM);
+    setExtraM(!extraM);
+  };
+
+  const toggleExtraMouthM = () => {
+    setExtraMouthM(!extraMouthM);
+    setExtraM(!extraM);
+  };
+
   // Toggle for isAddClick
   const toggleIsAddClick = () => {
     setIsAddClick(!isAddClick);
@@ -239,10 +285,17 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   // Toggle for mobile
   const toggleWholeHeadM = () => {
     setWholeHeadM(!wholeHeadM);
+    setExtraM(false);
+    setExtraHeadM(false);
+    setExtraEyesM(false);
+    setExtraEarsM(false);
+    setExtraNoseM(false);
+    setExtraMouthM(false);
   };
 
   const toggleNeckM = () => {
     setNeckM(!neckM);
+    setExtraM(false);
   };
 
   const toggleChestM = () => {
@@ -285,10 +338,11 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
     setFootM(!footM);
   };
 
+  const [isVisibleM, setIsVisibleM] = useState(false);
+  const [isSwitch, setIsSwitch] = useState(true);
   // Toggle Search Bar button (left)
   const toggleSearchBar = (e) => {
     e.preventDefault();
-    setIsVisible(true);
     setIsVisibleM(false);
     setIsSwitch(true);
   };
@@ -296,7 +350,6 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
   // Toggle Figure figure button (right)
   const toggleMobileFigure = (e) => {
     e.preventDefault();
-    setIsVisible(false);
     setIsVisibleM(true);
     setIsSwitch(false);
   };
@@ -333,13 +386,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
             <div className="left-box-wrapper">
               {/* Search Bar */}
               <SearchBarSymp
+                inputRef={inputRef}
+                searchSympRef={searchSympRef}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 displaySearch={displaySearch}
                 setDisplaySearch={setDisplaySearch}
                 filteredSymps={filteredSymps}
                 onCheck={onCheck}
-                patientForm={patientForm}
+                chosenSymps={patientForm.chosenSymps}
               />
               {/* Display selected symptoms */}
               <SelectedSympBox
@@ -397,14 +452,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showHeadSymptoms && (
                   <div ref={headRef} className="head-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Đầu")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Đầu" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -414,14 +470,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showEyesSymptoms && (
                   <div ref={eyesRef} className="eyes-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Mắt")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Mắt" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -431,14 +488,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showEarsSymptoms && (
                   <div ref={earsRef} className="ears-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Tai")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Tai" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -448,14 +506,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showNoseSymptoms && (
                   <div ref={noseRef} className="nose-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Mũi")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Mũi" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -465,14 +524,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showMouthSymptoms && (
                   <div ref={mouthRef} className="mouth-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Miệng")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Miệng" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -482,14 +542,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showNeckSymptoms && (
                   <div ref={neckRef} className="neck-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Cổ")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Cổ" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -499,14 +560,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showChestSymptoms && (
                   <div ref={chestRef} className="chest-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Ngực")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Ngực" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -516,14 +578,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showUpperArmSymptoms && (
                   <div ref={upperArmRef} className="upperArm-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Vai")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Vai" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -533,14 +596,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showForeArmSymptoms && (
                   <div ref={foreArmRef} className="foreArm-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Cánh tay")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Cánh tay" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -550,14 +614,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showMidAbSymptoms && (
                   <div ref={midAbRef} className="midAb-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Bụng")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Bụng" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -570,14 +635,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                     className="lowerAbPrivate-symptoms-list"
                   >
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Vùng dưới")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Vùng dưới" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -587,14 +653,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showHandSymptoms && (
                   <div ref={handRef} className="hand-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Bàn tay")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Bàn tay" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -605,15 +672,14 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                   <div ref={thighRef} className="thigh-symptoms-list">
                     {dbSymps
                       .filter(
-                        (symptom) => symptom.position === "Hông, đùi và mông"
+                        (symptom) =>
+                          symptom.position === "Hông, đùi và mông" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -623,14 +689,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showKneeSymptoms && (
                   <div ref={kneeRef} className="knee-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Đầu gối")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Đầu gối" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -640,14 +707,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showLowerLegSymptoms && (
                   <div ref={lowerLegRef} className="lowerLeg-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Cẳng chân")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Cẳng chân" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -657,14 +725,15 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 {showFootSymptoms && (
                   <div ref={footRef} className="foot-symptoms-list">
                     {dbSymps
-                      .filter((symptom) => symptom.position === "Bàn chân")
+                      .filter(
+                        (symptom) =>
+                          symptom.position === "Bàn chân" &&
+                          !patientForm.chosenSymps.includes(symptom.id)
+                      )
                       .map((symptom) => (
                         <Symptom
                           symptom={symptom}
-                          onCheck={() => onCheck(symptom.id)}
-                          isChecked={patientForm.chosenSymps.includes(
-                            symptom.id
-                          )}
+                          onCheck={onCheck}
                           key={symptom.id}
                         />
                       ))}
@@ -679,7 +748,7 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       <div
         className="mobile-add-symp-wrapper"
         style={{
-          visibility: isVisibleM ? "hidden" : "visible",
+          display: isVisibleM ? "none" : "",
           pointerEvents: isVisibleM ? "none" : "auto",
         }}
       >
@@ -695,6 +764,8 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
           </button>
           {isAddClick && (
             <MobileSearchBarSymp
+              inputRef={inputRef}
+              searchSympRef={searchSympRef}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               displaySearch={displaySearch}
@@ -702,8 +773,9 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               filteredSymps={filteredSymps}
               onCheck={onCheck}
               patientForm={patientForm}
-              toggleIsAddClick={toggleIsAddClick}
+              toggleFunction={toggleIsAddClick}
               dbSymps={dbSymps}
+              chosenSymps={patientForm.chosenSymps}
             />
           )}
         </div>
@@ -751,67 +823,108 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
             {wholeHeadM && (
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
-                  <span>Triệu chứng ở đầu</span>
-                  {dbSymps
-                    .filter((symptom) => symptom.position === "Đầu")
-                    .map((symptom) => (
-                      <Symptom
-                        symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                        key={symptom.id}
-                      />
-                    ))}
-                  <span>Triệu chứng ở mắt</span>
-                  {dbSymps
-                    .filter((symptom) => symptom.position === "Mắt")
-                    .map((symptom) => (
-                      <Symptom
-                        symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                        key={symptom.id}
-                      />
-                    ))}
-                  <span>Triệu chứng ở tai</span>
-                  {dbSymps
-                    .filter((symptom) => symptom.position === "Tai")
-                    .map((symptom) => (
-                      <Symptom
-                        symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                        key={symptom.id}
-                      />
-                    ))}
-                  <span>Triệu chứng ở mũi</span>
-                  {dbSymps
-                    .filter((symptom) => symptom.position === "Mũi")
-                    .map((symptom) => (
-                      <Symptom
-                        symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                        key={symptom.id}
-                      />
-                    ))}
-                  <span>Triệu chứng ở miệng</span>
-                  {dbSymps
-                    .filter((symptom) => symptom.position === "Miệng")
-                    .map((symptom) => (
-                      <Symptom
-                        symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                        key={symptom.id}
-                      />
-                    ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleWholeHeadM}
-                    position={["Đầu", "Mắt", "Tai", "Mũi", "Miệng"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  {/* Head */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleExtraHeadM();
+                    }}
+                  >
+                    <span>Đầu</span>
+                    <i className="bi bi-arrow-right"></i>
+                  </button>
+                  {extraHeadM && (
+                    <WholeHeadSymp
+                      dbSymps={dbSymps}
+                      onCheck={onCheck}
+                      position={"Đầu"}
+                      chosenSymps={patientForm.chosenSymps}
+                      toggleFunction={toggleWholeHeadM}
+                    />
+                  )}
+                  {/* Eyes */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleExtraEyesM();
+                    }}
+                  >
+                    <span>Mắt</span>
+                    <i className="bi bi-arrow-right"></i>
+                  </button>
+                  {extraEyesM && (
+                    <WholeHeadSymp
+                      dbSymps={dbSymps}
+                      onCheck={onCheck}
+                      position={"Mắt"}
+                      chosenSymps={patientForm.chosenSymps}
+                      toggleFunction={toggleWholeHeadM}
+                    />
+                  )}
+                  {/* Ears */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleExtraEarsM();
+                    }}
+                  >
+                    <span>Tai</span>
+                    <i className="bi bi-arrow-right"></i>
+                  </button>
+                  {extraEarsM && (
+                    <WholeHeadSymp
+                      dbSymps={dbSymps}
+                      onCheck={onCheck}
+                      position={"Tai"}
+                      chosenSymps={patientForm.chosenSymps}
+                      toggleFunction={toggleWholeHeadM}
+                    />
+                  )}
+                  {/* Nose */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleExtraNoseM();
+                    }}
+                  >
+                    <span>Mũi</span>
+                    <i className="bi bi-arrow-right"></i>
+                  </button>
+                  {extraNoseM && (
+                    <WholeHeadSymp
+                      dbSymps={dbSymps}
+                      onCheck={onCheck}
+                      position={"Mũi"}
+                      chosenSymps={patientForm.chosenSymps}
+                      toggleFunction={toggleWholeHeadM}
+                    />
+                  )}
+                  {/* Mouth */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleExtraMouthM();
+                    }}
+                  >
+                    <span>Miệng</span>
+                    <i className="bi bi-arrow-right"></i>
+                  </button>
+                  {extraMouthM && (
+                    <WholeHeadSymp
+                      dbSymps={dbSymps}
+                      onCheck={onCheck}
+                      position={"Miệng"}
+                      chosenSymps={patientForm.chosenSymps}
+                      toggleFunction={toggleWholeHeadM}
+                    />
+                  )}
+
+                  {/* Display bottom buttons */}
+                  {extraM ? (
+                    <ExtraMobileSympBtn toggleExtraM={toggleExtraM} />
+                  ) : (
+                    <MobileSympBtn toggleFunction={toggleWholeHeadM} />
+                  )}
                 </div>
               </div>
             )}
@@ -820,21 +933,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Cổ")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Cổ" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleNeckM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleNeckM}
-                    position={["Cổ"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleNeckM} />
                 </div>
               </div>
             )}
@@ -843,21 +955,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Ngực")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Ngực" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleChestM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleChestM}
-                    position={["Ngực"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleChestM} />
                 </div>
               </div>
             )}
@@ -866,21 +977,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Vai")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Vai" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleUpperArmM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleUpperArmM}
-                    position={["Vai"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleUpperArmM} />
                 </div>
               </div>
             )}
@@ -889,21 +999,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Cánh tay")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Cánh tay" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleForeArmM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleForeArmM}
-                    position={["Cánh tay"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleForeArmM} />
                 </div>
               </div>
             )}
@@ -912,21 +1021,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Bụng")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Bụng" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleMidAbM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleMidAbM}
-                    position={["Bụng"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleMidAbM} />
                 </div>
               </div>
             )}
@@ -935,21 +1043,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Vùng dưới")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Vùng dưới" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleLowerAbM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleLowerAbM}
-                    position={["Vùng dưới"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleLowerAbM} />
                 </div>
               </div>
             )}
@@ -958,21 +1065,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Bàn tay")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Bàn tay" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleHandM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleHandM}
-                    position={["Bàn tay"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleHandM} />
                 </div>
               </div>
             )}
@@ -982,22 +1088,19 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
-                      (symptom) => symptom.position === "Hông, đùi và mông"
+                      (symptom) =>
+                        symptom.position === "Hông, đùi và mông" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleThighM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleThighM}
-                    position={["Hông, đùi và mông"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleThighM} />
                 </div>
               </div>
             )}
@@ -1006,21 +1109,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Đầu gối")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Đầu gối" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleKneeM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleKneeM}
-                    position={["Đầu gối"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleKneeM} />
                 </div>
               </div>
             )}
@@ -1029,21 +1131,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Cẳng chân")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Cẳng chân" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleLowerLegM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleLowerLegM}
-                    position={["Cẳng chân"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleLowerLegM} />
                 </div>
               </div>
             )}
@@ -1052,21 +1153,20 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
               <div className="mobile-symp-background">
                 <div className="mobile-symptoms-list">
                   {dbSymps
-                    .filter((symptom) => symptom.position === "Bàn chân")
+                    .filter(
+                      (symptom) =>
+                        symptom.position === "Bàn chân" &&
+                        !patientForm.chosenSymps.includes(symptom.id)
+                    )
                     .map((symptom) => (
-                      <Symptom
+                      <MobileSymptom
                         symptom={symptom}
-                        onCheck={() => onCheck(symptom.id)}
-                        isChecked={patientForm.chosenSymps.includes(symptom.id)}
+                        onCheck={onCheck}
                         key={symptom.id}
+                        toggleFunction={toggleFootM}
                       />
                     ))}
-                  <MobileSympBtn
-                    toggleFunction={toggleFootM}
-                    position={["Bàn chân"]}
-                    patientForm={patientForm}
-                    dbSymps={dbSymps}
-                  />
+                  <MobileSympBtn toggleFunction={toggleFootM} />
                 </div>
               </div>
             )}

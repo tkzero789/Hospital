@@ -1,12 +1,14 @@
 import React from "react";
 
-const Symptom = ({ symptom, onCheck }) => {
+const MobileSymptom = ({ symptom, onCheck, toggleFunction }) => {
   return (
     <button
       className="symptom-button"
       onClick={(e) => {
         e.preventDefault();
         onCheck(symptom.id);
+        toggleFunction();
+        window.scrollTo({ top: 140, left: 0, behavior: "instant" });
       }}
     >
       <span>{symptom.name}</span>
@@ -14,4 +16,4 @@ const Symptom = ({ symptom, onCheck }) => {
   );
 };
 
-export default Symptom;
+export default MobileSymptom;

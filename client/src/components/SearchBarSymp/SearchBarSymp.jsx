@@ -1,17 +1,28 @@
-import { useRef } from "react";
+import { useState, useEffect } from "react";
 import Symptom from "../Symptom/Symptom";
+import { Skeleton } from "@mui/material";
 
 const SearchBarSymp = ({
+  inputRef,
+  searchSympRef,
   searchTerm,
   setSearchTerm,
   displaySearch,
   setDisplaySearch,
   filteredSymps,
   onCheck,
-  patientForm,
+  chosenSymps,
 }) => {
-  const inputRef = useRef(null);
-  const searchSympRef = useRef(null);
+  // Delay 1s on rendering symptom
+  const [delay, setDelay] = useState(false);
+
+  useEffect(() => {
+    setDelay(false);
+    const timer = setTimeout(() => {
+      setDelay(true);
+    }, 500);
+    return () => clearTimeout(timer); // Clean up on component unmount
+  }, [searchTerm]);
 
   return (
     <>
@@ -32,23 +43,34 @@ const SearchBarSymp = ({
               window.scrollTo({ top: 500, left: 0 });
             }}
           >
-            <i className="bi bi-arrow-right-square-fill"></i>
+            <i className="bi bi-x-lg"></i>
           </button>
         </div>
       </div>
       {/* Search results */}
       {searchTerm && displaySearch && (
         <div className="search-symp-display" ref={searchSympRef}>
-          {filteredSymps.map((symptom) => {
-            return (
-              <Symptom
-                symptom={symptom}
-                onCheck={() => onCheck(symptom.id)}
-                isChecked={patientForm.chosenSymps.includes(symptom.id)}
-                key={symptom.id}
-              />
-            );
-          })}
+          {delay
+            ? filteredSymps
+                .filter((symptom) => !chosenSymps.includes(symptom.id)) // Filter out chosen symptoms
+                .map((symptom) => (
+                  <Symptom
+                    symptom={symptom}
+                    onCheck={onCheck}
+                    key={symptom.id}
+                  />
+                ))
+            : Array(7)
+                .fill()
+                .map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="text"
+                    animation="wave"
+                    sx={{ fontSize: "1.2rem" }}
+                    style={{ margin: "0 10px" }}
+                  />
+                ))}
         </div>
       )}
     </>

@@ -1,15 +1,15 @@
 import "../../css/sympchecker.css";
 
-export const MobileSympBtn = ({ toggleFunction }) => {
+export const ExtraMobileSympBtn = ({ toggleExtraM }) => {
   return (
     <div className="mobile-symp-list-button">
       <button
         onClick={(e) => {
           e.preventDefault();
-          toggleFunction();
+          toggleExtraM();
         }}
       >
-        Huỷ
+        Quay lại
       </button>
     </div>
   );

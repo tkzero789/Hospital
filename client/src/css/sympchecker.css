@@ -53,19 +53,19 @@
   position: absolute;
   right: 0;
   top: 0;
-  padding: 8px;
+  height: 100%;
+  padding: 11px 10px 0 0;
 }
 
 .search-symp-button button {
-  padding: 4px 12px;
-  background-color: #3498db;
+  background-color: #ffffff;
   border: none;
   border-radius: 4px;
-  width: 60px;
+  width: 32px;
 }
 
 .search-symp-button button i {
-  color: #ffffff;
+  color: #303030;
   font-size: 18px;
 }
 
@@ -97,22 +97,41 @@
   background: #7e7e7e; /* Color of the scroll thumb on hover */
 }
 
-.form-check-label {
+.symptom-button {
   display: block;
-  padding: 4px 0 4px 20px;
-  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+  text-align: start;
+  padding: 6px 16px;
 }
 
-.form-check-label:hover {
+.symptom-button:hover {
   background-color: #f5f5f5;
 }
 
-.form-check-label span {
+.symptom-button span {
+  font-size: 18px;
+  font-weight: var(--roboto-medium-weight);
+}
+
+/* .form-check-label {
+  display: block;
+  padding: 4px 0 4px 20px;
+  border-bottom: 1px solid #e0e0e0;
+} */
+
+/* .form-check-label:hover {
+  background-color: #f5f5f5;
+} */
+
+/* .form-check-label span {
   padding-left: 10px;
   color: #4e4e4e;
   font-size: 16px;
   font-weight: var(--roboto-medium-weight);
-}
+} */
 
 /* Display selected symptoms box */
 .selected-symp-box {
@@ -421,6 +440,7 @@
 .mobile-right-box {
   padding-bottom: 12px;
   width: 100%;
+  height: 600px;
 }
 
 .mobile-selected-symp-box {
@@ -440,8 +460,20 @@
   top: 0;
   left: 0;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: white;
   touch-action: none;
+  animation: slideleft 0.5s;
+}
+
+.mobile-symp-background-extra {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: white;
+  touch-action: none;
+  animation: slideright 0.5s;
 }
 
 /***** Mobile symptoms list *****/
@@ -453,10 +485,21 @@
   height: calc(100% - 58px);
   border-radius: 6px;
   overflow-y: auto;
-  animation: slidein 0.4s;
+  animation: slideleft 0.4s;
 }
 
-@keyframes slidein {
+.mobile-symptoms-list-extra {
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  width: 100%;
+  height: calc(100% - 58px);
+  border-radius: 6px;
+  overflow-y: auto;
+  animation: slideright 0.4s;
+}
+
+@keyframes slideleft {
   from {
     transform: translateX(-100%);
   }
@@ -466,11 +509,29 @@
   }
 }
 
-.mobile-symptoms-list > span {
-  display: block;
+@keyframes slideright {
+  from {
+    transform: translateX(200%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.mobile-symptoms-list > button {
+  width: 100%;
+  padding: 16px 28px;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #ffffff;
+  display: flex;
   font-size: 20px;
-  padding: 8px;
-  background-color: #f1f1f1;
+  font-weight: var(--roboto-medium-weight);
+}
+
+.mobile-symptoms-list button > i {
+  margin-left: auto;
 }
 
 .mobile-symp-list-button {
@@ -563,7 +624,7 @@
     top: 58px;
     left: 0;
     z-index: 10;
-    animation: slidein 0.5s;
+    animation: slideleft 0.5s;
   }
 
   .mobile-add-symp-wrapper {
@@ -612,7 +673,7 @@
   }
 
   .mobile-search-symp-input .search-symp-button {
-    padding: 24px 20px 0 0;
+    padding: 26px 20px 0 0;
   }
 
   .mobile-search-symp-btn {
@@ -654,18 +715,22 @@
     font-weight: var(--roboto-regular-weight);
   }
 
-  .form-check-label {
-    padding: 20px 20px 20px 60px;
+  .symptom-button {
+    padding: 12px 16px;
   }
 
-  .form-check-label input {
+  /* .form-check-label {
+    padding: 20px 20px 20px 60px;
+  } */
+
+  /* .form-check-label input {
     font-size: 20px;
   }
 
   .form-check-label span {
     font-size: 20px;
     padding-left: 16px;
-  }
+  } */
 
   .selected-symp-item {
     padding: 12px 4px 12px 24px;
