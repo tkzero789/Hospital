@@ -62,7 +62,7 @@ export default function SymptomChecker() {
 
   useEffect(() => {
     if (prevStep === 1) {
-      const age = patientForm.age;
+      let age = patientForm.age;
       if (age !== "") {
         if (age <= 1) {
           age = "Dưới 1 tuổi";
@@ -184,7 +184,7 @@ export default function SymptomChecker() {
   const handleNext = () => {
     setPrevStep(step);
     setStep((step) => step + 1);
-    window.scrollTo({ top: 500, left: 0, behavior: "instant" });
+    window.scrollTo({ top: 100, left: 0, behavior: "instant" });
   };
 
   const checkHandleNext = () => {
@@ -210,7 +210,7 @@ export default function SymptomChecker() {
   const handlePrev = () => {
     setPrevStep(step);
     setStep((step) => step - 1);
-    window.scrollTo({ top: 500, left: 0, behavior: "instant" });
+    window.scrollTo({ top: 100, left: 0, behavior: "instant" });
   };
 
   const StepName = (props) => {
@@ -282,23 +282,31 @@ export default function SymptomChecker() {
             </h5>
           </div>
           <div className="symp-checker-board">
-            <div className="card p-5">
-              <div className="row border rounded">{ProcessBar()}</div>
-              <form className="pt-4">
+            <div className="card">
+              <div className="progress-bar-step border rounded">
+                {ProcessBar()}
+              </div>
+              <form>
                 <div>{StepDisplay()}</div>
 
-                <div className="row pt-3 pb-3 justify-content-end">
-                  <div className="col-3 d-grid gap-2">
+                <div className="steps-button-wrapper">
+                  <div className="steps-back-button">
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
                       disabled={step === 1}
-                      onClick={handlePrev}
+                      onClick={() => {
+                        if (step === 2) {
+                          window.location.reload();
+                        } else {
+                          handlePrev();
+                        }
+                      }}
                     >
                       Quay lại
                     </button>
                   </div>
-                  <div className="col-3 d-grid gap-2">
+                  <div className="steps-next-button">
                     {step === 4 ? (
                       <Link
                         type="button"
@@ -318,7 +326,12 @@ export default function SymptomChecker() {
                         />
                         <button
                           type="button"
-                          className="btn btn-outline-primary"
+                          className="btn btn-primary"
+                          disabled={
+                            step === 1 &&
+                            (!patientForm.patientAge ||
+                              !patientForm.patientGender)
+                          }
                           onClick={checkHandleNext}
                         >
                           {step === 3 ? "Xem kết quả" : "Tiếp theo"}

@@ -11,6 +11,8 @@ export default function ApptForm({
   showModal,
   setShowModal,
   editMode,
+  closeModal,
+  confirmSetAppt,
 }) {
   // --- DOB: Start ---
   const [date, setDate] = useState("");
@@ -523,6 +525,14 @@ export default function ApptForm({
                       nhất để xác nhận lịch hẹn. Cảm ơn Quý khách đã lựa chọn
                       dịch vụ của BKCare.
                     </p>
+                  </div>
+                  <div className="appt-modal-btn">
+                    <button type="button" onClick={closeModal}>
+                      Quay lại
+                    </button>
+                    <button type="button" onClick={confirmSetAppt}>
+                      Đăng ký khám
+                    </button>{" "}
                   </div>
                 </div>
               </div>
