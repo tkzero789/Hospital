@@ -33,8 +33,9 @@ export default function UserTable({ userRole, userInfos }) {
       renderCell: (params) => {
         return (
           // need to edit here
+
           <div className="cellAction">
-            <NavLink className="viewLink" to={`/user/${params.row.id}`}>
+            <NavLink className="viewLink" to={`/user/${params.row.id}/view`}>
               <div className="viewButton">Xem</div>
             </NavLink>
           </div>
@@ -43,8 +44,9 @@ export default function UserTable({ userRole, userInfos }) {
     },
   ];
 
-  const flattenedData = users.map((item) => ({
+  const flattenedData = users.map((item, index) => ({
     ...item,
+    number: index + 1,
     doctorID: item.userInfos ? item.userInfos.doctorID : "",
     fullName: item.userInfos ? item.userInfos.fullName : "",
     medSpecialty: item.userInfos ? item.userInfos.medSpecialty : "",
@@ -53,14 +55,14 @@ export default function UserTable({ userRole, userInfos }) {
   }));
 
   const columns = [
-    { field: "doctorID", headerName: "ID", width: 80 },
-    { field: "role", headerName: "Chức danh", width: 120 },
-    { field: "fullName", headerName: "Họ tên", width: 200 },
-    { field: "email", headerName: "Email", width: 240 },
-    { field: "medSpecialty", headerName: "Chuyên khoa", width: 200 },
+    { field: "number", headerName: "Stt", width: 80 },
+    { field: "id", headerName: "ID", width: 160 },
+    { field: "fullName", headerName: "Họ tên", width: 160 },
     { field: "phoneNumber", headerName: "SĐT", width: 140 },
-    { field: "dob", headerName: "Ngày sinh", width: 140 },
-    { field: "gender", headerName: "Giới tinh", width: 100 },
+    { field: "email", headerName: "Email", width: 240 },
+    { field: "role", headerName: "Chức danh", width: 120 },
+    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
+    { field: "medSpecialty", headerName: "Chuyên khoa", width: 200 },
   ].concat(actionColumn);
 
   return (
@@ -68,7 +70,7 @@ export default function UserTable({ userRole, userInfos }) {
       <div className="datatableTitle">
         Danh sách users
         {userRole === "admin" && (
-          <NavLink to="/signup" className="add-link">
+          <NavLink to="/signup-doctor" className="add-link">
             Thêm user
           </NavLink>
         )}
@@ -76,6 +78,7 @@ export default function UserTable({ userRole, userInfos }) {
       <DataGrid
         className="datagrid"
         rows={flattenedData}
+        getRowId={(row) => row._id}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

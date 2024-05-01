@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { v4 as uuidv4 } from "uuid";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import AdminNavBar from "../../components/Navbar/AdminNavBar";
-import SignupLogo from "../../assets/logo/signup-logo.png";
 
 export default function Signup() {
   const [user, setUser] = useState({
+    id: uuidv4(),
     email: "",
     phoneNumber: "",
     password: "",
@@ -19,18 +18,24 @@ export default function Signup() {
       doctorID: null,
       medSpecialty: null,
     },
+    status: "Normal",
   });
 
   const updateUserField = (event) => {
-    let _user = { ...user };
-    _user[event.target.name] = event.target.value;
-    setUser(_user);
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const updateInfoField = (event) => {
-    let _user = { ...user };
-    _user.userInfos[event.target.name] = event.target.value;
-    setUser(_user);
+    setUser({
+      ...user,
+      userInfos: {
+        ...user.userInfos,
+        [event.target.name]: event.target.value,
+      },
+    });
   };
 
   const navigate = useNavigate();
@@ -47,19 +52,23 @@ export default function Signup() {
     const inputPassword = document.getElementById("inputPassword");
     if (!inputEmail.checkValidity()) {
       alert("Email không hợp lệ");
+      return;
     } else if (!inputPhoneNumber.checkValidity()) {
       alert("Số điện thoại không hợp lệ");
+      return;
     } else if (!inputPassword.checkValidity()) {
       alert("Mật khẩu phải có ít nhất 8 ký tự");
+      return;
     } else if (
-      !inputFullName.checkValidity() &&
-      !inputGender.checkValidity() &&
-      !inputDob.checkValidity() &&
-      !inputDoctorID.checkValidity() &&
-      !inputMedSpecialty.checkValidity() &&
+      !inputFullName.checkValidity() ||
+      !inputGender.checkValidity() ||
+      !inputDob.checkValidity() ||
+      !inputDoctorID.checkValidity() ||
+      !inputMedSpecialty.checkValidity() ||
       !inputRole.checkValidity()
     ) {
       alert("Thông tin cá nhân không hợp lệ");
+      return;
     } else {
       e.preventDefault();
       const newUser = { ...user };
@@ -70,6 +79,7 @@ export default function Signup() {
           console.log("User created");
           console.log(res.data);
           setUser({
+            id: uuidv4(),
             email: "",
             phoneNumber: "",
             password: "",
@@ -81,25 +91,24 @@ export default function Signup() {
               doctorID: null,
               medSpecialty: null,
             },
+            status: "Normal",
           });
           navigate("/signin");
         })
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
-          return;
         });
     }
   }
 
   return (
     <div>
-      <AdminNavBar />
-      <h3 className="container text-center text-danger pt-5">
+      <h3 className="container text-center text-primary pt-5">
         ĐĂNG KÝ TÀI KHOẢN
       </h3>
       <div className="container p-5">
-        <div className="card border-danger-subtle p-5">
+        <div className="card border-primary-subtle p-5">
           <form className="needs-validation" noValidate>
             <div className="row">
               <div className="col-12 p-0">
@@ -110,7 +119,7 @@ export default function Signup() {
                   <div className="col-10">
                     <input
                       type="text"
-                      className="form-control border-danger-subtle px-2"
+                      className="form-control border-primary-subtle px-2"
                       id="inputFullName"
                       name="fullName"
                       value={user.userInfos.fullName}
@@ -126,11 +135,10 @@ export default function Signup() {
                   <div className="col-10">
                     <select
                       type="text"
-                      className="form-control border-danger-subtle px-2"
+                      className="form-control border-primary-subtle px-2"
                       id="inputGender"
                       name="gender"
                       value={user.userInfos.gender}
-                      required
                       onChange={(e) => updateInfoField(e)}
                     >
                       <option value="">Chọn giới tính</option>
@@ -146,68 +154,14 @@ export default function Signup() {
                   <div className="col-10">
                     <input
                       type="text"
-                      className="form-control border-danger-subtle px-2"
+                      className="form-control border-primary-subtle px-2"
                       placeholder="dd/mm/yyyy"
                       id="inputDob"
                       name="dob"
                       value={user.userInfos.dob}
                       pattern="^\d{2}\/\d{2}\/\d{4}$"
-                      required
                       onChange={(e) => updateInfoField(e)}
                     />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Mã số bác sĩ:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="text"
-                      className="form-control border-danger-subtle px-2"
-                      id="inputDoctorID"
-                      name="doctorID"
-                      value={user.userInfos.ageRange}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Chuyên khoa:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="text"
-                      className="form-control border-danger-subtle px-2"
-                      id="inputMedSpecialty"
-                      name="medSpecialty"
-                      value={user.userInfos.medSpecialty}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Chức danh:
-                  </h6>
-                  <div className="col-10">
-                    <select
-                      type="text"
-                      className="form-control border-danger-subtle px-2"
-                      id="inputRole"
-                      name="role"
-                      value={user.role}
-                      required
-                      onChange={(e) => updateUserField(e)}
-                    >
-                      <option value="">Chọn chức danh</option>
-                      <option value="doctor">Bác sĩ</option>
-                      <option value="head-doctor">Bác sĩ trưởng khoa</option>
-                      <option value="admin">Quản trị viên</option>
-                    </select>
                   </div>
                 </div>
               </div>
@@ -220,7 +174,7 @@ export default function Signup() {
                   <div className="col-10">
                     <input
                       type="email"
-                      className="form-control border-danger-subtle px-2"
+                      className="form-control border-primary-subtle px-2"
                       id="inputEmail"
                       name="email"
                       value={user.email}
@@ -237,7 +191,7 @@ export default function Signup() {
                   <div className="col-10">
                     <input
                       type="tel"
-                      className="form-control border-danger-subtle px-2"
+                      className="form-control border-primary-subtle px-2"
                       id="inputPhoneNumber"
                       name="phoneNumber"
                       value={user.phoneNumber}
@@ -254,7 +208,7 @@ export default function Signup() {
                   <div className="col-10">
                     <input
                       type="password"
-                      className="form-control border-danger-subtle px-2"
+                      className="form-control border-primary-subtle px-2"
                       id="inputPassword"
                       name="password"
                       value={user.password}
@@ -272,7 +226,7 @@ export default function Signup() {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-primary"
                   onClick={confirmSignup}
                 >
                   XÁC NHẬN ĐĂNG KÝ
@@ -283,25 +237,14 @@ export default function Signup() {
               <div className="col-12 pb-3 d-flex justify-content-center">
                 Bạn đã có tài khoản? &nbsp;
                 <NavLink
-                  className="text-danger text-decoration-underline"
+                  className="text-primary text-decoration-underline"
                   to="/signin"
                 >
                   Đăng nhập ngay
                 </NavLink>
               </div>
-              <div className="col-12 d-flex justify-content-center">
-                <NavLink
-                  className="text-danger text-decoration-underline"
-                  to="/signup-doctor"
-                >
-                  Đăng ký tài khoản bác sĩ
-                </NavLink>
-              </div>
             </div>
           </form>
-        </div>
-        <div className="d-flex justify-content-center pt-5">
-          <img alt="" style={{ width: 25 + "%" }} src={SignupLogo}></img>
         </div>
       </div>
     </div>

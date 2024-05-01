@@ -7,6 +7,7 @@ import "./table.scss";
 
 export default function SymptomTable({ userRole, userInfos }) {
   const [symptoms, setSymptoms] = useState([]);
+  const [tempSymptoms, setTempSymptoms] = useState([]);
 
   useEffect(() => {
     axios
@@ -21,20 +22,47 @@ export default function SymptomTable({ userRole, userInfos }) {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/symptom-temp/`)
+      .then((res) => {
+        const tempSymptoms = res.data;
+        setTempSymptoms(tempSymptoms);
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+  }, []);
+
+  const flatData = [...tempSymptoms, ...symptoms].map((symp, index) => ({
+    ...symp,
+    number: index + 1,
+  }));
+
   const actionColumn = [
     {
       field: "action",
       headerName: "Thao tác",
       width: 200,
       renderCell: (params) => {
-        const symptomId = params.row.id;
+        const symptom = params.row;
         return (
           <div className="cellAction">
-            <NavLink className="viewLink" to={`/symptom/${symptomId}/view`}>
-              <div className="viewButton">Xem</div>
-            </NavLink>
-            {userRole === "admin" && (
-              <NavLink className="viewLink" to={`/symptom/${symptomId}/edit`}>
+            {symptom.status !== "Approved" ? (
+              <NavLink
+                className="viewLink"
+                to={`/symptom-temp/${symptom.id}/view`}
+              >
+                <div className="viewButton">Xem</div>
+              </NavLink>
+            ) : (
+              <NavLink className="viewLink" to={`/symptom/${symptom.id}/view`}>
+                <div className="viewButton">Xem</div>
+              </NavLink>
+            )}
+            {userRole === "admin" && symptom.status === "Approved" && (
+              <NavLink className="viewLink" to={`/symptom/${symptom.id}/edit`}>
                 <div className="viewButton">Sửa</div>
               </NavLink>
             )}
@@ -44,19 +72,11 @@ export default function SymptomTable({ userRole, userInfos }) {
     },
   ];
 
-  const flattenedData = symptoms.map((item) => ({
-    ...item,
-    doctorCreated: item.createInfos ? item.createInfos.doctorCreated : "",
-    doctorID: item.createInfos ? item.createInfos.doctorID : "",
-    timeCreated: item.createInfos ? item.createInfos.timeCreated : "",
-  }));
-
   const columns = [
+    { field: "number", headerName: "Stt", width: 100 },
     { field: "id", headerName: "ID", width: 400 },
-    { field: "name", headerName: "Triệu chứng", width: 300 },
-    { field: "doctorCreated", headerName: "Người tạo", width: 200 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 140 },
-    { field: "timeCreated", headerName: "Ngày tạo", width: 160 },
+    { field: "name", headerName: "Triệu chứng", width: 500 },
+    { field: "status", headerName: "Trạng thái", width: 160 },
   ].concat(actionColumn);
 
   return (
@@ -71,7 +91,8 @@ export default function SymptomTable({ userRole, userInfos }) {
       </div>
       <DataGrid
         className="datagrid"
-        rows={flattenedData}
+        rows={flatData}
+        getRowId={(row) => row._id}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

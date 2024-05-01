@@ -33,7 +33,7 @@ export default function Sidebar() {
       console.log("Signed out");
       console.log(response);
       logout();
-      navigate("/home");
+      navigate("/test-signin");
     } catch (err) {
       const message = `Có lỗi xảy ra: ${err}`;
       window.alert(message);

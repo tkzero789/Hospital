@@ -1,12 +1,15 @@
 .symp-big-box {
   width: 100%;
   height: 580px;
-  background-color: #ddfeff;
 }
 
 .big-box-wrapper {
   display: flex;
   height: 100%;
+}
+
+.switch-button {
+  display: none;
 }
 
 /* Left box for search bar */
@@ -21,6 +24,18 @@
 }
 
 /* Search input and search results */
+.mobile-add-symp-wrapper {
+  display: none;
+}
+
+.mobile-add-symp-wrapper .selected-symp-box {
+  display: none;
+}
+
+.search-symp-input {
+  position: relative;
+}
+
 .search-symp-input input {
   width: 100%;
   height: 50px;
@@ -34,7 +49,28 @@
   outline: 2px solid #5ca8ff;
 }
 
+.search-symp-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding: 11px 10px 0 0;
+}
+
+.search-symp-button button {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  width: 32px;
+}
+
+.search-symp-button button i {
+  color: #303030;
+  font-size: 18px;
+}
+
 .search-symp-display {
+  position: relative;
   max-height: 220px;
   width: 100%;
   background-color: #ffffff;
@@ -61,22 +97,41 @@
   background: #7e7e7e; /* Color of the scroll thumb on hover */
 }
 
-.form-check-label {
+.symptom-button {
   display: block;
-  padding: 4px 0 4px 20px;
-  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+  text-align: start;
+  padding: 6px 16px;
 }
 
-.form-check-label:hover {
+.symptom-button:hover {
   background-color: #f5f5f5;
 }
 
-.form-check-label span {
+.symptom-button span {
+  font-size: 18px;
+  font-weight: var(--roboto-medium-weight);
+}
+
+/* .form-check-label {
+  display: block;
+  padding: 4px 0 4px 20px;
+  border-bottom: 1px solid #e0e0e0;
+} */
+
+/* .form-check-label:hover {
+  background-color: #f5f5f5;
+} */
+
+/* .form-check-label span {
   padding-left: 10px;
   color: #4e4e4e;
   font-size: 16px;
   font-weight: var(--roboto-medium-weight);
-}
+} */
 
 /* Display selected symptoms box */
 .selected-symp-box {
@@ -85,46 +140,50 @@
   width: 100%;
   height: 300px;
   padding-bottom: 12px;
-  background-color: #c0e8ff;
   border-radius: 8px;
-  border: 1px solid rgb(47, 150, 182);
-  overflow-y: auto;
-}
-
-.selected-symp-box::-webkit-scrollbar {
-  width: 4px; /* Width of the scrollbar */
-}
-
-.selected-symp-box::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the track */
-}
-
-.selected-symp-box::-webkit-scrollbar-thumb {
-  background: #acacac; /* Color of the scroll thumb */
-}
-
-.selected-symp-box::-webkit-scrollbar-thumb:hover {
-  background: #7e7e7e; /* Color of the scroll thumb on hover */
+  background-color: #f7f7f7;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .selected-symp-header {
   width: 100%;
-  background-color: #dfdfdf;
   padding: 8px;
-  margin-bottom: 12px;
   text-align: center;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #3498db;
+  border-radius: 8px 8px 2px 2px;
 }
 
 .selected-symp-header span {
   font-size: 18px;
-  color: var(--text-color);
+  color: var(--text-white);
   font-weight: var(--roboto-medium-weight);
+}
+
+.selected-symp-box-wrapper {
+  overflow-y: auto;
+  height: calc(100% - 43px);
+  padding-top: 6px;
+}
+
+.selected-symp-box-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+
+.selected-symp-box-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.selected-symp-box-wrapper::-webkit-scrollbar-thumb {
+  background: #acacac;
+}
+
+.selected-symp-box-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #7e7e7e;
 }
 
 .selected-symp-item {
   display: flex;
-  background-color: #2c99f1;
+  background-color: #e9e9e9;
   padding: 4px 8px 4px 20px;
   border-radius: 8px;
   margin: 0 12px 4px 12px;
@@ -133,26 +192,29 @@
 
 .selected-symp-name {
   margin-right: auto;
-  color: var(--text-white);
+  color: #838383;
   word-wrap: normal;
   word-break: break-word;
 }
 
 .selected-symp-item button {
   border: none;
-  background-color: #ffffff;
+  background-color: #e9e9e9;
   color: var(--text-white);
   border-radius: 6px;
 }
 
 .selected-symp-item button i {
-  color: #858585;
+  color: #b1b1b1;
+}
+
+.selected-symp-item button i:hover {
+  color: #838383;
 }
 
 /* Right box for human figure */
 .symp-right-box {
   width: 60%;
-  background-color: rgb(173, 238, 205);
 }
 
 .right-box-wrapper {
@@ -171,7 +233,7 @@
 }
 
 .sc-body-model-svg__path {
-  fill: rgba(0, 0, 0, 0);
+  fill: rgba(77, 140, 212, 0.2);
 }
 
 .sc-body-model-svg__path:hover {
@@ -289,7 +351,7 @@
 /* 9. ForeArm */
 .foreArm-symptoms-list {
   position: absolute;
-  top: 100px;
+  top: 140px;
   right: 0;
   background-color: #ffffff;
   width: 220px;
@@ -372,4 +434,319 @@
   width: 220px;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Mobile right box */
+.mobile-right-box {
+  padding-bottom: 12px;
+  width: 100%;
+  height: 600px;
+}
+
+.mobile-selected-symp-box {
+  display: none;
+  width: 100%;
+  height: 300px;
+  padding-bottom: 12px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.mobile-symp-background {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: white;
+  touch-action: none;
+  animation: slideleft 0.5s;
+}
+
+.mobile-symp-background-extra {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: white;
+  touch-action: none;
+  animation: slideright 0.5s;
+}
+
+/***** Mobile symptoms list *****/
+.mobile-symptoms-list {
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  width: 100%;
+  height: calc(100% - 58px);
+  border-radius: 6px;
+  overflow-y: auto;
+  animation: slideleft 0.4s;
+}
+
+.mobile-symptoms-list-extra {
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  width: 100%;
+  height: calc(100% - 58px);
+  border-radius: 6px;
+  overflow-y: auto;
+  animation: slideright 0.4s;
+}
+
+@keyframes slideleft {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideright {
+  from {
+    transform: translateX(200%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.mobile-symptoms-list > button {
+  width: 100%;
+  padding: 16px 28px;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #ffffff;
+  display: flex;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+}
+
+.mobile-symptoms-list button > i {
+  margin-left: auto;
+}
+
+.mobile-symp-list-button {
+  width: 100%;
+  height: 76px;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  background-color: #ffffff;
+}
+
+.mobile-symp-list-button button {
+  width: 100%;
+  border-radius: 10px;
+  margin: 10px 16px;
+}
+
+.mobile-symp-list-button button:first-child {
+  color: var(--text-color);
+  border: none;
+  background-color: #ebebeb;
+  padding: 8px 12px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.mobile-symp-list-button button:last-child {
+  color: var(--text-white);
+  background-color: #3498db;
+  border: none;
+  padding: 8px 12px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.mobile-symp-list-button button:last-child:disabled {
+  color: #d1d1d1;
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px 12px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+/* MOBILE RESPONSIVE */
+@media only screen and (max-width: 767px) {
+  /* Symptom Checker */
+  h4 {
+    display: none;
+  }
+
+  h5 {
+    text-align: center;
+  }
+
+  .active-switch-button {
+    color: var(--text-white);
+    background-color: #3498db;
+  }
+
+  .switch-button {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  .switch-button button {
+    width: 50%;
+    height: 100%;
+    border: none;
+  }
+
+  .switch-button button:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .switch-button button:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .left-box-wrapper {
+    height: 50%;
+  }
+
+  .mobile-search-background {
+    width: 100%;
+    height: calc(100% - 58px);
+    background-color: #ffffff;
+    position: fixed;
+    top: 58px;
+    left: 0;
+    z-index: 10;
+    animation: slideleft 0.5s;
+  }
+
+  .mobile-add-symp-wrapper {
+    display: block;
+  }
+
+  .add-symp-btn {
+    display: flex;
+    justify-content: center;
+  }
+
+  .add-symp-btn > button {
+    color: var(--text-white);
+    background-color: #004ad3;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .add-symp-btn button span {
+    padding-right: 8px;
+  }
+
+  .mobile-add-symp-wrapper .selected-symp-box {
+    position: relative !important;
+  }
+
+  .search-symp-input {
+    display: none;
+  }
+
+  .mobile-search-symp-input {
+    display: block;
+    position: relative;
+    padding: 16px 12px 4px 16px;
+  }
+
+  .mobile-search-symp-input input {
+    width: 100%;
+    height: 50px;
+    padding-left: 20px;
+    border-radius: 4px;
+    border: 1px solid #5ca8ff;
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-search-symp-input .search-symp-button {
+    padding: 26px 20px 0 0;
+  }
+
+  .mobile-search-symp-btn {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 76px;
+    display: flex;
+    background-color: #ffffff;
+  }
+
+  .mobile-search-symp-btn button {
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 16px;
+  }
+
+  .mobile-search-symp-btn button:first-child {
+    color: var(--text-color);
+    border: none;
+    background-color: #ebebeb;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .mobile-search-symp-btn button:last-child:disabled {
+    color: #d1d1d1;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .mobile-search-symp-btn button:last-child {
+    color: var(--text-white);
+    background-color: #3498db;
+    border: none;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .symptom-button {
+    padding: 12px 16px;
+  }
+
+  /* .form-check-label {
+    padding: 20px 20px 20px 60px;
+  } */
+
+  /* .form-check-label input {
+    font-size: 20px;
+  }
+
+  .form-check-label span {
+    font-size: 20px;
+    padding-left: 16px;
+  } */
+
+  .selected-symp-item {
+    padding: 12px 4px 12px 24px;
+  }
+
+  .selected-symp-item .selected-symp-name {
+    font-size: 18px;
+  }
+
+  .selected-symp-item button {
+    width: 40px;
+    height: 100%;
+  }
+
+  .mobile-selected-symp-box {
+    margin-top: 24px;
+    display: block;
+  }
 }

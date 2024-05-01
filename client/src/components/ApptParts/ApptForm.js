@@ -1,13 +1,19 @@
-import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import Calendar from "react-calendar";
+import { Toaster, toast } from "sonner";
 import "react-calendar/dist/Calendar.css";
 import "../../css/calendar.css";
-import { useNavigate } from "react-router-dom";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
-import { Toaster, toast } from "sonner";
 
-export default function ApptForm() {
+export default function ApptForm({
+  appt,
+  setAppt,
+  showModal,
+  setShowModal,
+  editMode,
+  closeModal,
+  confirmSetAppt,
+}) {
   // --- DOB: Start ---
   const [date, setDate] = useState("");
   const [month, setMonth] = useState("");
@@ -129,61 +135,10 @@ export default function ApptForm() {
   // --- Calendar: End ---
 
   // --- Validate: Start ---
-  const [appt, setAppt] = useState({
-    fullName: "",
-    phoneNumber: "",
-    email: "",
-    dob: "",
-    gender: "",
-    need: "",
-    date: "",
-    reason: "",
-    createdAt: null,
-  });
 
   const updateApptField = (e) => {
-    let _appt = { ...appt };
-    _appt[e.target.name] = e.target.value;
-    setAppt(_appt);
+    setAppt({ ...appt, [e.target.name]: e.target.value });
   };
-
-  const navigate = useNavigate();
-
-  async function confirmSetAppt(e) {
-    e.preventDefault();
-    const updatedAppt = {
-      ...appt,
-      createdAt: new Date().toLocaleDateString("vi-VN", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }),
-    };
-
-    axios
-      .post("http://localhost:5000/appointment/add", updatedAppt)
-      .then((res) => {
-        console.log("Appointment set");
-        console.log(res.data);
-        setAppt({
-          fullName: "",
-          phoneNumber: "",
-          email: "",
-          dob: "",
-          gender: "",
-          need: "",
-          date: "",
-          reason: "",
-          createdAt: null,
-        });
-        navigate("/");
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-        return;
-      });
-  }
 
   const validateInput = () => {
     const inputFullName = document.getElementById("inputFullName");
@@ -211,16 +166,10 @@ export default function ApptForm() {
   // --- Validate: End ---
 
   // --- Modal: Start ---
-  const [showModal, setShowModal] = useState(false);
 
   const displayModal = () => {
     setShowModal(!showModal);
   };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   const formatDateForModal = (date) => {
     return date.padStart(2, "0");
   };
@@ -259,6 +208,7 @@ export default function ApptForm() {
                     id="inputFullName"
                     name="fullName"
                     value={appt.fullName}
+                    readOnly={!editMode}
                     required
                     onChange={(e) => updateApptField(e)}
                   />
@@ -276,6 +226,7 @@ export default function ApptForm() {
                     name="phoneNumber"
                     value={appt.phoneNumber}
                     pattern="[0-9]{10}"
+                    readOnly={!editMode}
                     required
                     onChange={(e) => updateApptField(e)}
                   />
@@ -290,6 +241,7 @@ export default function ApptForm() {
                     id="inputEmail"
                     name="email"
                     value={appt.email}
+                    readOnly={!editMode}
                     onChange={(e) => updateApptField(e)}
                   />
                 </div>
@@ -305,6 +257,7 @@ export default function ApptForm() {
                     <select
                       id="dateSelect"
                       value={date}
+                      readOnly={!editMode}
                       onChange={handleDateChange}
                     >
                       <option value="">Ngày</option>
@@ -317,6 +270,7 @@ export default function ApptForm() {
                     <select
                       id="monthSelect"
                       value={month}
+                      readOnly={!editMode}
                       onChange={handleMonthChange}
                       disabled={!date}
                     >
@@ -342,6 +296,7 @@ export default function ApptForm() {
                     <select
                       id="yearSelect"
                       value={year}
+                      readOnly={!editMode}
                       onChange={handleYearChange}
                       disabled={!month}
                     >
@@ -371,6 +326,7 @@ export default function ApptForm() {
                     className="dropdown-field"
                     type="text"
                     value={appt.gender}
+                    readOnly={!editMode}
                     required
                     onChange={(e) => updateApptField(e)}
                   >
@@ -390,6 +346,7 @@ export default function ApptForm() {
                     className="dropdown-field"
                     type="text"
                     value={appt.need}
+                    readOnly={!editMode}
                     required
                     onChange={(e) => updateApptField(e)}
                   >
@@ -465,6 +422,7 @@ export default function ApptForm() {
                     id="inputReason"
                     name="reason"
                     value={appt.reason}
+                    readOnly={!editMode}
                     onChange={(e) => updateApptField(e)}
                   />
                 </div>
@@ -568,14 +526,14 @@ export default function ApptForm() {
                       dịch vụ của BKCare.
                     </p>
                   </div>
-                </div>
-                <div className="appt-modal-btn">
-                  <button type="button" onClick={closeModal}>
-                    Quay lại
-                  </button>
-                  <button type="button" onClick={confirmSetAppt}>
-                    Đăng ký khám
-                  </button>{" "}
+                  <div className="appt-modal-btn">
+                    <button type="button" onClick={closeModal}>
+                      Quay lại
+                    </button>
+                    <button type="button" onClick={confirmSetAppt}>
+                      Đăng ký khám
+                    </button>{" "}
+                  </div>
                 </div>
               </div>
             </div>

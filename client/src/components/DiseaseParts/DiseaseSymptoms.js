@@ -57,13 +57,15 @@ const DiseaseSymptoms = ({
       setDisease(_disease);
     } else {
       setChosenSymps([...chosenSymps, symptomId]);
-      let _disease = disease;
-      _disease.symptoms.push({
+      const newSymptom = {
         id: symptomId,
         name: symptomName,
         categories: [],
+      };
+      setDisease({
+        ...disease,
+        symptoms: [...disease.symptoms, newSymptom],
       });
-      setDisease(_disease);
     }
   };
 

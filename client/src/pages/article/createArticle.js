@@ -8,6 +8,11 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 
 export default function CreateArticle({ userInfos }) {
+  const now = new Date();
+  const formattedDate = `${String(now.getDate()).padStart(2, "0")}/${String(
+    now.getMonth() + 1
+  ).padStart(2, "0")}/${now.getFullYear()}`;
+
   const [article, setArticle] = useState({
     id: uuidv4(),
     title: "",
@@ -15,12 +20,15 @@ export default function CreateArticle({ userInfos }) {
     diseaseName: "",
     infos: [],
     treatments: [],
+    medSpecialty: "",
     createInfos: {
       doctorCreated: userInfos.fullName,
       doctorID: userInfos.doctorID,
-      timeCreated: Date.now(),
+      timeCreated: formattedDate,
       timeEdited: null,
     },
+    isDisplay: false,
+    status: "Pending Create",
   });
   const { diseaseId } = useParams();
   const navigate = useNavigate();
@@ -34,6 +42,7 @@ export default function CreateArticle({ userInfos }) {
           ...article,
           diseaseId: disease.id,
           diseaseName: disease.name,
+          medSpecialty: userInfos.medSpecialty,
         });
       })
       .catch((err) => {
@@ -46,22 +55,29 @@ export default function CreateArticle({ userInfos }) {
     // validation fields
     if (article.title === "") {
       alert("Thiếu tên bài viết");
-    } else if (article.infos.filter((info) => info.detail === "").length > 0) {
-      alert("Thiếu thông tin bệnh");
+      return;
     } else if (
-      article.treatments.filter((treatment) => treatment.detail === "").length >
-      0
+      article.infos.filter((info) => info.about === "" || info.detail === "")
+        .length > 0
+    ) {
+      alert("Thiếu thông tin bệnh");
+      return;
+    } else if (
+      article.treatments.filter(
+        (treatment) => treatment.about === "" || treatment.detail === ""
+      ).length > 0
     ) {
       alert("Thiếu phương pháp chữa trị");
+      return;
     } else {
       e.preventDefault();
-      // create new article
+      // create new article in temp
       const newArticle = { ...article };
       axios
-        .post("http://localhost:5000/article/add", newArticle)
+        .post("http://localhost:5000/article-temp/add", newArticle)
         .then((res) => {
           if (res.data && res.data.message === "Article already exists") {
-            window.alert("Bài viết cùng tên cho bệnh này đã tồn tại!");
+            window.alert("Bài viết cùng tên cho bệnh này đang được chờ duyệt!");
           } else {
             console.log("Article created:", res.data);
             setArticle({
@@ -71,33 +87,18 @@ export default function CreateArticle({ userInfos }) {
               diseaseName: "",
               infos: [],
               treatments: [],
+              medSpecialty: "",
               createInfos: {
                 doctorCreated: userInfos.fullName,
                 doctorID: userInfos.doctorID,
-                timeCreated: Date.now(),
+                timeCreated: formattedDate,
                 timeEdited: null,
               },
+              isDisplay: false,
+              status: "Pending Create",
             });
+            navigate(`/disease/${diseaseId}/article-table`);
           }
-        })
-        .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
-          window.alert(message);
-        });
-      // update disease article
-      const newArtShort = {
-        id: newArticle.id,
-        title: newArticle.title,
-        doctorID: newArticle.createInfos.doctorID,
-      };
-      axios
-        .post(
-          `http://localhost:5000/disease/add-article/${diseaseId}`,
-          newArtShort
-        )
-        .then((res) => {
-          console.log("Disease relatedArticle Added:", res.data);
-          navigate(`/disease/${diseaseId}/article-table`);
         })
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
@@ -126,7 +127,7 @@ export default function CreateArticle({ userInfos }) {
               <div className="col-3 d-grid gap-2">
                 <NavLink
                   className="btn btn-outline-primary"
-                  to={`/disease/${diseaseId}/article-list`}
+                  to={`/disease/${diseaseId}/article-table`}
                 >
                   HỦY TẠO BÀI VIẾT
                 </NavLink>

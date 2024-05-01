@@ -36,8 +36,8 @@
     width: 100%;
     top: 58px;
     height: calc(100% - 58px);
-    background-color: rgb(255, 255, 255);
-    border-top: 1px solid rgb(217, 217, 214);
+    background-color: #ffffff;
+    border-top: 1px solid #d9d9d6;
     position: fixed;
     right: -100%;
     transition: 0.3s cubic-bezier(0, 0, 0.2, 1);
@@ -492,5 +492,96 @@
 
   .signin-right-btn button {
     width: 100%;
+  }
+
+  /* Symptom Checker */
+  /* Step 1 */
+  .symp-checker-board {
+    padding: 0;
+  }
+
+  .steps-info-section {
+    padding: 32px;
+  }
+
+  .steps-info-section h5 {
+    padding: 0;
+  }
+
+  .symp-checker-board form {
+    padding: 0;
+  }
+
+  .select-age {
+    width: 100%;
+    padding: 0;
+    margin-top: 12px;
+  }
+
+  .select-age input {
+    width: 60%;
+  }
+
+  .select-gender {
+    width: 100%;
+    padding: 0;
+    margin-top: 12px;
+  }
+
+  .select-gender select {
+    width: 60%;
+  }
+
+  .symp-checker-steps {
+    display: none;
+  }
+
+  .progress-bar-step {
+    display: none;
+  }
+
+  .steps-button-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 16px 36px;
+  }
+
+  .steps-back-button {
+    padding-bottom: 16px;
+  }
+
+  .steps-back-button button {
+    width: 100%;
+  }
+
+  .steps-next-button {
+    padding: 0;
+  }
+
+  .steps-next-button button {
+    width: 100%;
+  }
+
+  /* Step 2 */
+  .symp-checker-board .card {
+    padding: 4px;
+    border: none;
+  }
+
+  .symp-big-box {
+    display: none;
+  }
+
+  .symp-left-box {
+    width: 100% !important;
+    display: none;
+  }
+
+  .search-symp-display {
+    max-height: calc(100% - 180px) !important;
+  }
+
+  .symp-right-box {
+    display: none;
   }
 }

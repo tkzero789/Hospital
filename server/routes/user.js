@@ -15,6 +15,56 @@ userRoutes.route("/user").get(async function (req, res) {
   }
 });
 
+userRoutes.route("/user/:id").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { id: req.params.id };
+    const result = await db_connect.collection("users").findOne(myquery);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+userRoutes.route("/user/update/:id").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { id: req.params.id };
+    const newvalues = {
+      $set: {
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        password: req.body.password,
+        userInfos: req.body.userInfos,
+      },
+    };
+    const result = await db_connect
+      .collection("users")
+      .updateOne(myquery, newvalues);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+userRoutes.route("/user/update-status/:id").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { id: req.params.id };
+    const newvalues = {
+      $set: {
+        status: req.body.status,
+      },
+    };
+    const result = await db_connect
+      .collection("users")
+      .updateOne(myquery, newvalues);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
 userRoutes.route("/signup").post(async function (req, res) {
   console.log(req.body);
   try {
@@ -22,15 +72,15 @@ userRoutes.route("/signup").post(async function (req, res) {
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
+      id: req.body.id,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       password: hashedPassword,
       role: req.body.role,
       userInfos: req.body.userInfos,
+      status: req.body.status,
     };
-    console.log("New User Object:", newUser);
     const result = await db_connect.collection("users").insertOne(newUser);
-    console.log("Insertion Result:", result);
     res.status(201).json(result);
   } catch (err) {
     throw err;
@@ -53,7 +103,7 @@ userRoutes.route("/signin").post(async function (req, res) {
     }
     req.session.user = result;
     const token = jwt.sign(
-      { userId: result._id, role: result.role, userInfos: result.userInfos },
+      { userId: result.id, role: result.role, userInfos: result.userInfos },
       SECRET_JWT_KEY,
       {
         expiresIn: "1h",
@@ -68,7 +118,6 @@ userRoutes.route("/signin").post(async function (req, res) {
 userRoutes.route("/signout").post(async function (req, res) {
   try {
     const token = req.headers.authorization?.split(" ")[1];
-    console.log("Extracted Token:", token);
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -83,38 +132,6 @@ userRoutes.route("/signout").post(async function (req, res) {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
-  }
-});
-
-userRoutes.route("/user/:id").get(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
-    const result = await db_connect.collection("users").findOne(myquery);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
-
-userRoutes.route("/user/update/:id").post(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
-    const newvalues = {
-      $set: {
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber,
-        password: req.body.password,
-        userInfos: req.body.userInfos,
-      },
-    };
-    const result = await db_connect
-      .collection("users")
-      .updateOne(myquery, newvalues);
-    res.json(result);
-  } catch (err) {
-    throw err;
   }
 });
 

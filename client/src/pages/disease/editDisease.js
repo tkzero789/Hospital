@@ -29,9 +29,11 @@ export default function EditDisease({ userInfos }) {
       timeCreated: "",
       timeEdited: "",
     },
+    status: "",
   });
   // dbSymps are Symptoms in DB
   const [dbSymps, setDbSymps] = useState([]);
+  const [newSymps, setNewSymps] = useState([]);
   // chosenSymps, chosenCats, chosenDes are Symptoms, Categories and Descriptions existing in DB
   // AND have been chosen in the process, only contain id
   const [chosenSymps, setChosenSymps] = useState([]);
@@ -48,7 +50,6 @@ export default function EditDisease({ userInfos }) {
     axios
       .get(`http://localhost:5000/disease/${diseaseId}`)
       .then((res) => {
-        console.log(res.data);
         const dbdisease = res.data;
         if (!dbdisease) {
           window.alert(`Không tìm thấy căn bệnh với id ${diseaseId}`);
@@ -60,12 +61,14 @@ export default function EditDisease({ userInfos }) {
           navigate("/disease-table");
           return;
         }
+        console.log(dbdisease);
         setDisease({
           ...dbdisease,
           createInfos: {
             ...dbdisease.createInfos,
             timeEdited: formattedDate,
           },
+          status: "Pending Update",
         });
         setChosenSymps(dbdisease.symptoms.map((symptom) => symptom.id));
         const catIds = dbdisease.symptoms
@@ -94,13 +97,11 @@ export default function EditDisease({ userInfos }) {
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
-        return;
       });
   }, []);
 
   // display components step by step
   const StepDisplay = () => {
-    console.log(chosenCats);
     if (step === 1) {
       return <DiseaseAgeGen disease={disease} setDisease={setDisease} />;
     } else if (step === 2) {
@@ -138,6 +139,9 @@ export default function EditDisease({ userInfos }) {
           chosenSymps={chosenSymps}
           chosenCats={chosenCats}
           chosenDes={chosenDes}
+          newSymps={newSymps}
+          setNewSymps={setNewSymps}
+          userInfos={userInfos}
         />
       );
     } else {
@@ -155,56 +159,67 @@ export default function EditDisease({ userInfos }) {
 
   // at step 4 (add new symptom description), before go to next step, check if there is any
   // new symptom or category or description has same name with existing ones in DB
-  const checkNewSympDes = () => {
+  function checkNewSympDes() {
     if (disease.symptoms.length > 0) {
       const dbSympNames = dbSymps.map((dbSymp) => dbSymp.name);
       for (const symp of disease.symptoms) {
-        if (symp.name === "") {
-          window.alert(`Vui lòng điền triệu chứng`);
-          return;
-        } else if (!chosenSymps.includes(symp.id)) {
-          if (dbSympNames.includes(symp.name)) {
-            window.alert(`Triệu chứng ${symp.name} đã tồn tại!`);
-            return;
-          } else continue;
-        }
-        if (symp.categories.length > 0) {
-          let dbCats = dbSymps.filter((dbSymp) => dbSymp.name === symp.name)[0]
-            .categories;
-          console.log(dbCats);
-          let dbCatNames = dbCats.map((dbCat) => dbCat.categoryName);
+        console.log(symp.name);
+        if (chosenSymps.includes(symp.id)) {
+          const dbCats = dbSymps.filter(
+            (dbSymp) => dbSymp.name === symp.name
+          )[0].categories;
+          const dbCatNames = dbCats.map((dbCat) => dbCat.categoryName);
           for (const cat of symp.categories) {
-            if (!chosenCats.includes(cat.id)) {
-              if (dbCatNames.includes(cat.categoryName)) {
-                window.alert(
-                  `Thuộc tính ${cat.categoryName} của triệu chứng ${symp.name} đã tồn tại!`
-                );
-                return;
-              } else continue;
-            }
-            if (cat.descriptions.length > 0) {
-              console.log(cat.categoryName);
-              console.log(
-                dbCats.filter(
-                  (dbCat) => dbCat.categoryName === cat.categoryName
-                )
-              );
-              let dbDes = dbCats.filter(
+            console.log(cat.categoryName);
+            if (chosenCats.includes(cat.id)) {
+              const dbDes = dbCats.filter(
                 (dbCat) => dbCat.categoryName === cat.categoryName
               )[0].descriptions;
-              let dbDesDetail = dbDes.map((dbDes) => dbDes.descriptionDetail);
+              const dbDesDetail = dbDes.map((dbDes) => dbDes.descriptionDetail);
               for (const des of cat.descriptions) {
-                if (symp.name === "") {
-                  window.alert(`Vui lòng điền mô tả`);
-                  return;
-                } else if (!chosenDes.includes(des.id)) {
+                console.log(des);
+                if (!chosenDes.includes(des.id)) {
+                  if (des.descriptionDetail === "") {
+                    window.alert(`Vui lòng điền mô tả`);
+                    return;
+                  }
                   if (dbDesDetail.includes(des.descriptionDetail)) {
                     window.alert(
                       `Mô tả ${des.descriptionDetail} của thuộc tính ${cat.categoryName} của triệu chứng ${symp.name} đã tồn tại!`
                     );
                     return;
-                  } else continue;
+                  }
                 }
+              }
+            } else if (!chosenCats.includes(cat.id)) {
+              if (dbCatNames.includes(cat.categoryName)) {
+                window.alert(
+                  `Thuộc tính ${cat.categoryName} của triệu chứng ${symp.name} đã tồn tại!`
+                );
+                return;
+              }
+              for (const des of cat.descriptions) {
+                if (des.descriptionDetail === "") {
+                  window.alert(`Vui lòng điền mô tả`);
+                  return;
+                }
+              }
+            }
+          }
+        } else if (!chosenSymps.includes(symp.id)) {
+          if (symp.name === "") {
+            window.alert(`Vui lòng điền triệu chứng`);
+            return;
+          }
+          if (dbSympNames.includes(symp.name)) {
+            window.alert(`Triệu chứng ${symp.name} đã tồn tại!`);
+            return;
+          }
+          for (const cat of symp.categories) {
+            for (const des of cat.descriptions) {
+              if (des.descriptionDetail === "") {
+                window.alert(`Vui lòng điền mô tả`);
+                return;
               }
             }
           }
@@ -212,7 +227,7 @@ export default function EditDisease({ userInfos }) {
       }
       handleNext();
     }
-  };
+  }
 
   // handle edit disease
   async function confirmEdit(e) {
@@ -231,59 +246,82 @@ export default function EditDisease({ userInfos }) {
       window.alert("Chưa có triệu chứng");
       return;
     }
-    // create 2 arrays, 1 for chosen symptoms that exist in DB
-    // and 1 for new symptoms created in the process
-    let editedSymptoms = [];
-    let newSymptoms = [];
-    if (chosenSymps.length > 0) {
-      editedSymptoms = disease.symptoms.filter((symptom) =>
-        chosenSymps.some((chosenSymp) => chosenSymp === symptom.id)
-      );
-      newSymptoms = disease.symptoms.filter((symptom) =>
-        chosenSymps.some((chosenSymp) => chosenSymp !== symptom.id)
-      );
-    } else {
-      newSymptoms = disease.symptoms;
-    }
+    const updatePromises = [];
     // update edited symptoms
-    if (editedSymptoms.length > 0) {
-      for (const editedSymptom of editedSymptoms) {
-        axios
-          .post(
-            `http://localhost:5000/symptom/update-from-disease/${editedSymptom.id}`,
-            editedSymptom
-          )
-          .then((res) => {
-            console.log("Symptom edited");
-            console.log(res.data);
-          })
-          .catch((err) => {
-            const message = `Có lỗi xảy ra: ${err}`;
-            window.alert(message);
-          });
+    if (chosenSymps.length > 0) {
+      const editedSymptoms = disease.symptoms
+        .filter((symptom) =>
+          chosenSymps.some((existSymp) => existSymp === symptom.id)
+        )
+        .map((item) => ({ ...item, status: "Pending Update" }));
+      if (editedSymptoms.length > 0) {
+        for (const editedSymptom of editedSymptoms) {
+          updatePromises.push(
+            axios
+              .post(`http://localhost:5000/symptom-temp/add`, editedSymptom)
+              .then((res) => {
+                console.log(
+                  "Triệu chứng sẽ được chỉnh sửa sau khi được admin chấp thuận",
+                  res.data
+                );
+              })
+              .catch((err) => {
+                const message = `Có lỗi xảy ra: ${err}`;
+                window.alert(message);
+              })
+          );
+        }
       }
     }
     // create new symptoms from disease
-    if (newSymptoms.length > 0) {
-      for (const newSymptom of newSymptoms) {
-        axios
-          .post("http://localhost:5000/symptom/add", newSymptom)
-          .then((res) => {
-            console.log("Symptom created");
-            console.log(res.data);
-          })
-          .catch((err) => {
-            const message = `Có lỗi xảy ra: ${err}`;
-            window.alert(message);
-          });
+    const createPromises = [];
+    if (newSymps.length > 0) {
+      for (const newSymp of newSymps) {
+        createPromises.push(
+          axios
+            .post("http://localhost:5000/symptom-temp/add", newSymp)
+            .then((res) => {
+              if (res.data && res.data.message === "Symptom already exists") {
+                window.alert(
+                  "Triệu chứng cùng tên đang được người khác thêm vào!"
+                );
+              } else {
+                console.log(
+                  "Triệu chứng sẽ được thêm vào sau khi được admin chấp thuận",
+                  res.data
+                );
+              }
+            })
+            .catch((err) => {
+              const message = `Có lỗi xảy ra: ${err}`;
+              window.alert(message);
+            })
+        );
       }
     }
     // update disease
-    const updateDisease = { ...disease };
-    axios
-      .post(`http://localhost:5000/disease/update/${diseaseId}`, updateDisease)
-      .then((res) => {
-        console.log("Disease edited", res.data);
+    const updatedDisease = {
+      ...disease,
+      symptoms: disease.symptoms.map((symptom) => ({
+        id: symptom.id,
+        name: symptom.name,
+        categories: symptom.categories,
+      })),
+      status: "Pending Update",
+    };
+    try {
+      await Promise.all([...updatePromises, ...createPromises]);
+      const response = await axios.post(
+        "http://localhost:5000/disease-temp/add",
+        updatedDisease
+      );
+      if (response.data && response.data.message === "Disease already exists") {
+        window.alert("Căn bệnh cùng tên đang được chỉnh sửa!");
+      } else {
+        console.log(
+          "Căn bệnh sẽ được chỉnh sửa sau khi được admin chấp thuận",
+          response.data
+        );
         setDisease({
           id: "",
           name: "",
@@ -298,14 +336,14 @@ export default function EditDisease({ userInfos }) {
             timeCreated: "",
             timeEdited: "",
           },
+          status: "",
         });
         setStep(1);
         navigate("/disease-table");
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-      });
+      }
+    } catch (err) {
+      window.alert("Có lỗi xảy ra khi cập nhật/tạo triệu chứng!");
+    }
   }
 
   return (

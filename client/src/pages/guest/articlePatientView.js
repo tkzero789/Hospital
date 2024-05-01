@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 
-export default function ArticlePatientView({ userInfos }) {
+export default function ArticlePatientView({ userRole, userInfos }) {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { articleId } = useParams();
@@ -12,8 +12,8 @@ export default function ArticlePatientView({ userInfos }) {
     axios
       .get(`http://localhost:5000/article/${articleId}`)
       .then((res) => {
-        const article = res.data;
-        if (!article) {
+        const dbarticle = res.data;
+        if (!dbarticle) {
           window.alert(`Article with id ${articleId} not found`);
           if (!userInfos) {
             navigate("/symptom-checker");
@@ -23,7 +23,8 @@ export default function ArticlePatientView({ userInfos }) {
           }
           return;
         }
-        setArticle(article);
+        console.log(dbarticle);
+        setArticle(dbarticle);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -33,17 +34,23 @@ export default function ArticlePatientView({ userInfos }) {
   }, [articleId]);
 
   const ArticleContent = ({ element }) => {
+    const elemAbout = element.about;
+    const elemOverview = element.overview;
     const elemDetail = element.detail;
-    const detailType = elemDetail.split("\n\n")[0];
-    const detailContent = elemDetail.split("\n\n")[1];
-    const detailContentRows = detailContent.split("\n");
     return (
       <div>
-        <p>{detailType}</p>
-        {element.image && console.log(element.image, detailType)}
-        {element.image && <img alt={element.image} src={element.image} />}
-        {detailContentRows.map((row) => (
-          <p key={row.slice(0, 10)}>{row}</p>
+        <h5>{elemAbout}</h5>
+        <p>{elemOverview}</p>
+        {element.image && (
+          <img alt={element.image} src={element.image} className="w-100 p-5" />
+        )}
+        {elemDetail.split("\n\n").map((paragraph) => (
+          <div key={paragraph.slice(0, 20)}>
+            {paragraph.split("\n").map((line) => (
+              <p key={line.slice(0, 10)}>{line}</p>
+            ))}
+            <br></br>
+          </div>
         ))}
       </div>
     );
@@ -66,9 +73,21 @@ export default function ArticlePatientView({ userInfos }) {
               <ArticleContent element={trm} key={trm.id} />
             ))}
             <hr></hr>
-            <p className="d-flex justify-content-end">
-              Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
-            </p>
+            <div className="row">
+              <p className="d-flex justify-content-end">
+                Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
+              </p>
+              {userRole && (
+                <div className="col-6 d-grid gap-2 justify-content-start">
+                  <NavLink
+                    className="btn btn-outline-primary"
+                    to={`/article-table`}
+                  >
+                    QUAY LẠI
+                  </NavLink>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -1,7 +1,6 @@
 const express = require("express");
 const appointmentRoutes = express.Router();
 const dbo = require("../db/conn");
-const ObjectId = require("mongodb").ObjectId;
 
 appointmentRoutes.route("/appointment").get(async function (req, res) {
   try {
@@ -19,8 +18,10 @@ appointmentRoutes.route("/appointment").get(async function (req, res) {
 appointmentRoutes.route("/appointment/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    console.log(req.params.id);
+    const myquery = { id: req.params.id };
     const result = await db_connect.collection("appointments").findOne(myquery);
+    console.log(result);
     res.json(result);
   } catch (err) {
     throw err;
@@ -31,6 +32,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myobj = {
+      id: req.params.id,
       fullName: req.body.fullName,
       phoneNumber: req.body.phoneNumber,
       email: req.body.email,
@@ -40,6 +42,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
       date: req.body.date,
       reason: req.body.reason,
       createdAt: req.body.createdAt,
+      status: req.body.status,
     };
     const result = await db_connect.collection("appointments").insertOne(myobj);
     res.json(result);
@@ -53,18 +56,10 @@ appointmentRoutes
   .post(async function (req, res) {
     try {
       const db_connect = await dbo.getDb("mern_hospital");
-      const myquery = { _id: new ObjectId(req.params.id) };
+      const myquery = { id: req.params.id };
       const newvalues = {
         $set: {
-          fullName: req.body.fullName,
-          phoneNumber: req.body.phoneNumber,
-          email: req.body.email,
-          dob: req.body.dob,
-          gender: req.body.gender,
-          need: req.body.need,
-          date: req.body.date,
-          reason: req.body.reason,
-          createdAt: req.body.createdAt,
+          status: req.body.status,
         },
       };
       const result = await db_connect
@@ -79,7 +74,7 @@ appointmentRoutes
 appointmentRoutes.route("/appointment/:id").delete(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
-    const myquery = { _id: new ObjectId(req.params.id) };
+    const myquery = { id: req.params.id };
     const result = await db_connect
       .collection("appointments")
       .deleteOne(myquery);

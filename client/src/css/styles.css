@@ -449,10 +449,6 @@ header {
   transition-duration: 0.4s;
 }
 
-.navbar-slider {
-  /* display: none; */
-}
-
 .mobile-logo-link {
   margin-right: auto;
 }
@@ -1624,4 +1620,70 @@ header {
   padding: 12px 16px;
   font-size: 16px;
   min-width: 150px;
+}
+
+/* Symptom checker */
+.symp-checker-board .card {
+  padding: 36px;
+}
+
+.symp-checker-board form {
+  padding-top: 20px;
+}
+
+.steps-info-section h5 {
+  text-align: center;
+  padding-top: 32px;
+}
+
+.select-age {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.select-age input {
+  width: 40%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.select-gender {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.select-gender select {
+  width: 40%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.progress-bar-step {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.steps-button-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+.steps-back-button button {
+  width: 200px;
+}
+
+.steps-next-button {
+  padding-left: 24px;
+}
+
+.steps-next-button button {
+  width: 200px;
+}
+
+.steps-next-button a {
+  width: 200px;
 }

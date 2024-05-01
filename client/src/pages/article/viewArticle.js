@@ -5,7 +5,7 @@ import axios from "axios";
 
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 
-export default function ViewArticle({ userInfos }) {
+export default function ViewArticle({ userRole, userInfos }) {
   const [article, setArticle] = useState({
     id: "",
     title: "",
@@ -19,6 +19,8 @@ export default function ViewArticle({ userInfos }) {
       timeCreated: "",
       timeEdited: "",
     },
+    isDisplay: false,
+    status: "",
   });
   const { diseaseId, articleId } = useParams();
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ export default function ViewArticle({ userInfos }) {
         const dbArticle = res.data;
         if (!dbArticle) {
           window.alert(`Không tìm thấy bài viết với id ${articleId} `);
-          navigate("/disease-table");
+          navigate("/article-table");
           return;
         }
         setArticle(dbArticle);
@@ -56,7 +58,6 @@ export default function ViewArticle({ userInfos }) {
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
-          return;
         });
       // delete article
       axios
@@ -67,9 +68,52 @@ export default function ViewArticle({ userInfos }) {
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
-          return;
         });
-      navigate(`/disease/${diseaseId}/article-table`);
+      navigate(`/article-table`);
+    }
+  }
+
+  async function setDisplay() {
+    let existArticleId = "";
+    // get article is set default displaying
+    console.log(article);
+    await axios
+      .post(`http://localhost:5000/article/get-isdisplay`, {
+        diseaseId: article.diseaseId,
+      })
+      .then((res) => {
+        if (res.data) existArticleId = res.data.id;
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+    await axios
+      .post(`http://localhost:5000/article/set-isdisplay`, {
+        id: article.id,
+        isDisplay: true,
+      })
+      .then(() => {
+        window.alert("Bài viết đã được đặt mặc định");
+        setArticle({
+          ...article,
+          isDisplay: true,
+        });
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+    if (existArticleId !== "") {
+      await axios
+        .post(`http://localhost:5000/article/set-isdisplay`, {
+          id: existArticleId,
+          isDisplay: false,
+        })
+        .catch((err) => {
+          const message = `Có lỗi xảy ra: ${err}`;
+          window.alert(message);
+        });
     }
   }
 
@@ -88,11 +132,25 @@ export default function ViewArticle({ userInfos }) {
                 />
               }
             </div>
+            {userRole === "head-doctor" && (
+              <div className="row pt-3 pb-3 gap-2 justify-content-center">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  disabled={article.isDisplay === true}
+                  onClick={() => setDisplay()}
+                >
+                  {article.isDisplay === true
+                    ? "ĐANG LÀ BÀI VIẾT MẶC ĐỊNH"
+                    : "ĐẶT LÀM BÀI VIẾT MẶC ĐỊNH"}
+                </button>
+              </div>
+            )}
             <div className="row pt-3 pb-3 justify-content-end">
               <div className="col-3 d-grid gap-2">
                 <NavLink
                   className="btn btn-outline-primary"
-                  to={`/disease/${article.diseaseId}/article-table`}
+                  to={`/article-table`}
                 >
                   QUAY LẠI
                 </NavLink>

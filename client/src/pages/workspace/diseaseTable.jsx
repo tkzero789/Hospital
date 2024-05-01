@@ -6,7 +6,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./table.scss";
 
 export default function DiseaseTable({ userRole, userInfos }) {
+  const [part, setPart] = useState(1);
   const [diseases, setDiseases] = useState([]);
+  const [tempDiseases, setTempDiseases] = useState([]);
 
   useEffect(() => {
     axios
@@ -21,21 +23,76 @@ export default function DiseaseTable({ userRole, userInfos }) {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/disease-temp/`)
+      .then((res) => {
+        const tempDiseases = res.data;
+        setTempDiseases(tempDiseases);
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+  }, []);
+
+  const flatData = [...tempDiseases, ...diseases].map((item, index) => {
+    const createInfos = item.createInfos || {};
+    return {
+      ...item,
+      doctorCreated: createInfos.doctorCreated || "",
+      doctorID: createInfos.doctorID || "",
+      timeCreated: createInfos.timeCreated || "",
+      number: index + 1,
+    };
+  });
+
+  const doctorFlatData = flatData
+    .filter((item) => item.medSpecialty === userInfos.medSpecialty)
+    .map((item, index) => ({ ...item, number: index + 1 }));
+
+  const doctorOwnFlatData = doctorFlatData
+    .filter((item) => item.createInfos.doctorID === userInfos.doctorID)
+    .map((item, index) => ({ ...item, number: index + 1 }));
+
   const actionColumn = [
     {
       field: "action",
       headerName: "Thao tác",
       width: 200,
       renderCell: (params) => {
-        const diseaseId = params.row.id;
+        const disease = params.row;
         return (
           <div className="cellAction">
-            <NavLink className="viewLink" to={`/disease/${diseaseId}/view`}>
-              <div className="viewButton">Xem</div>
-            </NavLink>
-            {userInfos.doctorID === params.row.createInfos.doctorID && (
-              <NavLink className="viewLink" to={`/disease/${diseaseId}/edit`}>
-                <div className="viewButton">Sửa</div>
+            {disease.status === "Approved" && (
+              <NavLink className="viewLink" to={`/disease/${disease.id}/view`}>
+                <div className="viewButton">Xem</div>
+              </NavLink>
+            )}
+            {disease.status === "Approved" &&
+              userInfos.doctorID === disease.createInfos.doctorID && (
+                <NavLink
+                  className="viewLink"
+                  to={`/disease/${disease.id}/edit`}
+                >
+                  <div className="viewButton">Sửa</div>
+                </NavLink>
+              )}
+            {disease.status !== "Approved" &&
+              userInfos.doctorID === disease.createInfos.doctorID && (
+                <NavLink
+                  className="viewLink"
+                  to={`/disease-temp/${disease.id}/approve`}
+                >
+                  <div className="viewButton">Xem</div>
+                </NavLink>
+              )}
+            {disease.status !== "Approved" && userRole === "admin" && (
+              <NavLink
+                className="viewLink"
+                to={`/disease-temp/${disease.id}/approve`}
+              >
+                <div className="viewButton">Xét duyệt</div>
               </NavLink>
             )}
           </div>
@@ -44,16 +101,10 @@ export default function DiseaseTable({ userRole, userInfos }) {
     },
   ];
 
-  const flattenedData = diseases.map((item) => ({
-    ...item,
-    doctorCreated: item.createInfos ? item.createInfos.doctorCreated : "",
-    doctorID: item.createInfos ? item.createInfos.doctorID : "",
-    timeCreated: item.createInfos ? item.createInfos.timeCreated : "",
-  }));
-
   const columns = [
-    { field: "id", headerName: "ID", width: 200 },
-    { field: "name", headerName: "Tên bệnh", width: 160 },
+    { field: "number", headerName: "Stt", width: 50 },
+    { field: "id", headerName: "ID", width: 120 },
+    { field: "name", headerName: "Tên bệnh", width: 200 },
     {
       field: "symptoms",
       headerName: "Triệu chứng đi kèm",
@@ -64,27 +115,63 @@ export default function DiseaseTable({ userRole, userInfos }) {
     { field: "medSpecialty", headerName: "Chuyên khoa", width: 160 },
     { field: "doctorCreated", headerName: "Người tạo", width: 180 },
     { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "timeCreated", headerName: "Ngày viết", width: 160 },
+    { field: "timeCreated", headerName: "Ngày viết", width: 120 },
+    { field: "status", headerName: "Tình trạng", width: 120 },
   ].concat(actionColumn);
 
   return (
     <div className="datatable">
       <div className="datatableTitle">
         Danh sách các căn bệnh
+        {userRole === "head-doctor" && part === 1 && (
+          <button type="button" className="add-link" onClick={() => setPart(2)}>
+            Của tôi
+          </button>
+        )}
+        {userRole === "head-doctor" && part === 2 && (
+          <button type="button" className="add-link" onClick={() => setPart(1)}>
+            Quay lại
+          </button>
+        )}
         {userRole === "head-doctor" && (
           <NavLink to="/disease/create" className="add-link">
             Thêm căn bệnh
           </NavLink>
         )}
       </div>
-      <DataGrid
-        className="datagrid"
-        rows={flattenedData}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-      />
+      {userRole === "admin" && (
+        <DataGrid
+          className="datagrid"
+          rows={flatData}
+          getRowId={(row) => row._id}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+        />
+      )}
+      {userRole !== "admin" && part === 1 && (
+        <DataGrid
+          className="datagrid"
+          rows={doctorFlatData}
+          getRowId={(row) => row._id}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+        />
+      )}
+      {userRole !== "admin" && part === 2 && (
+        <DataGrid
+          className="datagrid"
+          rows={doctorOwnFlatData}
+          getRowId={(row) => row._id}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+        />
+      )}
     </div>
   );
 }
