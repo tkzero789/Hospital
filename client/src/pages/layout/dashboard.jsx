@@ -1,14 +1,14 @@
-import Sidebar from "../../components/sidebar/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
 import Widget from "../../components/widget/Widget";
 import Featured from "../../components/featured/Featured";
 import Table from "../../components/table/Table";
 import "./dashboard.scss";
 
-export default function Dashboard({userInfos, userRole}) {
+export default function Dashboard({ userInfos, userRole }) {
   return (
     <div className="home">
-      <Sidebar userRole={userRole}/>
+      <Sidebar userRole={userRole} />
       <div className="homeContainer">
         <Navbar />
         <div className="widgets">
@@ -27,4 +27,4 @@ export default function Dashboard({userInfos, userRole}) {
       </div>
     </div>
   );
-};
+}

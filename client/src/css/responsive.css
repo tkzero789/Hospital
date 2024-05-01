@@ -226,6 +226,7 @@
 
   .about-body {
     padding: 32px 8px 0 8px;
+    font-size: 16px;
   }
 
   .about-img {
@@ -236,6 +237,7 @@
   /* System section */
   .syst-body {
     padding: 32px 8px 0 8px;
+    font-size: 16px;
   }
 
   .syst-card-wrapper {
@@ -246,20 +248,17 @@
   .syst-card {
     width: 100%;
     user-select: none;
+    box-shadow: none;
   }
 
-  .syst-card:hover {
-    user-select: none;
-    transform: none;
-    transition: none;
-    box-shadow: none;
+  .syst-card:not(:last-child) {
+    margin-bottom: 20px;
   }
 
   .card-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: 0 -130px;
+    object-fit: contain;
   }
 
   /* Specialty section */
@@ -279,6 +278,10 @@
 
   .splty-item {
     width: 100%;
+  }
+
+  .splty-item:hover {
+    user-select: none;
   }
 
   .splty-btn-wrapper {

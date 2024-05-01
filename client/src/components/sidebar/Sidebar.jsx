@@ -1,8 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import GridViewIcon from "@mui/icons-material/GridView";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import TodayIcon from "@mui/icons-material/Today";
 import FeedIcon from "@mui/icons-material/Feed";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import PeopleIcon from "@mui/icons-material/People";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import "./sidebar.scss";
@@ -63,41 +67,41 @@ export default function Sidebar() {
           </NavLink>
           <NavLink to="/symptom-table">
             <li>
-              <FeedIcon className="icon" />
-              <span>Danh sách triệu chứng</span>
+              <MonitorHeartIcon className="icon" />
+              <span>Triệu chứng</span>
             </li>
           </NavLink>
           <NavLink to="/disease-table">
             <li>
-              <FeedIcon className="icon" />
-              <span>Danh sách căn bệnh</span>
+              <MedicalServicesIcon className="icon" />
+              <span>Căn bệnh</span>
             </li>
           </NavLink>
           <NavLink to="/article-table">
             <li>
               <FeedIcon className="icon" />
-              <span>Danh sách bài viết</span>
+              <span>Bài viết</span>
             </li>
           </NavLink>
           {userRole === "admin" && (
             <NavLink to="/appointment-table">
               <li>
-                <FeedIcon className="icon" />
-                <span>Danh sách đặt hẹn</span>
+                <TodayIcon className="icon" />
+                <span>Đặt hẹn</span>
               </li>
             </NavLink>
           )}
           {userRole === "admin" && (
             <NavLink to="/user-table">
               <li>
-                <PersonOutlineIcon className="icon" />
-                <span>Danh sách users</span>
+                <PeopleIcon className="icon" />
+                <span>Tài khoản</span>
               </li>
             </NavLink>
           )}
           <NavLink to="/notif-table">
             <li>
-              <FeedIcon className="icon" />
+              <HelpCenterIcon className="icon" />
               <span>Thông báo</span>
             </li>
           </NavLink>

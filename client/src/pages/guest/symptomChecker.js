@@ -7,6 +7,7 @@ import PatientFormResult from "../../components/SymptomCheckerParts/PatientFormR
 import axios from "axios";
 import { Toaster, toast } from "sonner";
 import Footer from "../../components/ForPages/Footer";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({
@@ -255,6 +256,11 @@ export default function SymptomChecker() {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Phòng khám online</title>
+        </Helmet>
+      </HelmetProvider>
       <div className="symp-checker w-100">
         <div className="content-container">
           <h3 className="text-center">

@@ -954,19 +954,11 @@ header {
 }
 
 .syst-card {
-  width: 240px;
-  height: 400px;
+  width: 320px;
+  height: 250px;
   margin: 0 16px;
   border-radius: 3px;
-  box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.syst-card:hover {
-  transform: translateX(8px) translateY(-8px);
-  box-shadow: -5px 5px 0 0 #90ccec, -10px 10px 0 0 #90ccec,
-    -15px 15px 0 0 #90ccec;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background-color: #ffffff;
 }
 
 .syst-card-link {
@@ -976,18 +968,17 @@ header {
 
 .syst-card-img {
   overflow: hidden;
-  width: 100%;
+  width: 40%;
   margin: auto;
-  height: 50%;
+  height: 40%;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
 
 .card-img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
-  object-position: 0 -24px;
 }
 
 .syst-card-header {
@@ -1154,8 +1145,9 @@ header {
 
 .splty-item {
   width: 20%;
-  border-radius: 3px;
-  box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
+  border-radius: 12px;
+  box-shadow: rgba(54, 198, 255, 0.12) 0px 4px 6px -1px,
+    rgba(54, 198, 255, 0.12) 0px 2px 4px -1px;
 }
 
 .splty-item__link {
@@ -1166,10 +1158,11 @@ header {
 .splty-item-img {
   overflow: hidden;
   width: 100%;
-  height: 100%;
+  height: 120px;
   margin: auto;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: aliceblue;
 }
 
 .splty-item-img img {
@@ -1180,17 +1173,19 @@ header {
 
 .splty-item-header {
   text-align: center;
-  color: var(--text-white);
+  color: var(--text-color);
   padding: 8px 0;
   font-weight: var(--roboto-regular-weight);
-  background-color: var(--header-color);
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  transition: background-color 0.1s ease-in-out;
+  background-color: aliceblue;
+  border-top: 1px solid #e6e6e6;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .splty-item:hover .splty-item-header {
-  background-color: var(--btn-blue2-hover);
+  color: var(--text-white);
+  background-color: #349dff;
 }
 
 .splty-btn-wrapper {

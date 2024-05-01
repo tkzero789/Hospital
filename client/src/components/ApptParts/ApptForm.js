@@ -4,6 +4,7 @@ import { Toaster, toast } from "sonner";
 import "react-calendar/dist/Calendar.css";
 import "../../css/calendar.css";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function ApptForm({
   appt,
@@ -183,11 +184,18 @@ export default function ApptForm({
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Đăng ký khám bệnh</title>
+        </Helmet>
+      </HelmetProvider>
+
+      {/* Appointment Request Hero Image */}
       <div className="appt-img">
         <img src={ApptIMG} alt="Appointment" />
       </div>
 
-      {/* APPOINTMENT FORM */}
+      {/* Appointment Form */}
       <section className="appt w-100">
         <div className="content-container">
           <div className={`appt-wrapper ${showModal ? "hidden" : ""}`}>
