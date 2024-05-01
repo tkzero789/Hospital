@@ -47,10 +47,6 @@ const DiseaseSympDes = ({
           ].descriptions.filter(
             (description) => description.id !== target.descriptionId
           );
-          console.log(
-            _disease.symptoms[symptomIndex].categories[categoryIndex]
-              .descriptions
-          );
           if (
             _disease.symptoms[symptomIndex].categories[categoryIndex]
               .descriptions.length === 0

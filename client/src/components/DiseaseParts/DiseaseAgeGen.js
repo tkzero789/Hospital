@@ -20,14 +20,11 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
 
   // check form status if user click back button
   useEffect(() => {
-    console.log(disease.genders);
     if (disease.ageRanges.length > 0) {
-      const existedAgeRanges = [...disease.ageRanges];
-      setChosenAges(existedAgeRanges);
+      setChosenAges([...disease.ageRanges]);
     }
     if (disease.genders.length > 0) {
-      const existedGenders = [...disease.genders];
-      setChosenGens(existedGenders);
+      setChosenGens([...disease.genders]);
     }
   }, []);
 

@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./table.scss";
 
 export default function SymptomTable({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
   const [symptoms, setSymptoms] = useState([]);
   const [tempSymptoms, setTempSymptoms] = useState([]);
 
@@ -24,7 +25,9 @@ export default function SymptomTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/symptom-temp/`)
+      .get(`http://localhost:5000/symptom-temp/`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((res) => {
         const tempSymptoms = res.data;
         setTempSymptoms(tempSymptoms);
@@ -49,21 +52,24 @@ export default function SymptomTable({ userRole, userInfos }) {
         const symptom = params.row;
         return (
           <div className="cellAction">
-            {symptom.status !== "Approved" ? (
-              <NavLink
-                className="viewLink"
-                to={`/symptom-temp/${symptom.id}/view`}
-              >
-                <div className="viewButton">Xem</div>
-              </NavLink>
-            ) : (
+            {symptom.status === "Approved" && (
               <NavLink className="viewLink" to={`/symptom/${symptom.id}/view`}>
                 <div className="viewButton">Xem</div>
               </NavLink>
             )}
-            {userRole === "admin" && symptom.status === "Approved" && (
+            {symptom.status === "Approved" && userRole === "admin" && (
               <NavLink className="viewLink" to={`/symptom/${symptom.id}/edit`}>
                 <div className="viewButton">Sửa</div>
+              </NavLink>
+            )}
+            {symptom.status !== "Approved" && (
+              <NavLink
+                className="viewLink"
+                to={`/symptom-temp/${symptom.id}/approve`}
+              >
+                <div className="viewButton">
+                  {userRole === "admin" ? "Duyệt" : "Xem"}
+                </div>
               </NavLink>
             )}
           </div>
@@ -83,7 +89,7 @@ export default function SymptomTable({ userRole, userInfos }) {
     <div className="datatable">
       <div className="datatableTitle">
         Danh sách các triệu chứng
-        {userRole === "admin" && (
+        {userRole === "head-doctor" && (
           <NavLink to="/symptom/create" className="add-link">
             Thêm triệu chứng
           </NavLink>

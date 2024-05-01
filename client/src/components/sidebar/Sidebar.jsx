@@ -31,7 +31,6 @@ export default function Sidebar() {
         config
       );
       console.log("Signed out");
-      console.log(response);
       logout();
       navigate("/test-signin");
     } catch (err) {
@@ -96,6 +95,12 @@ export default function Sidebar() {
               </li>
             </NavLink>
           )}
+          <NavLink to="/notif-table">
+            <li>
+              <FeedIcon className="icon" />
+              <span>Thông báo</span>
+            </li>
+          </NavLink>
           <NavLink>
             <li>
               <SettingsApplicationsIcon className="icon" />

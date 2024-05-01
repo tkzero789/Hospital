@@ -37,24 +37,21 @@ const DiseaseSymptoms = ({
   const onCheck = (symptomId, symptomName) => {
     if (chosenSymps.includes(symptomId)) {
       setChosenSymps(chosenSymps.filter((existId) => existId !== symptomId));
-      const _disease = disease;
-      const symptomIndex = _disease.symptoms.findIndex(
+      const symptomIndex = disease.symptoms.findIndex(
         (symptom) => symptom.id === symptomId
       );
-      if (_disease.symptoms[symptomIndex].categories.length > 0) {
-        for (const cat of _disease.symptoms[symptomIndex].categories) {
-          setChosenCats(chosenCats.filter((chosenId) => chosenId !== cat.id));
-          if (cat.descriptions.length > 0) {
-            for (const des of cat.descriptions) {
-              setChosenDes(chosenDes.filter((chosenId) => chosenId !== des.id));
-            }
-          }
+      for (const cat of disease.symptoms[symptomIndex].categories) {
+        setChosenCats(chosenCats.filter((chosenId) => chosenId !== cat.id));
+        for (const des of cat.descriptions) {
+          setChosenDes(chosenDes.filter((chosenId) => chosenId !== des.id));
         }
       }
-      _disease.symptoms = _disease.symptoms.filter(
-        (symptom) => symptom.id !== symptomId
-      );
-      setDisease(_disease);
+      setDisease({
+        ...disease,
+        symptoms: disease.symptoms.filter(
+          (symptom) => symptom.id !== symptomId
+        ),
+      });
     } else {
       setChosenSymps([...chosenSymps, symptomId]);
       const newSymptom = {

@@ -85,7 +85,7 @@ export default function ViewArticleTemp({ userRole, userInfos }) {
     };
     axios
       .post(
-        `http://localhost:5000/disease/add-article/${diseaseId}`,
+        `http://localhost:5000/disease/${diseaseId}/add-article`,
         newArtShort
       )
       .then((res) => {

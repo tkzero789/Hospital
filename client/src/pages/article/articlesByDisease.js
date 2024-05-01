@@ -44,9 +44,9 @@ export default function ArticlesByDisease({ userInfos }) {
       setDisease(_disease);
       // delete article in disease
       axios
-        .post(`http://localhost:5000/disease/delete-article/${diseaseId}`, {
-          id: articleId,
-        })
+        .post(
+          `http://localhost:5000/disease/${diseaseId}/delete-article/${articleId}`
+        )
         .then((res) => {
           console.log(res.data);
         })

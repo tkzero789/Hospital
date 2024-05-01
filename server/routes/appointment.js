@@ -32,7 +32,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const myobj = {
-      id: req.params.id,
+      id: req.body.id,
       fullName: req.body.fullName,
       phoneNumber: req.body.phoneNumber,
       email: req.body.email,

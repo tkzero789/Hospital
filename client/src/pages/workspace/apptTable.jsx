@@ -13,8 +13,7 @@ export default function ApptTable({ userRole, userInfos }) {
       .get("http://localhost:5000/appointment")
       .then((res) => {
         const reverseData = res.data.reverse();
-        // Add an 'id' field to each appts object
-        const reverseDataWithNo = res.data.map((item, index) => ({
+        const reverseDataWithNo = reverseData.map((item, index) => ({
           ...item,
           number: index + 1,
         }));

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
 
-export default function ViewSymptom({ userRole, userInfos }) {
+export default function ApproveSymptom({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");
   const apiConfig = {
     headers: { Authorization: `Bearer ${userToken}` },
@@ -13,6 +12,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
   const [symptom, setSymptom] = useState({
     id: "",
     name: "",
+    position: "",
     categories: [
       {
         id: "",
@@ -39,10 +39,9 @@ export default function ViewSymptom({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/symptom/${symptomId}`)
+      .get(`http://localhost:5000/symptom-temp/${symptomId}/`, apiConfig)
       .then((res) => {
         const dbsymptom = res.data;
-        console.log(dbsymptom);
         if (!dbsymptom) {
           const id = symptomId;
           window.alert(`Symptom with id ${id} not found`);
@@ -57,16 +56,61 @@ export default function ViewSymptom({ userRole, userInfos }) {
       });
   }, [symptomId, navigate]);
 
-  function confirmDelete(e) {
+  async function confirmApprove(e) {
     e.preventDefault();
-    if (window.confirm("Xóa căn bệnh này trong bộ nhớ chính?")) {
+    if (symptom.status === "Pending Create") {
       axios
-        .delete(`http://localhost:5000/symptom/${symptomId}`, apiConfig)
-        .then({})
+        .post(
+          `http://localhost:5000/symptom/add/`,
+          { ...symptom, status: "Approved" },
+          apiConfig
+        )
+        .then((res) => {
+          if (res.data && res.data.message === "Symptom already exists") {
+            window.alert("Căn bệnh cùng tên đã có trong cơ sở dữ liệu!");
+            return;
+          }
+          console.log("Symptom created", res.data);
+        })
         .catch((err) => {
           const message = `Có lỗi xảy ra: ${err}`;
           window.alert(message);
+        });
+    } else if (symptom.status === "Pending Update") {
+      await axios
+        .get(`http://localhost:5000/symptom/${symptom.name}`)
+        .then((res) => {
+          if (res.data) {
+            window.alert("Căn bệnh cùng tên đã có trong cơ sở dữ liệu");
+          }
           return;
+        })
+        .catch((err) => {
+          const message = `Có lỗi xảy ra: ${err}`;
+          window.alert(message);
+        });
+      await axios
+        .post(
+          `http://localhost:5000/symptom/update/${symptomId}`,
+          { ...symptom, status: "Approved" },
+          apiConfig
+        )
+        .catch((err) => {
+          const message = `Có lỗi xảy ra: ${err}`;
+          window.alert(message);
+        });
+    }
+    confirmDelete(e);
+  }
+
+  function confirmDelete(e) {
+    e.preventDefault();
+    if (window.confirm("Xóa căn bệnh này trong bộ nhớ tạm thời?")) {
+      axios
+        .delete(`http://localhost:5000/symptom-temp/${symptomId}`, apiConfig)
+        .catch((err) => {
+          const message = `Có lỗi xảy ra: ${err}`;
+          window.alert(message);
         });
       navigate(`/symptom-table`);
     }
@@ -81,9 +125,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
               <SymptomForm
                 symptom={symptom}
                 setSymptom={setSymptom}
-                mode="view"
-                origCats={[]}
-                origDescs={[]}
+                editMode={false}
               />
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
@@ -95,17 +137,21 @@ export default function ViewSymptom({ userRole, userInfos }) {
                   QUAY LẠI
                 </NavLink>
               </div>
-              {(userRole === "admin" || userRole === "head-doctor") && (
+              {userRole === "admin" && (
                 <div className="col-3 d-grid gap-2">
-                  <NavLink
+                  <button
+                    type="button"
                     className="btn btn-outline-primary"
-                    to={`/symptom/${symptomId}/edit`}
+                    onClick={(e) => {
+                      confirmApprove(e);
+                    }}
                   >
-                    {userRole === "admin" ? "Chỉnh sửa" : "Thêm mô tả"}
-                  </NavLink>
+                    XÁC NHẬN DUYỆT
+                  </button>
                 </div>
               )}
-              {userRole === "admin" && (
+              {(userRole === "admin" ||
+                userInfos.doctorID === symptom.createInfos.doctorID) && (
                 <div className="col-3 d-grid gap-2">
                   <button
                     type="button"
@@ -114,7 +160,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
                       confirmDelete(e);
                     }}
                   >
-                    XÓA
+                    XÁC NHẬN XÓA
                   </button>
                 </div>
               )}

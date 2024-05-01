@@ -66,7 +66,6 @@ userRoutes.route("/user/update-status/:id").post(async function (req, res) {
 });
 
 userRoutes.route("/signup").post(async function (req, res) {
-  console.log(req.body);
   try {
     const db_connect = await dbo.getDb("mern_hospital");
     const password = req.body.password;
@@ -106,7 +105,7 @@ userRoutes.route("/signin").post(async function (req, res) {
       { userId: result.id, role: result.role, userInfos: result.userInfos },
       SECRET_JWT_KEY,
       {
-        expiresIn: "1h",
+        expiresIn: "6h",
       }
     );
     res.status(200).json({ token });
@@ -121,6 +120,7 @@ userRoutes.route("/signout").post(async function (req, res) {
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    req.session.user = null;
     const shortLivedToken = jwt.sign(
       { userId: "invalidated" },
       SECRET_JWT_KEY,
@@ -128,9 +128,8 @@ userRoutes.route("/signout").post(async function (req, res) {
         expiresIn: "1 second",
       }
     );
-    res.status(200).json({ message: "Logged out successfully" });
+    res.status(204).send();
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server Error" });
   }
 });

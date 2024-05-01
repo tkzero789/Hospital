@@ -1,7 +1,13 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export default function SymptomForm({ symptom, setSymptom, editMode }) {
+export default function SymptomForm({
+  symptom,
+  setSymptom,
+  mode,
+  origCats,
+  origDescs,
+}) {
   const categoryOptions = [
     { value: "Vị trí", label: "Vị trí" },
     { value: "Mức độ", label: "Mức độ" },
@@ -41,15 +47,11 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
     { value: "Bàn chân", label: "Bàn chân" },
   ];
 
-  function updateNameField(event) {
-    setSymptom({ ...symptom, name: event.target.value });
+  function updateField(event) {
+    setSymptom({ ...symptom, [event.target.name]: event.target.value });
   }
 
-  function updatePosField(event) {
-    setSymptom({ ...symptom, position: event.target.value });
-  }
-
-  function addCategoryField() {
+  function addCatField() {
     const newCat = {
       id: uuidv4(),
       categoryName: "Vị trí",
@@ -64,12 +66,12 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
     setSymptom({ ...symptom, categories: [...symptom.categories, newCat] });
   }
 
-  function updateCategoryField(categoryId, event) {
+  function updateCatField(categoryId, event) {
     const cats = symptom.categories;
     const catIndex = cats.findIndex((cat) => cat.id === categoryId);
     const updatedCat = {
       ...cats[catIndex],
-      name: event.target.value,
+      [event.target.name]: event.target.value,
     };
     setSymptom({
       ...symptom,
@@ -81,17 +83,14 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
     });
   }
 
-  function deleteCategoriesField(categoryId) {
-    const updatedCat = symptom.categories.filter(
-      (cat) => cat.id !== categoryId
-    );
+  function deleteCatField(categoryId) {
     setSymptom({
       ...symptom,
-      categories: updatedCat,
+      categories: symptom.categories.filter((cat) => cat.id !== categoryId),
     });
   }
 
-  function addDescriptionField(categoryId) {
+  function addDesField(categoryId) {
     const newDes = {
       id: uuidv4(),
       descriptionDetail: "",
@@ -113,7 +112,7 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
     });
   }
 
-  function updateDescriptionsField(categoryId, descriptionId, event) {
+  function updateDesField(categoryId, descriptionId, event) {
     const cats = symptom.categories;
     const catIndex = cats.findIndex((cat) => cat.id === categoryId);
     const desIndex = cats[catIndex].descriptions.findIndex(
@@ -125,7 +124,7 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
         ...cats[catIndex].descriptions.slice(0, desIndex),
         {
           ...cats[catIndex].descriptions[desIndex],
-          descriptionDetail: event.target.value,
+          [event.target.name]: event.target.value,
         },
         ...cats[catIndex].descriptions.slice(desIndex + 1),
       ],
@@ -140,7 +139,7 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
     });
   }
 
-  const deleteDescriptionsField = (categoryId, descriptionId) => {
+  const deleteDesField = (categoryId, descriptionId) => {
     const cats = symptom.categories;
     const catIndex = cats.findIndex((cat) => cat.id === categoryId);
     const updatedDescriptions = cats[catIndex].descriptions.filter(
@@ -174,11 +173,11 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
         <input
           type="text"
           className="form-control border-primary col border-dark-subtle shadow-sm"
-          name="symptomName"
+          name="name"
           value={symptom.name}
           placeholder="Nhập tên triệu chứng"
-          readOnly={!editMode}
-          onChange={(e) => updateNameField(e)}
+          disabled={mode === "view" || mode === "doctor edit"}
+          onChange={(e) => updateField(e)}
         />
       </div>
       <div className="form-group row pb-5">
@@ -187,8 +186,8 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
           name="position"
           value={symptom.position}
           className="form-select border-primary col border-dark-subtle shadow-sm"
-          readOnly={!editMode}
-          onChange={(e) => updatePosField(e)}
+          disabled={mode === "view" || mode === "doctor edit"}
+          onChange={(e) => updateField(e)}
         >
           {positionOptions.map((option) => (
             <option key={option.value} value={option.value}>
@@ -198,26 +197,31 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
         </select>
       </div>
       <h4 className="card-title text-body">Thêm mô tả chi tiết:</h4>
-      {symptom.categories.map((category) => {
+      {symptom.categories.map((cat) => {
         return (
-          <div key={category.id}>
+          <div key={cat.id}>
             <div className="form row pb-3 mt-5">
               <div className="col-2" style={{ display: "flex" }}>
-                {editMode && (
+                {(mode === "create" ||
+                  mode === "admin edit" ||
+                  (mode === "doctor edit" && !origCats.includes(cat.id))) && (
                   <i
                     class="btn py-0 px-0 bi bi-file-minus"
                     style={{ color: "#000", marginRight: "5px" }}
-                    onClick={() => deleteCategoriesField(category.id)}
+                    onClick={() => deleteCatField(cat.id)}
                   ></i>
                 )}
                 <h5 className="text-body">Thuộc tính:</h5>
               </div>
               <select
                 name="categoryName"
-                value={category.categoryName}
+                value={cat.categoryName}
                 className="form-select border-secondary col"
-                readOnly={!editMode}
-                onChange={(e) => updateCategoryField(category.id, e)}
+                disabled={
+                  mode === "view" ||
+                  (mode === "doctor edit" && origCats.includes(cat.id))
+                }
+                onChange={(e) => updateCatField(cat.id, e)}
               >
                 {categoryOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -228,38 +232,40 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
             </div>
 
             <div className="row">
-              {category.descriptions.map((description) => (
+              {cat.descriptions.map((desc) => (
                 <div
                   className="form-group pb-3 col-12"
                   style={{ display: "flex" }}
                 >
-                  {editMode && (
+                  {(mode === "create" ||
+                    mode === "admin edit" ||
+                    (mode === "doctor edit" &&
+                      !origDescs.includes(desc.id))) && (
                     <i
                       class="btn py-0 px-0 bi bi-file-minus"
                       style={{ color: "#000", marginRight: "5px" }}
-                      onClick={() =>
-                        deleteDescriptionsField(category.id, description.id)
-                      }
+                      onClick={() => deleteDesField(cat.id, desc.id)}
                     ></i>
                   )}
                   <input
                     name="descriptionDetail"
-                    value={description.descriptionDetail}
+                    value={desc.descriptionDetail}
                     type="text"
                     className="form-control border border-dark-subtle shadow-sm rounded "
                     placeholder="Nhập mô tả"
-                    readOnly={!editMode}
-                    onChange={(e) =>
-                      updateDescriptionsField(category.id, description.id, e)
+                    disabled={
+                      mode === "view" ||
+                      (mode === "doctor edit" && origDescs.includes(desc.id))
                     }
+                    onChange={(e) => updateDesField(cat.id, desc.id, e)}
                   />
                 </div>
               ))}
             </div>
-            {editMode && (
+            {(mode === "create" || mode === "doctor edit") && (
               <div className="row justify-content-center">
                 <div className="col-1 rounded-5 btn btn-light border-secondary-subtle border-0 py-0 px-0">
-                  <div onClick={() => addDescriptionField(category.id)}>
+                  <div onClick={() => addDesField(cat.id)}>
                     <i class="text-secondary fs-3 bi bi-plus-circle"></i>
                   </div>
                 </div>
@@ -268,9 +274,9 @@ export default function SymptomForm({ symptom, setSymptom, editMode }) {
           </div>
         );
       })}
-      {editMode && (
+      {(mode === "create" || mode === "doctor edit") && (
         <div
-          onClick={addCategoryField}
+          onClick={addCatField}
           className="btn btn-secondary bg-gradient mt-5"
         >
           Thêm thuộc tính

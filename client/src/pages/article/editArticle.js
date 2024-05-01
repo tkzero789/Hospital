@@ -106,7 +106,7 @@ export default function EditArticle({ userInfos }) {
       console.log(newArtShort);
       axios
         .post(
-          `http://localhost:5000/disease/update-article/${diseaseId}`,
+          `http://localhost:5000/disease/${diseaseId}/update-article/${articleId}`,
           newArtShort
         )
         .then((res) => {

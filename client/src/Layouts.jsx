@@ -5,12 +5,13 @@ import RequireAuth from "./RequireAuth";
 // staff pages
 import Dashboard from "./pages/workspace/dashboard";
 import StaffLayout from "./pages/layout/StaffLayout";
+import NotifTable from "./pages/workspace/notifTable";
 // symptom pages
 import SymptomTable from "./pages/workspace/symptomTable";
 import CreateSymptom from "./pages/symptom/createSymptom";
-import ViewSymptom from "./pages/symptom/viewSymptom";
-import ViewSymptomTemp from "./pages/symptom/viewSymptomTemp";
 import EditSymptom from "./pages/symptom/editSymptom";
+import ApproveSymptom from "./pages/symptom/approveSymptom";
+import ViewSymptom from "./pages/symptom/viewSymptom";
 // disease pages
 import DiseaseTable from "./pages/workspace/diseaseTable";
 import CreateDisease from "./pages/disease/createDisease";
@@ -70,6 +71,18 @@ export default function Layouts({ userRole, userInfos }) {
               path="/"
               element={<Navigate to="/dashboard" replace={true} />}
             />
+            {/* notification page */}
+            <Route
+              path="/notif-table"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "doctor", "admin"]}
+                >
+                  <NotifTable userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
             {/* symptom pages */}
             <Route
               path="/symptom-table"
@@ -85,8 +98,27 @@ export default function Layouts({ userRole, userInfos }) {
             <Route
               path="/symptom/create"
               element={
-                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
                   <CreateSymptom userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/symptom/:symptomId/edit"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "admin"]}
+                >
+                  <EditSymptom userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/symptom-temp/:symptomId/approve"
+              element={
+                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
+                  <ApproveSymptom userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />
@@ -98,25 +130,6 @@ export default function Layouts({ userRole, userInfos }) {
                   allowedRoles={["head-doctor", "doctor", "admin"]}
                 >
                   <ViewSymptom userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/symptom-temp/:symptomId/view"
-              element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor", "admin"]}
-                >
-                  <ViewSymptomTemp userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/symptom/:symptomId/edit"
-              element={
-                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
-                  <EditSymptom userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />
@@ -135,10 +148,7 @@ export default function Layouts({ userRole, userInfos }) {
             <Route
               path="/disease/create"
               element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "admin"]}
-                >
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
                   <CreateDisease userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
@@ -168,10 +178,7 @@ export default function Layouts({ userRole, userInfos }) {
             <Route
               path="/disease/:diseaseId/edit"
               element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "admin"]}
-                >
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
                   <EditDisease userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
