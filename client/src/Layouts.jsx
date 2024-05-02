@@ -43,11 +43,12 @@ import ArticlePatientView from "./pages/guest/articlePatientView";
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Set time out
   useEffect(() => {
     const timeoutId = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timeoutId);
   }, []);
-  // Set time out
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}

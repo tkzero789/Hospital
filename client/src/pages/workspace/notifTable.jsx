@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-
 import "./table.scss";
 
 export default function NotifTable({ userRole, userInfos }) {
   const [notifs, setNotifs] = useState([]);
   const doctorID = userInfos.doctorID;
-  console.log(doctorID);
 
   useEffect(() => {
     axios

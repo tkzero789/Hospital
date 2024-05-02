@@ -56,7 +56,7 @@
 }
 
 /* NAVBAR */
-header {
+.fixed-top {
   position: fixed;
   width: 100%;
   z-index: 1000;
@@ -499,10 +499,6 @@ header {
 }
 
 /* REQUEST APPOINTMENT FORM */
-.appt-req-body {
-  padding-top: 129px;
-}
-
 .appt-img {
   max-width: 100%;
   height: 250px;
@@ -1340,10 +1336,6 @@ header {
 }
 
 /* SYMPTOM CHECKER PAGE */
-.symp-checker {
-  padding-top: 129px;
-}
-
 .symp-checker h3 {
   margin-top: 40px;
   color: var(--header-color);

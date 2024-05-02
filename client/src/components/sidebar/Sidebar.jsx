@@ -9,9 +9,9 @@ import PeopleIcon from "@mui/icons-material/People";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import "./sidebar.scss";
 import BKCLogo from "../../assets/logo/footerLogo2.svg";
 import { useAuth } from "../../AuthContext";
+import "./sidebar.scss";
 
 export default function Sidebar() {
   const { logout, getUserRole } = useAuth();
@@ -59,7 +59,7 @@ export default function Sidebar() {
 
       <div className="center">
         <ul>
-          <NavLink to="/dashboard">
+          <NavLink to="/dashboard" activeclassname="active">
             <li>
               <GridViewIcon className="icon" />
               <span>Dashboard</span>
@@ -87,7 +87,7 @@ export default function Sidebar() {
             <NavLink to="/appointment-table">
               <li>
                 <TodayIcon className="icon" />
-                <span>Đặt hẹn</span>
+                <span>Appointments</span>
               </li>
             </NavLink>
           )}
@@ -95,7 +95,7 @@ export default function Sidebar() {
             <NavLink to="/user-table">
               <li>
                 <PeopleIcon className="icon" />
-                <span>Tài khoản</span>
+                <span>Account</span>
               </li>
             </NavLink>
           )}
@@ -105,13 +105,13 @@ export default function Sidebar() {
               <span>Thông báo</span>
             </li>
           </NavLink>
-          <NavLink>
+          <NavLink to="">
             <li>
               <SettingsApplicationsIcon className="icon" />
               <span>Cài đặt</span>
             </li>
           </NavLink>
-          <NavLink onClick={handleSignOut}>
+          <NavLink to="" onClick={handleSignOut}>
             <li>
               <ExitToAppIcon className="icon" />
               <span>Đăng xuất</span>

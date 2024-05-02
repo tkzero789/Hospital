@@ -2,7 +2,14 @@
   flex: 1;
   border-right: 0.5px solid rgb(230, 227, 227);
   min-height: 100vh;
-  background-color: #005d90;
+  background-image: linear-gradient(
+    to right top,
+    #0071ad,
+    #006faa,
+    #0060b7,
+    #0056bb,
+    #004abb
+  );
 
   .top {
     height: 120px;
@@ -23,9 +30,6 @@
       height: auto;
       overflow: hidden;
       position: relative;
-      // left: 50%;
-      // top: 50%;
-      // transform: translate(-60%, -30%);
     }
 
     .admin-logo img {
@@ -43,12 +47,25 @@
   .center {
     height: 100%;
     display: flex;
-    justify-content: center;
     padding-top: 24px;
 
     ul {
       list-style: none;
       margin: 0;
+      padding-left: 40px;
+
+      a.active {
+        background-color: #ffffff;
+        border-radius: 8px;
+
+        .icon {
+          color: #464040;
+        }
+
+        span {
+          color: #464040;
+        }
+      }
 
       a {
         text-decoration: none;
@@ -63,6 +80,8 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        width: 180px;
+        padding: 8px 0 8px 8px;
 
         .icon {
           font-size: 24px;
