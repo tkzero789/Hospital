@@ -146,10 +146,6 @@
     width: 100%;
   }
 
-  .opt-btn {
-    width: 100%;
-  }
-
   .big-opt-box {
     display: flex;
     flex-direction: column;

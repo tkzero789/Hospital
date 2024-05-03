@@ -107,10 +107,8 @@ export default function Specialty() {
                     </div>
                   </div>
                   <div className="splty-btn-wrapper">
-                    <NavLink className="splty-btn-link">
-                      <button className="splty-btn">
-                        Xem tất cả chuyên khoa
-                      </button>
+                    <NavLink to="/specialty-page" className="splty-btn-link">
+                      Xem chi tiết các chuyên khoa
                     </NavLink>
                   </div>
                 </div>
