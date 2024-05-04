@@ -2,7 +2,7 @@ import "./dashboard.scss";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
 
-export default function NavbarLayout({ title, children }) {
+export default function NavbarLayout({ children }) {
   return (
     <div className="home">
       <Sidebar />

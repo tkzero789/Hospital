@@ -5,7 +5,7 @@ import Featured from "../../components/featured/Featured";
 import Table from "../../components/table/Table";
 import "./dashboard.scss";
 
-export default function Dashboard({ userInfos, userRole }) {
+export default function Dashboard({ userRole }) {
   return (
     <div className="home">
       <Sidebar userRole={userRole} />

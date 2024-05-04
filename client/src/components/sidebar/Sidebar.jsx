@@ -62,44 +62,44 @@ export default function Sidebar() {
           <NavLink to="/dashboard" activeclassname="active">
             <li>
               <GridViewIcon className="icon" />
-              <span>Dashboard</span>
+              <span>Tổng hợp</span>
             </li>
           </NavLink>
-          <NavLink to="/symptom-table">
+          <NavLink to="/symptom-table" activeclassname="active">
             <li>
               <MonitorHeartIcon className="icon" />
               <span>Triệu chứng</span>
             </li>
           </NavLink>
-          <NavLink to="/disease-table">
+          <NavLink to="/disease-table" activeclassname="active">
             <li>
               <MedicalServicesIcon className="icon" />
               <span>Căn bệnh</span>
             </li>
           </NavLink>
-          <NavLink to="/article-table">
+          <NavLink to="/article-table" activeclassname="active">
             <li>
               <FeedIcon className="icon" />
               <span>Bài viết</span>
             </li>
           </NavLink>
           {userRole === "admin" && (
-            <NavLink to="/appointment-table">
+            <NavLink to="/appointment-table" activeclassname="active">
               <li>
                 <TodayIcon className="icon" />
-                <span>Appointments</span>
+                <span>Đặt hẹn</span>
               </li>
             </NavLink>
           )}
           {userRole === "admin" && (
-            <NavLink to="/user-table">
+            <NavLink to="/user-table" activeclassname="active">
               <li>
                 <PeopleIcon className="icon" />
-                <span>Account</span>
+                <span>Tài khoản</span>
               </li>
             </NavLink>
           )}
-          <NavLink to="/notif-table">
+          <NavLink to="/notif-table" activeclassname="active">
             <li>
               <HelpCenterIcon className="icon" />
               <span>Thông báo</span>
