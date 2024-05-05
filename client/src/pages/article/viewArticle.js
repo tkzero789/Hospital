@@ -49,9 +49,9 @@ export default function ViewArticle({ userRole, userInfos }) {
     if (window.confirm("Bạn có chắc muốn xóa bài viết này?")) {
       // delte article in disease
       axios
-        .post(`http://localhost:5000/disease/delete-article/${diseaseId}`, {
-          id: articleId,
-        })
+        .post(
+          `http://localhost:5000/disease/${diseaseId}/delete-article/${articleId}`
+        )
         .then((res) => {
           console.log(res.data);
         })

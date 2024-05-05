@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext(null);
@@ -6,10 +7,17 @@ const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userToken, setUserToken] = useState(null);
+  const navigate = useNavigate;
 
   useEffect(() => {
     const _userToken = localStorage.getItem("userToken");
     if (_userToken) {
+      const decodedToken = jwtDecode(_userToken);
+      if (decodedToken && Date.now() >= decodedToken.exp * 1000) {
+        logout();
+        navigate("/signin");
+        return;
+      }
       setUserToken(_userToken);
       setLoggedIn(true);
     }

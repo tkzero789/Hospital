@@ -131,7 +131,7 @@ export default function TestSignin() {
                     </div>
                     <div className="signin-right-form">
                       <form>
-                        <label for="username">Tài khoản</label>
+                        <label htmlFor="username">Tài khoản</label>
                         <input
                           type="text"
                           id="username"
@@ -144,7 +144,7 @@ export default function TestSignin() {
                               : ""
                           }`}
                         ></input>
-                        <label for="password">Mật khẩu</label>
+                        <label htmlFor="password">Mật khẩu</label>
                         <input
                           type="password"
                           id="password"

@@ -6,6 +6,10 @@ import axios from "axios";
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
 
 export default function ViewSymptom({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
   const [symptom, setSymptom] = useState({
     id: "",
     name: "",
@@ -28,6 +32,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
       timeCreated: "",
       timeEdited: "",
     },
+    status: "",
   });
   const { symptomId } = useParams();
   const navigate = useNavigate();
@@ -52,6 +57,21 @@ export default function ViewSymptom({ userRole, userInfos }) {
       });
   }, [symptomId, navigate]);
 
+  function confirmDelete(e) {
+    e.preventDefault();
+    if (window.confirm("Xóa căn bệnh này trong bộ nhớ chính?")) {
+      axios
+        .delete(`http://localhost:5000/symptom/${symptomId}`, apiConfig)
+        .then({})
+        .catch((err) => {
+          const message = `Có lỗi xảy ra: ${err}`;
+          window.alert(message);
+          return;
+        });
+      navigate(`/symptom-table`);
+    }
+  }
+
   return (
     <div>
       <div className="container p-5">
@@ -61,7 +81,9 @@ export default function ViewSymptom({ userRole, userInfos }) {
               <SymptomForm
                 symptom={symptom}
                 setSymptom={setSymptom}
-                editMode={false}
+                mode="view"
+                origCats={[]}
+                origDescs={[]}
               />
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
@@ -73,14 +95,27 @@ export default function ViewSymptom({ userRole, userInfos }) {
                   QUAY LẠI
                 </NavLink>
               </div>
-              {userRole === "admin" && (
+              {(userRole === "admin" || userRole === "head-doctor") && (
                 <div className="col-3 d-grid gap-2">
                   <NavLink
                     className="btn btn-outline-primary"
                     to={`/symptom/${symptomId}/edit`}
                   >
-                    CHỈNH SỬA
+                    {userRole === "admin" ? "Chỉnh sửa" : "Thêm mô tả"}
                   </NavLink>
+                </div>
+              )}
+              {userRole === "admin" && (
+                <div className="col-3 d-grid gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={(e) => {
+                      confirmDelete(e);
+                    }}
+                  >
+                    XÓA
+                  </button>
                 </div>
               )}
             </div>

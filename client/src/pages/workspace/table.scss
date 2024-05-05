@@ -68,8 +68,8 @@
       padding: 4px 10px;
       border-radius: 5px;
       color: #ffffff;
-      background-color: #006298;
-      border: 1px solid #006298;
+      background-color: #006faa;
+      border: 1px solid #006faa;
       font-weight: var(--roboto-medium-weight);
       cursor: pointer;
     }
@@ -80,6 +80,26 @@
       color: #ffffff;
       background-color: #ff0000;
       border: 1px solid #ff0000;
+      font-weight: var(--roboto-medium-weight);
+      cursor: pointer;
+    }
+
+    .checkButton {
+      padding: 4px 10px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #008b46;
+      border: 1px solid #008b46;
+      font-weight: var(--roboto-medium-weight);
+      cursor: pointer;
+    }
+
+    .editButton {
+      padding: 4px 10px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #ff9b04;
+      border: 1px solid #ff9b04;
       font-weight: var(--roboto-medium-weight);
       cursor: pointer;
     }

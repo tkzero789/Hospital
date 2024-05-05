@@ -1,4 +1,3 @@
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import "./adminnav.scss";
 import { useAuth } from "../../AuthContext";
@@ -11,14 +10,19 @@ const AdminNav = () => {
   return (
     <div className="admin-navbar">
       <div className="wrapper">
-        <div className="search">
-          <input type="text" placeholder="Tìm kiếm..." />
-          <SearchOutlinedIcon />
-        </div>
         <div className="items">
           <div className="item">
             <NotificationsNoneOutlinedIcon className="icon" />
-            <div className="counter">4</div>
+
+            <div className="counter">!</div>
+
+            <div className="noti-list">
+              <ul>
+                <li>Một bài viết mới đã được tạo bởi</li>
+                <li>Một bài viết mới đã được tạo bởi</li>
+                <li>Một bài viết mới đã được tạo bởi</li>
+              </ul>
+            </div>
           </div>
           <div className="item">
             <span>{fullName}</span>

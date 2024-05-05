@@ -1,13 +1,17 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import GridViewIcon from "@mui/icons-material/GridView";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import TodayIcon from "@mui/icons-material/Today";
 import FeedIcon from "@mui/icons-material/Feed";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import PeopleIcon from "@mui/icons-material/People";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import "./sidebar.scss";
 import BKCLogo from "../../assets/logo/footerLogo2.svg";
 import { useAuth } from "../../AuthContext";
+import "./sidebar.scss";
 
 export default function Sidebar() {
   const { logout, getUserRole } = useAuth();
@@ -31,7 +35,6 @@ export default function Sidebar() {
         config
       );
       console.log("Signed out");
-      console.log(response);
       logout();
       navigate("/test-signin");
     } catch (err) {
@@ -56,53 +59,59 @@ export default function Sidebar() {
 
       <div className="center">
         <ul>
-          <NavLink to="/dashboard">
+          <NavLink to="/dashboard" activeclassname="active">
             <li>
               <GridViewIcon className="icon" />
-              <span>Dashboard</span>
+              <span>Tổng hợp</span>
             </li>
           </NavLink>
-          <NavLink to="/symptom-table">
+          <NavLink to="/symptom-table" activeclassname="active">
             <li>
-              <FeedIcon className="icon" />
-              <span>Danh sách triệu chứng</span>
+              <MonitorHeartIcon className="icon" />
+              <span>Triệu chứng</span>
             </li>
           </NavLink>
-          <NavLink to="/disease-table">
+          <NavLink to="/disease-table" activeclassname="active">
             <li>
-              <FeedIcon className="icon" />
-              <span>Danh sách căn bệnh</span>
+              <MedicalServicesIcon className="icon" />
+              <span>Căn bệnh</span>
             </li>
           </NavLink>
-          <NavLink to="/article-table">
+          <NavLink to="/article-table" activeclassname="active">
             <li>
               <FeedIcon className="icon" />
-              <span>Danh sách bài viết</span>
+              <span>Bài viết</span>
             </li>
           </NavLink>
           {userRole === "admin" && (
-            <NavLink to="/appointment-table">
+            <NavLink to="/appointment-table" activeclassname="active">
               <li>
-                <FeedIcon className="icon" />
-                <span>Danh sách đặt hẹn</span>
+                <TodayIcon className="icon" />
+                <span>Đặt hẹn</span>
               </li>
             </NavLink>
           )}
           {userRole === "admin" && (
-            <NavLink to="/user-table">
+            <NavLink to="/user-table" activeclassname="active">
               <li>
-                <PersonOutlineIcon className="icon" />
-                <span>Danh sách users</span>
+                <PeopleIcon className="icon" />
+                <span>Tài khoản</span>
               </li>
             </NavLink>
           )}
-          <NavLink>
+          <NavLink to="/notif-table" activeclassname="active">
+            <li>
+              <HelpCenterIcon className="icon" />
+              <span>Thông báo</span>
+            </li>
+          </NavLink>
+          <NavLink to="">
             <li>
               <SettingsApplicationsIcon className="icon" />
               <span>Cài đặt</span>
             </li>
           </NavLink>
-          <NavLink onClick={handleSignOut}>
+          <NavLink to="" onClick={handleSignOut}>
             <li>
               <ExitToAppIcon className="icon" />
               <span>Đăng xuất</span>

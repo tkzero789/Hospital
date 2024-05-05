@@ -1,4 +1,4 @@
-import Sidebar from "../../components/sidebar/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
 import Widget from "../../components/widget/Widget";
 import Featured from "../../components/featured/Featured";

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import NewsIMG1 from "../assets/home/newsImg1.png";
+import NewsIMG1 from "../assets/home/newsImg1.jpg";
 import NewsIMG2 from "../assets/home/newsImg2.jpg";
 import NewsIMG3 from "../assets/home/newsImg3.jpg";
 import NewsIMG4 from "../assets/home/newsImg4.jpg";
@@ -76,7 +76,7 @@ export default function News() {
                   </div>
                   <div className="news-btn-wrapper">
                     <NavLink className="news-btn-link">
-                      <button className="news-btn">Xem tất cả tin tức</button>
+                      Xem tất cả tin tức
                     </NavLink>
                   </div>
                 </div>

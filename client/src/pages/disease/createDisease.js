@@ -10,6 +10,10 @@ import DiseaseNewSympDes from "../../components/DiseaseParts/DiseaseNewSympDes";
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 
 export default function CreateDisease({ userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
   const now = new Date();
   const formattedDate = `${String(now.getDate()).padStart(2, "0")}/${String(
     now.getMonth() + 1
@@ -29,6 +33,7 @@ export default function CreateDisease({ userInfos }) {
       timeCreated: formattedDate,
       timeEdited: null,
     },
+    status: "Pending Create",
   });
 
   const [dbSymps, setDbSymps] = useState([]);
@@ -41,6 +46,7 @@ export default function CreateDisease({ userInfos }) {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
+  // get symptoms from db
   useEffect(() => {
     axios
       .get("http://localhost:5000/symptom")
@@ -53,6 +59,7 @@ export default function CreateDisease({ userInfos }) {
       });
   }, []);
 
+  // display components step by step
   function StepDisplay() {
     if (step === 1) {
       return <DiseaseAgeGen disease={disease} setDisease={setDisease} />;
@@ -74,8 +81,8 @@ export default function CreateDisease({ userInfos }) {
       return (
         <DiseaseSympDes
           disease={disease}
-          dbSymps={dbSymps}
           setDisease={setDisease}
+          dbSymps={dbSymps}
           chosenSymps={chosenSymps}
           chosenCats={chosenCats}
           setChosenCats={setChosenCats}
@@ -105,6 +112,7 @@ export default function CreateDisease({ userInfos }) {
     }
   }
 
+  // handle next and prev button
   function handlePrev() {
     setStep((step) => step - 1);
   }
@@ -112,6 +120,8 @@ export default function CreateDisease({ userInfos }) {
     setStep((step) => step + 1);
   }
 
+  // at step 4 (add new symptom description), before go to next step, check if there is any
+  // new symptom or category or description has same name with existing ones in DB
   function checkNewSympDes() {
     if (disease.symptoms.length > 0) {
       const dbSympNames = dbSymps.map((dbSymp) => dbSymp.name);
@@ -181,7 +191,7 @@ export default function CreateDisease({ userInfos }) {
 
   async function confirmCreate(e) {
     e.preventDefault();
-    if (!disease.name) {
+    if (disease.name === "") {
       window.alert("Chưa nhập tên bệnh");
       return;
     } else if (disease.ageRanges.length === 0) {
@@ -204,8 +214,8 @@ export default function CreateDisease({ userInfos }) {
         status: "Pending Update",
       }));
     const newSymptoms = disease.symptoms
-      .filter((symptom) =>
-        chosenSymps.some((existSymp) => existSymp !== symptom.id)
+      .filter(
+        (symptom) => !chosenSymps.some((existSymp) => existSymp === symptom.id)
       )
       .map((item) => ({
         ...item,
@@ -218,7 +228,11 @@ export default function CreateDisease({ userInfos }) {
       for (const editedSymp of editedSymptoms) {
         updatePromises.push(
           axios
-            .post(`http://localhost:5000/symptom-temp/add`, editedSymp)
+            .post(
+              `http://localhost:5000/symptom-temp/add`,
+              editedSymp,
+              apiConfig
+            )
             .then((res) => {
               console.log(
                 "Triệu chứng sẽ được chỉnh sửa sau khi được admin chấp thuận",
@@ -238,7 +252,7 @@ export default function CreateDisease({ userInfos }) {
       for (const newSymp of newSymptoms) {
         createPromises.push(
           axios
-            .post("http://localhost:5000/symptom-temp/add", newSymp)
+            .post("http://localhost:5000/symptom-temp/add", newSymp, apiConfig)
             .then((res) => {
               if (res.data && res.data.message === "Symptom already exists") {
                 window.alert(
@@ -266,13 +280,13 @@ export default function CreateDisease({ userInfos }) {
         name: symptom.name,
         categories: symptom.categories,
       })),
-      status: "Pending Create",
     };
     try {
       await Promise.all([...updatePromises, ...createPromises]);
       const response = await axios.post(
         "http://localhost:5000/disease-temp/add",
-        newDisease
+        newDisease,
+        apiConfig
       );
       if (response.data && response.data.message === "Disease already exists") {
         window.alert("Căn bệnh cùng tên đang được người khác thêm vào!");
@@ -295,6 +309,7 @@ export default function CreateDisease({ userInfos }) {
             timeCreated: formattedDate,
             timeEdited: null,
           },
+          status: "Pending Create",
         });
         setStep(1);
         navigate("/disease-table");

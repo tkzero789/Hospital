@@ -6,6 +6,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./table.scss";
 
 export default function DiseaseTable({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  console.log(userToken);
   const [part, setPart] = useState(1);
   const [diseases, setDiseases] = useState([]);
   const [tempDiseases, setTempDiseases] = useState([]);
@@ -25,7 +27,9 @@ export default function DiseaseTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/disease-temp/`)
+      .get(`http://localhost:5000/disease-temp/`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((res) => {
         const tempDiseases = res.data;
         setTempDiseases(tempDiseases);
@@ -92,7 +96,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/disease-temp/${disease.id}/approve`}
               >
-                <div className="viewButton">Xét duyệt</div>
+                <div className="checkButton">Xét duyệt</div>
               </NavLink>
             )}
           </div>
@@ -103,7 +107,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "Stt", width: 50 },
-    { field: "id", headerName: "ID", width: 120 },
+    { field: "id", headerName: "ID", width: 80 },
     { field: "name", headerName: "Tên bệnh", width: 200 },
     {
       field: "symptoms",
@@ -150,7 +154,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
           checkboxSelection
         />
       )}
-      {userRole !== "admin" && part === 1 && (
+      {(userRole === "head-doctor" || userRole === "doctor") && part === 1 && (
         <DataGrid
           className="datagrid"
           rows={doctorFlatData}
@@ -161,7 +165,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
           checkboxSelection
         />
       )}
-      {userRole !== "admin" && part === 2 && (
+      {userRole === "head-doctor" && part === 2 && (
         <DataGrid
           className="datagrid"
           rows={doctorOwnFlatData}

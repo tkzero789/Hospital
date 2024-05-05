@@ -10,6 +10,7 @@ import DiseaseNewSympDes from "../../components/DiseaseParts/DiseaseNewSympDes";
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 
 export default function EditDisease({ userInfos }) {
+  const userToken = localStorage.getItem("userToken");
   const now = new Date();
   const formattedDate = `${String(now.getDate()).padStart(2, "0")}/${String(
     now.getMonth() + 1
@@ -40,9 +41,9 @@ export default function EditDisease({ userInfos }) {
   const [chosenCats, setChosenCats] = useState([]);
   const [chosenDes, setChosenDes] = useState([]);
   const { diseaseId } = useParams();
-  const navigate = useNavigate();
   // set form steps, form include 5 steps
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
 
   // get disease from DB by diseaseId and set chosenSymps, chosenCats, chosenDes
   // this will set the state of chosen ones checked before the process starts
@@ -140,12 +141,17 @@ export default function EditDisease({ userInfos }) {
           chosenCats={chosenCats}
           chosenDes={chosenDes}
           newSymps={newSymps}
-          setNewSymps={setNewSymps}
           userInfos={userInfos}
         />
       );
     } else {
-      return <DiseaseName disease={disease} setDisease={setDisease} />;
+      return (
+        <DiseaseName
+          disease={disease}
+          setDisease={setDisease}
+          editMode={true}
+        />
+      );
     }
   };
 
@@ -160,6 +166,7 @@ export default function EditDisease({ userInfos }) {
   // at step 4 (add new symptom description), before go to next step, check if there is any
   // new symptom or category or description has same name with existing ones in DB
   function checkNewSympDes() {
+    console.log(disease);
     if (disease.symptoms.length > 0) {
       const dbSympNames = dbSymps.map((dbSymp) => dbSymp.name);
       for (const symp of disease.symptoms) {
@@ -233,7 +240,7 @@ export default function EditDisease({ userInfos }) {
   async function confirmEdit(e) {
     e.preventDefault();
     // validate each field
-    if (!disease.name) {
+    if (disease.name === "") {
       window.alert("Chưa nhập tên bệnh");
       return;
     } else if (disease.ageRanges.length === 0) {
@@ -246,40 +253,58 @@ export default function EditDisease({ userInfos }) {
       window.alert("Chưa có triệu chứng");
       return;
     }
+    const editedSymptoms = disease.symptoms
+      .filter((symptom) =>
+        chosenSymps.some((existSymp) => existSymp === symptom.id)
+      )
+      .map((item) => ({
+        ...item,
+        diseaseId: disease.id,
+        status: "Pending Update",
+      }));
+    const newSymptoms = disease.symptoms
+      .filter(
+        (symptom) => !chosenSymps.some((existSymp) => existSymp === symptom.id)
+      )
+      .map((item) => ({
+        ...item,
+        diseaseId: disease.id,
+        status: "Pending Create",
+      }));
+    console.log(editedSymptoms);
+    console.log(newSymptoms);
+    return;
     const updatePromises = [];
     // update edited symptoms
-    if (chosenSymps.length > 0) {
-      const editedSymptoms = disease.symptoms
-        .filter((symptom) =>
-          chosenSymps.some((existSymp) => existSymp === symptom.id)
-        )
-        .map((item) => ({ ...item, status: "Pending Update" }));
-      if (editedSymptoms.length > 0) {
-        for (const editedSymptom of editedSymptoms) {
-          updatePromises.push(
-            axios
-              .post(`http://localhost:5000/symptom-temp/add`, editedSymptom)
-              .then((res) => {
-                console.log(
-                  "Triệu chứng sẽ được chỉnh sửa sau khi được admin chấp thuận",
-                  res.data
-                );
-              })
-              .catch((err) => {
-                const message = `Có lỗi xảy ra: ${err}`;
-                window.alert(message);
-              })
-          );
-        }
+    if (editedSymptoms.length > 0) {
+      for (const editedSymptom of editedSymptoms) {
+        updatePromises.push(
+          axios
+            .post(`http://localhost:5000/symptom-temp/add`, editedSymptom, {
+              headers: { Authorization: `Bearer ${userToken}` },
+            })
+            .then((res) => {
+              console.log(
+                "Triệu chứng sẽ được chỉnh sửa sau khi được admin chấp thuận",
+                res.data
+              );
+            })
+            .catch((err) => {
+              const message = `Có lỗi xảy ra: ${err}`;
+              window.alert(message);
+            })
+        );
       }
     }
     // create new symptoms from disease
     const createPromises = [];
-    if (newSymps.length > 0) {
-      for (const newSymp of newSymps) {
+    if (newSymptoms.length > 0) {
+      for (const newSymp of newSymptoms) {
         createPromises.push(
           axios
-            .post("http://localhost:5000/symptom-temp/add", newSymp)
+            .post("http://localhost:5000/symptom-temp/add", newSymp, {
+              headers: { Authorization: `Bearer ${userToken}` },
+            })
             .then((res) => {
               if (res.data && res.data.message === "Symptom already exists") {
                 window.alert(
@@ -307,13 +332,15 @@ export default function EditDisease({ userInfos }) {
         name: symptom.name,
         categories: symptom.categories,
       })),
-      status: "Pending Update",
     };
     try {
       await Promise.all([...updatePromises, ...createPromises]);
       const response = await axios.post(
         "http://localhost:5000/disease-temp/add",
-        updatedDisease
+        updatedDisease,
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
       );
       if (response.data && response.data.message === "Disease already exists") {
         window.alert("Căn bệnh cùng tên đang được chỉnh sửa!");

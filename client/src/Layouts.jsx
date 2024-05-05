@@ -5,12 +5,13 @@ import RequireAuth from "./RequireAuth";
 // staff pages
 import Dashboard from "./pages/workspace/dashboard";
 import StaffLayout from "./pages/layout/StaffLayout";
+import NotifTable from "./pages/workspace/notifTable";
 // symptom pages
 import SymptomTable from "./pages/workspace/symptomTable";
 import CreateSymptom from "./pages/symptom/createSymptom";
-import ViewSymptom from "./pages/symptom/viewSymptom";
-import ViewSymptomTemp from "./pages/symptom/viewSymptomTemp";
 import EditSymptom from "./pages/symptom/editSymptom";
+import ApproveSymptom from "./pages/symptom/approveSymptom";
+import ViewSymptom from "./pages/symptom/viewSymptom";
 // disease pages
 import DiseaseTable from "./pages/workspace/diseaseTable";
 import CreateDisease from "./pages/disease/createDisease";
@@ -38,15 +39,19 @@ import SymptomChecker from "./pages/guest/symptomChecker";
 import Home from "./pages/guest/home";
 import CreateAppt from "./pages/guest/createAppt";
 import ArticlePatientView from "./pages/guest/articlePatientView";
+import Work from "./pages/guest/workSchedule";
+import SpecialtyPage from "./pages/guest/specialtyPage";
+import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Set time out
   useEffect(() => {
     const timeoutId = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timeoutId);
   }, []);
-  // Set time out
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}
@@ -70,6 +75,18 @@ export default function Layouts({ userRole, userInfos }) {
               path="/"
               element={<Navigate to="/dashboard" replace={true} />}
             />
+            {/* notification page */}
+            <Route
+              path="/notif-table"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "doctor", "admin"]}
+                >
+                  <NotifTable userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
             {/* symptom pages */}
             <Route
               path="/symptom-table"
@@ -85,8 +102,27 @@ export default function Layouts({ userRole, userInfos }) {
             <Route
               path="/symptom/create"
               element={
-                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
                   <CreateSymptom userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/symptom/:symptomId/edit"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "admin"]}
+                >
+                  <EditSymptom userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/symptom-temp/:symptomId/approve"
+              element={
+                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
+                  <ApproveSymptom userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />
@@ -98,25 +134,6 @@ export default function Layouts({ userRole, userInfos }) {
                   allowedRoles={["head-doctor", "doctor", "admin"]}
                 >
                   <ViewSymptom userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/symptom-temp/:symptomId/view"
-              element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor", "admin"]}
-                >
-                  <ViewSymptomTemp userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/symptom/:symptomId/edit"
-              element={
-                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
-                  <EditSymptom userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />
@@ -135,10 +152,7 @@ export default function Layouts({ userRole, userInfos }) {
             <Route
               path="/disease/create"
               element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "admin"]}
-                >
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
                   <CreateDisease userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
@@ -168,10 +182,7 @@ export default function Layouts({ userRole, userInfos }) {
             <Route
               path="/disease/:diseaseId/edit"
               element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "admin"]}
-                >
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
                   <EditDisease userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
@@ -327,6 +338,12 @@ export default function Layouts({ userRole, userInfos }) {
               element={<Navigate to="/home" replace={true} />}
             />
             <Route path="/appt-request" element={<CreateAppt />} />
+            <Route path="/specialty-page" element={<SpecialtyPage />} />
+            <Route
+              path="/specialty-page/:specialtyId"
+              element={<SpecialtyDetail />}
+            />
+            <Route path="/work-schedule" element={<Work />} />
           </Routes>
         </GuestLayout>
       )}
