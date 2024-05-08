@@ -1,6 +1,7 @@
 import React from "react";
 import HI1 from "../../assets/carousel/h6.jpg";
 import HI3 from "../../assets/carousel/h8.png";
+import Test9 from "../../assets/carousel/test9.png";
 
 export default function Carousel() {
   return (
