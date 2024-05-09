@@ -1849,3 +1849,9 @@
 .breadcrumbs a:hover {
   text-decoration: underline;
 }
+
+/* Blogs/News Page */
+.blog-list {
+  display: flex;
+  flex-direction: column;
+}
