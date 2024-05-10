@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 
 export default function LowNav() {
   const navLinks = [
-    { link: "/home", text: "Giới thiệu" },
+    { link: "/create-blog", text: "Blog editor test" },
+    { link: "/view-blog", text: "Tin tức" },
     { link: "/specialty-page", text: "Chuyên khoa" },
-    { link: "/doctor", text: "Bác sĩ" },
     { link: "/symptom-checker", text: "Chẩn đoán" },
     { link: "/work-schedule", text: "Lịch làm việc" },
   ];

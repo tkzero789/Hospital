@@ -8,10 +8,24 @@ import EarSVG from "../../assets/home/earSVG.svg";
 import DnaSVG from "../../assets/home/dnaSVG.svg";
 import TubeSVG from "../../assets/home/tubesSVG.svg";
 import { Link } from "react-router-dom";
+import { Breadcrumbs, Typography } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const SpecialtyPage = () => {
   return (
     <>
+      <div className="content-container">
+        <Breadcrumbs
+          className="breadcrumbs"
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+        >
+          <Link className="text-secondary" to="/home">
+            Trang chủ
+          </Link>
+          ,<Typography className="text-dark">Chuyên khoa</Typography>,
+        </Breadcrumbs>
+      </div>
       <div className="specialty-list w-100">
         <div className="content-container">
           <h1>Chuyên khoa</h1>

@@ -583,4 +583,63 @@
   .symp-right-box {
     display: none;
   }
+
+  /* Specialty Page */
+  .breadcrumbs {
+    margin-top: 58px !important;
+  }
+
+  .specialty-item {
+    height: 240px;
+  }
+
+  .specialty-item img {
+    width: 100%;
+    padding: 0;
+    margin-top: 4px;
+  }
+
+  .specialty-item-info .specialty-item-link {
+    padding-top: 8px;
+    width: 100%;
+  }
+
+  .specialty-item-info a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .specialty-detail-header {
+    font-size: 32px;
+    padding: 16px 0 16px;
+  }
+
+  .specialty-detail-wrapper {
+    flex-direction: column;
+  }
+
+  .specialty-detail-wrapper .m-12 > p {
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 0;
+  }
+
+  .specilty-detail-info h3 {
+    line-height: 1.4;
+    padding-top: 32px;
+    font-size: 22px;
+  }
+
+  .specilty-detail-info p {
+    padding: 20px 0 12px;
+    font-size: 16px;
+  }
+
+  .specilty-detail-info ul li {
+    font-size: 16px;
+  }
+
+  .specilty-detail-info ul li:not(:last-child) {
+    padding-bottom: 8px;
+  }
 }
