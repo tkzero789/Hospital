@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import removeAccents from "remove-accents";
 
-import MaleFigure from "../MaleFigure/MaleFigure";
+import MaleFigure from "../../components/MaleFigure/MaleFigure";
 import FemaleFigure from "../FemaleFigure/FemaleFigure";
 import "../../css/sympchecker.css";
 import MobileFemaleFigure from "../FemaleFigure/MobileFemaleFigure";
@@ -410,7 +410,7 @@ export default function PatientFormSymptoms({
           <div className="symp-right-box">
             <div className="right-box-wrapper">
               <div className="human-figure">
-                {patientForm.patientGender === "Nữ" && (
+                {patientForm.gender === "Nữ" && (
                   <FemaleFigure
                     toggleHeadSymptoms={toggleHeadSymptoms}
                     toggleEyesSymptoms={toggleEyesSymptoms}
@@ -430,7 +430,7 @@ export default function PatientFormSymptoms({
                     toggleFootSymptoms={toggleFootSymptoms}
                   />
                 )}
-                {patientForm.patientGender === "Nam" && (
+                {patientForm.gender === "Nam" && (
                   <MaleFigure
                     toggleHeadSymptoms={toggleHeadSymptoms}
                     toggleEyesSymptoms={toggleEyesSymptoms}
@@ -789,7 +789,7 @@ export default function PatientFormSymptoms({
       >
         <div className="right-box-wrapper">
           <div className="human-figure">
-            {patientForm.patientGender === "Nữ" && (
+            {patientForm.gender === "Nữ" && (
               <MobileFemaleFigure
                 toggleWholeHeadM={toggleWholeHeadM}
                 toggleNeckM={toggleNeckM}
@@ -805,7 +805,7 @@ export default function PatientFormSymptoms({
                 toggleFootM={toggleFootM}
               />
             )}
-            {patientForm.patientGender === "Nam" && (
+            {patientForm.gender === "Nam" && (
               <MobileMaleFigure
                 toggleWholeHeadM={toggleWholeHeadM}
                 toggleNeckM={toggleNeckM}
