@@ -15,16 +15,15 @@ import ViewSymptom from "./pages/symptom/viewSymptom";
 // disease pages
 import DiseaseTable from "./pages/workspace/diseaseTable";
 import CreateDisease from "./pages/disease/createDisease";
+import EditDisease from "./pages/disease/editDisease";
 import ApproveDisease from "./pages/disease/approveDisease";
 import ViewDisease from "./pages/disease/viewDisease";
-import EditDisease from "./pages/disease/editDisease";
 // article pages
 import ArticleTable from "./pages/workspace/articleTable";
 import ArticleTableByDisease from "./pages/workspace/articleTableByDisease";
 import CreateArticle from "./pages/article/createArticle";
 import ApproveArticle from "./pages/article/approveArticle";
 import ViewArticle from "./pages/article/viewArticle";
-import ArticlePatViewTemp from "./pages/article/articlePatViewTemp";
 import EditArticle from "./pages/article/editArticle";
 // appointment pages
 import ApptTable from "./pages/workspace/apptTable";
@@ -115,7 +114,7 @@ export default function Layouts({ userRole, userInfos }) {
               }
             />
             <Route
-              path="/symptom-temp/:symptomId/approve"
+              path="/symptom-temp/:symptomIdTemp/approve"
               element={
                 <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
                   <ApproveSymptom userRole={userRole} userInfos={userInfos} />
@@ -154,7 +153,15 @@ export default function Layouts({ userRole, userInfos }) {
               }
             />
             <Route
-              path="/disease-temp/:diseaseId/approve"
+              path="/disease/:diseaseId/edit"
+              element={
+                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
+                  <EditDisease userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/disease-temp/:diseaseIdTemp/approve"
               element={
                 <RequireAuth
                   userRole={userRole}
@@ -172,14 +179,6 @@ export default function Layouts({ userRole, userInfos }) {
                   allowedRoles={["head-doctor", "doctor", "admin"]}
                 >
                   <ViewDisease userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/disease/:diseaseId/edit"
-              element={
-                <RequireAuth userRole={userRole} allowedRoles={["head-doctor"]}>
-                  <EditDisease userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />
@@ -214,14 +213,25 @@ export default function Layouts({ userRole, userInfos }) {
               element={
                 <RequireAuth
                   userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor", "admin"]}
+                  allowedRoles={["head-doctor", "doctor"]}
                 >
                   <CreateArticle userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />
             <Route
-              path="/disease/:diseaseId/article-temp/:articleId/approve"
+              path="/disease/:diseaseId/article/:articleId/edit"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "doctor"]}
+                >
+                  <EditArticle userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="article-temp/:articleIdTemp/approve"
               element={
                 <RequireAuth
                   userRole={userRole}
@@ -246,31 +256,6 @@ export default function Layouts({ userRole, userInfos }) {
               path="/articles/:articleId"
               element={
                 <ArticlePatientView userRole={userRole} userInfos={userInfos} />
-              }
-            />
-            <Route
-              path="/disease/:diseaseId/article-temp/:articleId/pat-view"
-              element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor"]}
-                >
-                  <ArticlePatViewTemp
-                    userRole={userRole}
-                    userInfos={userInfos}
-                  />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/disease/:diseaseId/article/:articleId/edit"
-              element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor"]}
-                >
-                  <EditArticle userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
               }
             />
             {/* appointment pages */}

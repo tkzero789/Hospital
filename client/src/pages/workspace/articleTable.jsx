@@ -6,6 +6,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./table.scss";
 
 export default function ArticleTable({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
   const [part, setPart] = useState(1);
   const [articles, setArticles] = useState([]);
   const [tempArticles, setTempArticles] = useState([]);
@@ -25,7 +29,7 @@ export default function ArticleTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/article-temp/`)
+      .get(`http://localhost:5000/article-temp/`, apiConfig)
       .then((res) => {
         const articles = res.data;
         setTempArticles(articles);
@@ -72,7 +76,6 @@ export default function ArticleTable({ userRole, userInfos }) {
                 <div className="viewButton">Xem</div>
               </NavLink>
             )}
-
             {article.status === "Approved" &&
               userInfos.doctorID === params.row.createInfos.doctorID && (
                 <NavLink
@@ -86,7 +89,7 @@ export default function ArticleTable({ userRole, userInfos }) {
               userInfos.doctorID === params.row.createInfos.doctorID && (
                 <NavLink
                   className="viewLink"
-                  to={`/disease/${article.diseaseId}/article-temp/${article.id}/approve`}
+                  to={`/article-temp/${article.idTemp}/approve`}
                 >
                   <div className="viewButton">Xem</div>
                 </NavLink>
@@ -94,7 +97,7 @@ export default function ArticleTable({ userRole, userInfos }) {
             {article.status !== "Approved" && userRole === "head-doctor" && (
               <NavLink
                 className="viewLink"
-                to={`/disease/${article.diseaseId}/article-temp/${article.id}/approve`}
+                to={`/article-temp/${article.idTemp}/approve`}
               >
                 <div className="viewButton">Xét duyệt</div>
               </NavLink>

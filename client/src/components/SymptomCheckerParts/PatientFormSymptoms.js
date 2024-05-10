@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import removeAccents from "remove-accents";
-import MaleFigure from "../../components/MaleFigure/MaleFigure";
+
+import MaleFigure from "../MaleFigure/MaleFigure";
 import FemaleFigure from "../FemaleFigure/FemaleFigure";
 import "../../css/sympchecker.css";
 import MobileFemaleFigure from "../FemaleFigure/MobileFemaleFigure";
@@ -15,7 +16,11 @@ import WholeHeadSymp from "../WholeHeadSymp/WholeHeadSymp";
 import { ExtraMobileSympBtn } from "../MobileSympBtn/ExtraMobileSympBtn";
 import MobileSymptom from "../Symptom/MobileSymptom";
 
-const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
+export default function PatientFormSymptoms({
+  dbSymps,
+  patientForm,
+  setPatientForm,
+}) {
   const onCheck = (symptomId) => {
     if (patientForm.chosenSymps.includes(symptomId)) {
       setPatientForm({
@@ -23,11 +28,8 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
         chosenSymps: patientForm.chosenSymps.filter(
           (chosenId) => chosenId !== symptomId
         ),
-        chosenCats: patientForm.chosenCats.filter(
-          (chosenCat) => chosenCat.sympId !== symptomId
-        ),
-        chosenDes: patientForm.chosenDes.filter(
-          (chosenDes) => chosenDes.sympId !== symptomId
+        chosenDescs: patientForm.chosenDescs.filter(
+          (chosenDesc) => chosenDesc.symptomId !== symptomId
         ),
       });
     } else {
@@ -37,9 +39,6 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       });
     }
   };
-
-  console.log(dbSymps);
-  console.log(patientForm.chosenSymps);
 
   // Search
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,6 +57,9 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       ...patientForm,
       chosenSymps: patientForm.chosenSymps.filter(
         (chosenId) => chosenId !== symptomId
+      ),
+      chosenDescs: patientForm.chosenDescs.filter(
+        (chosenDesc) => chosenDesc.symptomId !== symptomId
       ),
     });
   };
@@ -1182,6 +1184,4 @@ const PatientFormSymptoms = ({ dbSymps, patientForm, setPatientForm }) => {
       <div className="row pt-3 pb-3"></div>
     </div>
   );
-};
-
-export default PatientFormSymptoms;
+}
