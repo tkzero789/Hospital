@@ -43,6 +43,7 @@ blogRoutes.route("/blog/add").post(async function (req, res) {
     const myobj = {
       id: req.body.id,
       title: req.body.title,
+      image: req.body.image,
       content: req.body.content,
       createdAt: req.body.createdAt,
     };

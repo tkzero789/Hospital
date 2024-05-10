@@ -3,6 +3,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import MainNav from "../../components/Navbar/MainNav";
 import LowNav from "../../components/Navbar/LowNav";
+import Footer from "../../components/ForPages/Footer";
+import { Breadcrumbs, Typography } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Link } from "react-router-dom";
 
 const ViewSpecificBlog = () => {
   const { id } = useParams();
@@ -34,15 +38,51 @@ const ViewSpecificBlog = () => {
       <MainNav />
       <LowNav />
       <div className="content-container">
+        <Breadcrumbs
+          className="breadcrumbs"
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+        >
+          <Link className="text-secondary" to="/home">
+            Trang chủ
+          </Link>
+          ,
+          <Link className="text-secondary" to="/view-blog">
+            Tin tức
+          </Link>
+          ,<Typography className="text-dark">{blog.title}</Typography>,
+        </Breadcrumbs>
+      </div>
+
+      <div className="content-container individual-blog">
         <div key={blog.id}>
           <h2>{blog.title}</h2>
+          {blog.image && (
+            <div className="blog-img">
+              <img src={blog.image} alt={blog.title} />
+            </div>
+          )}
           {blog.content.content.map((item, index) => {
             if (item.type === "paragraph") {
+              if (item.content === undefined) {
+                return null;
+              }
               return (
                 <p key={index}>
-                  {item.content.map((textObj, textObjIndex) => (
-                    <span key={textObjIndex}>{textObj.text}</span>
-                  ))}
+                  {item.content.map((textObj, textObjIndex) => {
+                    if (
+                      textObj.marks &&
+                      textObj.marks.some((mark) => mark.type === "bold")
+                    ) {
+                      return (
+                        <strong>
+                          <span key={textObjIndex}>{textObj.text}</span>
+                        </strong>
+                      );
+                    } else {
+                      return <span key={textObjIndex}>{textObj.text}</span>;
+                    }
+                  })}
                 </p>
               );
             } else if (item.type === "bulletList") {
@@ -77,11 +117,20 @@ const ViewSpecificBlog = () => {
                   ))}
                 </ol>
               );
+            } else if (item.type === "heading" && item.attrs.level === 1) {
+              return (
+                <h1 key={index}>
+                  {item.content.map((textObj, textObjIndex) => (
+                    <span key={textObjIndex}>{textObj.text}</span>
+                  ))}
+                </h1>
+              );
             }
             return null;
           })}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

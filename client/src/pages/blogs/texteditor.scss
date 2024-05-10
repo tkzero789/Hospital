@@ -70,7 +70,7 @@
   }
 
   img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
   }
 
@@ -88,4 +88,8 @@
   em {
     font-style: italic;
   }
+}
+
+.text-editor-img {
+  width: 50%;
 }

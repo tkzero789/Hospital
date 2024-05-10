@@ -3,6 +3,8 @@ import LowNav from "../../components/Navbar/LowNav";
 import MainNav from "../../components/Navbar/MainNav";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Breadcrumbs, Typography } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const ViewBlog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -28,11 +30,23 @@ const ViewBlog = () => {
       <MainNav />
       <LowNav />
       <div className="content-container">
+        <Breadcrumbs
+          className="breadcrumbs"
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+        >
+          <Link className="text-secondary" to="/home">
+            Trang chủ
+          </Link>
+          ,<Typography className="text-dark">Tin tức</Typography>,
+        </Breadcrumbs>
+      </div>
+      <div className="content-container">
         <h4>Blogs list</h4>
         <div className="blog-list">
           {blogs.map((blog, index) => (
             <Link key={index} to={`/view-blog/${blog.id}`}>
-              Blog {index + 1}
+              {blog.title ? blog.title : "Does not have a title"}
             </Link>
           ))}
         </div>

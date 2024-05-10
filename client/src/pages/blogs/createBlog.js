@@ -95,7 +95,6 @@ const MenuBar = ({ editor }) => {
 };
 
 const CreateBlog = () => {
-  const [imageUrl, setImageUrl] = useState(null);
   const [blog, setBlog] = useState({
     id: null,
     title: "",
@@ -140,45 +139,23 @@ const CreateBlog = () => {
     setBlog({ ...blog, title: e.target.value });
   };
 
-  const uploadImage = useCallback(() => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = async () => {
-      if (input.files.length > 0) {
-        const file = input.files[0];
-        const formData = new FormData();
-        formData.append("image", file);
-
-        try {
-          const response = await axios.post(
-            "http://localhost:5000/blog/upload",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-
-          if (response.data.url) {
-            const imageNode = editor.schema.nodes.image.create({
-              src: response.data.url,
-            });
-            const transaction = editor.state.tr.insert(
-              editor.state.doc.content.size,
-              imageNode
-            );
-            editor.view.dispatch(transaction);
-            setImageUrl(response.data.url);
-          }
-        } catch (error) {
-          console.error(error);
-        }
+  const updateInfoImage = async (event) => {
+    const formData = new FormData();
+    formData.append("image", event.target.files[0]);
+    const response = await axios.post(
+      `http://localhost:5000/blog/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
-    };
-    input.click();
-  }, [editor]);
+    );
+    setBlog((prevBlog) => ({
+      ...prevBlog,
+      image: response.data.link,
+    }));
+  };
 
   return (
     <>
@@ -187,14 +164,22 @@ const CreateBlog = () => {
           <MenuBar editor={editor} />
           <EditorContent editor={editor} />
         </div>
-        <button onClick={uploadImage}>Upload Image</button>
         <label htmlFor="title">Title</label>
         <input type="text" value={blog.title} onChange={onChange} />
         <button onClick={handleClick}>Submit</button>
 
-        <div className="uploaded-image">
-          {imageUrl && <img src={imageUrl} alt="Uploaded" />}
-        </div>
+        <input
+          type="file"
+          name="image"
+          className="form-control border-primary-subtle col-9 mb-2"
+          placeholder="Ảnh minh họa"
+          onChange={(e) => updateInfoImage(e)}
+        />
+        {blog.image ? (
+          <img className="text-editor-img" src={blog.image} alt="Blog img" />
+        ) : (
+          "Chưa có ảnh nào được upload"
+        )}
       </div>
     </>
   );

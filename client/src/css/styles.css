@@ -1855,3 +1855,23 @@
   display: flex;
   flex-direction: column;
 }
+
+.blog-img {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 32px 0;
+}
+
+.blog-img img {
+  width: 50%;
+  border-radius: 6px;
+}
+
+.individual-blog {
+  padding-top: 40px;
+}
+
+.individual-blog p {
+  padding-bottom: 12px;
+}
