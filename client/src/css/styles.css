@@ -1860,7 +1860,7 @@
   width: 100%;
   display: block;
   text-align: center;
-  padding: 32px 0;
+  padding: 24px 0 32px 0;
 }
 
 .blog-img img {
@@ -1874,4 +1874,12 @@
 
 .individual-blog p {
   padding-bottom: 12px;
+}
+
+.individual-blog ul {
+  padding-left: 40px;
+}
+
+.individual-blog ol {
+  padding-left: 40px;
 }

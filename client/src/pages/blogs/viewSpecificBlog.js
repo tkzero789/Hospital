@@ -47,7 +47,7 @@ const ViewSpecificBlog = () => {
             Trang chủ
           </Link>
           ,
-          <Link className="text-secondary" to="/view-blog">
+          <Link className="text-secondary" to="/view-blog-list">
             Tin tức
           </Link>
           ,<Typography className="text-dark">{blog.title}</Typography>,
@@ -57,19 +57,20 @@ const ViewSpecificBlog = () => {
       <div className="content-container individual-blog">
         <div key={blog.id}>
           <h2>{blog.title}</h2>
+          <p>{blog.intro}</p>
           {blog.image && (
             <div className="blog-img">
               <img src={blog.image} alt={blog.title} />
             </div>
           )}
-          {blog.content.content.map((item, index) => {
+          {blog.content?.content.map((item, index) => {
             if (item.type === "paragraph") {
               if (item.content === undefined) {
                 return null;
               }
               return (
                 <p key={index}>
-                  {item.content.map((textObj, textObjIndex) => {
+                  {item.content?.map((textObj, textObjIndex) => {
                     if (
                       textObj.marks &&
                       textObj.marks.some((mark) => mark.type === "bold")
@@ -88,11 +89,11 @@ const ViewSpecificBlog = () => {
             } else if (item.type === "bulletList") {
               return (
                 <ul key={index}>
-                  {item.content.map((listItem, listItemIndex) => (
+                  {item.content?.map((listItem, listItemIndex) => (
                     <li key={listItemIndex}>
-                      {listItem.content.map((paragraph, paragraphIndex) => (
+                      {listItem.content?.map((paragraph, paragraphIndex) => (
                         <span key={paragraphIndex}>
-                          {paragraph.content.map((textObj, textObjIndex) => (
+                          {paragraph.content?.map((textObj, textObjIndex) => (
                             <span key={textObjIndex}>{textObj.text}</span>
                           ))}
                         </span>
@@ -104,11 +105,11 @@ const ViewSpecificBlog = () => {
             } else if (item.type === "orderedList") {
               return (
                 <ol key={index}>
-                  {item.content.map((listItem, listItemIndex) => (
+                  {item.content?.map((listItem, listItemIndex) => (
                     <li key={listItemIndex}>
-                      {listItem.content.map((paragraph, paragraphIndex) => (
+                      {listItem.content?.map((paragraph, paragraphIndex) => (
                         <span key={paragraphIndex}>
-                          {paragraph.content.map((textObj, textObjIndex) => (
+                          {paragraph.content?.map((textObj, textObjIndex) => (
                             <span key={textObjIndex}>{textObj.text}</span>
                           ))}
                         </span>
@@ -120,7 +121,7 @@ const ViewSpecificBlog = () => {
             } else if (item.type === "heading" && item.attrs.level === 1) {
               return (
                 <h1 key={index}>
-                  {item.content.map((textObj, textObjIndex) => (
+                  {item.content?.map((textObj, textObjIndex) => (
                     <span key={textObjIndex}>{textObj.text}</span>
                   ))}
                 </h1>

@@ -18,8 +18,7 @@ import TestSignin from "./pages/auth/testSignin";
 // routes
 import Layouts from "./Layouts";
 import StaffHome from "./pages/guest/staffHome";
-import CreateBlog from "./pages/blogs/createBlog";
-import ViewBlog from "./pages/blogs/viewBlog";
+import ViewBlogList from "./pages/blogs/viewBlogList";
 import ViewSpecificBlog from "./pages/blogs/viewSpecificBlog";
 
 const App = () => {
@@ -63,10 +62,8 @@ const App = () => {
             </RequireAuth>
           }
         />
-
-        <Route path="/create-blog" element={<CreateBlog />} />
-        <Route path="/view-blog" element={<ViewBlog />} />
-        <Route path="/view-blog/:id" element={<ViewSpecificBlog />} />
+        <Route path="/view-blog-list" element={<ViewBlogList />} />
+        <Route path="/view-blog-list/:id" element={<ViewSpecificBlog />} />
       </Routes>
     </div>
   );

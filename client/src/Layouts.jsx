@@ -28,6 +28,10 @@ import EditArticle from "./pages/article/editArticle";
 // appointment pages
 import ApptTable from "./pages/workspace/apptTable";
 import ViewAppt from "./pages/adminonly/viewAppt";
+// blog pages
+import CreateBlog from "./pages/blogs/createBlog";
+import BlogTable from "./pages/workspace/blogTable";
+import ViewBlog from "./pages/adminonly/viewBlog";
 // user pages
 import UserTable from "./pages/workspace/userTable";
 import ViewUser from "./pages/adminonly/viewUser";
@@ -41,6 +45,7 @@ import ArticlePatientView from "./pages/guest/articlePatientView";
 import Work from "./pages/guest/workSchedule";
 import SpecialtyPage from "./pages/guest/specialtyPage";
 import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
+import EditBlog from "./pages/blogs/editBlog";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -276,6 +281,41 @@ export default function Layouts({ userRole, userInfos }) {
               element={
                 <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
                   <ViewAppt userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            {/* blog pages */}
+            <Route path="/create-blog" element={<CreateBlog />} />
+            <Route
+              path="/blog-table"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["admin", "head-doctor", "doctor"]}
+                >
+                  <BlogTable userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/blog/:blogId/view"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["admin", "head-doctor", "doctor"]}
+                >
+                  <ViewBlog userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/blog/:blogId/edit"
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "doctor"]}
+                >
+                  <EditBlog userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>
               }
             />

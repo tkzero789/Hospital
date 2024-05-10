@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { useState } from "react";
 import Italic from "@tiptap/extension-italic";
 import Image from "@tiptap/extension-image";
-import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 import "../../pages/blogs/texteditor.scss";
 
 const MenuBar = ({ editor }) => {
@@ -94,16 +95,17 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const CreateBlog = () => {
-  const [blog, setBlog] = useState({
-    id: null,
-    title: "",
-    intro: "",
-    image: null,
-    content: "",
-    createAt: null,
-    status: "Pending",
-  });
+const EditBlog = () => {
+  const now = new Date();
+  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
+    now.getMinutes()
+  ).padStart(2, "0")} ${String(now.getDate()).padStart(2, "0")}/${String(
+    now.getMonth() + 1
+  ).padStart(2, "0")}/${now.getFullYear()}`;
+
+  const { blogId } = useParams();
+
+  const [blog, setBlog] = useState(null);
 
   const editor = useEditor({
     extensions: [StarterKit, Italic, Image],
@@ -117,22 +119,45 @@ const CreateBlog = () => {
     },
   });
 
+  // Fetch blog content based on id
+  useEffect(() => {
+    console.log(blogId);
+    axios
+      .get(`http://localhost:5000/blog/${blogId}`)
+      .then((res) => {
+        setBlog(res.data);
+        if (editor) {
+          editor.commands.setContent(res.data.content);
+        }
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+  }, [blogId, editor]);
+
+  if (!blog) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(blog.content.content);
+
   // Submit button
   const handleClick = async (e) => {
     e.preventDefault();
     const updatedBlog = {
       ...blog,
-      id: uuidv4(),
-      createdAt: new Date().toLocaleDateString("vi-VN", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }),
+      status: "Pending",
+      createdAt: formattedTime,
     };
 
     try {
-      await axios.post("http://localhost:5000/blog/add", updatedBlog);
+      await axios.post(
+        `http://localhost:5000/blog/edit/${blogId}`,
+        updatedBlog
+      );
       setBlog(updatedBlog);
+      console.log(updatedBlog);
     } catch (error) {
       console.log(error);
     }
@@ -210,4 +235,4 @@ const CreateBlog = () => {
   );
 };
 
-export default CreateBlog;
+export default EditBlog;

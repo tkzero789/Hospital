@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-const ViewBlog = () => {
+const ViewBlogList = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
@@ -44,15 +44,21 @@ const ViewBlog = () => {
       <div className="content-container">
         <h4>Blogs list</h4>
         <div className="blog-list">
-          {blogs.map((blog, index) => (
-            <Link key={index} to={`/view-blog/${blog.id}`}>
-              {blog.title ? blog.title : "Does not have a title"}
-            </Link>
-          ))}
+          {blogs.map((blog, index) => {
+            if (blog.status === "Pending") {
+              return null;
+            } else if (blog.status === "Accepted") {
+              return (
+                <Link key={index} to={`/view-blog-list/${blog.id}`}>
+                  {blog.title ? blog.title : "Does not have a title"}
+                </Link>
+              );
+            }
+          })}
         </div>
       </div>
     </>
   );
 };
 
-export default ViewBlog;
+export default ViewBlogList;
