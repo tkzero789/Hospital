@@ -60,6 +60,16 @@ export default function MobileNav() {
                 <li>
                   <NavLink
                     className="mobile-nav-link"
+                    to="/specialty-page"
+                    data-to="/specialty-page"
+                    onClick={handleLinkClick}
+                  >
+                    Chuyên khoa
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="mobile-nav-link"
                     to="/appt-request"
                     data-to="/appt-request"
                     onClick={handleLinkClick}

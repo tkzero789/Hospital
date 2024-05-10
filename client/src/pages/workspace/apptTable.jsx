@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 
 import "./table.scss";
 
-export default function ApptTable({ userRole, userInfos }) {
+export default function ApptTable() {
   const [appts, setAppts] = useState([]);
 
   useEffect(() => {
@@ -25,6 +25,18 @@ export default function ApptTable({ userRole, userInfos }) {
       });
   }, []);
 
+  const deleteAppt = (id) => {
+    axios
+      .delete(`http://localhost:5000/appointment/${id}`)
+      .then((res) => {
+        setAppts(appts.filter((appt) => appt.id !== id));
+      })
+      .catch((err) => {
+        const message = `Có lỗi xảy ra: ${err}`;
+        window.alert(message);
+      });
+  };
+
   const actionColumn = [
     {
       field: "action",
@@ -39,7 +51,11 @@ export default function ApptTable({ userRole, userInfos }) {
               <div className="viewButton">Xem</div>
             </NavLink>
             {appt.status === "Spam" && (
-              <button type="button" className="viewLink">
+              <button
+                type="button"
+                className="deleteButton"
+                onClick={() => deleteAppt(appt.id)}
+              >
                 Xóa
               </button>
             )}

@@ -6,20 +6,28 @@ import BKCSystem from "../../home/BKCSystem";
 import Specialty from "../../home/Specialty";
 import News from "../../home/News";
 import Footer from "../../components/ForPages/Footer";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function Home() {
   return (
-    <div>
-      {/* Main */}
-      <main id="main">
-        <Carousel />
-        <Options />
-        <About />
-        <BKCSystem />
-        <Specialty />
-        <News />
-        <Footer />
-      </main>
-    </div>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Bệnh viện BKCare</title>
+        </Helmet>
+      </HelmetProvider>
+      <div>
+        {/* Main */}
+        <main id="main">
+          <Carousel />
+          <Options />
+          <About />
+          <BKCSystem />
+          <Specialty />
+          <News />
+          <Footer />
+        </main>
+      </div>
+    </>
   );
 }

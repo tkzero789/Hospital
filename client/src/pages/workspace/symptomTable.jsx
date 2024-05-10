@@ -59,7 +59,7 @@ export default function SymptomTable({ userRole, userInfos }) {
             )}
             {symptom.status === "Approved" && userRole === "admin" && (
               <NavLink className="viewLink" to={`/symptom/${symptom.id}/edit`}>
-                <div className="viewButton">Sửa</div>
+                <div className="editButton">Sửa</div>
               </NavLink>
             )}
             {symptom.status !== "Approved" && (
@@ -67,7 +67,7 @@ export default function SymptomTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/symptom-temp/${symptom.idTemp}/approve`}
               >
-                <div className="viewButton">
+                <div className="checkButton">
                   {userRole === "admin" ? "Duyệt" : "Xem"}
                 </div>
               </NavLink>
@@ -80,7 +80,7 @@ export default function SymptomTable({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "Stt", width: 100 },
-    { field: "id", headerName: "ID", width: 400 },
+    { field: "id", headerName: "ID", width: 80 },
     { field: "name", headerName: "Triệu chứng", width: 500 },
     { field: "status", headerName: "Trạng thái", width: 160 },
   ].concat(actionColumn);

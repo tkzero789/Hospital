@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { DataGrid } from "@mui/x-data-grid";
-
 import "./table.scss";
 
 export default function NotifTable({ userRole, userInfos }) {

@@ -11,25 +11,7 @@
     padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
-    .search {
-      display: flex;
-      align-items: center;
-      border: 0.5px solid lightgray;
-      padding: 6px;
-
-      input {
-        border: none;
-        outline: none;
-        background: transparent;
-        margin-right: auto;
-
-        &::placeholder {
-          font-size: 12px;
-        }
-      }
-    }
+    justify-content: end;
 
     .items {
       display: flex;
@@ -41,19 +23,66 @@
         margin-right: 20px;
         position: relative;
 
+        .noti-list {
+          position: absolute;
+          display: none;
+          width: 320px;
+          background-color: #f1f1f1;
+          top: 30px;
+          left: -280px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          z-index: 10;
+          border-radius: 8px;
+
+          ul {
+            list-style: none;
+            border-radius: 8px;
+
+            li {
+              font-size: 16px;
+              display: block;
+              padding: 8px 8px;
+              cursor: pointer;
+            }
+
+            li:hover {
+              background-color: #e2e2e2;
+            }
+
+            li:first-child {
+              border-top-left-radius: 8px;
+              border-top-right-radius: 8px;
+            }
+
+            li:last-child {
+              border-bottom-left-radius: 8px;
+              border-bottom-right-radius: 8px;
+            }
+
+            li:not(:first-child) {
+              border-top: 1px solid black;
+            }
+          }
+        }
+
         .icon {
-          font-size: 20px;
+          font-size: 24px;
+          position: relative;
+        }
+
+        .span {
+          font-size: 24px;
         }
 
         .avatar {
-          width: 30px;
-          height: 30px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
         }
 
         .counter {
-          width: 15px;
-          height: 15px;
+          width: 16px;
+          height: 16px;
           background-color: red;
           border-radius: 50%;
           color: white;
@@ -66,6 +95,20 @@
           top: -5px;
           right: -5px;
         }
+      }
+
+      .item:first-child:hover .noti-list {
+        display: block;
+      }
+
+      .item:first-child::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: -260px;
+        height: 10px;
+        width: 300px;
+        background-color: transparent;
       }
     }
   }

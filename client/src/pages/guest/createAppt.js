@@ -72,7 +72,6 @@ export default function CreateAppt() {
         closeModal={closeModal}
         confirmSetAppt={confirmSetAppt}
       />
-
       <Footer />
     </div>
   );

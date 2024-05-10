@@ -24,7 +24,7 @@ export default function Options() {
                   </div>
                   <div className="opt-btn-wrapper">
                     <NavLink className="opt-btn-link" to="/symptom-checker">
-                      <button className="opt-btn">Chẩn đoán</button>
+                      Chẩn đoán
                     </NavLink>
                   </div>
                 </div>
@@ -36,7 +36,7 @@ export default function Options() {
                   </div>
                   <div className="opt-btn-wrapper">
                     <NavLink className="opt-btn-link" to="/appt-request">
-                      <button className="opt-btn">Đăng ký</button>
+                      Đăng ký
                     </NavLink>
                   </div>
                 </div>

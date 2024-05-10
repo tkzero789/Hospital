@@ -38,15 +38,19 @@ import SymptomChecker from "./pages/guest/symptomChecker";
 import Home from "./pages/guest/home";
 import CreateAppt from "./pages/guest/createAppt";
 import ArticlePatientView from "./pages/guest/articlePatientView";
+import Work from "./pages/guest/workSchedule";
+import SpecialtyPage from "./pages/guest/specialtyPage";
+import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Set time out
   useEffect(() => {
     const timeoutId = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timeoutId);
   }, []);
-  // Set time out
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}
@@ -319,6 +323,12 @@ export default function Layouts({ userRole, userInfos }) {
               element={<Navigate to="/home" replace={true} />}
             />
             <Route path="/appt-request" element={<CreateAppt />} />
+            <Route path="/specialty-page" element={<SpecialtyPage />} />
+            <Route
+              path="/specialty-page/:specialtyId"
+              element={<SpecialtyDetail />}
+            />
+            <Route path="/work-schedule" element={<Work />} />
           </Routes>
         </GuestLayout>
       )}

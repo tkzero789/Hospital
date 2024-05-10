@@ -31,7 +31,7 @@ export default function Footer() {
               <img className="footer-logo" src={BKCsvg} alt="Footer logo"></img>
             </div>
             <div className="footer-logo-header">
-              <span>Công ty cổ phần bệnh viện Đa khoa BKC</span>
+              <span>Công ty cổ phần bệnh viện Đa khoa BKCare</span>
             </div>
             <div className="footer-logo-address">
               <span>Khu túc xá Đại Học Quốc Gia thành phố Hồ Chí Minh</span>

@@ -1,5 +1,5 @@
 import "./single.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/adminNav/AdminNav";
 import List from "../../components/table/Table";
 

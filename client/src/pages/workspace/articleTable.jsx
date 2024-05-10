@@ -110,7 +110,7 @@ export default function ArticleTable({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "Stt", width: 50 },
-    { field: "id", headerName: "ID", width: 150 },
+    { field: "id", headerName: "ID", width: 80 },
     { field: "title", headerName: "Tựa đề", width: 200 },
     { field: "diseaseName", headerName: "Bệnh đi kèm", width: 200 },
     { field: "doctorCreated", headerName: "Tác giả", width: 180 },

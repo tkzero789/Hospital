@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 export default function LowNav() {
   const navLinks = [
-    { link: "/home", text: "Giới thiệu" },
-    { link: "/major", text: "Chuyên khoa" },
-    { link: "/doctor", text: "Bác sĩ" },
+    { link: "/create-blog", text: "Blog editor test" },
+    { link: "/view-blog", text: "Tin tức" },
+    { link: "/specialty-page", text: "Chuyên khoa" },
     { link: "/symptom-checker", text: "Chẩn đoán" },
-    { link: "/work", text: "Lịch làm việc" },
+    { link: "/work-schedule", text: "Lịch làm việc" },
   ];
 
   return (
@@ -29,7 +29,7 @@ export default function LowNav() {
                 <div className="dropdown-list-box">
                   <div className="low-nav-text">Khác</div>
                   <div className="dropdown-content">
-                    <NavLink>Lịch làm việc</NavLink>
+                    <NavLink to="/work-schedule">Lịch làm việc</NavLink>
                     <NavLink>Bảo hiểm</NavLink>
                     <NavLink>Tra cứu</NavLink>
                     <NavLink>Thông tin Dược</NavLink>

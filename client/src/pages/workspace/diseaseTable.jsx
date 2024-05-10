@@ -96,7 +96,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/disease-temp/${disease.idTemp}/approve`}
               >
-                <div className="viewButton">Xét duyệt</div>
+                <div className="checkButton">Xét duyệt</div>
               </NavLink>
             )}
           </div>
@@ -107,7 +107,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "Stt", width: 50 },
-    { field: "id", headerName: "ID", width: 120 },
+    { field: "id", headerName: "ID", width: 80 },
     { field: "name", headerName: "Tên bệnh", width: 200 },
     { field: "medSpecialty", headerName: "Chuyên khoa", width: 160 },
     { field: "doctorCreated", headerName: "Người tạo", width: 180 },
