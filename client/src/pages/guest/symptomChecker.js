@@ -197,6 +197,16 @@ export default function SymptomChecker() {
     handleNext();
   };
 
+  const setDefault = () => {
+    setPatientForm({
+      age: "",
+      gender: "",
+      chosenSymps: [],
+      chosenDescs: [],
+    });
+    handlePrev();
+  };
+
   const handlePrev = () => {
     setPrevStep(step);
     setStep((step) => step - 1);
@@ -255,27 +265,6 @@ export default function SymptomChecker() {
           <h3 className="text-center">
             CHÀO MỪNG BẠN ĐẾN VỚI TÍNH NĂNG GỢI Ý CHẨN ĐOÁN BỆNH
           </h3>
-          <div className="symp-checker-steps">
-            <h5>CÁC BƯỚC SỬ DỤNG</h5>
-            <p>Bước 1: Điền thông tin về giới tính, tuổi tác của bạn</p>
-            <p>
-              Bước 2: Chọn một hoặc nhiều triệu chứng bệnh từ danh sách có sẵn
-              hoặc từ bản đồ cơ thể
-            </p>
-            <p>
-              Bước 3: Chọn một hoặc nhiều các mô tả chi tiết của triệu chứng phù
-              hợp với tình trạng cơ thể
-            </p>
-            <p>Bước 4: Chọn căn bệnh được hệ thống chẩn đoán</p>
-            <p>Bước 5: Chọn bài viết về căn bệnh để biết thông tin chi tiết</p>
-            <p>Bước 6: Chọn phương pháp điều trị</p>
-            <h5>
-              LƯU Ý: Kết quả chỉ mang tính chất tham khảo. Để tìm hiểu chính xác
-              nhất về tình trạng của bản thân, vui lòng đến các cơ sở y tế hoặc
-              đặt lịch khám tại bệnh viện chúng tôi để được chẩn đoán chính xác
-              nhất.
-            </h5>
-          </div>
           <div className="symp-checker-board">
             <div className="card">
               <div className="progress-bar-step border rounded">
@@ -292,7 +281,7 @@ export default function SymptomChecker() {
                       disabled={step === 1}
                       onClick={() => {
                         if (step === 2) {
-                          window.location.reload();
+                          setDefault();
                         } else {
                           handlePrev();
                         }
@@ -322,6 +311,15 @@ export default function SymptomChecker() {
                         <button
                           type="button"
                           className="btn btn-primary"
+                          disabled={
+                            (step === 1 &&
+                              (!patientForm.age || !patientForm.gender)) ||
+                            (step === 2 &&
+                              patientForm.chosenSymps.length === 0) ||
+                            (step > 2 &&
+                              step < finalStep &&
+                              patientForm.chosenDescs.length === 0)
+                          }
                           onClick={checkHandleNext}
                         >
                           {step === finalStep - 1 ? "Xem kết quả" : "Tiếp theo"}
