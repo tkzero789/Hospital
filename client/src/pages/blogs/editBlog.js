@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -95,13 +95,8 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const EditBlog = () => {
-  const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getDate()).padStart(2, "0")}/${String(
-    now.getMonth() + 1
-  ).padStart(2, "0")}/${now.getFullYear()}`;
+const EditBlog = ({ userInfos }) => {
+  const navigate = useNavigate();
 
   const { blogId } = useParams();
 
@@ -140,11 +135,15 @@ const EditBlog = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(blog.content.content);
-
   // Submit button
   const handleClick = async (e) => {
     e.preventDefault();
+    const now = new Date();
+    const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
+      now.getMinutes()
+    ).padStart(2, "0")} ${String(now.getDate()).padStart(2, "0")}/${String(
+      now.getMonth() + 1
+    ).padStart(2, "0")}/${now.getFullYear()}`;
     const updatedBlog = {
       ...blog,
       status: "Pending",
@@ -161,6 +160,7 @@ const EditBlog = () => {
     } catch (error) {
       console.log(error);
     }
+    navigate("/blog-table");
   };
 
   // Value from title input
@@ -194,18 +194,19 @@ const EditBlog = () => {
 
   return (
     <>
-      <div className="content-container">
-        <h1>Create blog</h1>
+      <div className="content-container create-blog-text-editor">
+        <h1>Chỉnh sửa bài blog:</h1>
+        <span>Tác giả: {userInfos.fullName}</span>
         <div className="text-editor-title">
-          <label htmlFor="title">Title</label>
-          <input type="text" value={blog.title} onChange={onChangeTitle} />
+          <label htmlFor="title">Tựa đề:</label>
+          <textarea value={blog.title} onChange={onChangeTitle} />
         </div>
         <div className="text-editor-intro">
-          <label htmlFor="intro">Intro</label>
-          <input type="text" value={blog.intro} onChange={onChangeIntro} />
+          <label htmlFor="intro">Đoạn mở đầu:</label>
+          <textarea value={blog.intro} onChange={onChangeIntro} />
         </div>
         <div className="text-editor-img">
-          <label htmlFor="image">Image</label>
+          <label htmlFor="image">Ảnh bài blog:</label>
           <input
             type="file"
             name="image"
@@ -227,8 +228,16 @@ const EditBlog = () => {
           <EditorContent editor={editor} />
         </div>
 
-        <div className="text-editor-submit-btn">
-          <button onClick={handleClick}>Submit</button>
+        <div className="text-editor-btn">
+          <Link
+            className="btn btn-outline-secondary me-5"
+            to={`/blog/${blogId}/view`}
+          >
+            Quay lại
+          </Link>
+          <button className="btn btn-primary" onClick={handleClick}>
+            Xác nhận chỉnh sửa
+          </button>
         </div>
       </div>
     </>

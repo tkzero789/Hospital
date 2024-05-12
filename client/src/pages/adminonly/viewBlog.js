@@ -3,26 +3,17 @@ import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function ViewBlog({ userRole }) {
-  const [blog, setBlog] = useState({
-    title: "",
-    intro: "",
-    content: "",
-    status: "",
-    image: "",
-    createAt: "",
-  });
+export default function ViewBlog({ userRole, userInfos }) {
+  const [blog, setBlog] = useState({});
   const { blogId } = useParams();
   const navigate = useNavigate();
 
   // Fetch blog content based on id
   useEffect(() => {
-    console.log(blogId);
     axios
       .get(`http://localhost:5000/blog/${blogId}`)
       .then((res) => {
         setBlog(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
@@ -32,7 +23,6 @@ export default function ViewBlog({ userRole }) {
 
   // Update blog status
   function updateStatus(newStatus) {
-    console.log(newStatus);
     axios
       .post(`http://localhost:5000/blog/update/${blogId}`, {
         status: newStatus,
@@ -44,6 +34,7 @@ export default function ViewBlog({ userRole }) {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
       });
+    navigate("/blog-table");
   }
 
   // Delete a blog from database
@@ -51,7 +42,6 @@ export default function ViewBlog({ userRole }) {
     axios
       .delete(`http://localhost:5000/blog/${blogId}`)
       .then((res) => {
-        console.log(res);
         navigate("/blog-table");
       })
       .catch((err) => {
@@ -65,17 +55,19 @@ export default function ViewBlog({ userRole }) {
     navigate(`/blog/${blogId}/edit`);
   }
 
+  console.log(userInfos.doctorID);
+  console.log(blog);
+
   return (
     <>
       <div className="content-container individual-blog">
         <div key={blog.id}>
           <h2>{blog.title}</h2>
+          <div className="blog-author-info">
+            <span>Tác giả: {blog.author} </span>
+            <span>{blog.createdAt}</span>
+          </div>
           <p>{blog.intro}</p>
-          {blog.image && (
-            <div className="blog-img">
-              <img src={blog.image} alt={blog.title} />
-            </div>
-          )}
           {blog.content?.content?.map((item, index) => {
             if (item.type === "paragraph") {
               if (item.content === undefined) {
@@ -139,63 +131,81 @@ export default function ViewBlog({ userRole }) {
                   ))}
                 </h1>
               );
+            } else if (item.type === "image") {
+              return (
+                <div className="blog-img">
+                  <img
+                    key={index}
+                    src={item.attrs.src}
+                    alt={item.attrs.alt || ""}
+                  />
+                </div>
+              );
             }
             return null;
           })}
         </div>
       </div>
-      <div className="row pt-3 pb-3 justify-content-end">
-        <div className="col-3 d-grid gap-2">
-          <NavLink className="btn btn-outline-primary" to={`/blog-table`}>
-            QUAY LẠI
+      <div className="content-container">
+        <div className="d-flex justify-content-end pt-3 pb-5">
+          <NavLink
+            className="btn btn-outline-secondary me-3"
+            to={`/blog-table`}
+          >
+            Quay lại
           </NavLink>
+          {userRole === "admin" && (
+            <div className="d-flex">
+              <div className="ms-auto me-3">
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  disabled={blog.status === "Accepted"}
+                  onClick={() => updateStatus("Accepted")}
+                >
+                  Chấp nhận
+                </button>
+              </div>
+              <div className="me-3">
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  disabled={blog.status === "Request-edit"}
+                  onClick={() => updateStatus("Request-edit")}
+                >
+                  Yêu cầu chỉnh sửa
+                </button>
+              </div>
+              <div className="">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  disabled={
+                    blog.status === "Pending" || blog.status === "Accepted"
+                  }
+                  onClick={() => deleteBlog()}
+                >
+                  Xoá
+                </button>
+              </div>
+            </div>
+          )}
+          {(userRole === "head-doctor" || userRole === "doctor") && (
+            <div className="col-3">
+              <button
+                type="button"
+                className="btn btn-success"
+                disabled={
+                  blog.status === "Accepted" ||
+                  userInfos.doctorID !== blog.doctorID
+                }
+                onClick={editBlog}
+              >
+                Chỉnh sửa
+              </button>
+            </div>
+          )}
         </div>
-        {userRole === "admin" && (
-          <div>
-            <div className="col-3 d-grid gap-2">
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                disabled={blog.status === "Accepted"}
-                onClick={() => updateStatus("Accepted")}
-              >
-                CHẤP NHẬN
-              </button>
-            </div>
-            <div className="col-3 d-grid gap-2">
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                disabled={blog.status === "Declined"}
-                onClick={() => updateStatus("Declined")}
-              >
-                TỪ CHỐI
-              </button>
-            </div>
-            <div className="col-3 d-grid gap-2">
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                disabled={blog.status === "Pending"}
-                onClick={() => deleteBlog()}
-              >
-                Xoá
-              </button>
-            </div>
-          </div>
-        )}
-        {(userRole === "head-doctor" || userRole === "doctor") && (
-          <div className="col-3 d-grid gap-2">
-            <button
-              type="button"
-              className="btn btn-outline-primary"
-              disabled={blog.status === "Accepted"}
-              onClick={editBlog}
-            >
-              Edit
-            </button>
-          </div>
-        )}
       </div>
     </>
   );

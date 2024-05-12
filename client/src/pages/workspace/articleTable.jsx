@@ -82,7 +82,7 @@ export default function ArticleTable({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/disease/${article.diseaseId}/article/${article.id}/edit`}
                 >
-                  <div className="viewButton">Sửa</div>
+                  <div className="editButton">Sửa</div>
                 </NavLink>
               )}
             {article.status !== "Approved" &&
@@ -99,7 +99,7 @@ export default function ArticleTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/article-temp/${article.idTemp}/approve`}
               >
-                <div className="viewButton">Xét duyệt</div>
+                <div className="checkButton">Xét duyệt</div>
               </NavLink>
             )}
           </div>
@@ -124,13 +124,13 @@ export default function ArticleTable({ userRole, userInfos }) {
       <div className="datatableTitle">
         Danh sách bài viết
         {userRole !== "admin" && part === 1 && (
-          <button type="button" className="add-link" onClick={() => setPart(2)}>
-            Của tôi
+          <button type="button" onClick={() => setPart(2)}>
+            Bài viết của tôi
           </button>
         )}
         {userRole !== "admin" && part === 2 && (
-          <button type="button" className="add-link" onClick={() => setPart(1)}>
-            Quay lại
+          <button type="button" onClick={() => setPart(1)}>
+            Xem tất cả các bài viết
           </button>
         )}
       </div>

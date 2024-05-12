@@ -48,8 +48,10 @@ blogRoutes.route("/blog/add").post(async function (req, res) {
       intro: req.body.intro,
       image: req.body.image,
       content: req.body.content,
-      status: req.body.status,
+      author: req.body.author,
+      doctorID: req.body.doctorID,
       createdAt: req.body.createdAt,
+      status: req.body.status,
     };
     const result = await db_connect.collection("blogs").insertOne(myobj);
     res.json(result);
@@ -119,6 +121,7 @@ blogRoutes.route("/blog/edit/:id").post(async function (req, res) {
         intro: req.body.intro,
         image: req.body.image,
         content: req.body.content,
+        createdAt: req.body.createdAt,
         status: req.body.status,
       },
     };

@@ -32,6 +32,7 @@ import ViewAppt from "./pages/adminonly/viewAppt";
 import CreateBlog from "./pages/blogs/createBlog";
 import BlogTable from "./pages/workspace/blogTable";
 import ViewBlog from "./pages/adminonly/viewBlog";
+import EditBlog from "./pages/blogs/editBlog";
 // user pages
 import UserTable from "./pages/workspace/userTable";
 import ViewUser from "./pages/adminonly/viewUser";
@@ -45,7 +46,8 @@ import ArticlePatientView from "./pages/guest/articlePatientView";
 import Work from "./pages/guest/workSchedule";
 import SpecialtyPage from "./pages/guest/specialtyPage";
 import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
-import EditBlog from "./pages/blogs/editBlog";
+import ViewBlogList from "./pages/blogs/viewBlogList";
+import ViewSpecificBlog from "./pages/blogs/viewSpecificBlog";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -285,7 +287,10 @@ export default function Layouts({ userRole, userInfos }) {
               }
             />
             {/* blog pages */}
-            <Route path="/create-blog" element={<CreateBlog />} />
+            <Route
+              path="/create-blog"
+              element={<CreateBlog userInfos={userInfos} />}
+            />
             <Route
               path="/blog-table"
               element={
@@ -369,6 +374,8 @@ export default function Layouts({ userRole, userInfos }) {
               element={<SpecialtyDetail />}
             />
             <Route path="/work-schedule" element={<Work />} />
+            <Route path="/view-blog-list" element={<ViewBlogList />} />
+            <Route path="/view-blog-list/:id" element={<ViewSpecificBlog />} />
           </Routes>
         </GuestLayout>
       )}

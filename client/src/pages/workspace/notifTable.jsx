@@ -69,10 +69,10 @@ export default function NotifTable({ userRole, userInfos }) {
           <div className="cellAction">
             <button
               type="button"
-              className="viewLink"
+              className="viewButton"
               onClick={() => viewLink(notif)}
             >
-              <div className="viewButton">Xem</div>
+              <div>Xem</div>
             </button>
           </div>
         );

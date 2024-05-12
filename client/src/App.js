@@ -18,8 +18,6 @@ import TestSignin from "./pages/auth/testSignin";
 // routes
 import Layouts from "./Layouts";
 import StaffHome from "./pages/guest/staffHome";
-import ViewBlogList from "./pages/blogs/viewBlogList";
-import ViewSpecificBlog from "./pages/blogs/viewSpecificBlog";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();
@@ -62,8 +60,6 @@ const App = () => {
             </RequireAuth>
           }
         />
-        <Route path="/view-blog-list" element={<ViewBlogList />} />
-        <Route path="/view-blog-list/:id" element={<ViewSpecificBlog />} />
       </Routes>
     </div>
   );

@@ -6,6 +6,7 @@ import Image from "@tiptap/extension-image";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import "../../pages/blogs/texteditor.scss";
+import { useNavigate } from "react-router-dom";
 
 const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -30,36 +31,6 @@ const MenuBar = ({ editor }) => {
           <i className="bi bi-type-italic"></i>
         </button>
         <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 1 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 1 }) ? "is-active" : ""
-          }
-        >
-          <i className="bi bi-type-h1"></i>
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 2 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
-          }
-        >
-          <i className="bi bi-type-h2"></i>
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 3 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
-          }
-        >
-          <i className="bi bi-type-h3"></i>
-        </button>
-        <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "is-active" : ""}
         >
@@ -70,12 +41,6 @@ const MenuBar = ({ editor }) => {
           className={editor.isActive("orderedList") ? "is-active" : ""}
         >
           <i className="bi bi-list-ol"></i>
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "is-active" : ""}
-        >
-          <i className="bi bi-quote"></i>
         </button>
         <button
           onClick={() => editor.chain().focus().undo().run()}
@@ -94,13 +59,23 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const CreateBlog = () => {
+const CreateBlog = ({ userInfos }) => {
+  const navigate = useNavigate();
+  const now = new Date();
+  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
+    now.getMinutes()
+  ).padStart(2, "0")} ${String(now.getDate()).padStart(2, "0")}/${String(
+    now.getMonth() + 1
+  ).padStart(2, "0")}/${now.getFullYear()}`;
+
   const [blog, setBlog] = useState({
     id: null,
     title: "",
     intro: "",
     image: null,
     content: "",
+    author: userInfos.fullName,
+    doctorID: userInfos.doctorID,
     createAt: null,
     status: "Pending",
   });
@@ -123,11 +98,7 @@ const CreateBlog = () => {
     const updatedBlog = {
       ...blog,
       id: uuidv4(),
-      createdAt: new Date().toLocaleDateString("vi-VN", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }),
+      createdAt: formattedTime,
     };
 
     try {
@@ -136,6 +107,7 @@ const CreateBlog = () => {
     } catch (error) {
       console.log(error);
     }
+    navigate("/blog-table");
   };
 
   // Value from title input
@@ -169,18 +141,19 @@ const CreateBlog = () => {
 
   return (
     <>
-      <div className="content-container">
-        <h1>Create blog</h1>
+      <div className="content-container create-blog-text-editor">
+        <h1>Tạo bài blog/ tin tức mới</h1>
+        <span>Tác giả: {userInfos.fullName}</span>
         <div className="text-editor-title">
-          <label htmlFor="title">Title</label>
-          <input type="text" value={blog.title} onChange={onChangeTitle} />
+          <label htmlFor="title">Tựa đề:</label>
+          <textarea value={blog.title} onChange={onChangeTitle} />
         </div>
         <div className="text-editor-intro">
-          <label htmlFor="intro">Intro</label>
-          <input type="text" value={blog.intro} onChange={onChangeIntro} />
+          <label htmlFor="intro">Đoạn mở đầu:</label>
+          <textarea value={blog.intro} onChange={onChangeIntro} />
         </div>
         <div className="text-editor-img">
-          <label htmlFor="image">Image</label>
+          <label htmlFor="image">Ảnh bài blog:</label>
           <input
             type="file"
             name="image"
@@ -194,16 +167,18 @@ const CreateBlog = () => {
             <img src={blog.image} alt="Blog img" />
           </div>
         ) : (
-          "Chưa có ảnh nào được upload"
+          <div className="pt-2">Chưa có ảnh nào được upload</div>
         )}
-        <label htmlFor="info">Info</label>
+        <label htmlFor="info">Nội dung bài blog:</label>
         <div className="text-editor">
           <MenuBar editor={editor} />
           <EditorContent editor={editor} />
         </div>
 
-        <div className="text-editor-submit-btn">
-          <button onClick={handleClick}>Submit</button>
+        <div className="text-editor-btn">
+          <button className="btn btn-primary" onClick={handleClick}>
+            Xác nhận tạo
+          </button>
         </div>
       </div>
     </>

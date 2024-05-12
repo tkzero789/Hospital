@@ -79,7 +79,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/disease/${disease.id}/edit`}
                 >
-                  <div className="viewButton">Sửa</div>
+                  <div className="editButton">Sửa</div>
                 </NavLink>
               )}
             {disease.status !== "Approved" &&
@@ -112,7 +112,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
     { field: "medSpecialty", headerName: "Chuyên khoa", width: 160 },
     { field: "doctorCreated", headerName: "Người tạo", width: 180 },
     { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "timeCreated", headerName: "Ngày viết", width: 120 },
+    { field: "timeCreated", headerName: "Ngày viết", width: 160 },
     { field: "status", headerName: "Tình trạng", width: 120 },
   ].concat(actionColumn);
 
@@ -121,13 +121,13 @@ export default function DiseaseTable({ userRole, userInfos }) {
       <div className="datatableTitle">
         Danh sách các căn bệnh
         {userRole === "head-doctor" && part === 1 && (
-          <button type="button" className="add-link" onClick={() => setPart(2)}>
-            Của tôi
+          <button type="button" onClick={() => setPart(2)}>
+            Căn bệnh được tạo bởi tôi
           </button>
         )}
         {userRole === "head-doctor" && part === 2 && (
-          <button type="button" className="add-link" onClick={() => setPart(1)}>
-            Quay lại
+          <button type="button" onClick={() => setPart(1)}>
+            Xem tất cả căn bệnh
           </button>
         )}
         {userRole === "head-doctor" && (
