@@ -33,8 +33,7 @@ const ViewBlogList = () => {
         }, 600);
       })
       .catch((err) => {
-        const message = err;
-        console.log(message);
+        console.log(err);
         setIsLoading(false);
       });
   }, []);
@@ -73,7 +72,7 @@ const ViewBlogList = () => {
           </div>
           <div className="blog-list w-100">
             <div className="content-container">
-              <h1>Blogs list</h1>
+              <h1>Tin tức - Y học thường thức</h1>
               <div className="blog-list-items">
                 {currentBlogs.map((blog) => {
                   if (blog.status === "Pending") {
@@ -84,7 +83,39 @@ const ViewBlogList = () => {
                     );
                     return (
                       <div className="blog-list-item" key={blog.id}>
-                        <div className="c-3">
+                        {/* Mobile blog link title */}
+                        <div className="mobile-blog-link d-none">
+                          <Link to={`/view-blog-list/${blog.id}`}>
+                            {blog.title ? blog.title : "Does not have a title"}
+                          </Link>
+                        </div>
+                        {/* Mobile blog image and intro */}
+                        <div className="mobile-blog-img-and-intro d-none">
+                          <div className="d-flex">
+                            <Link
+                              className="mobile-blog-thumbnail-img"
+                              to={`/view-blog-list/${blog.id}`}
+                            >
+                              {thumbnailImage && (
+                                <img
+                                  src={thumbnailImage.attrs.src}
+                                  alt={
+                                    thumbnailImage.attrs.alt ||
+                                    "Thumbnail image"
+                                  }
+                                />
+                              )}
+                            </Link>
+                            <div className="mobile-blog-intro">
+                              <span>
+                                {blog.intro
+                                  ? blog.intro
+                                  : "Does not have an intro"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="c-3 md-4">
                           <Link
                             className="blog-thumbnail-img"
                             to={`/view-blog-list/${blog.id}`}
@@ -99,7 +130,7 @@ const ViewBlogList = () => {
                             )}
                           </Link>
                         </div>
-                        <div className="c-9">
+                        <div className="c-9 md-8">
                           <div className="blog-link-and-intro">
                             <Link to={`/view-blog-list/${blog.id}`}>
                               {blog.title
@@ -116,6 +147,7 @@ const ViewBlogList = () => {
                       </div>
                     );
                   }
+                  return null;
                 })}
               </div>
               <div className="blog-pagination">

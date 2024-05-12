@@ -101,6 +101,7 @@ const EditBlog = ({ userInfos }) => {
   const { blogId } = useParams();
 
   const [blog, setBlog] = useState(null);
+  const [userUploadedImage, setUserUploadedImage] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit, Italic, Image],
@@ -190,6 +191,7 @@ const EditBlog = ({ userInfos }) => {
       ...prevBlog,
       image: response.data.link,
     }));
+    setUserUploadedImage(true);
   };
 
   return (
@@ -215,12 +217,12 @@ const EditBlog = ({ userInfos }) => {
             onChange={(e) => updateInfoImage(e)}
           />
         </div>
-        {blog.image ? (
+        {userUploadedImage ? (
           <div className="text-editor-img">
             <img src={blog.image} alt="Blog img" />
           </div>
         ) : (
-          "Chưa có ảnh nào được upload"
+          <div className="pt-2">Chưa có ảnh nào được upload</div>
         )}
         <label htmlFor="info">Info</label>
         <div className="text-editor">

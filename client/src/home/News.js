@@ -46,45 +46,55 @@ export default function News() {
         <section className="news w-100">
           <div className="content-container">
             <div className="news-wrapper">
-              <div className="news-header">Newest blogs</div>
+              <div className="news-header">Tin tức - Y học thường thức</div>
               <div className="news-section">
-                <div className="c-7 m-12">
+                <div className="c-7 md-12">
                   <div className="news-section-left">
                     <div className="news-left-wrapper">
                       <NavLink
                         className="news-link-left"
-                        to={`/blog/${mostRecentBlog.id}/view`}
+                        to={
+                          mostRecentBlog
+                            ? `/view-blog-list/${mostRecentBlog.id}`
+                            : "#"
+                        }
                       >
                         <div className="img-container-left">
                           <img
                             className="news-img-left"
-                            src={mostRecentBlog.image}
-                            alt={mostRecentBlog.title}
+                            src={mostRecentBlog ? mostRecentBlog.image : ""}
+                            alt={mostRecentBlog ? mostRecentBlog.title : ""}
                           ></img>
                         </div>
                         <div className="news-title-left">
-                          {mostRecentBlog.title}
+                          {mostRecentBlog ? mostRecentBlog.title : ""}
                         </div>
                       </NavLink>
                     </div>
                   </div>
                 </div>
-                <div className="c-5 m-12">
+                <div className="c-5 md-12">
                   <div className="news-section-right">
                     {nextBlogs?.map((blog) => (
                       <div className="news-link-wrapper" key={blog.id}>
                         <NavLink
                           className="news-link-right"
-                          to={`/blog/${blog.id}/view`}
+                          to={
+                            mostRecentBlog
+                              ? `/view-blog-list/${mostRecentBlog.id}`
+                              : "#"
+                          }
                         >
                           <div className="img-container-right">
                             <img
                               className="news-img-right"
-                              src={blog.image}
-                              alt={blog.title}
+                              src={blog ? blog.image : ""}
+                              alt={blog ? blog.title : ""}
                             ></img>
                           </div>
-                          <div className="news-title-right">{blog.title}</div>
+                          <div className="news-title-right">
+                            {blog ? blog.title : ""}
+                          </div>
                         </NavLink>
                       </div>
                     ))}

@@ -203,7 +203,7 @@ export default function ApptForm({
               <div className="appt-title-text">Đăng ký khám bệnh</div>
             </div>
             <form className="appt-form">
-              <div className="c-4 m-12">
+              <div className="c-4 md-12">
                 {/* Name */}
                 <div className="name-form">
                   <label htmlFor="name">
@@ -254,7 +254,7 @@ export default function ApptForm({
                   />
                 </div>
               </div>
-              <div className="c-4 m-12">
+              <div className="c-4 md-12">
                 {/* DOB */}
                 <div className="dob-form">
                   <label htmlFor="dob">
@@ -369,7 +369,7 @@ export default function ApptForm({
                   </select>
                 </div>
               </div>
-              <div className="c-4 m-12">
+              <div className="c-4 md-12">
                 {/* Appt Date */}
                 <div className="appt-date">
                   <label htmlFor="appt-date">Đặt lịch khám</label>

@@ -45,7 +45,6 @@ export default function ApptTable() {
       renderCell: (params) => {
         const appt = params.row;
         return (
-          // need to edit here
           <div className="cellAction">
             <NavLink className="viewLink" to={`/appointment/${appt.id}/view`}>
               <div className="viewButton">Xem</div>

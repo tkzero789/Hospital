@@ -70,8 +70,15 @@
       color: goldenrod;
     }
     &.Request-edit {
-      background-color: rgba(228, 228, 228, 0.5);
-      color: rgb(119, 119, 119);
+      background-color: rgba(209, 84, 170, 0.5);
+      color: rgb(207, 58, 160);
+    }
+  }
+
+  .rowWithStatus {
+    &.Request-edit {
+      background-color: rgba(197, 197, 197, 0.3);
+      font-weight: var(--roboto-medium-weight);
     }
   }
 
@@ -89,10 +96,14 @@
       padding: 4px 10px;
       border-radius: 5px;
       color: #ffffff;
-      background-color: #006faa;
-      border: 1px solid #006faa;
+      background-color: #008dda;
+      border: 1px solid #008dda;
       font-weight: var(--roboto-medium-weight);
       cursor: pointer;
+
+      &:hover {
+        background-color: darken(#008dda, 10%);
+      }
     }
 
     .deleteButton {
@@ -103,6 +114,10 @@
       border: 1px solid #ff0000;
       font-weight: var(--roboto-medium-weight);
       cursor: pointer;
+
+      &:hover {
+        background-color: darken(#ff0000, 10%);
+      }
     }
 
     .checkButton {
@@ -113,22 +128,26 @@
       border: 1px solid #008b46;
       font-weight: var(--roboto-medium-weight);
       cursor: pointer;
+
+      &:hover {
+        background-color: darken(#008b46, 10%);
+      }
     }
 
     .editButton {
       padding: 4px 10px;
       border-radius: 5px;
       color: #ffffff;
-      background-color: #ff9b04;
-      border: 1px solid #ff9b04;
+      background-color: #e459b8;
+      border: 1px solid #e459b8;
       font-weight: var(--roboto-medium-weight);
       cursor: pointer;
+
+      &:hover {
+        background-color: darken(#e459b8, 10%);
+      }
     }
   }
-}
-
-.cell-blog-title {
-  font-weight: var(--roboto-medium-weight);
 }
 
 // .cell-blog-status-request-edit {

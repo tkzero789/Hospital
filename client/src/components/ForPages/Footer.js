@@ -26,7 +26,7 @@ export default function Footer() {
     <footer className="footer w-100 footer-bg">
       <div className="content-container">
         <div className="footer-wrapper">
-          <div className="c-3 m-12">
+          <div className="c-3 md-12">
             <div className="footer-logo-wrapper">
               <img className="footer-logo" src={BKCsvg} alt="Footer logo"></img>
             </div>
@@ -62,7 +62,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="c-3 m-12">
+          <div className="c-3 md-12">
             <div className="footer-header">Mạng xã hội</div>
             <div className="footer-socials">
               <NavLink className="footer-socials__link">
