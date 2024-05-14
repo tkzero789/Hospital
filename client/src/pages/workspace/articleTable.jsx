@@ -116,7 +116,18 @@ export default function ArticleTable({ userRole, userInfos }) {
     { field: "doctorCreated", headerName: "Tác giả", width: 180 },
     { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
     { field: "timeCreated", headerName: "Ngày viết", width: 160 },
-    { field: "status", headerName: "Trạng thái", width: 120 },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <div className={`cellWithStatus ${params.row.status}`}>
+            {params.row.status}
+          </div>
+        );
+      },
+    },
   ].concat(actionColumn);
 
   return (
@@ -143,6 +154,13 @@ export default function ArticleTable({ userRole, userInfos }) {
           pageSize={10}
           rowsPerPageOptions={[10]}
           checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              color: "primary.main",
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
         />
       )}
       {userRole !== "admin" && part === 1 && (
@@ -154,6 +172,13 @@ export default function ArticleTable({ userRole, userInfos }) {
           pageSize={10}
           rowsPerPageOptions={[10]}
           checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              color: "primary.main",
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
         />
       )}
       {userRole !== "admin" && part === 2 && (
@@ -165,6 +190,13 @@ export default function ArticleTable({ userRole, userInfos }) {
           pageSize={10}
           rowsPerPageOptions={[10]}
           checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              color: "primary.main",
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
         />
       )}
     </div>

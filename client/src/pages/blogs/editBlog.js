@@ -31,36 +31,6 @@ const MenuBar = ({ editor }) => {
           <i className="bi bi-type-italic"></i>
         </button>
         <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 1 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 1 }) ? "is-active" : ""
-          }
-        >
-          <i className="bi bi-type-h1"></i>
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 2 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
-          }
-        >
-          <i className="bi bi-type-h2"></i>
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 3 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
-          }
-        >
-          <i className="bi bi-type-h3"></i>
-        </button>
-        <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "is-active" : ""}
         >
@@ -71,12 +41,6 @@ const MenuBar = ({ editor }) => {
           className={editor.isActive("orderedList") ? "is-active" : ""}
         >
           <i className="bi bi-list-ol"></i>
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "is-active" : ""}
-        >
-          <i className="bi bi-quote"></i>
         </button>
         <button
           onClick={() => editor.chain().focus().undo().run()}
@@ -198,7 +162,9 @@ const EditBlog = ({ userInfos }) => {
     <>
       <div className="content-container create-blog-text-editor">
         <h1>Chỉnh sửa bài blog:</h1>
-        <span>Tác giả: {userInfos.fullName}</span>
+        <span>
+          Tác giả: <span className="text-blue-1">{userInfos.fullName}</span>
+        </span>
         <div className="text-editor-title">
           <label htmlFor="title">Tựa đề:</label>
           <textarea value={blog.title} onChange={onChangeTitle} />
@@ -232,12 +198,12 @@ const EditBlog = ({ userInfos }) => {
 
         <div className="text-editor-btn">
           <Link
-            className="btn btn-outline-secondary me-5"
+            className="btn btn-outline-secondary"
             to={`/blog/${blogId}/view`}
           >
             Quay lại
           </Link>
-          <button className="btn btn-primary" onClick={handleClick}>
+          <button className="btn btn-primary ms-auto" onClick={handleClick}>
             Xác nhận chỉnh sửa
           </button>
         </div>

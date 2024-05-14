@@ -25,6 +25,7 @@ export default function ApptTable() {
       });
   }, []);
 
+  // Delete Appointment
   const deleteAppt = (id) => {
     axios
       .delete(`http://localhost:5000/appointment/${id}`)
@@ -36,6 +37,23 @@ export default function ApptTable() {
         window.alert(message);
       });
   };
+
+  // Assign appointment priority
+  const getPriority = (status) => {
+    switch (status) {
+      case "Pending":
+        return 1;
+      case "Accepted":
+        return 2;
+      default:
+        return 3;
+    }
+  };
+
+  // Sort appointments based on status priority
+  const sortedAppts = [...appts].sort(
+    (a, b) => getPriority(a.status) - getPriority(b.status)
+  );
 
   const actionColumn = [
     {
@@ -72,7 +90,18 @@ export default function ApptTable() {
     { field: "need", headerName: "Nhu cầu", width: 240 },
     { field: "email", headerName: "Email", width: 240 },
     { field: "createdAt", headerName: "Ngày khởi tạo", width: 160 },
-    { field: "status", headerName: "Trạng thái", width: 160 },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 160,
+      renderCell: (params) => {
+        return (
+          <div className={`cellWithStatus ${params.row.status}`}>
+            {params.row.status}
+          </div>
+        );
+      },
+    },
   ].concat(actionColumn);
 
   return (
@@ -80,12 +109,19 @@ export default function ApptTable() {
       <div className="datatableTitle">Danh sách đặt hẹn</div>
       <DataGrid
         className="datagrid"
-        rows={appts}
+        rows={sortedAppts}
         getRowId={(row) => row._id}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
+        sx={{
+          "& .MuiDataGrid-row:hover": {
+            color: "primary.main",
+            backgroundColor: "transparent",
+            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          },
+        }}
       />
     </div>
   );

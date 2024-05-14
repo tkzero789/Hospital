@@ -467,7 +467,7 @@
   display: block;
   text-decoration: none;
   color: var(--text-blue);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -747,6 +747,7 @@
 
 /* APPOINTMENT SUCCESS MESSAGE */
 .appt-success {
+  border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -792,6 +793,7 @@
 
 .appt-success-info a {
   font-size: 18px;
+  text-align: center;
   text-underline-offset: 6px;
 }
 
@@ -1751,7 +1753,7 @@
 
 /* Work schedule Page */
 .work {
-  padding-top: 60px;
+  padding-top: 28px;
 }
 
 .work-wrapper h1 {
@@ -2009,29 +2011,29 @@
 }
 
 .individual-blog .blog-author-info {
-  background-color: #ebebeb;
+  display: flex;
   border-radius: 6px;
   padding: 10px 0;
-  margin: 12px 0 24px 0;
+  margin: 0 0 8px 0;
+  border-bottom: 1px solid #d9d9d6;
 }
 
-.individual-blog .blog-author-info span {
-  padding-left: 8px;
+.individual-blog .blog-author-info div {
   display: block;
-  font-weight: var(--roboto-medium-weight);
+  font-weight: var(--roboto-regular-weight);
 }
 
 .individual-blog p {
-  color: var(--text-dark-sub);
+  color: var(--text-dark-body);
   padding: 8px 0;
 }
 
 .individual-blog ul {
-  color: var(--text-dark-sub);
+  color: var(--text-dark-body);
   padding-left: 40px;
 }
 
 .individual-blog ol {
-  color: var(--text-dark-sub);
+  color: var(--text-dark-body);
   padding-left: 40px;
 }

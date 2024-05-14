@@ -64,8 +64,15 @@ export default function ViewBlog({ userRole, userInfos }) {
         <div key={blog.id}>
           <h2>{blog.title}</h2>
           <div className="blog-author-info">
-            <span>Tác giả: {blog.author} </span>
-            <span>Cập nhật lần cuối: {blog.createdAt}</span>
+            <div className="d-flex flex-column">
+              <div className="text-secondary-1">
+                Tác giả:{" "}
+                <span className="text-blue-1 fw-bold">{blog.author}</span>
+              </div>
+              <span className="text-secondary-1">
+                Cập nhật lần cuối: {blog.createdAt}
+              </span>
+            </div>
           </div>
           <p>{blog.intro}</p>
           {blog.content?.content?.map((item, index) => {
@@ -160,9 +167,13 @@ export default function ViewBlog({ userRole, userInfos }) {
             <div className="col-2 d-grid">
               <button
                 type="button"
-                className="btn btn-success"
+                className={`btn ${
+                  blog.status === "Accepted" || blog.status === "Request edit"
+                    ? "btn-outline-success"
+                    : "btn-success"
+                }`}
                 disabled={
-                  blog.status === "Accepted" || blog.status === "Request-edit"
+                  blog.status === "Accepted" || blog.status === "Request edit"
                 }
                 onClick={() => updateStatus("Accepted")}
               >
@@ -172,9 +183,13 @@ export default function ViewBlog({ userRole, userInfos }) {
             <div className="col-2 d-grid">
               <button
                 type="button"
-                className="btn btn-warning"
-                disabled={blog.status === "Request-edit"}
-                onClick={() => updateStatus("Request-edit")}
+                className={`btn ${
+                  blog.status === "Request edit"
+                    ? "btn-outline-warning"
+                    : "btn-warning"
+                }`}
+                disabled={blog.status === "Request edit"}
+                onClick={() => updateStatus("Request edit")}
               >
                 Yêu cầu chỉnh sửa
               </button>
@@ -183,7 +198,11 @@ export default function ViewBlog({ userRole, userInfos }) {
             <div className="col-2 d-grid">
               <button
                 type="button"
-                className="btn btn-outline-danger"
+                className={`btn ${
+                  blog.status === "Pending" || blog.status === "Accepted"
+                    ? "btn-outline-danger"
+                    : "btn-danger"
+                }`}
                 disabled={
                   blog.status === "Pending" || blog.status === "Accepted"
                 }

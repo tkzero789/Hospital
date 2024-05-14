@@ -55,8 +55,33 @@ const ViewSpecificBlog = () => {
             <div key={blog.id}>
               <h2>{blog.title}</h2>
               <div className="blog-author-info">
-                <span>Tác giả: {blog.author} </span>
-                <span>Cập nhật lần cuối: {blog.createdAt}</span>
+                <div className="d-flex flex-column">
+                  <div className="text-secondary-1">
+                    Tác giả:{" "}
+                    <span className="text-blue-1 fw-bold">{blog.author}</span>
+                  </div>
+                  <span className="text-secondary-1">
+                    Cập nhật lần cuối: {blog.createdAt}
+                  </span>
+                </div>
+                <div className="ms-auto">
+                  <Link
+                    className="text-decoration-none text-blue fs-3 me-3"
+                    to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                      window.location.href
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="bi bi-facebook"></i>
+                  </Link>
+                  <Link
+                    className="text-decoration-none text-danger fs-3 me-2"
+                    to="#"
+                  >
+                    <i className="bi bi-envelope-fill"></i>
+                  </Link>
+                </div>
               </div>
               <p>{blog.intro}</p>
               {blog.content?.content.map((item, itemIndex) => {
@@ -75,8 +100,8 @@ const ViewSpecificBlog = () => {
                           textObj.marks.some((mark) => mark.type === "bold")
                         ) {
                           return (
-                            <strong>
-                              <span key={key}>{textObj.text}</span>
+                            <strong key={key}>
+                              <span>{textObj.text}</span>
                             </strong>
                           );
                         } else {

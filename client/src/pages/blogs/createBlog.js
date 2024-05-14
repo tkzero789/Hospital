@@ -143,7 +143,9 @@ const CreateBlog = ({ userInfos }) => {
     <>
       <div className="content-container create-blog-text-editor">
         <h1>Tạo bài blog/ tin tức mới</h1>
-        <span>Tác giả: {userInfos.fullName}</span>
+        <span>
+          Tác giả: <span className="text-blue-1">{userInfos.fullName}</span>
+        </span>
         <div className="text-editor-title">
           <label htmlFor="title">Tựa đề:</label>
           <textarea value={blog.title} onChange={onChangeTitle} />
@@ -176,7 +178,7 @@ const CreateBlog = ({ userInfos }) => {
         </div>
 
         <div className="text-editor-btn">
-          <button className="btn btn-primary" onClick={handleClick}>
+          <button className="btn btn-primary ms-auto" onClick={handleClick}>
             Xác nhận tạo
           </button>
         </div>

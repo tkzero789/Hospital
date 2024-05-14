@@ -29,7 +29,7 @@ export default function BlogTable({ userRole, userInfos }) {
   // Assign blog priority
   const getPriority = (status) => {
     switch (status) {
-      case "Request-edit":
+      case "Request edit":
         return 1;
       case "Pending":
         return 2;
@@ -88,10 +88,9 @@ export default function BlogTable({ userRole, userInfos }) {
       headerName: "Trạng thái",
       width: 140,
       renderCell: (params) => {
+        const status = params.row.status.replace(" ", "-");
         return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
+          <div className={`cellWithStatus ${status}`}>{params.row.status}</div>
         );
       },
     },
@@ -121,6 +120,13 @@ export default function BlogTable({ userRole, userInfos }) {
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
+        sx={{
+          "& .MuiDataGrid-row:hover": {
+            color: "primary.main",
+            backgroundColor: "transparent",
+            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          },
+        }}
       />
     </div>
   );

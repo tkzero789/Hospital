@@ -37,7 +37,7 @@ export default function Footer() {
               <span>Khu túc xá Đại Học Quốc Gia thành phố Hồ Chí Minh</span>
             </div>
           </div>
-          <div className="c-3 m-6">
+          <div className="c-3 md-6">
             <div className="footer-header">Liên kết nhanh</div>
             <ul className="footer-list">
               {footerLinks1.map((e) => (
@@ -49,7 +49,7 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div className="c-3 m-6">
+          <div className="c-3 md-6">
             <div className="footer-header">Hỗ trợ khách hàng</div>
             <ul className="footer-list">
               {footerLinks2.map((link) => (

@@ -87,7 +87,17 @@ export default function NotifTable({ userRole, userInfos }) {
     { field: "contentType", headerName: "Loại", width: 200 },
     { field: "detail", headerName: "Nội dung", width: 500 },
     { field: "timeSent", headerName: "Thời gian gửi", width: 160 },
-    { field: "status", headerName: "Trạng thái", width: 100 },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 100,
+      renderCell: (params) => {
+        const status = params.row.status.replace(" ", "-");
+        return (
+          <div className={`cellWithStatus ${status}`}>{params.row.status}</div>
+        );
+      },
+    },
   ].concat(actionColumn);
 
   return (
@@ -108,6 +118,13 @@ export default function NotifTable({ userRole, userInfos }) {
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
+        sx={{
+          "& .MuiDataGrid-row:hover": {
+            color: "primary.main",
+            backgroundColor: "transparent",
+            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          },
+        }}
       />
     </div>
   );

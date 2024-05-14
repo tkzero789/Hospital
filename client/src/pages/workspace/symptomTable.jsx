@@ -82,7 +82,18 @@ export default function SymptomTable({ userRole, userInfos }) {
     { field: "number", headerName: "Stt", width: 100 },
     { field: "id", headerName: "ID", width: 80 },
     { field: "name", headerName: "Triệu chứng", width: 500 },
-    { field: "status", headerName: "Trạng thái", width: 160 },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 160,
+      renderCell: (params) => {
+        return (
+          <div className={`cellWithStatus ${params.row.status}`}>
+            {params.row.status}
+          </div>
+        );
+      },
+    },
   ].concat(actionColumn);
 
   return (
@@ -103,6 +114,13 @@ export default function SymptomTable({ userRole, userInfos }) {
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
+        sx={{
+          "& .MuiDataGrid-row:hover": {
+            color: "primary.main",
+            backgroundColor: "transparent",
+            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          },
+        }}
       />
     </div>
   );

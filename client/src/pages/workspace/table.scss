@@ -65,19 +65,26 @@
       background-color: rgba(148, 230, 148, 0.5);
       color: green;
     }
+    &.Approved {
+      background-color: rgba(148, 230, 148, 0.5);
+      color: green;
+    }
     &.Pending {
       background-color: rgba(219, 211, 154, 0.5);
       color: goldenrod;
     }
+    &.Đã-xem {
+      background-color: rgba(61, 146, 226, 0.5);
+      color: rgb(46, 117, 184);
+    }
     &.Request-edit {
-      background-color: rgba(209, 84, 170, 0.5);
-      color: rgb(207, 58, 160);
+      background-color: rgba(231, 110, 193, 0.5);
+      color: rgb(223, 71, 174);
     }
   }
 
   .rowWithStatus {
     &.Request-edit {
-      background-color: rgba(197, 197, 197, 0.3);
       font-weight: var(--roboto-medium-weight);
     }
   }
