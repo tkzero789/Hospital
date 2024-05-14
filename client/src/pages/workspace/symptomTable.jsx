@@ -101,7 +101,7 @@ export default function SymptomTable({ userRole, userInfos }) {
       <div className="datatableTitle">
         Danh sách các triệu chứng
         {userRole === "head-doctor" && (
-          <NavLink to="/symptom/create" className="add-link">
+          <NavLink to="/symptom/create" className="add-link ms-auto">
             Thêm triệu chứng
           </NavLink>
         )}
@@ -110,13 +110,15 @@ export default function SymptomTable({ userRole, userInfos }) {
         className="datagrid"
         rows={flatData}
         getRowId={(row) => row._id}
+        getRowClassName={(params) =>
+          `rowWithStatus ${params.row.status.replace(" ", "-")}`
+        }
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
         sx={{
           "& .MuiDataGrid-row:hover": {
-            color: "primary.main",
             backgroundColor: "transparent",
             boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
           },
