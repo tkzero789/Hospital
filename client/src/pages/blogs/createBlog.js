@@ -124,19 +124,24 @@ const CreateBlog = ({ userInfos }) => {
   const updateInfoImage = async (event) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
-    const response = await axios.post(
-      `http://localhost:5000/blog/upload`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    setBlog((prevBlog) => ({
-      ...prevBlog,
-      image: response.data.link,
-    }));
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/blog/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data); // Log the response data to check if the image is uploaded correctly
+      setBlog((prevBlog) => ({
+        ...prevBlog,
+        image: response.data.link, // Ensure that the server is returning the correct URL for the image
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

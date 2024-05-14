@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export default function News() {
   const [blogs, setBlogs] = useState([]);
@@ -38,6 +38,11 @@ export default function News() {
   const mostRecentBlog = blogs[0]; // the most recent blog is the first one
   const nextBlogs = blogs.slice(1, 4); // the second, third, and fourth most recent blogs
 
+  // Find the first image in the most recent blog's content
+  const thumbnailImageMostRecent = mostRecentBlog?.content?.content.find(
+    (item) => item.type === "image"
+  );
+
   return (
     <>
       {isLoading ? (
@@ -51,7 +56,7 @@ export default function News() {
                 <div className="c-7 md-12">
                   <div className="news-section-left">
                     <div className="news-left-wrapper">
-                      <NavLink
+                      <Link
                         className="news-link-left"
                         to={
                           mostRecentBlog
@@ -62,46 +67,55 @@ export default function News() {
                         <div className="img-container-left">
                           <img
                             className="news-img-left"
-                            src={mostRecentBlog ? mostRecentBlog.image : ""}
+                            src={
+                              thumbnailImageMostRecent
+                                ? thumbnailImageMostRecent.attrs.src
+                                : ""
+                            }
                             alt={mostRecentBlog ? mostRecentBlog.title : ""}
                           ></img>
                         </div>
                         <div className="news-title-left">
                           {mostRecentBlog ? mostRecentBlog.title : ""}
                         </div>
-                      </NavLink>
+                      </Link>
                     </div>
                   </div>
                 </div>
                 <div className="c-5 md-12">
                   <div className="news-section-right">
-                    {nextBlogs?.map((blog) => (
-                      <div className="news-link-wrapper" key={blog.id}>
-                        <NavLink
-                          className="news-link-right"
-                          to={
-                            mostRecentBlog
-                              ? `/view-blog-list/${mostRecentBlog.id}`
-                              : "#"
-                          }
-                        >
-                          <div className="img-container-right">
-                            <img
-                              className="news-img-right"
-                              src={blog ? blog.image : ""}
-                              alt={blog ? blog.title : ""}
-                            ></img>
-                          </div>
-                          <div className="news-title-right">
-                            {blog ? blog.title : ""}
-                          </div>
-                        </NavLink>
-                      </div>
-                    ))}
+                    {nextBlogs?.map((blog) => {
+                      // Find the first image in the blog's content
+                      const thumbnailImage = blog.content?.content.find(
+                        (item) => item.type === "image"
+                      );
+
+                      return (
+                        <div className="news-link-wrapper" key={blog.id}>
+                          <Link
+                            className="news-link-right"
+                            to={blog ? `/view-blog-list/${blog.id}` : "#"}
+                          >
+                            <div className="img-container-right">
+                              <img
+                                className="news-img-right"
+                                src={
+                                  thumbnailImage ? thumbnailImage.attrs.src : ""
+                                }
+                                alt={blog ? blog.title : ""}
+                              ></img>
+                            </div>
+                            <div className="news-title-right">
+                              {blog ? blog.title : ""}
+                            </div>
+                          </Link>
+                        </div>
+                      );
+                    })}
                     <div className="news-btn-wrapper">
-                      <NavLink className="news-btn-link" to="/view-blog-list">
+                      <Link className="news-btn-link" to="/view-blog-list">
                         Xem tất cả tin tức
-                      </NavLink>
+                      </Link>
                     </div>
                   </div>
                 </div>

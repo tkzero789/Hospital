@@ -10,6 +10,7 @@ const ViewBlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
   const blogsPerPage = 5;
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const ViewBlogList = () => {
         });
         setTimeout(() => {
           setBlogs(blogData);
+          console.log(blogData);
           setIsLoading(false);
         }, 600);
       })
@@ -38,13 +40,19 @@ const ViewBlogList = () => {
       });
   }, []);
 
+  // Filter blogs with status "Accepted"
+  const acceptedBlogs = blogs.filter((blog) => blog.status === "Accepted");
+
   // Calculate total pages
-  const totalPages = Math.ceil(blogs.length / blogsPerPage);
+  useEffect(() => {
+    const totalPages = Math.ceil(acceptedBlogs.length / blogsPerPage);
+    setTotalPages(totalPages);
+  }, [acceptedBlogs]);
 
   // Get current blogs
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+  const currentBlogs = acceptedBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
   // Pagination
   const paginate = (pageNumber) => {

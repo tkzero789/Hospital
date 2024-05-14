@@ -63,15 +63,15 @@ export default function ViewUser() {
             <div className="row pt-3 pb-3 justify-content-end">
               <div className="col-3 d-grid gap-2">
                 <NavLink className="btn btn-outline-primary" to={`/user-table`}>
-                  QUAY LẠI
+                  Quay lại
                 </NavLink>
               </div>
               <div className="col-3 d-grid gap-2">
                 <NavLink
-                  className="btn btn-outline-primary"
+                  className="btn btn-warning"
                   to={`/user/${userId}/edit`}
                 >
-                  CHỈNH SỬA
+                  Chỉnh sửa
                 </NavLink>
               </div>
               <div className="col-3 d-grid gap-2">
@@ -82,7 +82,7 @@ export default function ViewUser() {
                     disabled={user.status === "Blocked"}
                     onClick={() => updateStatus("Blocked")}
                   >
-                    CHẶN
+                    Chặn
                   </button>
                 )}
                 {user.status === "Blocked" && (
@@ -92,7 +92,7 @@ export default function ViewUser() {
                     disabled={user.status === "Normal"}
                     onClick={() => updateStatus("Normal")}
                   >
-                    GỠ CHẶN
+                    Gỡ chặn
                   </button>
                 )}
               </div>
@@ -103,7 +103,7 @@ export default function ViewUser() {
                   disabled={user.status === "Spam"}
                   onClick={() => confirmDelete()}
                 >
-                  XÓA
+                  Xoá
                 </button>
               </div>
             </div>
