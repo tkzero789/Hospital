@@ -114,7 +114,7 @@ export default function EditUser() {
             <div className="row pt-3 pb-3 justify-content-end">
               <div className="col-3 d-grid gap-2">
                 <NavLink
-                  className="btn btn-outline-primary"
+                  className="btn btn-outline-secondary"
                   to={`/user/${userId}/view`}
                 >
                   Quay lại

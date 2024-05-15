@@ -62,7 +62,10 @@ export default function ViewUser() {
             <UserForm user={user} editMode={false} />
             <div className="row pt-3 pb-3 justify-content-end">
               <div className="col-3 d-grid gap-2">
-                <NavLink className="btn btn-outline-primary" to={`/user-table`}>
+                <NavLink
+                  className="btn btn-outline-secondary"
+                  to={`/user-table`}
+                >
                   Quay lại
                 </NavLink>
               </div>
