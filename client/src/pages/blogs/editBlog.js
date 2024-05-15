@@ -31,6 +31,16 @@ const MenuBar = ({ editor }) => {
           <i className="bi bi-type-italic"></i>
         </button>
         <button
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 4 }).run()
+          }
+          className={
+            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
+          }
+        >
+          Tựa đề phụ
+        </button>
+        <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "is-active" : ""}
         >

@@ -179,6 +179,15 @@ const ViewSpecificBlog = () => {
                       <img src={item.attrs.src} alt={item.attrs.alt || ""} />
                     </div>
                   );
+                } else if (item.type === "heading" && item.attrs.level === 4) {
+                  return (
+                    <h4 key={keyPrefix}>
+                      {item.content?.map((textObj, textObjIndex) => {
+                        const key = `${keyPrefix}-h4-${textObjIndex}`;
+                        return <span key={key}>{textObj.text}</span>;
+                      })}
+                    </h4>
+                  );
                 }
                 return null;
               })}

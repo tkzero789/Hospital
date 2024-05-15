@@ -31,6 +31,16 @@ const MenuBar = ({ editor }) => {
           <i className="bi bi-type-italic"></i>
         </button>
         <button
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 4 }).run()
+          }
+          className={
+            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
+          }
+        >
+          Tựa đề phụ
+        </button>
+        <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "is-active" : ""}
         >
@@ -157,7 +167,11 @@ const CreateBlog = ({ userInfos }) => {
         </div>
         <div className="text-editor-intro">
           <label htmlFor="intro">Đoạn mở đầu:</label>
-          <textarea value={blog.intro} onChange={onChangeIntro} />
+          <textarea
+            className="intro-textarea"
+            value={blog.intro}
+            onChange={onChangeIntro}
+          />
         </div>
         <div className="text-editor-img">
           <label htmlFor="image">Ảnh bài blog:</label>

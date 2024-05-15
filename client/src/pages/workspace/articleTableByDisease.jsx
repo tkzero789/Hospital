@@ -125,7 +125,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
         {userRole !== "admin" && (
           <NavLink
             to={`/disease/${diseaseId}/article/create`}
-            className="add-link"
+            className="add-link ms-auto"
           >
             Thêm bài viết
           </NavLink>

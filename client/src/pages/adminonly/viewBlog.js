@@ -81,32 +81,42 @@ export default function ViewBlog({ userRole, userInfos }) {
                 return null;
               }
               return (
-                <p key={index}>
+                <p key={`paragraph-${index}`}>
                   {item.content?.map((textObj, textObjIndex) => {
                     if (
                       textObj.marks &&
                       textObj.marks.some((mark) => mark.type === "bold")
                     ) {
                       return (
-                        <strong>
-                          <span key={textObjIndex}>{textObj.text}</span>
+                        <strong key={`strong-${index}-${textObjIndex}`}>
+                          <span>{textObj.text}</span>
                         </strong>
                       );
                     } else {
-                      return <span key={textObjIndex}>{textObj.text}</span>;
+                      return (
+                        <span key={`span-${index}-${textObjIndex}`}>
+                          {textObj.text}
+                        </span>
+                      );
                     }
                   })}
                 </p>
               );
             } else if (item.type === "bulletList") {
               return (
-                <ul key={index}>
+                <ul key={`bulletList-${index}`}>
                   {item.content?.map((listItem, listItemIndex) => (
-                    <li key={listItemIndex}>
+                    <li key={`listItem-${index}-${listItemIndex}`}>
                       {listItem.content?.map((paragraph, paragraphIndex) => (
-                        <span key={paragraphIndex}>
+                        <span
+                          key={`paragraph-${index}-${listItemIndex}-${paragraphIndex}`}
+                        >
                           {paragraph.content?.map((textObj, textObjIndex) => (
-                            <span key={textObjIndex}>{textObj.text}</span>
+                            <span
+                              key={`textObj-${index}-${listItemIndex}-${paragraphIndex}-${textObjIndex}`}
+                            >
+                              {textObj.text}
+                            </span>
                           ))}
                         </span>
                       ))}
@@ -116,13 +126,19 @@ export default function ViewBlog({ userRole, userInfos }) {
               );
             } else if (item.type === "orderedList") {
               return (
-                <ol key={index}>
+                <ol key={`orderedList-${index}`}>
                   {item.content?.map((listItem, listItemIndex) => (
-                    <li key={listItemIndex}>
+                    <li key={`listItem-${index}-${listItemIndex}`}>
                       {listItem.content?.map((paragraph, paragraphIndex) => (
-                        <span key={paragraphIndex}>
+                        <span
+                          key={`paragraph-${index}-${listItemIndex}-${paragraphIndex}`}
+                        >
                           {paragraph.content?.map((textObj, textObjIndex) => (
-                            <span key={textObjIndex}>{textObj.text}</span>
+                            <span
+                              key={`textObj-${index}-${listItemIndex}-${paragraphIndex}-${textObjIndex}`}
+                            >
+                              {textObj.text}
+                            </span>
                           ))}
                         </span>
                       ))}
@@ -130,22 +146,20 @@ export default function ViewBlog({ userRole, userInfos }) {
                   ))}
                 </ol>
               );
-            } else if (item.type === "heading" && item.attrs.level === 1) {
+            } else if (item.type === "heading" && item.attrs.level === 4) {
               return (
-                <h1 key={index}>
+                <h4 key={`heading-${index}`}>
                   {item.content?.map((textObj, textObjIndex) => (
-                    <span key={textObjIndex}>{textObj.text}</span>
+                    <span key={`textObj-${index}-${textObjIndex}`}>
+                      {textObj.text}
+                    </span>
                   ))}
-                </h1>
+                </h4>
               );
             } else if (item.type === "image") {
               return (
-                <div className="blog-img">
-                  <img
-                    key={index}
-                    src={item.attrs.src}
-                    alt={item.attrs.alt || ""}
-                  />
+                <div className="blog-img" key={`image-${index}`}>
+                  <img src={item.attrs.src} alt={item.attrs.alt || ""} />
                 </div>
               );
             }
