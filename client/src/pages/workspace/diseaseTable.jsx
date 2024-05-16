@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-
 import "./table.scss";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function DiseaseTable({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");
@@ -128,85 +128,93 @@ export default function DiseaseTable({ userRole, userInfos }) {
   ].concat(actionColumn);
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Danh sách các căn bệnh
-        {userRole === "head-doctor" && part === 1 && (
-          <button type="button" onClick={() => setPart(2)}>
-            Căn bệnh được tạo bởi tôi
-          </button>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Căn bệnh</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="datatable">
+        <div className="datatableTitle">
+          Danh sách các căn bệnh
+          {userRole === "head-doctor" && part === 1 && (
+            <button type="button" onClick={() => setPart(2)}>
+              Căn bệnh được tạo bởi tôi
+            </button>
+          )}
+          {userRole === "head-doctor" && part === 2 && (
+            <button type="button" onClick={() => setPart(1)}>
+              Xem tất cả căn bệnh
+            </button>
+          )}
+          {userRole === "head-doctor" && (
+            <NavLink to="/disease/create" className="add-link">
+              Thêm căn bệnh
+            </NavLink>
+          )}
+        </div>
+        {userRole === "admin" && (
+          <DataGrid
+            className="datagrid"
+            rows={flatData}
+            getRowId={(row) => row._id}
+            getRowClassName={(params) =>
+              `rowWithStatus ${params.row.status.replace(" ", "-")}`
+            }
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            checkboxSelection
+            sx={{
+              "& .MuiDataGrid-row:hover": {
+                backgroundColor: "transparent",
+                boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+              },
+            }}
+          />
         )}
+        {(userRole === "head-doctor" || userRole === "doctor") &&
+          part === 1 && (
+            <DataGrid
+              className="datagrid"
+              rows={doctorFlatData}
+              getRowId={(row) => row._id}
+              getRowClassName={(params) =>
+                `rowWithStatus ${params.row.status.replace(" ", "-")}`
+              }
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+              checkboxSelection
+              sx={{
+                "& .MuiDataGrid-row:hover": {
+                  backgroundColor: "transparent",
+                  boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+                },
+              }}
+            />
+          )}
         {userRole === "head-doctor" && part === 2 && (
-          <button type="button" onClick={() => setPart(1)}>
-            Xem tất cả căn bệnh
-          </button>
-        )}
-        {userRole === "head-doctor" && (
-          <NavLink to="/disease/create" className="add-link">
-            Thêm căn bệnh
-          </NavLink>
+          <DataGrid
+            className="datagrid"
+            rows={doctorOwnFlatData}
+            getRowId={(row) => row._id}
+            getRowClassName={(params) =>
+              `rowWithStatus ${params.row.status.replace(" ", "-")}`
+            }
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            checkboxSelection
+            sx={{
+              "& .MuiDataGrid-row:hover": {
+                backgroundColor: "transparent",
+                boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+              },
+            }}
+          />
         )}
       </div>
-      {userRole === "admin" && (
-        <DataGrid
-          className="datagrid"
-          rows={flatData}
-          getRowId={(row) => row._id}
-          getRowClassName={(params) =>
-            `rowWithStatus ${params.row.status.replace(" ", "-")}`
-          }
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          checkboxSelection
-          sx={{
-            "& .MuiDataGrid-row:hover": {
-              backgroundColor: "transparent",
-              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            },
-          }}
-        />
-      )}
-      {(userRole === "head-doctor" || userRole === "doctor") && part === 1 && (
-        <DataGrid
-          className="datagrid"
-          rows={doctorFlatData}
-          getRowId={(row) => row._id}
-          getRowClassName={(params) =>
-            `rowWithStatus ${params.row.status.replace(" ", "-")}`
-          }
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          checkboxSelection
-          sx={{
-            "& .MuiDataGrid-row:hover": {
-              backgroundColor: "transparent",
-              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            },
-          }}
-        />
-      )}
-      {userRole === "head-doctor" && part === 2 && (
-        <DataGrid
-          className="datagrid"
-          rows={doctorOwnFlatData}
-          getRowId={(row) => row._id}
-          getRowClassName={(params) =>
-            `rowWithStatus ${params.row.status.replace(" ", "-")}`
-          }
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          checkboxSelection
-          sx={{
-            "& .MuiDataGrid-row:hover": {
-              backgroundColor: "transparent",
-              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            },
-          }}
-        />
-      )}
-    </div>
+    </>
   );
 }

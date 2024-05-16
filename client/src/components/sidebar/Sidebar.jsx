@@ -60,12 +60,6 @@ export default function Sidebar() {
 
       <div className="center">
         <ul>
-          <NavLink to="/dashboard" activeclassname="active">
-            <li>
-              <GridViewIcon className="icon" />
-              <span>Tổng hợp</span>
-            </li>
-          </NavLink>
           <NavLink to="/symptom-table" activeclassname="active">
             <li>
               <MonitorHeartIcon className="icon" />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function ArticlePatientView({ userRole, userInfos }) {
   const [article, setArticle] = useState(null);
@@ -56,40 +57,47 @@ export default function ArticlePatientView({ userRole, userInfos }) {
   };
 
   return (
-    <div className="symp-checker w-100">
-      {isLoading ? (
-        <p>Đang tải bài viết...</p>
-      ) : (
-        <div className="content-container">
-          <h3 className="text-center">{article.title}</h3>
-          <div className="symp-checker-steps">
-            <h2>Thông tin căn bệnh</h2>
-            {article.infos.map((info) => (
-              <ArticleContent element={info} key={info.id} />
-            ))}
-            <h2>Phương pháp điều trị</h2>
-            {article.treatments.map((trm) => (
-              <ArticleContent element={trm} key={trm.id} />
-            ))}
-            <hr></hr>
-            <div className="row">
-              <p className="d-flex justify-content-end">
-                Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
-              </p>
-              {userRole && (
-                <div className="col-6 d-grid gap-2 justify-content-start">
-                  <NavLink
-                    className="btn btn-outline-primary"
-                    to={`/article-table`}
-                  >
-                    QUAY LẠI
-                  </NavLink>
-                </div>
-              )}
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>{article && article.title ? article.title : ""}</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="symp-checker w-100">
+        {isLoading ? (
+          <p>Đang tải bài viết...</p>
+        ) : (
+          <div className="content-container">
+            <h3 className="text-center">{article.title}</h3>
+            <div className="symp-checker-steps">
+              <h2>Thông tin căn bệnh</h2>
+              {article.infos.map((info) => (
+                <ArticleContent element={info} key={info.id} />
+              ))}
+              <h2>Phương pháp điều trị</h2>
+              {article.treatments.map((trm) => (
+                <ArticleContent element={trm} key={trm.id} />
+              ))}
+              <hr></hr>
+              <div className="row">
+                <p className="d-flex justify-content-end">
+                  Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
+                </p>
+                {userRole && (
+                  <div className="col-6 d-grid gap-2 justify-content-start">
+                    <NavLink
+                      className="btn btn-outline-primary"
+                      to={`/article-table`}
+                    >
+                      QUAY LẠI
+                    </NavLink>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

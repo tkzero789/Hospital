@@ -40,7 +40,7 @@ export default function DiseaseDescs({
             <div className="row">
               {category.descriptions.map((description) => (
                 <div className="form pb-3 col-4" key={description.id}>
-                  <lable style={{ display: "flex" }}>
+                  <label className="d-flex">
                     <input
                       type="checkbox"
                       checked={disease.descIds.some(
@@ -57,7 +57,7 @@ export default function DiseaseDescs({
                         {description.descriptionDetail}
                       </h5>
                     </span>
-                  </lable>
+                  </label>
                 </div>
               ))}
             </div>

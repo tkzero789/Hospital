@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import "./table.scss";
 
@@ -105,23 +106,30 @@ export default function ApptTable() {
   ].concat(actionColumn);
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">Danh sách đặt hẹn</div>
-      <DataGrid
-        className="datagrid"
-        rows={sortedAppts}
-        getRowId={(row) => row._id}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        sx={{
-          "& .MuiDataGrid-row:hover": {
-            backgroundColor: "transparent",
-            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          },
-        }}
-      />
-    </div>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Đặt hẹn</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="datatable">
+        <div className="datatableTitle">Danh sách đặt hẹn</div>
+        <DataGrid
+          className="datagrid"
+          rows={sortedAppts}
+          getRowId={(row) => row._id}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
+        />
+      </div>
+    </>
   );
 }

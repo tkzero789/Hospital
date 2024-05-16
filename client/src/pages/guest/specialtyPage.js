@@ -10,10 +10,16 @@ import TubeSVG from "../../assets/home/tubesSVG.svg";
 import { Link } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const SpecialtyPage = () => {
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Chuyên khoa</title>
+        </Helmet>
+      </HelmetProvider>
       <div className="content-container">
         <Breadcrumbs
           className="breadcrumbs"

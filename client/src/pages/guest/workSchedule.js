@@ -2,10 +2,16 @@ import Footer from "../../components/ForPages/Footer";
 import { Breadcrumbs, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Link } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const WorkSchedule = () => {
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Lịch làm việc</title>
+        </Helmet>
+      </HelmetProvider>
       <div className="content-container">
         <Breadcrumbs
           className="breadcrumbs"

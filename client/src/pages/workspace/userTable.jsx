@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import "./table.scss";
 
@@ -66,30 +67,37 @@ export default function UserTable({ userRole, userInfos }) {
   ].concat(actionColumn);
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Danh sách users
-        {userRole === "admin" && (
-          <NavLink to="/signup-doctor" className="add-link ms-auto">
-            Thêm user
-          </NavLink>
-        )}
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Tài khoản</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="datatable">
+        <div className="datatableTitle">
+          Danh sách users
+          {userRole === "admin" && (
+            <NavLink to="/signup-doctor" className="add-link ms-auto">
+              Thêm user
+            </NavLink>
+          )}
+        </div>
+        <DataGrid
+          className="datagrid"
+          rows={flattenedData}
+          getRowId={(row) => row._id}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
+        />
       </div>
-      <DataGrid
-        className="datagrid"
-        rows={flattenedData}
-        getRowId={(row) => row._id}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        sx={{
-          "& .MuiDataGrid-row:hover": {
-            backgroundColor: "transparent",
-            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          },
-        }}
-      />
-    </div>
+    </>
   );
 }

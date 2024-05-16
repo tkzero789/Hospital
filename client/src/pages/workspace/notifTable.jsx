@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import { DataGrid } from "@mui/x-data-grid";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./table.scss";
 
 export default function NotifTable({ userRole, userInfos }) {
@@ -101,33 +101,40 @@ export default function NotifTable({ userRole, userInfos }) {
   ].concat(actionColumn);
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">Thông báo</div>
-      <DataGrid
-        className="datagrid"
-        rows={flatData}
-        getRowId={(row) => row._id}
-        getRowClassName={(params) =>
-          `rowWithStatus ${params.row.status.replace(" ", "-")}`
-        }
-        // columns={columns}
-        columns={columns.map((col) => ({
-          ...col,
-          cellStyle: (params) =>
-            params.row.status === "Chưa xem"
-              ? { backgroundColor: "#F5F5F5" }
-              : {},
-        }))}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        sx={{
-          "& .MuiDataGrid-row:hover": {
-            backgroundColor: "transparent",
-            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          },
-        }}
-      />
-    </div>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Thông báo</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="datatable">
+        <div className="datatableTitle">Thông báo</div>
+        <DataGrid
+          className="datagrid"
+          rows={flatData}
+          getRowId={(row) => row._id}
+          getRowClassName={(params) =>
+            `rowWithStatus ${params.row.status.replace(" ", "-")}`
+          }
+          // columns={columns}
+          columns={columns.map((col) => ({
+            ...col,
+            cellStyle: (params) =>
+              params.row.status === "Chưa xem"
+                ? { backgroundColor: "#F5F5F5" }
+                : {},
+          }))}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
+        />
+      </div>
+    </>
   );
 }

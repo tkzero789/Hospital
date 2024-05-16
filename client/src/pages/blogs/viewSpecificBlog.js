@@ -5,6 +5,7 @@ import Footer from "../../components/ForPages/Footer";
 import { Breadcrumbs, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Link } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const ViewSpecificBlog = () => {
   const { id } = useParams();
@@ -30,6 +31,11 @@ const ViewSpecificBlog = () => {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>{blog && blog.title ? blog.title : ""}</title>
+        </Helmet>
+      </HelmetProvider>
       {isLoading ? (
         <div>Loading...</div>
       ) : (

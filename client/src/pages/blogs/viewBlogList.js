@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Pagination from "@mui/material/Pagination";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const ViewBlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -62,6 +63,11 @@ const ViewBlogList = () => {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Tin tức - Y học thường thức</title>
+        </Helmet>
+      </HelmetProvider>
       {isLoading ? (
         <div>Loading....</div>
       ) : (

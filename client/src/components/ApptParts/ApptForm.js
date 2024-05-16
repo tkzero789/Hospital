@@ -6,7 +6,6 @@ import "../../css/calendar.css";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import ApptSuccessMsg from "./ApptSuccessMsg";
 
 export default function ApptForm({
   appt,

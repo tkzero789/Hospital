@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import "./table.scss";
 
@@ -97,33 +98,40 @@ export default function SymptomTable({ userRole, userInfos }) {
   ].concat(actionColumn);
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Danh sách các triệu chứng
-        {userRole === "head-doctor" && (
-          <NavLink to="/symptom/create" className="add-link ms-auto">
-            Thêm triệu chứng
-          </NavLink>
-        )}
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Triệu chứng</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="datatable">
+        <div className="datatableTitle">
+          Danh sách các triệu chứng
+          {userRole === "head-doctor" && (
+            <NavLink to="/symptom/create" className="add-link ms-auto">
+              Thêm triệu chứng
+            </NavLink>
+          )}
+        </div>
+        <DataGrid
+          className="datagrid"
+          rows={flatData}
+          getRowId={(row) => row._id}
+          getRowClassName={(params) =>
+            `rowWithStatus ${params.row.status.replace(" ", "-")}`
+          }
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
+        />
       </div>
-      <DataGrid
-        className="datagrid"
-        rows={flatData}
-        getRowId={(row) => row._id}
-        getRowClassName={(params) =>
-          `rowWithStatus ${params.row.status.replace(" ", "-")}`
-        }
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        sx={{
-          "& .MuiDataGrid-row:hover": {
-            backgroundColor: "transparent",
-            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          },
-        }}
-      />
-    </div>
+    </>
   );
 }

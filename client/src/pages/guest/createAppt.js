@@ -4,9 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 import ApptForm from "../../components/ApptParts/ApptForm";
 import ApptSuccessMsg from "../../components/ApptParts/ApptSuccessMsg";
 import Footer from "../../components/ForPages/Footer";
+import ApptOtp from "../../components/ApptParts/ApptOtp";
 
 export default function CreateAppt() {
-  const [isApptSet, setIsApptSet] = useState(false);
+  const [isOtpConfirmed, setIsOtpConfirmed] = useState(false);
+  const [show, setShow] = useState(false);
 
   const [appt, setAppt] = useState({
     id: uuidv4(),
@@ -21,7 +23,15 @@ export default function CreateAppt() {
     createdAt: null,
     status: "Pending",
   });
+  const [otp, setOtp] = useState("");
   const [showModal, setShowModal] = useState(false);
+
+  function sendOTP(e) {
+    e.preventDefault();
+    // Mock sending OTP
+    console.log("OTP sent");
+    window.alert("Đã gửi mã xác thực, vui lòng kiểm tra tin nhắn");
+  }
 
   async function confirmSetAppt(e) {
     e.preventDefault();
@@ -38,7 +48,7 @@ export default function CreateAppt() {
       .post("http://localhost:5000/appointment/add", updatedAppt)
       .then((res) => {
         setAppt(updatedAppt);
-        setIsApptSet(true);
+        setShow(true);
         console.log(res.data);
       })
       .catch((err) => {
@@ -53,7 +63,7 @@ export default function CreateAppt() {
 
   return (
     <div className="appt-req-body">
-      {!isApptSet && (
+      {!isOtpConfirmed && (
         <ApptForm
           appt={appt}
           setAppt={setAppt}
@@ -62,10 +72,21 @@ export default function CreateAppt() {
           editMode={true}
           closeModal={closeModal}
           confirmSetAppt={confirmSetAppt}
+          otp={otp}
+          setOtp={setOtp}
+          sendOTP={sendOTP}
         />
       )}
 
-      {isApptSet && <ApptSuccessMsg />}
+      {show && (
+        <ApptOtp
+          setIsOtpConfirmed={setIsOtpConfirmed}
+          show={show}
+          setShow={setShow}
+        />
+      )}
+
+      {isOtpConfirmed && <ApptSuccessMsg />}
 
       <Footer />
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./table.scss";
 
 export default function BlogTable({ userRole, userInfos }) {
@@ -97,38 +98,45 @@ export default function BlogTable({ userRole, userInfos }) {
   ].concat(actionColumn);
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Danh sách blogs
-        {(userRole === "head-doctor" || userRole === "doctor") && (
-          <>
-            <button onClick={handleMyBlogClick}>
-              {myBlog ? "Xem tất cả blogs" : "Blogs của tôi"}
-            </button>
-            <NavLink to="/create-blog" className="add-link">
-              Thêm bài blog
-            </NavLink>
-          </>
-        )}
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Blogs</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className="datatable">
+        <div className="datatableTitle">
+          Danh sách blogs
+          {(userRole === "head-doctor" || userRole === "doctor") && (
+            <>
+              <button onClick={handleMyBlogClick}>
+                {myBlog ? "Xem tất cả blogs" : "Blogs của tôi"}
+              </button>
+              <NavLink to="/create-blog" className="add-link">
+                Thêm bài blog
+              </NavLink>
+            </>
+          )}
+        </div>
+        <DataGrid
+          className="datagrid"
+          rows={displayedBlogs}
+          getRowId={(row) => row._id}
+          getRowClassName={(params) =>
+            `rowWithStatus ${params.row.status.replace(" ", "-")}`
+          }
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
+        />
       </div>
-      <DataGrid
-        className="datagrid"
-        rows={displayedBlogs}
-        getRowId={(row) => row._id}
-        getRowClassName={(params) =>
-          `rowWithStatus ${params.row.status.replace(" ", "-")}`
-        }
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        sx={{
-          "& .MuiDataGrid-row:hover": {
-            backgroundColor: "transparent",
-            boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          },
-        }}
-      />
-    </div>
+    </>
   );
 }
