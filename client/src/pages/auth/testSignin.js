@@ -92,38 +92,6 @@ export default function TestSignin() {
           <div className="signin-wrapper zi">
             <div className="content-container">
               <div className="signin-box">
-                <div className="c-6 md-12 signin-left">
-                  <div className="signin-left-container">
-                    <div className="signin-left-header">
-                      <span>Chức năng tài khoản</span>
-                    </div>
-                    <div className="signin-left-body">
-                      <span>
-                        Bằng cách tạo một tài khoản, bạn sẽ có thể:
-                        <br />
-                      </span>
-                      <ul className="signin-left-list">
-                        <li>
-                          Sử dụng dịch vụ chẩn đoán trực tuyến của chúng tôi mọi
-                          lúc, mọi nơi.
-                        </li>
-                        <li>
-                          Xem lại kết quả chẩn đoán của bạn một cách dễ dàng và
-                          nhanh chóng.
-                        </li>
-                        <li>
-                          Nhận thông tin cập nhật và hỗ trợ từ đội ngũ chuyên
-                          gia của chúng tôi.
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="signin-left-btn">
-                      <NavLink to="/signup">
-                        <button type="button">Đăng ký tài khoản</button>
-                      </NavLink>
-                    </div>
-                  </div>
-                </div>
                 <div className="c-6 md-12 signin-right">
                   <div className="signin-right-container">
                     <div className="signin-right-header">
@@ -176,6 +144,11 @@ export default function TestSignin() {
                       >
                         Đăng nhập
                       </button>
+                    </div>
+                    <div className="signin-attention-text">
+                      <p>
+                        Tính năng đăng nhập chỉ dành cho nhân viên của bệnh viện
+                      </p>
                     </div>
                   </div>
                 </div>

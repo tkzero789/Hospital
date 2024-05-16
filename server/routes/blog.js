@@ -3,7 +3,11 @@ const blogRoutes = express.Router();
 const dbo = require("../db/conn");
 const multer = require("multer");
 const { Upload } = require("@aws-sdk/lib-storage");
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
 const stream = require("stream");
 require("dotenv").config({ path: "../.config.env" });
 
@@ -95,6 +99,29 @@ blogRoutes
       res.status(500).send(err);
     }
   });
+
+// Delete image from s3
+blogRoutes.route("/blog/delete").post(async function (req, res) {
+  try {
+    const { key } = req.body; // the key of the image to delete
+    if (!key) {
+      throw new Error("No key provided");
+    }
+
+    const deleteParams = {
+      Bucket: "mybkcarebucket",
+      Key: key,
+    };
+
+    await s3.send(new DeleteObjectCommand(deleteParams));
+
+    res.json({
+      message: `Image with key ${key} deleted successfully`,
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 // View specific blog
 blogRoutes.route("/blog/:id").get(async function (req, res) {

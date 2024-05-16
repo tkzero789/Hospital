@@ -1,12 +1,12 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Italic from "@tiptap/extension-italic";
 import Image from "@tiptap/extension-image";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import "../../pages/blogs/texteditor.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -71,6 +71,9 @@ const MenuBar = ({ editor }) => {
 
 const CreateBlog = ({ userInfos }) => {
   const navigate = useNavigate();
+  // Create a ref for the file input
+  const fileInputRef = useRef();
+
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -152,6 +155,30 @@ const CreateBlog = ({ userInfos }) => {
     } catch (error) {
       console.error(error);
     }
+    fileInputRef.current = event.target;
+  };
+
+  // Remove image
+  const removeImage = async (e) => {
+    e.preventDefault();
+    try {
+      // Extract the key from the image URL
+      const key = blog.image.split("/").pop();
+
+      await axios.post(`http://localhost:5000/blog/delete`, { key });
+
+      // Remove the image from the blog state
+      setBlog((prevBlog) => ({
+        ...prevBlog,
+        image: null,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
+    // Clear the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -181,11 +208,15 @@ const CreateBlog = ({ userInfos }) => {
             className="form-control border-primary-subtle col-9 mb-2"
             placeholder="Ảnh minh họa"
             onChange={(e) => updateInfoImage(e)}
+            ref={fileInputRef}
           />
         </div>
         {blog.image ? (
           <div className="text-editor-img">
             <img src={blog.image} alt="Blog img" />
+            <button onClick={removeImage} className="border rounded">
+              <i className="bi bi-trash3-fill"></i>
+            </button>
           </div>
         ) : (
           <div className="pt-2">Chưa có ảnh nào được upload</div>
@@ -197,6 +228,9 @@ const CreateBlog = ({ userInfos }) => {
         </div>
 
         <div className="text-editor-btn">
+          <Link className="btn btn-outline-secondary" to="/blog-table">
+            Quay lại
+          </Link>
           <button className="btn btn-primary ms-auto" onClick={handleClick}>
             Xác nhận tạo
           </button>

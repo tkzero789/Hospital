@@ -1500,10 +1500,10 @@
 
 .signin-box {
   display: flex;
-  min-width: 50vw;
+  justify-content: center;
+  width: 100%;
   min-height: 60vh;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .signin-left {
@@ -1581,7 +1581,7 @@
 
 .signin-right-form form input {
   margin: 12px 0;
-  width: 90%;
+  width: 100%;
   padding: 8px;
   border: 1px solid #cfcfcf;
   outline-color: #3498db;
@@ -1593,6 +1593,7 @@
 }
 
 .signin-right-btn {
+  text-align: center;
   margin-top: 24px;
 }
 
@@ -1603,10 +1604,16 @@
   border-top-left-radius: 5px;
   border-bottom-right-radius: 5px;
   border: none;
+  width: 180px;
 }
 
 .signin-right-btn button:hover {
   background-color: var(--btn-blue-hover);
+}
+
+.signin-attention-text {
+  padding-top: 24px;
+  text-align: center;
 }
 
 .signin-footer {
