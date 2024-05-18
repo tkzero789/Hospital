@@ -38,8 +38,14 @@ export default function ViewAppt() {
 
   // Handle input change
   const handleInputChange = (event) => {
-    setFormInputs({ ...formInputs, [event.target.name]: event.target.value });
+    let value = event.target.value;
+    if (event.target.name === "dob") {
+      value = formatDate(value);
+    }
+    setFormInputs({ ...formInputs, [event.target.name]: value });
   };
+
+  // Handle DOB change
 
   // Uppdate appointment status
   function updateStatus(newStatus) {
@@ -85,6 +91,21 @@ export default function ViewAppt() {
       }
       return !prevIsEditable;
     });
+  }
+
+  // Format DOB
+  function formatDate(dateString) {
+    if (!dateString) {
+      return "";
+    }
+    const [day, month, year] = dateString.split("/");
+    if (day && month && year) {
+      const formattedDay = day.padStart(2, "0");
+      const formattedMonth = month.padStart(2, "0");
+      return `${formattedDay}/${formattedMonth}/${year}`;
+    } else {
+      return dateString;
+    }
   }
 
   return (
@@ -135,7 +156,7 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="dob"
-                  value={formInputs.dob}
+                  value={formatDate(formInputs.dob)}
                   onChange={handleInputChange}
                   disabled={!isEditable}
                   readOnly={!isEditable}

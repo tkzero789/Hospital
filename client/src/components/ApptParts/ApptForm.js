@@ -396,6 +396,7 @@ export default function ApptForm({
                       <Calendar
                         onChange={handleCalendarChange}
                         locale="vi-VN"
+                        value={calendarDate}
                         minDate={new Date()}
                         maxDate={maxDate}
                         tileClassName={({ date, view }) => {
