@@ -817,6 +817,202 @@
   background-color: var(--btn-blue-hover);
 }
 
+/* APPOINTMENT DETAIL GUEST */
+.appt-detail {
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-detail-filter {
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.appt-detail-filter .dropdown-filter {
+  width: 225px;
+  z-index: 5;
+  position: absolute;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.appt-detail-filter .dropdown-filter-header {
+  cursor: pointer;
+  padding: 6px 24px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.appt-detail-filter .dropdown-filter-header:hover {
+  background-color: #d3e6fc;
+}
+
+.appt-detail-filter .dropdown-filter-item {
+  padding: 6px 24px;
+  cursor: pointer;
+  border-top: 1px solid #d8d8d8;
+}
+
+.appt-detail-filter .dropdown-filter-item:last-child {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.appt-detail-filter .dropdown-filter-item:hover {
+  background-color: #d3e6fc;
+}
+
+.appt-detail-wrapper {
+  padding: 20px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.appt-detail-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+  padding: 8px 0;
+  background-color: #3498db;
+  border-radius: 3px;
+  color: var(--text-white);
+  margin-bottom: 24px;
+}
+
+.appt-detail-info {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+.appt-detail-info .phone-number-field label {
+  display: block;
+  font-weight: var(--roboto-medium-weight);
+  padding: 16px 0 8px 0;
+}
+
+.appt-detail-info .phone-number-field input {
+  width: 200px;
+  padding: 4px 6px;
+  border: 1px solid #cfcfcf;
+  outline-color: #3498db;
+  border-radius: 3px;
+}
+
+.appt-detail .appt-detail-icon {
+  height: 80px;
+}
+
+.appt-detail .appt-detail-icon img {
+  height: 100%;
+}
+
+.appt-detail-wrapper .appt-detail-btn {
+  text-align: center;
+  padding-top: 28px;
+}
+
+.appt-detail-wrapper .appt-detail-btn button {
+  color: var(--text-white);
+  background-color: #3498db;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 12px;
+  width: 150px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-detail-btn-2 {
+  text-align: center;
+  padding-top: 28px;
+}
+
+.appt-detail-btn-2 button {
+  margin-right: 4px;
+  color: var(--text-color);
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  padding: 8px 12px;
+  width: 150px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-detail-btn-2 button:hover {
+  background-color: #b8b8b8;
+}
+
+.appt-detail-item {
+  margin-bottom: 16px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-detail-item-wrapper {
+  display: flex;
+  padding: 12px;
+}
+
+.appt-detail-item-wrapper .appt-individual:first-child {
+  width: 15%;
+}
+
+.appt-detail-item-wrapper .appt-individual:first-child p:last-child {
+  padding-right: 20px;
+}
+
+.appt-detail-item-wrapper .appt-individual:nth-child(2) {
+  width: 25%;
+}
+
+.appt-detail-item-wrapper .appt-individual:nth-child(3) {
+  width: 20%;
+}
+
+.appt-detail-item-wrapper .appt-individual:nth-child(4) {
+  width: 20%;
+}
+
+.appt-status-pending {
+  color: goldenrod;
+  background-color: rgba(219, 211, 154, 0.5);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.appt-status-accepted {
+  color: green;
+  background-color: rgba(148, 230, 148, 0.5);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.appt-detail-item-wrapper .appt-individual p:first-child {
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-blue);
+}
+
+.appt-individual-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.appt-individual-btn button {
+  color: var(--text-white);
+  background-color: #3498db;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-individual-btn button:hover {
+  background-color: var(--btn-blue-hover);
+}
+
 /* OPTIONS SECTION */
 .options {
   background-image: url("../assets/background/options-bg.png");
@@ -1502,7 +1698,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  min-height: 60vh;
+  min-height: 50vh;
   border-radius: 8px;
 }
 
@@ -1556,8 +1752,7 @@
 
 .signin-right {
   background-color: #fff;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-radius: 8px;
 }
 
 .signin-right-container {
@@ -1567,6 +1762,7 @@
 .signin-right-header {
   font-size: 30px;
   color: #666;
+  text-align: center;
 }
 
 .signin-right-form {
@@ -1601,8 +1797,7 @@
   background-color: #3498db;
   color: var(--text-white);
   padding: 10px 12px;
-  border-top-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 8px;
   border: none;
   width: 180px;
 }
@@ -1687,6 +1882,13 @@
 
 .toast-noti {
   height: 50px;
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 150px;
+}
+
+.toast-noti-2 {
+  height: 80px;
   padding: 12px 16px;
   font-size: 16px;
   min-width: 150px;

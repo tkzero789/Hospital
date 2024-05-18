@@ -14,7 +14,7 @@ export default function ApptForm({
   setShowModal,
   editMode,
   closeModal,
-  confirmSetAppt,
+  setShow,
 }) {
   // --- DOB: Start ---
   const [date, setDate] = useState("");
@@ -234,7 +234,7 @@ export default function ApptForm({
                     id="inputPhoneNumber"
                     name="phoneNumber"
                     value={appt.phoneNumber}
-                    pattern="[0-9]{10}"
+                    pattern="^0[0-9]{9}$"
                     readOnly={!editMode}
                     required
                     onChange={(e) => updateApptField(e)}
@@ -542,7 +542,14 @@ export default function ApptForm({
                     <button type="button" onClick={closeModal}>
                       Quay lại
                     </button>
-                    <button type="button" onClick={confirmSetAppt}>
+                    <button type="button" onClick={setShow}>
+                      <Toaster
+                        toastOptions={{
+                          className: "toast-noti-2",
+                        }}
+                        position="top-center"
+                        richColors
+                      />
                       Đăng ký khám
                     </button>{" "}
                   </div>

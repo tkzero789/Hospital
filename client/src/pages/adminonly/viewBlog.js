@@ -55,9 +55,6 @@ export default function ViewBlog({ userRole, userInfos }) {
     navigate(`/blog/${blogId}/edit`);
   }
 
-  console.log(userInfos.doctorID);
-  console.log(blog);
-
   return (
     <>
       <div className="content-container individual-blog">

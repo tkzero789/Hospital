@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Options() {
   return (
@@ -23,9 +23,9 @@ export default function Options() {
                     chất lượng mà không cần ra khỏi nhà.
                   </div>
                   <div className="opt-btn-wrapper">
-                    <NavLink className="opt-btn-link" to="/symptom-checker">
+                    <Link className="opt-btn-link" to="/symptom-checker">
                       Chẩn đoán
-                    </NavLink>
+                    </Link>
                   </div>
                 </div>
                 <div className="opt-box">
@@ -35,9 +35,9 @@ export default function Options() {
                     sóc y tế chất lượng cao mà bạn xứng đáng.
                   </div>
                   <div className="opt-btn-wrapper">
-                    <NavLink className="opt-btn-link" to="/appt-request">
+                    <Link className="opt-btn-link" to="/appt-request">
                       Đăng ký
-                    </NavLink>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -49,36 +49,36 @@ export default function Options() {
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">
-                    <NavLink className="box-select-link">
+                    <Link className="box-select-link">
                       <div className="box-icon">
                         <i className="bi bi-question-circle"></i>
                       </div>
                       <div className="box-text">Tư vấn</div>
-                    </NavLink>
+                    </Link>
                   </div>
                   <div className="box-select">
-                    <NavLink className="box-select-link">
+                    <Link to="/specialty-page" className="box-select-link">
                       <div className="box-icon">
                         <i className="bi bi-lungs"></i>
                       </div>
                       <div className="box-text">Chuyên khoa</div>
-                    </NavLink>
+                    </Link>
                   </div>
                   <div className="box-select">
-                    <NavLink className="box-select-link">
+                    <Link to="/work-schedule" className="box-select-link">
                       <div className="box-icon">
                         <i className="bi bi-calendar-heart"></i>
                       </div>
                       <div className="box-text">Lịch làm việc</div>
-                    </NavLink>
+                    </Link>
                   </div>
                   <div className="box-select">
-                    <NavLink className="box-select-link">
+                    <Link className="box-select-link">
                       <div className="box-icon">
                         <i className="bi bi-file-earmark-medical"></i>
                       </div>
                       <div className="box-text">Bảng giá</div>
-                    </NavLink>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Toaster, toast } from "sonner";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
-const ApptOtp = ({ setIsOtpConfirmed, show, setShow }) => {
+const ApptOtp = ({
+  setIsOtpConfirmed,
+  show,
+  setShow,
+  confirmSetAppt,
+  isSubmit,
+}) => {
   const [otp, setOtp] = useState("");
 
   const handleClose = () => {
@@ -49,7 +57,13 @@ const ApptOtp = ({ setIsOtpConfirmed, show, setShow }) => {
           <Button variant="outline-secondary" onClick={handleClose}>
             Huỷ
           </Button>
-          <Button variant="primary" onClick={handleConfirm}>
+          <Button
+            className={`btn ${
+              otp.length === 6 ? "btn-primary" : "btn-outline-primary"
+            }`}
+            onClick={confirmSetAppt}
+            disabled={otp.length < 6 || isSubmit}
+          >
             <Toaster
               toastOptions={{
                 className: "toast-noti",
@@ -57,7 +71,13 @@ const ApptOtp = ({ setIsOtpConfirmed, show, setShow }) => {
               position="top-center"
               richColors
             />
-            Xác nhận
+            {isSubmit ? (
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress size={24} style={{ color: "white" }} />
+              </Box>
+            ) : (
+              "Xác nhận"
+            )}
           </Button>
         </Modal.Footer>
       </Modal>

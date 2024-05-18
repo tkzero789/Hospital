@@ -78,6 +78,16 @@ export default function MobileNav() {
                 <li>
                   <NavLink
                     className="mobile-nav-link"
+                    to="/appt-detail-guest"
+                    data-to="/appt-detail-guest"
+                    onClick={handleLinkClick}
+                  >
+                    Kiểm tra lịch hẹn
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="mobile-nav-link"
                     to="/symptom-checker"
                     data-to="/symptom-checker"
                     onClick={handleLinkClick}

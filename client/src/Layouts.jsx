@@ -47,6 +47,7 @@ import SpecialtyPage from "./pages/guest/specialtyPage";
 import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
 import ViewBlogList from "./pages/blogs/viewBlogList";
 import ViewSpecificBlog from "./pages/blogs/viewSpecificBlog";
+import ApptDetailGuest from "./components/ApptParts/ApptDetailGuest";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -356,6 +357,7 @@ export default function Layouts({ userRole, userInfos }) {
               element={<Navigate to="/home" replace={true} />}
             />
             <Route path="/appt-request" element={<CreateAppt />} />
+            <Route path="/appt-detail-guest" element={<ApptDetailGuest />} />
             <Route path="/specialty-page" element={<SpecialtyPage />} />
             <Route
               path="/specialty-page/:specialtyId"

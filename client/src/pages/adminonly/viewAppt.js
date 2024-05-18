@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export default function ViewAppt() {
-  const [appt, setAppt] = useState({
+  const [isEditable, setIsEditable] = useState(false);
+  const [disableEdit, setDisableEdit] = useState(false);
+
+  const { apptId } = useParams();
+
+  const [formInputs, setFormInputs] = useState({
     fullName: "",
     phoneNumber: "",
     email: "",
@@ -15,14 +22,13 @@ export default function ViewAppt() {
     createdAt: null,
     status: "",
   });
-  const { apptId } = useParams();
 
   useEffect(() => {
     console.log(apptId);
     axios
       .get(`http://localhost:5000/appointment/${apptId}`)
       .then((res) => {
-        setAppt(res.data);
+        setFormInputs(res.data);
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
@@ -30,6 +36,12 @@ export default function ViewAppt() {
       });
   }, [apptId]);
 
+  // Handle input change
+  const handleInputChange = (event) => {
+    setFormInputs({ ...formInputs, [event.target.name]: event.target.value });
+  };
+
+  // Uppdate appointment status
   function updateStatus(newStatus) {
     console.log(newStatus);
     axios
@@ -40,7 +52,39 @@ export default function ViewAppt() {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);
       });
-    setAppt({ ...appt, status: newStatus });
+    setFormInputs({ ...formInputs, status: newStatus });
+  }
+
+  // Edit appointment info
+  function updateApptInfo(event) {
+    event.preventDefault();
+    setIsEditable((prevIsEditable) => {
+      if (prevIsEditable) {
+        axios
+          .post(`http://localhost:5000/appointment/edit/${apptId}`, formInputs)
+          .then((res) => {
+            console.log(res);
+            setDisableEdit(true);
+            setTimeout(() => setDisableEdit(false), 4000); // Enable the button after 4 seconds
+
+            // Fetch the updated data
+            axios
+              .get(`http://localhost:5000/appointment/${apptId}`)
+              .then((res) => {
+                setFormInputs(res.data);
+              })
+              .catch((err) => {
+                const message = `Có lỗi xảy ra: ${err}`;
+                window.alert(message);
+              });
+          })
+          .catch((err) => {
+            const message = `Có lỗi xảy ra: ${err}`;
+            window.alert(message);
+          });
+      }
+      return !prevIsEditable;
+    });
   }
 
   return (
@@ -55,8 +99,10 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="fullName"
-                  value={appt.fullName}
-                  readOnly
+                  value={formInputs.fullName}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
@@ -65,8 +111,10 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="phoneNumber"
-                  value={appt.phoneNumber}
-                  readOnly
+                  value={formInputs.phoneNumber}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
@@ -75,8 +123,10 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="email"
-                  value={appt.email}
-                  readOnly
+                  value={formInputs.email}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
@@ -85,8 +135,10 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="dob"
-                  value={appt.dob}
-                  readOnly
+                  value={formInputs.dob}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
@@ -95,28 +147,40 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="gender"
-                  value={appt.gender}
-                  readOnly
+                  value={formInputs.gender}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
                 <h4 className="text-blue-2 col-3">Nhu cầu khám</h4>
-                <input
-                  type="text"
+                <select
                   className="form-control border-primary-subtle col"
                   name="need"
-                  value={appt.need}
-                  readOnly
-                />
+                  value={formInputs.need}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                >
+                  <option value="Khám chuyên khoa">Khám chuyên khoa</option>
+                  <option value="Kiểm tra sức khoẻ tổng quát">
+                    Kiểm tra sức khoẻ tổng quát
+                  </option>
+                  <option value="Xét nghiệm, chẩn đoán hình ảnh">
+                    Xét nghiệm, chẩn đoán hình ảnh
+                  </option>
+                </select>
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Ngày đặt lịch</h4>
+                <h4 className="text-blue-2 col-3">Ngày hẹn khám</h4>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="date"
-                  value={appt.date}
-                  readOnly
+                  value={formInputs.date}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
@@ -125,7 +189,7 @@ export default function ViewAppt() {
                   type="text"
                   className="form-control border-primary-subtle col"
                   name="createdAt"
-                  value={appt.createdAt}
+                  value={formInputs.createdAt}
                   readOnly
                 />
               </div>
@@ -135,13 +199,15 @@ export default function ViewAppt() {
                   className="form-control border-primary-subtle col"
                   rows={5}
                   name="reason"
-                  value={appt.reason}
-                  readOnly
+                  value={formInputs.reason}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <NavLink
                   className="btn btn-outline-secondary"
                   to={`/appointment-table`}
@@ -149,31 +215,68 @@ export default function ViewAppt() {
                   Quay lại
                 </NavLink>
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-success"
-                  disabled={appt.status === "Accepted"}
+                  className={`btn btn-success ${
+                    isEditable === true || formInputs.status === "Accepted"
+                      ? "hidden"
+                      : ""
+                  }`}
+                  disabled={disableEdit}
                   onClick={() => updateStatus("Accepted")}
                 >
                   Chấp nhận
                 </button>
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
+                <button
+                  type="button"
+                  className={`btn ${
+                    isEditable ? "btn-outline-warning" : "btn-warning"
+                  }`}
+                  disabled={isEditable || disableEdit}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsEditable(true);
+                  }}
+                >
+                  Chỉnh sửa
+                </button>
+              </div>
+              <div className="c-2 d-grid gap-2">
+                <button
+                  type="button"
+                  className={`btn ${
+                    !isEditable ? "btn-outline-warning" : "btn-warning"
+                  }`}
+                  disabled={!isEditable || disableEdit}
+                  onClick={(event) => updateApptInfo(event)}
+                >
+                  {disableEdit ? (
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                      <CircularProgress size={24} />
+                    </Box>
+                  ) : (
+                    "Xác nhận chỉnh sửa"
+                  )}
+                </button>
+              </div>
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  disabled={appt.status === "Declined"}
+                  disabled={formInputs.status === "Declined"}
                   onClick={() => updateStatus("Declined")}
                 >
                   Từ chối
                 </button>
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-outline-danger"
-                  disabled={appt.status === "Spam"}
+                  disabled={formInputs.status === "Spam"}
                   onClick={() => updateStatus("Spam")}
                 >
                   Đánh dấu spam

@@ -5,10 +5,12 @@ import ApptForm from "../../components/ApptParts/ApptForm";
 import ApptSuccessMsg from "../../components/ApptParts/ApptSuccessMsg";
 import Footer from "../../components/ForPages/Footer";
 import ApptOtp from "../../components/ApptParts/ApptOtp";
+import { Toaster, toast } from "sonner";
 
 export default function CreateAppt() {
   const [isOtpConfirmed, setIsOtpConfirmed] = useState(false);
   const [show, setShow] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const [appt, setAppt] = useState({
     id: uuidv4(),
@@ -35,6 +37,7 @@ export default function CreateAppt() {
 
   async function confirmSetAppt(e) {
     e.preventDefault();
+    setIsSubmit(true);
     const updatedAppt = {
       ...appt,
       createdAt: new Date().toLocaleDateString("vi-VN", {
@@ -44,16 +47,32 @@ export default function CreateAppt() {
       }),
     };
 
-    axios
+    await axios
       .post("http://localhost:5000/appointment/add", updatedAppt)
       .then((res) => {
+        if (res.data && res.data.message === "Phone number spamming") {
+          throw new Error(
+            toast.error(
+              "Số điện thoại bị đánh dấu spam. Nếu đây là sự nhầm lẫn, quý khách vui lòng liên hệ tổng đài để giải quyết"
+            )
+          );
+        }
+        if (res.data && res.data.message === "Phone number pending") {
+          throw new Error(
+            toast.error(
+              "Số điện thoại đã đăng ký lịch khám. Quý khách vui lòng đợi tổng đài viên liên hệ để xác nhận"
+            )
+          );
+        }
         setAppt(updatedAppt);
-        setShow(true);
-        console.log(res.data);
+        setTimeout(() => {
+          setShow(false);
+          setIsOtpConfirmed(true);
+        }, 1500);
       })
       .catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
+        console.log(message);
       });
   }
 
@@ -71,10 +90,10 @@ export default function CreateAppt() {
           setShowModal={setShowModal}
           editMode={true}
           closeModal={closeModal}
-          confirmSetAppt={confirmSetAppt}
           otp={otp}
           setOtp={setOtp}
           sendOTP={sendOTP}
+          setShow={setShow}
         />
       )}
 
@@ -83,6 +102,8 @@ export default function CreateAppt() {
           setIsOtpConfirmed={setIsOtpConfirmed}
           show={show}
           setShow={setShow}
+          confirmSetAppt={confirmSetAppt}
+          isSubmit={isSubmit}
         />
       )}
 

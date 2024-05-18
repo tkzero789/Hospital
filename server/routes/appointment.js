@@ -2,6 +2,7 @@ const express = require("express");
 const appointmentRoutes = express.Router();
 const dbo = require("../db/conn");
 
+// Get all appointments
 appointmentRoutes.route("/appointment").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
@@ -15,6 +16,7 @@ appointmentRoutes.route("/appointment").get(async function (req, res) {
   }
 });
 
+// Get appointment by ID
 appointmentRoutes.route("/appointment/:id").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
@@ -28,9 +30,38 @@ appointmentRoutes.route("/appointment/:id").get(async function (req, res) {
   }
 });
 
+// Get all appointments by phone number
+appointmentRoutes
+  .route("/appointment/:phoneNumber")
+  .get(async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("mern_hospital");
+      const myquery = { phoneNumber: req.params.phoneNumber };
+      const result = await db_connect
+        .collection("appointments")
+        .find(myquery)
+        .toArray();
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+// Add an appointment
 appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { phoneNumber: req.body.phoneNumber };
+    const existAppts = await db_connect
+      .collection("appointments")
+      .find(myquery)
+      .toArray();
+    if (existAppts.find((appt) => appt.status === "Spam")) {
+      return res.json({ message: "Phone number spamming" });
+    }
+    if (existAppts.find((appt) => appt.status === "Pending")) {
+      return res.json({ message: "Phone number pending" });
+    }
     const myobj = {
       id: req.body.id,
       fullName: req.body.fullName,
@@ -51,6 +82,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   }
 });
 
+// Update/Edit appointment status
 appointmentRoutes
   .route("/appointment/update/:id")
   .post(async function (req, res) {
@@ -71,6 +103,35 @@ appointmentRoutes
     }
   });
 
+// Edit appointment info
+appointmentRoutes
+  .route("/appointment/edit/:id")
+  .post(async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("mern_hospital");
+      const myquery = { id: req.params.id };
+      const newvalues = {
+        $set: {
+          fullName: req.body.fullName,
+          phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
+          dob: req.body.dob,
+          gender: req.body.gender,
+          need: req.body.need,
+          date: req.body.date,
+          reason: req.body.reason,
+        },
+      };
+      const result = await db_connect
+        .collection("appointments")
+        .updateOne(myquery, newvalues);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
+
+// Delete appointment
 appointmentRoutes.route("/appointment/:id").delete(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("mern_hospital");

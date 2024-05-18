@@ -6,6 +6,7 @@ export default function LowNav() {
     { link: "/view-blog-list", text: "Tin tức" },
     { link: "/specialty-page", text: "Chuyên khoa" },
     { link: "/symptom-checker", text: "Chẩn đoán" },
+    { link: "/appt-detail-guest", text: "Kiểm tra lịch hẹn" },
     { link: "/work-schedule", text: "Lịch làm việc" },
   ];
 

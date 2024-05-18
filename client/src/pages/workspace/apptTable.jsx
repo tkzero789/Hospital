@@ -46,6 +46,8 @@ export default function ApptTable() {
         return 1;
       case "Accepted":
         return 2;
+      case "Declined":
+        return 2;
       default:
         return 3;
     }

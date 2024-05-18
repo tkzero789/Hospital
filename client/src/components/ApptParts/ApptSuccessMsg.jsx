@@ -32,6 +32,7 @@ const ApptSuccessMsg = () => {
                 <Link to="/symptom-checker">
                   Sử dụng dịch vụ chẩn đoán sức khoẻ trực tuyến
                 </Link>
+                <Link to="/appt-detail-guest">Kiểm tra lịch hẹn</Link>
               </div>
               <hr />
               <div className="back-to-home">
