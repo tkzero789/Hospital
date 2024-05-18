@@ -13,7 +13,7 @@ const SearchBarSymp = ({
   onCheck,
   chosenSymps,
 }) => {
-  // Delay 1s on rendering symptom
+  // Delay 0.5s on rendering symptom
   const [delay, setDelay] = useState(false);
 
   useEffect(() => {

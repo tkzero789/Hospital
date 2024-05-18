@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
 import ApptByPhoneDetail from "./ApptByPhoneDetail";
 import ApptFilter from "./ApptFilter";
+import { Skeleton } from "@mui/material";
 
 const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [sortedAppointments, setSortedAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = (appointment, e) => {
     e.preventDefault();
@@ -30,11 +32,11 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
     },
     {
       value: "desc",
-      label: "Ngày hẹn khám gần nhất",
+      label: "Ngày hẹn khám mới nhất",
     },
     {
       value: "asc",
-      label: "Ngày hẹn khám đầu tiên",
+      label: "Ngày hẹn khám cũ nhất",
     },
   ];
 
@@ -45,8 +47,11 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
     setFilter(option);
   };
 
+  // Delay
+  const sortTimeout = useRef(null);
   // Filter
   useEffect(() => {
+    setIsLoading(true);
     const sorted = [...appointments].sort((a, b) => {
       // Convert dates from "dd/mm/yyyy" to "mm/dd/yyyy"
       const aDate = a.date.split("/").reverse().join("/");
@@ -75,7 +80,17 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
       }
     });
 
-    setSortedAppointments(sorted);
+    // Clear any existing timeout
+    if (sortTimeout.current) clearTimeout(sortTimeout.current);
+
+    // Set a new timeout
+    sortTimeout.current = setTimeout(() => {
+      setSortedAppointments(sorted);
+      setIsLoading(false);
+    }, 500);
+
+    // Clear the timeout when the component unmounts or when the dependencies change
+    return () => clearTimeout(sortTimeout.current);
   }, [filter, appointments]);
 
   return (
@@ -107,7 +122,9 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                     Tất cả thông tin lịch hẹn
                   </div>
                   <div className="appt-detail-filter">
-                    <div>Sắp xếp theo:</div>
+                    <div>
+                      <b>Sắp xếp theo:</b>
+                    </div>
                     <ApptFilter
                       options={options}
                       value={filter}
@@ -116,55 +133,67 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                   </div>
                   <div className="app-detail-info">
                     <div className="app-detail-info-wrapper">
-                      {sortedAppointments.map((appointment, index) => (
-                        <div className="appt-detail-item" key={index}>
-                          <div className="appt-detail-item-wrapper">
-                            <div className="appt-individual">
-                              <p>Tên</p>
-                              <p>{appointment.fullName}</p>
+                      {isLoading
+                        ? Array(7)
+                            .fill()
+                            .map((_, index) => (
+                              <Skeleton
+                                key={index}
+                                variant="text"
+                                animation="wave"
+                                sx={{ fontSize: "2rem" }}
+                                style={{ margin: "0 10px" }}
+                              />
+                            ))
+                        : sortedAppointments.map((appointment, index) => (
+                            <div className="appt-detail-item" key={index}>
+                              <div className="appt-detail-item-wrapper">
+                                <div className="appt-individual">
+                                  <p>Tên</p>
+                                  <p>{appointment.fullName}</p>
+                                </div>
+                                <div className="appt-individual">
+                                  <p>Nhu cầu</p>
+                                  <p>{appointment.need}</p>
+                                </div>
+                                <div className="appt-individual">
+                                  <p>Ngày hẹn khám</p>
+                                  <p>
+                                    {appointment.date
+                                      ? appointment.date
+                                      : "Chưa có"}
+                                  </p>
+                                </div>
+                                <div className="appt-individual">
+                                  <p>Ngày đăng ký</p>
+                                  <p>{appointment.createdAt}</p>
+                                </div>
+                                <div className="appt-individual">
+                                  <p>Trạng thái</p>
+                                  <p
+                                    className={`${
+                                      appointment.status === "Pending"
+                                        ? "appt-status-pending"
+                                        : "appt-status-accepted"
+                                    }`}
+                                  >
+                                    {appointment.status === "Pending"
+                                      ? "Đang xét duyệt"
+                                      : appointment.status === "Accepted"
+                                      ? "Đã chấp nhận"
+                                      : appointment.status}
+                                  </p>
+                                </div>
+                                <div className="appt-individual-btn">
+                                  <button
+                                    onClick={(e) => handleClick(appointment, e)}
+                                  >
+                                    Xem
+                                  </button>
+                                </div>
+                              </div>
                             </div>
-                            <div className="appt-individual">
-                              <p>Nhu cầu</p>
-                              <p>{appointment.need}</p>
-                            </div>
-                            <div className="appt-individual">
-                              <p>Ngày hẹn khám</p>
-                              <p>
-                                {appointment.date
-                                  ? appointment.date
-                                  : "Chưa có"}
-                              </p>
-                            </div>
-                            <div className="appt-individual">
-                              <p>Ngày đăng ký</p>
-                              <p>{appointment.createdAt}</p>
-                            </div>
-                            <div className="appt-individual">
-                              <p>Trạng thái</p>
-                              <p
-                                className={`${
-                                  appointment.status === "Pending"
-                                    ? "appt-status-pending"
-                                    : "appt-status-accepted"
-                                }`}
-                              >
-                                {appointment.status === "Pending"
-                                  ? "Đang xét duyệt"
-                                  : appointment.status === "Accepted"
-                                  ? "Đã chấp nhận"
-                                  : appointment.status}
-                              </p>
-                            </div>
-                            <div className="appt-individual-btn">
-                              <button
-                                onClick={(e) => handleClick(appointment, e)}
-                              >
-                                Xem
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                          ))}
                     </div>
                   </div>
                   <div className="appt-detail-btn-2">

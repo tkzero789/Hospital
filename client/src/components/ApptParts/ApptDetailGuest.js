@@ -2,7 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import ApptIMG from "../../assets/appt/apptReq.jpg";
 import SearchApptDetail from "../../assets/appt/searchApptDetailSVG.svg";
 import Footer from "../ForPages/Footer";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ApptByPhone from "./ApptByPhone";
 import axios from "axios";
 
@@ -30,14 +30,13 @@ const ApptDetailGuest = () => {
           console.error("There was an error!", error);
         });
     }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   };
 
   const handlePhoneChange = (e) => {
     setPhoneNumber(e.target.value);
     console.log("Phone number:", phoneNumber);
   };
-
-  console.log("Appointments:", appointments);
 
   return (
     <>
