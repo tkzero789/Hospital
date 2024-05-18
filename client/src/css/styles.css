@@ -829,7 +829,7 @@
 }
 
 .appt-detail-filter .dropdown-filter {
-  width: 225px;
+  width: 229px;
   z-index: 5;
   position: absolute;
   border-radius: 6px;
@@ -1798,7 +1798,7 @@
   background-color: #3498db;
   color: var(--text-white);
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: none;
   width: 180px;
 }

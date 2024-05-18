@@ -4,6 +4,7 @@ import SearchApptDetail from "../../assets/appt/searchApptDetailSVG.svg";
 import Footer from "../ForPages/Footer";
 import React, { useState } from "react";
 import ApptByPhone from "./ApptByPhone";
+import { Toaster, toast } from "sonner";
 import axios from "axios";
 
 const ApptDetailGuest = () => {
@@ -13,17 +14,20 @@ const ApptDetailGuest = () => {
 
   const handleBtnClick = (e) => {
     e.preventDefault();
-    setIsPhoneNum(true);
     if (phoneNumber) {
       axios
         .get(`http://localhost:5000/appointment/${e.target.value}`)
         .then((response) => {
           console.log("API response:", response.data);
-          setAppointments(
-            response.data.filter(
-              (appointment) => appointment.phoneNumber === phoneNumber
-            )
+          const filteredAppointments = response.data.filter(
+            (appointment) => appointment.phoneNumber === phoneNumber
           );
+          if (filteredAppointments.length > 0) {
+            setAppointments(filteredAppointments);
+            setIsPhoneNum(true);
+          } else {
+            toast.error("Số điện thoại không chính xác");
+          }
           console.log("Filter response:", response.data);
         })
         .catch((error) => {
@@ -79,7 +83,16 @@ const ApptDetailGuest = () => {
                       </div>
                     </div>
                     <div className="appt-detail-btn">
-                      <button onClick={handleBtnClick}>Tiếp theo</button>
+                      <button onClick={handleBtnClick}>
+                        <Toaster
+                          toastOptions={{
+                            className: "toast-noti",
+                          }}
+                          position="top-center"
+                          richColors
+                        />
+                        Tiếp theo
+                      </button>
                     </div>
                   </div>
                 </div>

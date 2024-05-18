@@ -14,6 +14,7 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
     e.preventDefault();
     setIsClicked(true);
     setSelectedAppointment(appointment);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   };
 
   const handleBack = (e) => {
@@ -32,11 +33,11 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
     },
     {
       value: "desc",
-      label: "Ngày hẹn khám mới nhất",
+      label: "Ngày hẹn khám giảm dần",
     },
     {
       value: "asc",
-      label: "Ngày hẹn khám cũ nhất",
+      label: "Ngày hẹn khám tăng dần",
     },
   ];
 
