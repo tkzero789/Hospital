@@ -25,7 +25,7 @@ const ApptByPhoneDetail = ({
         <div className="content-container">
           <div className="appt-modal">
             <div className="appt-modal-wrapper">
-              <div className="appt-modal-header">All detail</div>
+              <div className="appt-modal-header">Thông tin lịch hẹn</div>
               <div className="appt-modal-info">
                 <div className="appt-modal-data">
                   <span>Họ tên:</span>
