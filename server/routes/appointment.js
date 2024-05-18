@@ -82,6 +82,27 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   }
 });
 
+// Check for appointment with existed phone number
+appointmentRoutes.route("/check-phone-number").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("mern_hospital");
+    const myquery = { phoneNumber: req.body.phoneNumber };
+    const existAppts = await db_connect
+      .collection("appointments")
+      .find(myquery)
+      .toArray();
+    if (existAppts.find((appt) => appt.status === "Spam")) {
+      return res.json({ exists: true, message: "Phone number spamming" });
+    }
+    if (existAppts.find((appt) => appt.status === "Pending")) {
+      return res.json({ exists: true, message: "Phone number pending" });
+    }
+    return res.json({ exists: false });
+  } catch (err) {
+    throw err;
+  }
+});
+
 // Update/Edit appointment status
 appointmentRoutes
   .route("/appointment/update/:id")

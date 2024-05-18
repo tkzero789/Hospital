@@ -14,7 +14,7 @@ export default function ApptForm({
   setShowModal,
   editMode,
   closeModal,
-  setShow,
+  checkPhoneNumber,
 }) {
   // --- DOB: Start ---
   const [date, setDate] = useState("");
@@ -542,7 +542,7 @@ export default function ApptForm({
                     <button type="button" onClick={closeModal}>
                       Quay lại
                     </button>
-                    <button type="button" onClick={setShow}>
+                    <button type="button" onClick={checkPhoneNumber}>
                       <Toaster
                         toastOptions={{
                           className: "toast-noti-2",

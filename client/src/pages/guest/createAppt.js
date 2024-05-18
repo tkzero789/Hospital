@@ -35,6 +35,7 @@ export default function CreateAppt() {
     window.alert("Đã gửi mã xác thực, vui lòng kiểm tra tin nhắn");
   }
 
+  // Add the appointment
   async function confirmSetAppt(e) {
     e.preventDefault();
     setIsSubmit(true);
@@ -76,6 +77,34 @@ export default function CreateAppt() {
       });
   }
 
+  // Check for existed phone number
+  async function checkPhoneNumber() {
+    const phoneNumber = appt.phoneNumber;
+    await axios
+      .post("http://localhost:5000/check-phone-number", { phoneNumber })
+      .then((res) => {
+        if (res.data && res.data.message === "Phone number spamming") {
+          throw new Error(
+            toast.error(
+              "Số điện thoại bị đánh dấu spam. Nếu đây là sự nhầm lẫn, quý khách vui lòng liên hệ tổng đài để giải quyết"
+            )
+          );
+        }
+        if (res.data && res.data.message === "Phone number pending") {
+          throw new Error(
+            toast.error(
+              "Số điện thoại đã đăng ký lịch khám. Quý khách vui lòng đợi tổng đài viên liên hệ để xác nhận"
+            )
+          );
+        }
+        setShow(true);
+      })
+      .catch((err) => {
+        const message = `Error occurred: ${err}`;
+        console.log(message);
+      });
+  }
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -93,7 +122,7 @@ export default function CreateAppt() {
           otp={otp}
           setOtp={setOtp}
           sendOTP={sendOTP}
-          setShow={setShow}
+          checkPhoneNumber={checkPhoneNumber}
         />
       )}
 
