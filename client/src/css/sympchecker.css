@@ -628,8 +628,8 @@
 /* MOBILE RESPONSIVE */
 @media only screen and (max-width: 767px) {
   /* Symptom Checker */
-  h4 {
-    display: none;
+  .m-symp-name {
+    display: block;
   }
 
   h5 {
