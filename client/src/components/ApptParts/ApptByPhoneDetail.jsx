@@ -35,13 +35,13 @@ const ApptByPhoneDetail = ({
                   <span>Số điện thoại:</span>
                   <p>{phoneNumber}</p>
                 </div>
-                <div className={`appt-modal-data ${!email ? "hidden" : ""}`}>
+                <div className="appt-modal-data">
+                  <span>Email:</span>
                   {email ? (
-                    <>
-                      <span>Email:</span>
-                      <p>{email}</p>
-                    </>
-                  ) : null}
+                    <p>{email}</p>
+                  ) : (
+                    <p>Chưa cung cấp (không bắt buộc)</p>
+                  )}
                 </div>
                 <div className="appt-modal-data">
                   <span>Ngày sinh:</span>
@@ -68,13 +68,13 @@ const ApptByPhoneDetail = ({
                     )}
                   </p>
                 </div>
-                <div className={`appt-modal-data ${!reason ? "hidden" : ""}`}>
+                <div className="appt-modal-data">
+                  <span>Mô tả vấn đề sức khoẻ:</span>
                   {reason ? (
-                    <>
-                      <span>Mô tả vấn đề sức khoẻ:</span>
-                      <p>{reason}</p>
-                    </>
-                  ) : null}
+                    <p>{reason}</p>
+                  ) : (
+                    <p>Chưa được cung cấp (không bắt buộc)</p>
+                  )}
                 </div>
               </div>
               <div className="appt-detail-btn-2">

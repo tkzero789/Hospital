@@ -482,15 +482,13 @@ export default function ApptForm({
                     <span>Số điện thoại:</span>
                     <p>{appt.phoneNumber}</p>
                   </div>
-                  <div
-                    className={`appt-modal-data ${!appt.email ? "hidden" : ""}`}
-                  >
+                  <div className="appt-modal-data">
+                    <span>Email:</span>
                     {appt.email ? (
-                      <>
-                        <span>Email:</span>
-                        <p>{appt.email}</p>
-                      </>
-                    ) : null}
+                      <p>{appt.email}</p>
+                    ) : (
+                      <p>Chưa cung cấp (không bắt buộc)</p>
+                    )}
                   </div>
                   <div className="appt-modal-data">
                     <span>Ngày sinh:</span>
@@ -506,27 +504,24 @@ export default function ApptForm({
                     <span>Nhu cầu khám:</span>
                     <p>{appt.need}</p>
                   </div>
-                  <div
-                    className={`appt-modal-data ${!appt.date ? "hidden" : ""}`}
-                  >
+                  <div className="appt-modal-data">
+                    <span>Ngày đặt khám:</span>
                     {appt.date ? (
-                      <>
-                        <span>Ngày đặt khám:</span>
-                        <p>{appt.date}</p>
-                      </>
-                    ) : null}
+                      <p>{appt.date}</p>
+                    ) : (
+                      <p>
+                        Tổng đài BKCare sẽ liên hệ Quý khách trong thời gian sớm
+                        nhất để xác nhận lịch hẹn.
+                      </p>
+                    )}
                   </div>
-                  <div
-                    className={`appt-modal-data ${
-                      !appt.reason ? "hidden" : ""
-                    }`}
-                  >
+                  <div className="appt-modal-data">
+                    <span>Mô tả vấn đề sức khoẻ:</span>
                     {appt.reason ? (
-                      <>
-                        <span>Mô tả vấn đề sức khoẻ:</span>
-                        <p>{appt.reason}</p>
-                      </>
-                    ) : null}
+                      <p>{appt.reason}</p>
+                    ) : (
+                      <p>Chưa cung cấp (không bắt buộc)</p>
+                    )}
                   </div>
                   <hr style={{ marginTop: "3rem" }} />
                   <div className="attention-text">

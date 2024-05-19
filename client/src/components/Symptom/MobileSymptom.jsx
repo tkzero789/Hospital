@@ -8,7 +8,7 @@ const MobileSymptom = ({ symptom, onCheck, toggleFunction }) => {
         e.preventDefault();
         onCheck(symptom.id);
         toggleFunction();
-        window.scrollTo({ top: 140, left: 0, behavior: "instant" });
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       }}
     >
       <span>{symptom.name}</span>

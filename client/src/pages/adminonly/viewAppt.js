@@ -71,7 +71,7 @@ export default function ViewAppt() {
           .then((res) => {
             console.log(res);
             setDisableEdit(true);
-            setTimeout(() => setDisableEdit(false), 4000); // Enable the button after 4 seconds
+            setTimeout(() => setDisableEdit(false), 2500); // Enable the button after 2.5 seconds
 
             // Fetch the updated data
             axios
