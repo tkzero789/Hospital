@@ -144,10 +144,11 @@ export default function ApptForm({
 
   const validateInput = () => {
     const inputFullName = document.getElementById("inputFullName");
+    const inputPhoneNumber = document.getElementById("inputPhoneNumber");
     const inputEmail = document.getElementById("inputEmail");
     if (!inputFullName.checkValidity()) {
       toast.warning("Thiếu họ và tên");
-    } else if (appt.phoneNumber.checkValidity()) {
+    } else if (!inputPhoneNumber.checkValidity()) {
       toast.warning("Số điện thoại không hợp lệ");
     } else if (!inputEmail.checkValidity()) {
       toast.warning("Email không hợp lệ");
