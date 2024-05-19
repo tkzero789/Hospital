@@ -635,7 +635,7 @@
   }
 
   .specialty-item {
-    height: 240px;
+    height: 290px;
   }
 
   .specialty-item img {
@@ -728,7 +728,7 @@
   }
 
   .mobile-blog-thumbnail-img {
-    max-width: 40%;
+    width: 40%;
     display: inline-block;
   }
 
@@ -739,6 +739,7 @@
 
   .mobile-blog-intro {
     padding-left: 8px;
+    width: 60%;
   }
 
   .mobile-blog-intro span {

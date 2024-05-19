@@ -147,7 +147,7 @@ export default function ApptForm({
     const inputEmail = document.getElementById("inputEmail");
     if (!inputFullName.checkValidity()) {
       toast.warning("Thiếu họ và tên");
-    } else if (appt.phoneNumber === "") {
+    } else if (appt.phoneNumber.checkValidity()) {
       toast.warning("Số điện thoại không hợp lệ");
     } else if (!inputEmail.checkValidity()) {
       toast.warning("Email không hợp lệ");
