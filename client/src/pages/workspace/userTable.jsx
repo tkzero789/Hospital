@@ -29,7 +29,7 @@ export default function UserTable({ userRole, userInfos }) {
   const actionColumn = [
     {
       field: "action",
-      headerName: "Chỉnh sửa",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         return (

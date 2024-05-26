@@ -65,7 +65,7 @@ const isHDrOrAdmin = (req, res, next) => {
 // get all
 diseaseRoutes.route("/disease").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect.collection("diseases").find({}).toArray();
     res.json(result);
   } catch (err) {
@@ -76,7 +76,7 @@ diseaseRoutes.route("/disease").get(async function (req, res) {
 // get by id
 diseaseRoutes.route("/disease/:id").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const result = await db_connect.collection("diseases").findOne(myquery);
     res.json(result);
@@ -88,7 +88,7 @@ diseaseRoutes.route("/disease/:id").get(async function (req, res) {
 // get disease by name (check duplicate)
 diseaseRoutes.route("/disease/:name").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { name: req.params.name };
     const result = await db_connect.collection("diseases").findOne(myquery);
     res.json(result);
@@ -102,7 +102,7 @@ diseaseRoutes
   .route("/disease/add")
   .post(verifyJWT, isAdmin, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const dupCheck = await db_connect
         .collection("diseases")
         .findOne({ name: req.body.name });
@@ -134,7 +134,7 @@ diseaseRoutes
   .route("/disease/update/:id")
   .post(verifyJWT, isAdmin, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const newvalues = {
         $set: {
@@ -161,7 +161,7 @@ diseaseRoutes
   .route("/disease/:id")
   .delete(verifyJWT, isAdmin, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const result = await db_connect.collection("diseases").deleteOne(myquery);
       res.json(result);
@@ -177,7 +177,7 @@ diseaseRoutes
   .route("/disease-temp")
   .get(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const result = await db_connect
         .collection("diseases-temp")
         .find({})
@@ -193,7 +193,7 @@ diseaseRoutes
   .route("/disease-temp/:idTemp")
   .get(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { idTemp: req.params.idTemp };
       const result = await db_connect
         .collection("diseases-temp")
@@ -209,7 +209,7 @@ diseaseRoutes
   .route("/disease-temp/add")
   .post(verifyJWT, isHeadDoctor, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const dupCheck = await db_connect
         .collection("diseases-temp")
         .findOne({ name: req.body.name });
@@ -245,7 +245,7 @@ diseaseRoutes
   .route("/disease-temp/:idTemp")
   .delete(verifyJWT, isHDrOrAdmin, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { idTemp: req.params.idTemp };
       const result = await db_connect
         .collection("diseases-temp")
@@ -263,7 +263,7 @@ diseaseRoutes
   .route("/disease/:diseaseId/add-article")
   .post(verifyJWT, isHeadDoctor, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.diseaseId };
       const action = {
         $push: {
@@ -284,7 +284,7 @@ diseaseRoutes
   .route("/disease/:diseaseId/update-article/:articleId")
   .post(verifyJWT, isHeadDoctor, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.diseaseId };
       const searchRes = await db_connect
         .collection("diseases")
@@ -311,7 +311,7 @@ diseaseRoutes
   .route("/disease/:diseaseId/delete-article/:articleId")
   .post(verifyJWT, isHeadDoctor, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.diseaseId };
       const action = {
         $pull: {

@@ -5,7 +5,7 @@ const dbo = require("../db/conn");
 // Get all appointments
 appointmentRoutes.route("/appointment").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect
       .collection("appointments")
       .find({})
@@ -19,7 +19,7 @@ appointmentRoutes.route("/appointment").get(async function (req, res) {
 // Get appointment by ID
 appointmentRoutes.route("/appointment/:id").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     console.log(req.params.id);
     const myquery = { id: req.params.id };
     const result = await db_connect.collection("appointments").findOne(myquery);
@@ -35,7 +35,7 @@ appointmentRoutes
   .route("/appointment/:phoneNumber")
   .get(async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { phoneNumber: req.params.phoneNumber };
       const result = await db_connect
         .collection("appointments")
@@ -50,7 +50,7 @@ appointmentRoutes
 // Add an appointment
 appointmentRoutes.route("/appointment/add").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { phoneNumber: req.body.phoneNumber };
     const existAppts = await db_connect
       .collection("appointments")
@@ -85,7 +85,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
 // Check for appointment with existed phone number
 appointmentRoutes.route("/check-phone-number").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { phoneNumber: req.body.phoneNumber };
     const existAppts = await db_connect
       .collection("appointments")
@@ -108,7 +108,7 @@ appointmentRoutes
   .route("/appointment/update/:id")
   .post(async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const newvalues = {
         $set: {
@@ -129,7 +129,7 @@ appointmentRoutes
   .route("/appointment/edit/:id")
   .post(async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const newvalues = {
         $set: {
@@ -155,7 +155,7 @@ appointmentRoutes
 // Delete appointment
 appointmentRoutes.route("/appointment/:id").delete(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const result = await db_connect
       .collection("appointments")

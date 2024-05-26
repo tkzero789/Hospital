@@ -19,7 +19,7 @@ export default function staffHome() {
         <MobileNav />
       </header>
       {/* Main */}
-      <main id="main">
+      <main>
         <Carousel />
         <Options />
         <About />

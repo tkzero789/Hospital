@@ -345,7 +345,7 @@ export default function Layouts({ userRole, userInfos }) {
         <GuestLayout>
           <Routes>
             {/* guest pages */}
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<Home userRole={userRole} />} />
             <Route path="/symptom-checker" element={<SymptomChecker />} />
             <Route
               path="/articles/:articleId"

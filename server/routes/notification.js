@@ -68,7 +68,7 @@ notificationRoutes
   .route("/notification")
   .get(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const result = await db_connect
         .collection("notifications")
         .find({})
@@ -84,7 +84,7 @@ notificationRoutes
   .route("/notification/:doctorID")
   .get(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const query = {
         toDoctorID: { $elemMatch: { $eq: req.params.doctorID } },
       };
@@ -104,7 +104,7 @@ notificationRoutes
   .route("/notification/:id")
   .get(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const result = await db_connect
         .collection("notifications")
@@ -120,7 +120,7 @@ notificationRoutes
   .route("/notification/add")
   .post(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myobj = {
         id: req.body.id,
         fromInfos: req.body.fromInfos,
@@ -143,7 +143,7 @@ notificationRoutes
   .route("/notification/update-status/:id")
   .post(verifyJWT, isStaff, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const newvalues = {
         $set: {
@@ -164,7 +164,7 @@ notificationRoutes
   .route("/notification/:id")
   .delete(verifyJWT, isAdmin, async function (req, res) {
     try {
-      const db_connect = await dbo.getDb("mern_hospital");
+      const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
       const result = await db_connect
         .collection("notifications")

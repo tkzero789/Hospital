@@ -38,7 +38,7 @@ const upload = multer({
 // Fetch all blogs from database
 blogRoutes.route("/blog").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect.collection("blogs").find({}).toArray();
     res.json(result);
   } catch (err) {
@@ -49,7 +49,7 @@ blogRoutes.route("/blog").get(async function (req, res) {
 // Add a blog into database (blogs collection)
 blogRoutes.route("/blog/add").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myobj = {
       id: req.body.id,
       title: req.body.title,
@@ -126,7 +126,7 @@ blogRoutes.route("/blog/delete").post(async function (req, res) {
 // View specific blog
 blogRoutes.route("/blog/:id").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     console.log(req.params.id);
     const myquery = { id: req.params.id };
     const result = await db_connect.collection("blogs").findOne(myquery);
@@ -140,7 +140,7 @@ blogRoutes.route("/blog/:id").get(async function (req, res) {
 // Update status
 blogRoutes.route("/blog/update/:id").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const newvalues = {
       $set: {
@@ -159,7 +159,7 @@ blogRoutes.route("/blog/update/:id").post(async function (req, res) {
 // Edit blog
 blogRoutes.route("/blog/edit/:id").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const newvalues = {
       $set: {
@@ -183,7 +183,7 @@ blogRoutes.route("/blog/edit/:id").post(async function (req, res) {
 // Delete blog
 blogRoutes.route("/blog/:id").delete(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const result = await db_connect.collection("blogs").deleteOne(myquery);
     res.json(result);

@@ -7,7 +7,7 @@ const SECRET_JWT_KEY = process.env.SECRET_JWT_KEY;
 
 userRoutes.route("/user").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect.collection("users").find({}).toArray();
     res.json(result);
   } catch (err) {
@@ -17,7 +17,7 @@ userRoutes.route("/user").get(async function (req, res) {
 
 userRoutes.route("/user/:id").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const result = await db_connect.collection("users").findOne(myquery);
     res.json(result);
@@ -28,7 +28,7 @@ userRoutes.route("/user/:id").get(async function (req, res) {
 
 userRoutes.route("/user/doctor-ids").get(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect.collection("users").find({}).toArray();
     const doctorIds = result
       .map((user) => user.userInfos.doctorID)
@@ -41,7 +41,7 @@ userRoutes.route("/user/doctor-ids").get(async function (req, res) {
 
 userRoutes.route("/user/medspec-doctor-ids").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect
       .collection("users")
       .find({ "userInfos.medSpecialty": req.body.medSpecialty })
@@ -56,7 +56,7 @@ userRoutes.route("/user/medspec-doctor-ids").post(async function (req, res) {
 userRoutes.route("/user/medspec-hdoctor-id").post(async function (req, res) {
   try {
     console.log(req.body.medSpecialty);
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const result = await db_connect.collection("users").findOne({
       "userInfos.medSpecialty": req.body.medSpecialty,
       role: "head-doctor",
@@ -73,7 +73,7 @@ userRoutes.route("/user/medspec-hdoctor-id").post(async function (req, res) {
 
 userRoutes.route("/user/update/:id").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const newvalues = {
       $set: {
@@ -94,7 +94,7 @@ userRoutes.route("/user/update/:id").post(async function (req, res) {
 
 userRoutes.route("/user/update-status/:id").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };
     const newvalues = {
       $set: {
@@ -112,7 +112,7 @@ userRoutes.route("/user/update-status/:id").post(async function (req, res) {
 
 userRoutes.route("/signup").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
@@ -133,7 +133,7 @@ userRoutes.route("/signup").post(async function (req, res) {
 
 userRoutes.route("/signin").post(async function (req, res) {
   try {
-    const db_connect = await dbo.getDb("mern_hospital");
+    const db_connect = await dbo.getDb("hospital");
     const { email, phoneNumber, password } = req.body;
     const result = await db_connect.collection("users").findOne({
       $or: [{ email }, { phoneNumber }],

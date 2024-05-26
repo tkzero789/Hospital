@@ -8,7 +8,7 @@ import News from "../../home/News";
 import Footer from "../../components/ForPages/Footer";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-export default function Home() {
+export default function Home(userRole) {
   return (
     <>
       <HelmetProvider>
@@ -18,7 +18,15 @@ export default function Home() {
       </HelmetProvider>
       <div>
         {/* Main */}
-        <main id="main">
+        <main
+          className={`${
+            userRole === "admin" ||
+            userRole === "head-doctor" ||
+            userRole === "doctor"
+              ? "main-padding-0"
+              : "main-padding-1"
+          }`}
+        >
           <Carousel />
           <Options />
           <About />
