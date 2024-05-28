@@ -8,16 +8,13 @@ import "./css/responsive.css";
 import "./css/base.css";
 import { useAuth } from "./AuthContext";
 import RequireAuth from "./RequireAuth";
-import ScrollToTop from "./components/Functionals/ScrollToTop";
+import ScrollToTop from "./utilities/ScrollToTop";
 // auth pages
-import Signup from "./pages/auth/signup";
-import SignupDoctor from "./pages/auth/signupDoctor";
-import Signin from "./pages/auth/signin";
-import Login from "./pages/login/Login";
-import TestSignin from "./pages/auth/testSignin";
+import SignupDoctor from "./pages/account/signupStaff";
+import TestSignin from "./pages/account/signinStaff";
 // routes
 import Layouts from "./Layouts";
-import StaffHome from "./pages/guest/staffHome";
+import StaffHome from "./pages/home/staffHome";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();
@@ -29,7 +26,6 @@ const App = () => {
 
       <Routes>
         {/* auth pages */}
-        <Route path="/signup" element={<Signup />} />
         <Route
           path="/signup-doctor"
           element={
@@ -41,9 +37,7 @@ const App = () => {
             </RequireAuth>
           }
         />
-        <Route path="/signin" element={<Signin />} />
         <Route path="/test-signin" element={<TestSignin />} />
-        <Route path="/login" element={<Login />} />
         {/* layouts and content */}
         <Route
           path="/*"

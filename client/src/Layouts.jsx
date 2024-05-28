@@ -26,28 +26,28 @@ import ViewArticle from "./pages/article/viewArticle";
 import EditArticle from "./pages/article/editArticle";
 // appointment pages
 import ApptTable from "./pages/workspace/apptTable";
-import ViewAppt from "./pages/adminonly/viewAppt";
+import ViewAppt from "./pages/appointment/viewAppt";
 // blog pages
-import CreateBlog from "./pages/blogs/createBlog";
+import CreateBlog from "./pages/blog/createBlog";
 import BlogTable from "./pages/workspace/blogTable";
-import ViewBlog from "./pages/adminonly/viewBlog";
-import EditBlog from "./pages/blogs/editBlog";
+import ViewBlog from "./pages/blog/viewBlog";
+import EditBlog from "./pages/blog/editBlog";
 // user pages
 import UserTable from "./pages/workspace/userTable";
-import ViewUser from "./pages/adminonly/viewUser";
-import EditUser from "./pages/adminonly/editUser";
+import ViewUser from "./pages/account/viewUser";
+import EditUser from "./pages/account/editUser";
 // guest pages
 import GuestLayout from "./pages/layout/GuestLayout";
-import SymptomChecker from "./pages/guest/symptomChecker";
-import Home from "./pages/guest/home";
-import CreateAppt from "./pages/guest/createAppt";
-import ArticlePatientView from "./pages/guest/articlePatientView";
-import Work from "./pages/guest/workSchedule";
-import SpecialtyPage from "./pages/guest/specialtyPage";
+import SymptomChecker from "./pages/home/symptomChecker";
+import Home from "./pages/home/home";
+import CreateAppt from "./pages/appointment/createAppt";
+import ArticlePatientView from "./pages/home/articlePatientView";
+import Work from "./pages/home/workSchedule";
+import SpecialtyPage from "./pages/home/specialtyPage";
 import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
-import ViewBlogList from "./pages/blogs/viewBlogList";
-import ViewSpecificBlog from "./pages/blogs/viewSpecificBlog";
-import ApptDetailGuest from "./components/ApptParts/ApptDetailGuest";
+import ViewBlogList from "./pages/home/viewBlogList";
+import ViewSpecificBlog from "./pages/home/viewSpecificBlog";
+import ApptDetailGuest from "./pages/home/apptDetailGuest";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);

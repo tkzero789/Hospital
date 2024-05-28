@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import GridViewIcon from "@mui/icons-material/GridView";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import TodayIcon from "@mui/icons-material/Today";
@@ -10,7 +9,7 @@ import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import BKCLogo from "../../assets/logo/footerLogo2.svg";
+import BaySideLogo from "../../assets/logo/BaySide-logo-2.svg";
 import { useAuth } from "../../AuthContext";
 import "./sidebar.scss";
 
@@ -53,7 +52,7 @@ export default function Sidebar() {
           style={{ textDecoration: "none" }}
         >
           <div className="admin-logo">
-            <img src={BKCLogo} alt="" />
+            <img src={BaySideLogo} alt="hospital logo" />
           </div>
         </NavLink>
       </div>

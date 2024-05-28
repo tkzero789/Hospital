@@ -10,7 +10,7 @@ import Eyes1 from "../../assets/home/eyes1.jpg";
 import Lab1 from "../../assets/home/lab1.jpg";
 import Ents1 from "../../assets/home/ents1.jpg";
 import Neuron1 from "../../assets/home/neuron1.jpg";
-import Footer from "../ForPages/Footer";
+import Footer from "../Home/Footer";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const SpecialtyDetail = () => {
