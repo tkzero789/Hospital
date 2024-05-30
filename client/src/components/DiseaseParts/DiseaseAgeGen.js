@@ -3,18 +3,18 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 const DiseaseAgeGen = ({ disease, setDisease }) => {
   const ageRanges = [
-    "Mọi độ tuổi",
-    "Dưới 1 tuổi",
-    "1 tuổi - 5 tuổi",
-    "6 tuổi - 12 tuổi",
-    "13 tuổi - 16 tuổi",
-    "17 tuổi - 29 tuổi",
-    "30 tuổi - 39 tuổi",
-    "40 tuổi - 49 tuổi",
-    "50 tuổi - 64 tuổi",
-    "Trên 65 tuổi",
+    "All ages",
+    "Under 1 years old",
+    "1 - 5 years old",
+    "6 - 12 years old",
+    "13 - 16 years old",
+    "17 - 29 years old",
+    "30 - 39 years old",
+    "40 - 49 years old",
+    "50 - 64 years old",
+    "Above 65 years old",
   ];
-  const genders = ["Cả nam và nữ", "Nam", "Nữ"];
+  const genders = ["All genders", "Male", "Female"];
   const [chosenAges, setChosenAges] = useState([]);
   const [chosenGens, setChosenGens] = useState([]);
 
@@ -61,17 +61,15 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
   return (
     <div>
       <div className="pb-5 text-center">
-        <h4 className="text-blue-1 fw-med">
-          Chọn độ tuổi và giới tính có thể mắc phải
-        </h4>
+        <h4 className="text-blue-1 fw-med">Select age and gender</h4>
       </div>
       <div className="px-5">
         <div className="form-group row pb-5">
-          <h5 className="col-2 fw-med">Độ tuổi</h5>
+          <h5 className="col-2 fw-med">Age</h5>
           <div className="col-3">
-            <Dropdown className=" col-12" autoClose="outside">
-              <Dropdown.Toggle className="form-select blue-border-1 col-12 fw-reg">
-                Độ tuổi
+            <Dropdown className="col-12" autoClose="outside">
+              <Dropdown.Toggle className="form-select blue-border-1 col-12 fw-reg btn-light">
+                Select age
               </Dropdown.Toggle>
               <Dropdown.Menu className="w-100">
                 {ageRanges.map((ageRange) => (
@@ -85,8 +83,8 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
                         checked={chosenAges.includes(ageRange)}
                         onChange={() => checkAgeRangeField(ageRange)}
                         disabled={
-                          chosenAges.includes("Mọi độ tuổi") &&
-                          ageRange !== "Mọi độ tuổi"
+                          chosenAges.includes("All ages") &&
+                          ageRange !== "All ages"
                         }
                       />
                       <span className="ps-2">{ageRange}</span>
@@ -98,11 +96,11 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
           </div>
         </div>
         <div className="form-group row pb-5">
-          <h5 className="col-2 fw-med text-blue-2">Giới tính</h5>
+          <h5 className="col-2 fw-med">Gender</h5>
           <div className="col-3">
             <Dropdown className=" col-12" autoClose="outside">
-              <Dropdown.Toggle className="form-select blue-border-1 col-12 fw-reg">
-                Giới tính
+              <Dropdown.Toggle className="form-select blue-border-1 col-12 fw-reg btn-light">
+                Select gender
               </Dropdown.Toggle>
               <Dropdown.Menu className="w-100">
                 {genders.map((gender) => (
@@ -116,8 +114,8 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
                         checked={chosenGens.includes(gender)}
                         onChange={() => checkGenderField(gender)}
                         disabled={
-                          chosenGens.includes("Cả nam và nữ") &&
-                          gender !== "Cả nam và nữ"
+                          chosenGens.includes("All genders") &&
+                          gender !== "All genders"
                         }
                       />
                       <span className="ps-2">{gender}</span>

@@ -8,35 +8,35 @@ export default function Options() {
       <section className="options w-100">
         <div className="content-container">
           <div className="opt-big-header">
-            <div className="opt-big-header-text">Dịch vụ trực tuyến</div>
+            <div className="opt-big-header-text">Convenience Center </div>
           </div>
           <div className="options-wrapper">
             <div className="c-6 md-12">
               <div className="opt-section">
                 <div className="opt-header">
-                  <div className="opt-header-text">Tiện ích</div>
+                  <div className="opt-header-text">Virtual Care</div>
                 </div>
                 <div className="opt-box">
-                  <div className="opt-title">Chẩn đoán sức khoẻ trực tuyến</div>
+                  <div className="opt-title">Personal Health Checkup</div>
                   <div className="opt-body">
-                    Với phòng khám online, bạn có thể tiếp cận các dịch vụ y tế
-                    chất lượng mà không cần ra khỏi nhà.
+                    Explore your health and get personalized insights with our
+                    quick and confidential online checkup tool.
                   </div>
                   <div className="opt-btn-wrapper">
                     <Link className="opt-btn-link" to="/symptom-checker">
-                      Chẩn đoán
+                      Diagnose
                     </Link>
                   </div>
                 </div>
                 <div className="opt-box">
-                  <div className="opt-title">Đăng ký lịch khám</div>
+                  <div className="opt-title">Schedule an appointment</div>
                   <div className="opt-body">
-                    Đăng ký dịch vụ khám bệnh của chúng tôi để nhận được sự chăm
-                    sóc y tế chất lượng cao mà bạn xứng đáng.
+                    We make it easy! Skip the wait. Just hop online and pick a
+                    time that works best for you.
                   </div>
                   <div className="opt-btn-wrapper">
                     <Link className="opt-btn-link" to="/appt-request">
-                      Đăng ký
+                      Schedule
                     </Link>
                   </div>
                 </div>
@@ -45,7 +45,7 @@ export default function Options() {
             <div className="c-6 md-12">
               <div className="opt-section">
                 <div className="opt-header">
-                  <div className="opt-header-text">Thông tin</div>
+                  <div className="opt-header-text">Care Connect</div>
                 </div>
                 <div className="big-opt-box">
                   <div className="box-select">
@@ -53,7 +53,7 @@ export default function Options() {
                       <div className="box-icon">
                         <i className="bi bi-question-circle"></i>
                       </div>
-                      <div className="box-text">Tư vấn</div>
+                      <div className="box-text">Consultation</div>
                     </Link>
                   </div>
                   <div className="box-select">
@@ -61,23 +61,23 @@ export default function Options() {
                       <div className="box-icon">
                         <i className="bi bi-lungs"></i>
                       </div>
-                      <div className="box-text">Chuyên khoa</div>
+                      <div className="box-text">Specialty</div>
                     </Link>
                   </div>
                   <div className="box-select">
                     <Link to="/work-schedule" className="box-select-link">
                       <div className="box-icon">
-                        <i className="bi bi-calendar-heart"></i>
+                        <i className="bi bi-hospital"></i>
                       </div>
-                      <div className="box-text">Lịch làm việc</div>
+                      <div className="box-text">Emergency</div>
                     </Link>
                   </div>
                   <div className="box-select">
                     <Link className="box-select-link">
                       <div className="box-icon">
-                        <i className="bi bi-file-earmark-medical"></i>
+                        <i className="bi bi-calendar-heart"></i>
                       </div>
-                      <div className="box-text">Bảng giá</div>
+                      <div className="box-text">Network</div>
                     </Link>
                   </div>
                 </div>

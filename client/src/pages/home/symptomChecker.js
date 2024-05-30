@@ -33,10 +33,10 @@ export default function SymptomChecker() {
   const [step, setStep] = useState(1);
   const [finalStep, setFinalStep] = useState(3);
   const stepNames = [
-    { number: 0, name: "Điền thông tin" },
-    { number: 1, name: "Chọn triệu chứng" },
-    { number: 2, name: "Mô tả chi tiết" },
-    { number: 3, name: "Kết quả chẩn đoán" },
+    { number: 0, name: "Info" },
+    { number: 1, name: "Symptoms" },
+    { number: 2, name: "Details" },
+    { number: 3, name: "Treatment" },
   ];
 
   useEffect(() => {
@@ -124,29 +124,29 @@ export default function SymptomChecker() {
       // filter disease with suitable age and gender
       const age =
         patientForm.age <= 1
-          ? "Dưới 1 tuối"
+          ? "Under 1 years old"
           : patientForm.age <= 5
-          ? "1 tuổi - 5 tuổi"
+          ? "1 - 5 years old"
           : patientForm.age <= 12
-          ? "6 tuổi - 12 tuổi"
+          ? "6 - 12 years old"
           : patientForm.age <= 16
-          ? "13 tuổi - 16 tuổi"
+          ? "13 - 16 years old"
           : patientForm.age <= 29
-          ? "17 tuổi - 29 tuổi"
+          ? "17 - 29 years old"
           : patientForm.age <= 39
-          ? "30 tuổi - 39 tuổi"
+          ? "30 - 39 years old"
           : patientForm.age <= 49
-          ? "40 tuổi - 49 tuổi"
+          ? "40 - 49 years old"
           : patientForm.age <= 64
-          ? "50 tuổi - 64 tuổi"
-          : "Trên 65 tuổi";
+          ? "50 - 64 years old"
+          : "Above 65 years old";
       const gender = patientForm.gender;
       const _patientResult = patientResult.filter((disease) => {
         return (
           (disease.ageRanges.includes(age) ||
-            disease.ageRanges.includes("Mọi độ tuổi")) &&
+            disease.ageRanges.includes("All ages")) &&
           (disease.genders.includes(gender) ||
-            disease.genders.includes("Cả nam và nữ"))
+            disease.genders.includes("All genders"))
         );
       });
       setPatientResult(_patientResult);
@@ -258,13 +258,13 @@ export default function SymptomChecker() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Phòng khám online</title>
+          <title>Online health check</title>
         </Helmet>
       </HelmetProvider>
       {step === 1 && <SympCheckerModal />}
       <div className="symp-checker w-100">
         <div className="content-container">
-          <h3 className="text-center">Chẩn đoán bệnh trực tuyến</h3>
+          <h3 className="text-center">Online health check</h3>
           <div className="symp-checker-board">
             <div className="card">
               <div className="progress-bar-step border rounded">
@@ -287,7 +287,7 @@ export default function SymptomChecker() {
                         }
                       }}
                     >
-                      Quay lại
+                      Back
                     </button>
                   </div>
                   <div className="steps-next-button">
@@ -297,7 +297,7 @@ export default function SymptomChecker() {
                         className="btn btn-outline-primary"
                         to={`/appt-request`}
                       >
-                        ĐẶT LỊCH KHÁM
+                        Schedule an appointment
                       </Link>
                     ) : (
                       <>
@@ -322,7 +322,7 @@ export default function SymptomChecker() {
                           }
                           onClick={checkHandleNext}
                         >
-                          {step === finalStep - 1 ? "Xem kết quả" : "Tiếp theo"}
+                          {step === finalStep - 1 ? "See results" : "Next"}
                         </button>
                       </>
                     )}

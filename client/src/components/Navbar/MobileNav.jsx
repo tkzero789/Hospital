@@ -102,7 +102,7 @@ export default function MobileNav() {
                     data-to="/view-blog-list"
                     onClick={handleLinkClick}
                   >
-                    Tin tức - Y học thường thức
+                    News
                   </NavLink>
                 </li>
                 <li>

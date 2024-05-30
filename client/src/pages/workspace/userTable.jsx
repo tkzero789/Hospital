@@ -37,7 +37,7 @@ export default function UserTable({ userRole, userInfos }) {
 
           <div className="cellAction">
             <NavLink className="viewLink" to={`/user/${params.row.id}/view`}>
-              <div className="viewButton">Xem</div>
+              <div className="viewButton">View</div>
             </NavLink>
           </div>
         );
@@ -56,29 +56,29 @@ export default function UserTable({ userRole, userInfos }) {
   }));
 
   const columns = [
-    { field: "number", headerName: "Stt", width: 80 },
+    { field: "number", headerName: "No.", width: 80 },
     { field: "id", headerName: "ID", width: 160 },
-    { field: "fullName", headerName: "Họ tên", width: 160 },
-    { field: "phoneNumber", headerName: "SĐT", width: 140 },
+    { field: "fullName", headerName: "Name", width: 160 },
+    { field: "phoneNumber", headerName: "Phone number", width: 140 },
     { field: "email", headerName: "Email", width: 240 },
-    { field: "role", headerName: "Chức danh", width: 120 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "medSpecialty", headerName: "Chuyên khoa", width: 200 },
+    { field: "role", headerName: "Role", width: 120 },
+    { field: "doctorID", headerName: "Doctor ID", width: 120 },
+    { field: "medSpecialty", headerName: "Specialty", width: 200 },
   ].concat(actionColumn);
 
   return (
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Tài khoản</title>
+          <title>Accounts list</title>
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Danh sách users
+          List of acconts
           {userRole === "admin" && (
             <NavLink to="/signup-doctor" className="add-link ms-auto">
-              Thêm user
+              Add an account
             </NavLink>
           )}
         </div>

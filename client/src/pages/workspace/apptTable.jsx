@@ -61,14 +61,14 @@ export default function ApptTable() {
   const actionColumn = [
     {
       field: "action",
-      headerName: "Trạng thái",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         const appt = params.row;
         return (
           <div className="cellAction">
             <NavLink className="viewLink" to={`/appointment/${appt.id}/view`}>
-              <div className="viewButton">Xem</div>
+              <div className="viewButton">View</div>
             </NavLink>
             {appt.status === "Spam" && (
               <button
@@ -76,7 +76,7 @@ export default function ApptTable() {
                 className="deleteButton"
                 onClick={() => deleteAppt(appt.id)}
               >
-                Xóa
+                Delete
               </button>
             )}
           </div>
@@ -86,16 +86,16 @@ export default function ApptTable() {
   ];
 
   const columns = [
-    { field: "number", headerName: "Stt", width: 50 },
-    { field: "phoneNumber", headerName: "SĐT", width: 120 },
-    { field: "fullName", headerName: "Tên bệnh nhân", width: 200 },
-    { field: "date", headerName: "Ngày đặt hẹn", width: 160 },
-    { field: "need", headerName: "Nhu cầu", width: 240 },
+    { field: "number", headerName: "No.", width: 50 },
+    { field: "phoneNumber", headerName: "Phone number", width: 120 },
+    { field: "fullName", headerName: "Patient's name", width: 200 },
+    { field: "date", headerName: "Appointment date", width: 160 },
+    { field: "need", headerName: "Service", width: 240 },
     { field: "email", headerName: "Email", width: 240 },
-    { field: "createdAt", headerName: "Ngày khởi tạo", width: 160 },
+    { field: "createdAt", headerName: "Requested on", width: 160 },
     {
       field: "status",
-      headerName: "Trạng thái",
+      headerName: "Status",
       width: 160,
       renderCell: (params) => {
         return (
@@ -111,11 +111,11 @@ export default function ApptTable() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Đặt hẹn</title>
+          <title>Appointments list</title>
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
-        <div className="datatableTitle">Danh sách đặt hẹn</div>
+        <div className="datatableTitle">List of appointments</div>
         <DataGrid
           className="datagrid"
           rows={sortedAppts}

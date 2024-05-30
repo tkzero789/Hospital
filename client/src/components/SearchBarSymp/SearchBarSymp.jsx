@@ -31,7 +31,7 @@ const SearchBarSymp = ({
         <input
           ref={inputRef}
           type="text"
-          placeholder="Tìm kiếm triệu chứng..."
+          placeholder="Enter your symptom here..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -52,7 +52,11 @@ const SearchBarSymp = ({
         <div className="search-symp-display" ref={searchSympRef}>
           {delay
             ? filteredSymps
-                .filter((symptom) => !chosenSymps.includes(symptom.id)) // Filter out chosen symptoms
+                .filter(
+                  (symptom) =>
+                    !chosenSymps.includes(symptom.id) &&
+                    symptom.status === "Approved"
+                ) // Filter out chosen symptoms
                 .map((symptom) => (
                   <Symptom
                     symptom={symptom}

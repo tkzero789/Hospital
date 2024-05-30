@@ -7,9 +7,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./table.scss";
 
 export default function SymptomTable({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
   const [symptoms, setSymptoms] = useState([]);
-  const [tempSymptoms, setTempSymptoms] = useState([]);
 
   useEffect(() => {
     axios
@@ -19,35 +17,15 @@ export default function SymptomTable({ userRole, userInfos }) {
         setSymptoms(symptoms);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/symptom-temp/`, {
-        headers: { Authorization: `Bearer ${userToken}` },
-      })
-      .then((res) => {
-        const tempSymptoms = res.data;
-        setTempSymptoms(tempSymptoms);
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-      });
-  }, []);
-
-  const flatData = [...tempSymptoms, ...symptoms].map((symp, index) => ({
-    ...symp,
-    number: index + 1,
-  }));
 
   const actionColumn = [
     {
       field: "action",
-      headerName: "Thao tác",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         const symptom = params.row;
@@ -55,21 +33,25 @@ export default function SymptomTable({ userRole, userInfos }) {
           <div className="cellAction">
             {symptom.status === "Approved" && (
               <NavLink className="viewLink" to={`/symptom/${symptom.id}/view`}>
-                <div className="viewButton">Xem</div>
+                <div className="viewButton">View</div>
               </NavLink>
             )}
-            {symptom.status === "Approved" && userRole === "admin" && (
+            {symptom.status !== "Approved" && userRole === "head-doctor" && (
               <NavLink className="viewLink" to={`/symptom/${symptom.id}/edit`}>
-                <div className="editButton">Sửa</div>
+                <div className="editButton">Edit</div>
               </NavLink>
             )}
             {symptom.status !== "Approved" && (
               <NavLink
                 className="viewLink"
-                to={`/symptom-temp/${symptom.idTemp}/approve`}
+                to={`${
+                  userRole === "admin"
+                    ? `/symptom/approve/${symptom.id}`
+                    : `/symptom/${symptom.id}/view`
+                }`}
               >
                 <div className="checkButton">
-                  {userRole === "admin" ? "Duyệt" : "Xem"}
+                  {userRole === "admin" ? "Approve" : "View"}
                 </div>
               </NavLink>
             )}
@@ -80,18 +62,18 @@ export default function SymptomTable({ userRole, userInfos }) {
   ];
 
   const columns = [
-    { field: "number", headerName: "Stt", width: 100 },
+    { field: "number", headerName: "No.", width: 100 },
     { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Triệu chứng", width: 500 },
+    { field: "name", headerName: "Symptom", width: 500 },
+
     {
       field: "status",
-      headerName: "Trạng thái",
+      headerName: "Status",
       width: 160,
       renderCell: (params) => {
+        const status = params.row.status.replace(" ", "-");
         return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
+          <div className={`cellWithStatus ${status}`}>{params.row.status}</div>
         );
       },
     },
@@ -101,21 +83,21 @@ export default function SymptomTable({ userRole, userInfos }) {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Triệu chứng</title>
+          <title>Symptoms list</title>
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Danh sách các triệu chứng
+          List of symptoms
           {userRole === "head-doctor" && (
             <NavLink to="/symptom/create" className="add-link ms-auto">
-              Thêm triệu chứng
+              Add symptom
             </NavLink>
           )}
         </div>
         <DataGrid
           className="datagrid"
-          rows={flatData}
+          rows={symptoms}
           getRowId={(row) => row._id}
           getRowClassName={(params) =>
             `rowWithStatus ${params.row.status.replace(" ", "-")}`

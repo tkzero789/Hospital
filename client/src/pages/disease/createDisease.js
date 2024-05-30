@@ -114,22 +114,22 @@ export default function CreateDisease({ userRole, userInfos }) {
   function checkStep() {
     if (step === 1) {
       if (disease.ageRanges.length === 0) {
-        window.alert("Vui lòng chọn độ tuổi");
+        window.alert("Please select age");
         return;
       }
       if (disease.genders.length === 0) {
-        window.alert("Vui lòng chọn giới tính");
+        window.alert("Please select gender");
         return;
       }
     } else if (step === 2) {
       if (disease.symptomIds.length === 0) {
-        window.alert("Vui lòng chọn ít nhất 1 triệu chứng");
+        window.alert("Please select at least 1 symptom");
         return;
       }
     } else if (step > 2 && step < finalStep) {
       const symptomId = disease.symptomIds[step - 3];
       if (!disease.descIds.some((desc) => desc.symptomId === symptomId)) {
-        window.alert("Vui không chọn mô tả cho triệu chứng");
+        window.alert("Please add symptom's description");
         return;
       }
     }
@@ -137,7 +137,7 @@ export default function CreateDisease({ userRole, userInfos }) {
   }
 
   function confirmCancle(e) {
-    if (window.confirm("Hủy tạo và trở về?")) {
+    if (window.confirm("Cancel creating symptom?")) {
       setDisease((prev) => ({
         ...prev,
         name: "",
@@ -153,19 +153,19 @@ export default function CreateDisease({ userRole, userInfos }) {
   async function confirmCreate(e) {
     e.preventDefault();
     if (disease.name === "") {
-      window.alert("Chưa nhập tên bệnh");
+      window.alert("Please enter disease name");
       return;
     } else if (disease.ageRanges.length === 0) {
-      window.alert("Chưa chọn độ tuôi");
+      window.alert("Please select age");
       return;
     } else if (disease.genders.length === 0) {
-      window.alert("Chưa chọn giới tính");
+      window.alert("Please select gender");
       return;
     } else if (disease.symptomIds.length === 0) {
-      window.alert("Chưa có triệu chứng");
+      window.alert("Please select symptom");
       return;
     } else if (disease.descIds.length === 0) {
-      window.alert("Chưa có mô tả cho triệu chứng");
+      window.alert("Please add symptom's description");
       return;
     }
     try {
@@ -219,7 +219,7 @@ export default function CreateDisease({ userRole, userInfos }) {
 
   return (
     <div>
-      <h3 className="container text-center text-body pt-5">TẠO CĂN BỆNH</h3>
+      <h3 className="container text-center text-body pt-5">Create disease</h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -233,7 +233,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                     className="btn btn-outline-primary"
                     onClick={(e) => confirmCancle(e)}
                   >
-                    Huỷ tạo
+                    Cancel
                   </button>
                 ) : (
                   <button
@@ -241,7 +241,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                     className="btn btn-outline-primary"
                     onClick={handlePrev}
                   >
-                    Quay lại
+                    Back
                   </button>
                 )}
               </div>
@@ -257,7 +257,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                     }
                   }}
                 >
-                  {step === finalStep ? "Xác nhận tạo" : "Tiếp theo"}
+                  {step === finalStep ? "Create" : "Next"}
                 </button>
               </div>
             </div>

@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import RequireAuth from "./RequireAuth";
 // staff pages
 import StaffLayout from "./pages/layout/StaffLayout";
-import NotifTable from "./pages/workspace/notifTable";
+
 // symptom pages
 import SymptomTable from "./pages/workspace/symptomTable";
 import CreateSymptom from "./pages/symptom/createSymptom";
@@ -70,18 +70,7 @@ export default function Layouts({ userRole, userInfos }) {
               path="/"
               element={<Navigate to="/dashboard" replace={true} />}
             />
-            {/* notification page */}
-            <Route
-              path="/notif-table"
-              element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor", "admin"]}
-                >
-                  <NotifTable userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
+
             {/* symptom pages */}
             <Route
               path="/symptom-table"
@@ -114,7 +103,7 @@ export default function Layouts({ userRole, userInfos }) {
               }
             />
             <Route
-              path="/symptom-temp/:symptomIdTemp/approve"
+              path="/symptom/approve/:symptomId"
               element={
                 <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
                   <ApproveSymptom userRole={userRole} userInfos={userInfos} />

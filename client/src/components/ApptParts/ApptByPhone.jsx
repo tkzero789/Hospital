@@ -25,19 +25,19 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
   const options = [
     {
       value: "descCreated",
-      label: "Ngày đăng ký gần nhất",
+      label: "Most recent",
     },
     {
       value: "ascCreated",
-      label: "Ngày đăng ký đầu tiên",
+      label: "First appointment",
     },
     {
       value: "desc",
-      label: "Ngày hẹn khám giảm dần",
+      label: "Appointment date (descending)",
     },
     {
       value: "asc",
-      label: "Ngày hẹn khám tăng dần",
+      label: "Appointment date (ascending)",
     },
   ];
 
@@ -120,11 +120,11 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
               <div className="appt-detail">
                 <div className="appt-detail-wrapper">
                   <div className="appt-detail-header">
-                    Tất cả thông tin lịch hẹn
+                    All appointment details
                   </div>
                   <div className="appt-detail-filter">
                     <div>
-                      <b>Sắp xếp theo:</b>
+                      <b>Filter:</b>
                     </div>
                     <ApptFilter
                       options={options}
@@ -150,15 +150,15 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                             <div className="appt-detail-item" key={index}>
                               <div className="appt-detail-item-wrapper">
                                 <div className="appt-individual">
-                                  <p>Tên</p>
+                                  <p>Name</p>
                                   <p>{appointment.fullName}</p>
                                 </div>
                                 <div className="appt-individual">
-                                  <p>Nhu cầu</p>
+                                  <p>Service</p>
                                   <p>{appointment.need}</p>
                                 </div>
                                 <div className="appt-individual">
-                                  <p>Ngày hẹn khám</p>
+                                  <p>Appointment date</p>
                                   <p>
                                     {appointment.date
                                       ? appointment.date
@@ -166,11 +166,11 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                                   </p>
                                 </div>
                                 <div className="appt-individual">
-                                  <p>Ngày đăng ký</p>
+                                  <p>Requested on</p>
                                   <p>{appointment.createdAt}</p>
                                 </div>
                                 <div className="appt-individual">
-                                  <p>Trạng thái</p>
+                                  <p>Status</p>
                                   <p
                                     className={`${
                                       appointment.status === "Pending"
@@ -179,9 +179,9 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                                     }`}
                                   >
                                     {appointment.status === "Pending"
-                                      ? "Đang xét duyệt"
+                                      ? "Pending"
                                       : appointment.status === "Accepted"
-                                      ? "Đã chấp nhận"
+                                      ? "Accepted"
                                       : appointment.status}
                                   </p>
                                 </div>
@@ -189,7 +189,7 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                                   <button
                                     onClick={(e) => handleClick(appointment, e)}
                                   >
-                                    Xem
+                                    View
                                   </button>
                                 </div>
                               </div>
@@ -198,7 +198,7 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                     </div>
                   </div>
                   <div className="appt-detail-btn-2">
-                    <button onClick={(e) => handleBack(e)}>Quay lại</button>
+                    <button onClick={(e) => handleBack(e)}>Back</button>
                   </div>
                 </div>
               </div>

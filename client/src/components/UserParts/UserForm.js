@@ -17,7 +17,7 @@ export default function UserForm({ user, setUser, editMode }) {
   };
   return (
     <div>
-      <div className="form-group row pb-5">
+      <div className="form-group pb-5">
         <h4 className="text-blue-2 col-3">Họ tên</h4>
         <input
           type="text"
@@ -71,8 +71,8 @@ export default function UserForm({ user, setUser, editMode }) {
           onChange={(e) => updateInfoField(e)}
         >
           <option value="">Chọn giới tính</option>
-          <option value="Nam">Nam</option>
-          <option value="Nữ">Nữ</option>
+          <option value="Male">Nam</option>
+          <option value="Female">Nữ</option>
         </select>
       </div>
       <div className="form-group row pb-5">

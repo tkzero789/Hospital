@@ -11,7 +11,8 @@ import RequireAuth from "./RequireAuth";
 import ScrollToTop from "./utilities/ScrollToTop";
 // auth pages
 import SignupDoctor from "./pages/account/signupStaff";
-import TestSignin from "./pages/account/signinStaff";
+import SigninStaff from "./pages/account/signinStaff";
+
 // routes
 import Layouts from "./Layouts";
 import StaffHome from "./pages/home/staffHome";
@@ -37,7 +38,7 @@ const App = () => {
             </RequireAuth>
           }
         />
-        <Route path="/test-signin" element={<TestSignin />} />
+        <Route path="/signin-staff" element={<SigninStaff />} />
         {/* layouts and content */}
         <Route
           path="/*"

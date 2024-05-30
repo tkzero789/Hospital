@@ -8,7 +8,7 @@ import axios from "axios";
 import BaySideLogo from "../../assets/logo/BaySide-logo-1.svg";
 import { Toaster, toast } from "sonner";
 
-export default function TestSignin() {
+export default function SigninStaff() {
   // User
   const [user, setUser] = useState({
     email: "",
@@ -78,7 +78,7 @@ export default function TestSignin() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Đăng nhập</title>
+          <title>Login</title>
         </Helmet>
       </HelmetProvider>
 
@@ -95,11 +95,11 @@ export default function TestSignin() {
                 <div className="c-6 md-12 signin-right">
                   <div className="signin-right-container">
                     <div className="signin-right-header">
-                      <span>Đăng nhập</span>
+                      <span>Login</span>
                     </div>
                     <div className="signin-right-form">
                       <form>
-                        <label htmlFor="username">Tài khoản</label>
+                        <label htmlFor="username">Username</label>
                         <input
                           type="text"
                           id="username"
@@ -112,7 +112,7 @@ export default function TestSignin() {
                               : ""
                           }`}
                         ></input>
-                        <label htmlFor="password">Mật khẩu</label>
+                        <label htmlFor="password">Password</label>
                         <input
                           type="password"
                           id="password"
@@ -133,17 +133,19 @@ export default function TestSignin() {
                         position="top-center"
                         richColors
                       />
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          checkInputEmpty();
-                          if (!isInputEmpty) {
-                            confirmSignin(e);
-                          }
-                        }}
-                      >
-                        Đăng nhập
-                      </button>
+                      <form>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            checkInputEmpty();
+                            if (!isInputEmpty) {
+                              confirmSignin(e);
+                            }
+                          }}
+                        >
+                          Login
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -156,13 +158,13 @@ export default function TestSignin() {
             </span>
             <div>
               <NavLink className="text-decoration-none ">
-                <span>Điều khoản</span>
+                <span>Privacy Policy</span>
               </NavLink>
               <NavLink className="text-decoration-none ">
-                <span>Chính sách</span>
+                <span>Terms of Use</span>
               </NavLink>
               <NavLink className="text-decoration-none ">
-                <span>Trợ giúp</span>
+                <span>Supports</span>
               </NavLink>
             </div>
           </div>

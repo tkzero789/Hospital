@@ -26,7 +26,7 @@ const ApptDetailGuest = () => {
             setAppointments(filteredAppointments);
             setIsPhoneNum(true);
           } else {
-            toast.error("Số điện thoại không chính xác");
+            toast.error("Invalid phone number");
           }
           console.log("Filter response:", response.data);
         })
@@ -46,7 +46,7 @@ const ApptDetailGuest = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Kiểm tra lịch hẹn</title>
+          <title>Check appointment status</title>
         </Helmet>
       </HelmetProvider>
       <div className="appt-detail-body">
@@ -65,14 +65,17 @@ const ApptDetailGuest = () => {
               <div className="content-container">
                 <div className="appt-detail">
                   <div className="appt-detail-wrapper">
-                    <div className="appt-detail-header">Kiểm tra lịch hẹn</div>
+                    <div className="appt-detail-header">
+                      Check appointment status
+                    </div>
                     <div className="appt-detail-info">
                       <div className="appt-detail-icon">
                         <img src={SearchApptDetail} alt="Search icon" />
                       </div>
                       <div className="phone-number-field">
                         <label htmlFor="phone-number">
-                          Nhập số điện thoại được dùng để đăng ký khám
+                          Enter the phone number used to schedule the
+                          appointment
                         </label>
                         <input
                           type="text"
@@ -91,7 +94,7 @@ const ApptDetailGuest = () => {
                           position="top-center"
                           richColors
                         />
-                        Tiếp theo
+                        Next
                       </button>
                     </div>
                   </div>

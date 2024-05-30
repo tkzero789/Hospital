@@ -28,7 +28,7 @@ export default function ViewUser() {
         setUser(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [userId]);
@@ -39,14 +39,14 @@ export default function ViewUser() {
         status: newStatus,
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
     setUser({ ...user, status: newStatus });
   }
 
   function confirmDelete() {
-    if (window.confirm("Bạn có chắc chắn muốn xóa tài khoản này?")) {
+    if (window.confirm("Are you sure you want to delete?")) {
       axios.delete(`http://localhost:5000/user/${userId}`).catch((err) => {
         const message = `Có lỗi xảy ra: ${err}`;
         window.alert(message);

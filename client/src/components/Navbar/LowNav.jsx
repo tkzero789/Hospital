@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 export default function LowNav() {
   const navLinks = [
-    { link: "/view-blog-list", text: "Tin tức" },
-    { link: "/specialty-page", text: "Chuyên khoa" },
-    { link: "/symptom-checker", text: "Chẩn đoán" },
-    { link: "/appt-detail-guest", text: "Kiểm tra lịch hẹn" },
-    { link: "/work-schedule", text: "Lịch làm việc" },
+    { link: "/view-blog-list", text: "News" },
+    { link: "/specialty-page", text: "Specialty" },
+    { link: "/symptom-checker", text: "Online health check" },
+    { link: "/appt-detail-guest", text: "Appointment status" },
+    { link: "/work-schedule", text: "Business hours" },
   ];
 
   return (
@@ -27,15 +27,14 @@ export default function LowNav() {
               {/* DROPDOWN  */}
               <li className="low-nav-item dropdown-list-item">
                 <div className="dropdown-list-box">
-                  <div className="low-nav-text">Khác</div>
+                  <div className="low-nav-text">Our services</div>
                   <div className="dropdown-content">
-                    <NavLink to="/work-schedule">Lịch làm việc</NavLink>
-                    <NavLink>Bảo hiểm</NavLink>
-                    <NavLink>Tra cứu</NavLink>
-                    <NavLink>Thông tin Dược</NavLink>
-                    <NavLink>Bảng giá dịch vụ</NavLink>
-                    <NavLink>Viện nghiên cứu</NavLink>
-                    <NavLink>Hoạt động vì cộng đồng</NavLink>
+                    <NavLink>Lab</NavLink>
+                    <NavLink>Primary care</NavLink>
+                    <NavLink>Home care</NavLink>
+                    <NavLink>Imaging</NavLink>
+                    <NavLink>Insurance</NavLink>
+                    <NavLink>Health and wellness</NavLink>
                   </div>
                 </div>
               </li>

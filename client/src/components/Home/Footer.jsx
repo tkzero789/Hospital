@@ -4,21 +4,21 @@ import { NavLink } from "react-router-dom";
 import BaySideLogo from "../../assets/logo/BaySide-logo-2.svg";
 
 const footerLinks1 = [
-  { name: "Trang chủ", link: "/" },
-  { name: "Giới thiệu", link: "/" },
-  { name: "Đối tác", link: "/" },
-  { name: "Dự án", link: "/" },
-  { name: "Đội ngũ", link: "/" },
-  { name: "Tuyển dụng", link: "/" },
+  { name: "Home", link: "/" },
+  { name: "Our team", link: "/" },
+  { name: "Specialties", link: "/" },
+  { name: "Latest news", link: "/" },
+  { name: "BaySide system", link: "/" },
+  { name: "Health and wellness", link: "/" },
 ];
 
 const footerLinks2 = [
-  { name: "Dịch vụ", link: "/" },
-  { name: "Tư vấn", link: "/" },
-  { name: "Chuyên khoa", link: "/" },
-  { name: "Đặt lịch khám", link: "/" },
-  { name: "Viện nghiên cứu", link: "/" },
-  { name: "Thông tin Dược", link: "/" },
+  { name: "Lab", link: "/" },
+  { name: "Services", link: "/" },
+  { name: "Consultation", link: "/" },
+  { name: "Primary care", link: "/" },
+  { name: "Health and wellness", link: "/" },
+  { name: "Request an appointment", link: "/" },
 ];
 
 export default function Footer() {
@@ -35,14 +35,14 @@ export default function Footer() {
               ></img>
             </div>
             <div className="footer-logo-header">
-              <span>Công ty cổ phần bệnh viện Đa khoa BKCare</span>
+              <span>BaySide Hospital</span>
             </div>
             <div className="footer-logo-address">
-              <span>Khu túc xá Đại Học Quốc Gia thành phố Hồ Chí Minh</span>
+              <span>7171 N Dale Mabry Hwy, Tampa, FL 33614</span>
             </div>
           </div>
           <div className="c-3 md-6">
-            <div className="footer-header">Liên kết nhanh</div>
+            <div className="footer-header">Quick connect</div>
             <ul className="footer-list">
               {footerLinks1.map((e) => (
                 <li className="footer-item" key={e.name}>
@@ -54,7 +54,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="c-3 md-6">
-            <div className="footer-header">Hỗ trợ khách hàng</div>
+            <div className="footer-header">Explore</div>
             <ul className="footer-list">
               {footerLinks2.map((link) => (
                 <li className="footer-item" key={link.name}>
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
 
           <div className="c-3 md-12">
-            <div className="footer-header">Mạng xã hội</div>
+            <div className="footer-header">Follow us</div>
             <div className="footer-socials">
               <NavLink className="footer-socials__link">
                 <div className="footer-socials-icon">
@@ -83,10 +83,24 @@ export default function Footer() {
                   </span>
                 </div>
               </NavLink>
+              <NavLink className="footer-socials__link">
+                <div className="footer-socials-icon">
+                  <span>
+                    <i className="bi bi-twitter-x"></i>
+                  </span>
+                </div>
+              </NavLink>
+              <NavLink className="footer-socials__link">
+                <div className="footer-socials-icon">
+                  <span>
+                    <i className="bi bi-instagram"></i>
+                  </span>
+                </div>
+              </NavLink>
             </div>
             <div className="footer-map">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125424.37507381833!2d106.57549990679829!3d10.772064120329766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2sHo%20Chi%20Minh%20City%20University%20of%20Technology%20(HCMUT)!5e0!3m2!1sen!2sus!4v1712861600232!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3522.3603299916645!2d-82.50669742452168!3d28.01346067600846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c16f67337b11%3A0x9c40bf8b22b18f1d!2s7171%20N%20Dale%20Mabry%20Hwy%2C%20Tampa%2C%20FL%2033614!5e0!3m2!1sen!2sus!4v1716919058990!5m2!1sen!2sus"
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -99,14 +113,14 @@ export default function Footer() {
       <div className="copyright">
         <div className="footer-copyright">
           <div className="copyright-header">
-            <span>Copyright © 2024 BKCare. All rights reserved.</span>
+            <span>Copyright © 2024 BaySide. All rights reserved.</span>
           </div>
           <div className="copyright-body">
             <span>
-              Các thông tin trên website BKCare.com chỉ dành cho mục đích tham
-              khảo, tra cứu, khuyến nghị. Quý khách hàng không tự ý áp dụng.
-              BKCare không chịu trách nhiệm về những trường hợp tự ý áp dụng mà
-              không có chỉ định của bác sĩ.
+              The information on BaySide.com is for reference, research, and
+              recommendation purposes only. Customers should not apply it on
+              their own. BaySide hospital is not responsible for any cases of
+              self-application without a doctor's prescription.
             </span>
           </div>
         </div>

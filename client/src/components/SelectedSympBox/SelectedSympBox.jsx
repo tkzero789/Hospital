@@ -4,7 +4,7 @@ const SelectedSympBox = ({ patientForm, dbSymps, handleDelete }) => {
   return (
     <div className="selected-symp-box">
       <div className="selected-symp-header">
-        <span>Các triệu chứng đã chọn:</span>
+        <span>Your symptoms:</span>
       </div>
       <div className="selected-symp-box-wrapper">
         {[...patientForm.chosenSymps].reverse().map((symptomId) => {

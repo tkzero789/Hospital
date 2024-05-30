@@ -43,19 +43,23 @@ const ApptOtp = ({
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Nhập mã xác thực OTP</Modal.Title>
+          <Modal.Title>Enter your One-time password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Control
             type="number"
             value={otp}
             onChange={handleOtpChange}
-            placeholder="Nhập mã"
+            placeholder="Enter"
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-secondary" onClick={handleClose}>
-            Huỷ
+          <Button
+            variant="outline-secondary"
+            onClick={handleClose}
+            disabled={isSubmit}
+          >
+            Cancel
           </Button>
           <Button
             className={`btn ${
@@ -76,7 +80,7 @@ const ApptOtp = ({
                 <CircularProgress size={24} style={{ color: "white" }} />
               </Box>
             ) : (
-              "Xác nhận"
+              "Confirm"
             )}
           </Button>
         </Modal.Footer>

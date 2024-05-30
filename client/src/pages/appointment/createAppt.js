@@ -41,7 +41,7 @@ export default function CreateAppt() {
     setIsSubmit(true);
     const updatedAppt = {
       ...appt,
-      createdAt: new Date().toLocaleDateString("vi-VN", {
+      createdAt: new Date().toLocaleDateString("en-US", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",

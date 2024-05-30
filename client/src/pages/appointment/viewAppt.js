@@ -115,7 +115,7 @@ export default function ViewAppt() {
           <form>
             <div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Họ tên</h4>
+                <h5 className="text-blue-2 col-3">Name</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -127,7 +127,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">SĐT</h4>
+                <h5 className="text-blue-2 col-3">Phone number</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -139,7 +139,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Email</h4>
+                <h5 className="text-blue-2 col-3">Email</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -151,7 +151,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Ngày sinh</h4>
+                <h5 className="text-blue-2 col-3">Date of birth</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -163,7 +163,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Giới tính</h4>
+                <h5 className="text-blue-2 col-3">Gender</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -175,7 +175,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Nhu cầu khám</h4>
+                <h5 className="text-blue-2 col-3">Service</h5>
                 <select
                   className="form-control border-primary-subtle col"
                   name="need"
@@ -183,17 +183,13 @@ export default function ViewAppt() {
                   onChange={handleInputChange}
                   disabled={!isEditable}
                 >
-                  <option value="Khám chuyên khoa">Khám chuyên khoa</option>
-                  <option value="Kiểm tra sức khoẻ tổng quát">
-                    Kiểm tra sức khoẻ tổng quát
-                  </option>
-                  <option value="Xét nghiệm, chẩn đoán hình ảnh">
-                    Xét nghiệm, chẩn đoán hình ảnh
-                  </option>
+                  <option value="Primary care">Primary care</option>
+                  <option value="Imaging">Imaging</option>
+                  <option value="Senior care">Senior care</option>
                 </select>
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Ngày hẹn khám</h4>
+                <h5 className="text-blue-2 col-3">Appointment date</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -205,7 +201,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Ngày khởi tạo</h4>
+                <h5 className="text-blue-2 col-3">Requested on</h5>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col"
@@ -215,7 +211,7 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h4 className="text-blue-2 col-3">Mô tả vấn đề</h4>
+                <h5 className="text-blue-2 col-3">Health issue description</h5>
                 <textarea
                   className="form-control border-primary-subtle col"
                   rows={5}
@@ -233,7 +229,7 @@ export default function ViewAppt() {
                   className="btn btn-outline-secondary"
                   to={`/appointment-table`}
                 >
-                  Quay lại
+                  Back
                 </NavLink>
               </div>
               <div className="c-2 d-grid gap-2">
@@ -247,7 +243,7 @@ export default function ViewAppt() {
                   disabled={disableEdit}
                   onClick={() => updateStatus("Accepted")}
                 >
-                  Chấp nhận
+                  Accept
                 </button>
               </div>
               <div className="c-2 d-grid gap-2">
@@ -262,7 +258,7 @@ export default function ViewAppt() {
                     setIsEditable(true);
                   }}
                 >
-                  Chỉnh sửa
+                  Edit
                 </button>
               </div>
               <div className="c-2 d-grid gap-2">
@@ -279,7 +275,7 @@ export default function ViewAppt() {
                       <CircularProgress size={24} />
                     </Box>
                   ) : (
-                    "Xác nhận chỉnh sửa"
+                    "Confirm edit"
                   )}
                 </button>
               </div>
@@ -290,7 +286,7 @@ export default function ViewAppt() {
                   disabled={formInputs.status === "Declined"}
                   onClick={() => updateStatus("Declined")}
                 >
-                  Từ chối
+                  Decline
                 </button>
               </div>
               <div className="c-2 d-grid gap-2">
@@ -300,7 +296,7 @@ export default function ViewAppt() {
                   disabled={formInputs.status === "Spam"}
                   onClick={() => updateStatus("Spam")}
                 >
-                  Đánh dấu spam
+                  Mark as spam
                 </button>
               </div>
             </div>

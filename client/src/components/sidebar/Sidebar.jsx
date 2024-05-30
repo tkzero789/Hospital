@@ -36,7 +36,7 @@ export default function Sidebar() {
       );
       console.log("Signed out");
       logout();
-      navigate("/test-signin");
+      navigate("/home");
     } catch (err) {
       const message = `Có lỗi xảy ra: ${err}`;
       window.alert(message);
@@ -62,26 +62,26 @@ export default function Sidebar() {
           <NavLink to="/symptom-table" activeclassname="active">
             <li>
               <MonitorHeartIcon className="icon" />
-              <span>Triệu chứng</span>
+              <span>Symptoms</span>
             </li>
           </NavLink>
           <NavLink to="/disease-table" activeclassname="active">
             <li>
               <MedicalServicesIcon className="icon" />
-              <span>Căn bệnh</span>
+              <span>Diseases</span>
             </li>
           </NavLink>
           <NavLink to="/article-table" activeclassname="active">
             <li>
               <FeedIcon className="icon" />
-              <span>Bài viết</span>
+              <span>Articles</span>
             </li>
           </NavLink>
           {userRole === "admin" && (
             <NavLink to="/appointment-table" activeclassname="active">
               <li>
                 <TodayIcon className="icon" />
-                <span>Đặt hẹn</span>
+                <span>Appointments</span>
               </li>
             </NavLink>
           )}
@@ -89,16 +89,10 @@ export default function Sidebar() {
             <NavLink to="/user-table" activeclassname="active">
               <li>
                 <PeopleIcon className="icon" />
-                <span>Tài khoản</span>
+                <span>Accounts</span>
               </li>
             </NavLink>
           )}
-          <NavLink to="/notif-table" activeclassname="active">
-            <li>
-              <HelpCenterIcon className="icon" />
-              <span>Thông báo</span>
-            </li>
-          </NavLink>
           <NavLink to="/blog-table" activeclassname="active">
             <li>
               <NewspaperIcon className="icon" />
@@ -108,13 +102,13 @@ export default function Sidebar() {
           <NavLink to="">
             <li>
               <SettingsApplicationsIcon className="icon" />
-              <span>Cài đặt</span>
+              <span>Setting</span>
             </li>
           </NavLink>
           <NavLink to="" onClick={handleSignOut}>
             <li>
               <ExitToAppIcon className="icon" />
-              <span>Đăng xuất</span>
+              <span>Logout</span>
             </li>
           </NavLink>
         </ul>

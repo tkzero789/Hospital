@@ -22,7 +22,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
         setDiseases(diseases);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -35,7 +35,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
         setTempDiseases(tempDiseases);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -62,7 +62,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
   const actionColumn = [
     {
       field: "action",
-      headerName: "Thao tác",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         const disease = params.row;
@@ -70,7 +70,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
           <div className="cellAction">
             {disease.status === "Approved" && (
               <NavLink className="viewLink" to={`/disease/${disease.id}/view`}>
-                <div className="viewButton">Xem</div>
+                <div className="viewButton">View</div>
               </NavLink>
             )}
             {disease.status === "Approved" &&
@@ -79,7 +79,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/disease/${disease.id}/edit`}
                 >
-                  <div className="editButton">Sửa</div>
+                  <div className="editButton">Edit</div>
                 </NavLink>
               )}
             {disease.status !== "Approved" &&
@@ -88,7 +88,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/disease-temp/${disease.idTemp}/approve`}
                 >
-                  <div className="viewButton">Xem</div>
+                  <div className="viewButton">View</div>
                 </NavLink>
               )}
             {disease.status !== "Approved" && userRole === "admin" && (
@@ -96,7 +96,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/disease-temp/${disease.idTemp}/approve`}
               >
-                <div className="checkButton">Xét duyệt</div>
+                <div className="checkButton">Approve</div>
               </NavLink>
             )}
           </div>
@@ -106,16 +106,16 @@ export default function DiseaseTable({ userRole, userInfos }) {
   ];
 
   const columns = [
-    { field: "number", headerName: "Stt", width: 50 },
+    { field: "number", headerName: "No.", width: 50 },
     { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Tên bệnh", width: 200 },
-    { field: "medSpecialty", headerName: "Chuyên khoa", width: 160 },
-    { field: "doctorCreated", headerName: "Người tạo", width: 180 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "timeCreated", headerName: "Ngày viết", width: 160 },
+    { field: "name", headerName: "Disease", width: 200 },
+    { field: "medSpecialty", headerName: "Specialty", width: 160 },
+    { field: "doctorCreated", headerName: "Created by", width: 180 },
+    { field: "doctorID", headerName: "Doctor ID", width: 120 },
+    { field: "timeCreated", headerName: "Created on", width: 160 },
     {
       field: "status",
-      headerName: "Trạng thái",
+      headerName: "Status",
       width: 120,
       renderCell: (params) => {
         return (
@@ -131,25 +131,25 @@ export default function DiseaseTable({ userRole, userInfos }) {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Căn bệnh</title>
+          <title>Disease list</title>
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Danh sách các căn bệnh
+          List of diseases
           {userRole === "head-doctor" && part === 1 && (
             <button type="button" onClick={() => setPart(2)}>
-              Căn bệnh được tạo bởi tôi
+              Diseases created by me
             </button>
           )}
           {userRole === "head-doctor" && part === 2 && (
             <button type="button" onClick={() => setPart(1)}>
-              Xem tất cả căn bệnh
+              All diseases
             </button>
           )}
           {userRole === "head-doctor" && (
             <NavLink to="/disease/create" className="add-link">
-              Thêm căn bệnh
+              Add a disease
             </NavLink>
           )}
         </div>

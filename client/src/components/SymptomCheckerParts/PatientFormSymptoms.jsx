@@ -360,25 +360,23 @@ export default function PatientFormSymptoms({
   return (
     <div>
       <div className="pb-2 pb-md-5 text-center">
-        <h4 className="text-blue-1 fw-med">
-          Hãy chọn triệu chứng mà bạn đang gặp phải
-        </h4>
+        <h4 className="text-blue-1 fw-med">Select symptoms</h4>
       </div>
       <h5 className="card-title text-blue-1 fw-med text-blue-2">
-        Tìm kiếm các triệu chứng
+        Search symptoms
       </h5>
       <div className="switch-button">
         <button
           onClick={toggleSearchBar}
           className={`${isSwitch ? "active-switch-button" : ""}`}
         >
-          Tìm kiếm
+          Search symptoms
         </button>
         <button
           onClick={toggleMobileFigure}
           className={`${isSwitch ? "" : "active-switch-button"}`}
         >
-          Chọn trên hình
+          Choose on figure
         </button>
       </div>
       <div className="symp-big-box">
@@ -410,7 +408,7 @@ export default function PatientFormSymptoms({
           <div className="symp-right-box">
             <div className="right-box-wrapper">
               <div className="human-figure">
-                {patientForm.gender === "Nữ" && (
+                {patientForm.gender === "Female" && (
                   <FemaleFigure
                     toggleHeadSymptoms={toggleHeadSymptoms}
                     toggleEyesSymptoms={toggleEyesSymptoms}
@@ -430,7 +428,7 @@ export default function PatientFormSymptoms({
                     toggleFootSymptoms={toggleFootSymptoms}
                   />
                 )}
-                {patientForm.gender === "Nam" && (
+                {patientForm.gender === "Male" && (
                   <MaleFigure
                     toggleHeadSymptoms={toggleHeadSymptoms}
                     toggleEyesSymptoms={toggleEyesSymptoms}
@@ -456,7 +454,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Đầu" &&
+                          symptom.position === "Head" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -474,7 +473,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Mắt" &&
+                          symptom.position === "Eyes" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -492,7 +492,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Tai" &&
+                          symptom.position === "Ears" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -510,7 +511,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Mũi" &&
+                          symptom.position === "Nose" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -528,7 +530,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Miệng" &&
+                          symptom.position === "Mouth" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -546,7 +549,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Cổ" &&
+                          symptom.position === "Neck" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -564,7 +568,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Ngực" &&
+                          symptom.position === "Chest" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -582,7 +587,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Vai" &&
+                          symptom.position === "Shoulder" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -600,7 +606,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Cánh tay" &&
+                          symptom.position === "Forearm" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -618,7 +625,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Bụng" &&
+                          symptom.position === "Middle abdomen" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -639,7 +647,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Vùng dưới" &&
+                          symptom.position === "Lower abdomen" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -657,7 +666,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Bàn tay" &&
+                          symptom.position === "Hand" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -675,7 +685,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Hông, đùi và mông" &&
+                          symptom.position === "Pelvis, gluteal and thigh" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -693,7 +704,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Đầu gối" &&
+                          symptom.position === "Knee" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -711,7 +723,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Cẳng chân" &&
+                          symptom.position === "Shin" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -729,7 +742,8 @@ export default function PatientFormSymptoms({
                     {dbSymps
                       .filter(
                         (symptom) =>
-                          symptom.position === "Bàn chân" &&
+                          symptom.position === "Foot" &&
+                          symptom.status === "Approved" &&
                           !patientForm.chosenSymps.includes(symptom.id)
                       )
                       .map((symptom) => (
@@ -789,7 +803,7 @@ export default function PatientFormSymptoms({
       >
         <div className="right-box-wrapper">
           <div className="human-figure">
-            {patientForm.gender === "Nữ" && (
+            {patientForm.gender === "Female" && (
               <MobileFemaleFigure
                 toggleWholeHeadM={toggleWholeHeadM}
                 toggleNeckM={toggleNeckM}
@@ -805,7 +819,7 @@ export default function PatientFormSymptoms({
                 toggleFootM={toggleFootM}
               />
             )}
-            {patientForm.gender === "Nam" && (
+            {patientForm.gender === "Male" && (
               <MobileMaleFigure
                 toggleWholeHeadM={toggleWholeHeadM}
                 toggleNeckM={toggleNeckM}
@@ -832,14 +846,14 @@ export default function PatientFormSymptoms({
                       toggleExtraHeadM();
                     }}
                   >
-                    <span>Đầu</span>
+                    <span>Head</span>
                     <i className="bi bi-arrow-right"></i>
                   </button>
                   {extraHeadM && (
                     <WholeHeadSymp
                       dbSymps={dbSymps}
                       onCheck={onCheck}
-                      position={"Đầu"}
+                      position={"Head"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
                     />
@@ -851,14 +865,14 @@ export default function PatientFormSymptoms({
                       toggleExtraEyesM();
                     }}
                   >
-                    <span>Mắt</span>
+                    <span>Eyes</span>
                     <i className="bi bi-arrow-right"></i>
                   </button>
                   {extraEyesM && (
                     <WholeHeadSymp
                       dbSymps={dbSymps}
                       onCheck={onCheck}
-                      position={"Mắt"}
+                      position={"Eyes"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
                     />
@@ -870,14 +884,14 @@ export default function PatientFormSymptoms({
                       toggleExtraEarsM();
                     }}
                   >
-                    <span>Tai</span>
+                    <span>Ears</span>
                     <i className="bi bi-arrow-right"></i>
                   </button>
                   {extraEarsM && (
                     <WholeHeadSymp
                       dbSymps={dbSymps}
                       onCheck={onCheck}
-                      position={"Tai"}
+                      position={"Ears"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
                     />
@@ -889,14 +903,14 @@ export default function PatientFormSymptoms({
                       toggleExtraNoseM();
                     }}
                   >
-                    <span>Mũi</span>
+                    <span>Nose</span>
                     <i className="bi bi-arrow-right"></i>
                   </button>
                   {extraNoseM && (
                     <WholeHeadSymp
                       dbSymps={dbSymps}
                       onCheck={onCheck}
-                      position={"Mũi"}
+                      position={"Nose"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
                     />
@@ -908,14 +922,14 @@ export default function PatientFormSymptoms({
                       toggleExtraMouthM();
                     }}
                   >
-                    <span>Miệng</span>
+                    <span>Mouth</span>
                     <i className="bi bi-arrow-right"></i>
                   </button>
                   {extraMouthM && (
                     <WholeHeadSymp
                       dbSymps={dbSymps}
                       onCheck={onCheck}
-                      position={"Miệng"}
+                      position={"Mouth"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
                     />
@@ -937,7 +951,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Cổ" &&
+                        symptom.position === "Neck" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -959,7 +974,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Ngực" &&
+                        symptom.position === "Chest" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -981,7 +997,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Vai" &&
+                        symptom.position === "Shoulder" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1003,7 +1020,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Cánh tay" &&
+                        symptom.position === "Forearm" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1025,7 +1043,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Bụng" &&
+                        symptom.position === "Middle abdomen" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1047,7 +1066,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Vùng dưới" &&
+                        symptom.position === "Lower abdomen" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1069,7 +1089,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Bàn tay" &&
+                        symptom.position === "Hand" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1091,7 +1112,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Hông, đùi và mông" &&
+                        symptom.position === "Pelvis, gluteal and thigh" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1113,7 +1135,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Đầu gối" &&
+                        symptom.position === "Knee" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1135,7 +1158,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Cẳng chân" &&
+                        symptom.position === "Shin" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (
@@ -1157,7 +1181,8 @@ export default function PatientFormSymptoms({
                   {dbSymps
                     .filter(
                       (symptom) =>
-                        symptom.position === "Bàn chân" &&
+                        symptom.position === "Foot" &&
+                        symptom.status === "Approved" &&
                         !patientForm.chosenSymps.includes(symptom.id)
                     )
                     .map((symptom) => (

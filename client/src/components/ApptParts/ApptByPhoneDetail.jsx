@@ -15,6 +15,12 @@ const ApptByPhoneDetail = ({
     e.preventDefault();
     setIsClicked(false);
   };
+
+  const formatDate = (dob) => {
+    const [month, day, year] = dob.split("/");
+    const paddedDay = day.padStart(2, "0");
+    return `${month}/${paddedDay}/${year}`;
+  };
   return (
     <>
       {/* Appointment Request Hero Image */}
@@ -25,60 +31,57 @@ const ApptByPhoneDetail = ({
         <div className="content-container">
           <div className="appt-modal">
             <div className="appt-modal-wrapper">
-              <div className="appt-modal-header">Thông tin lịch hẹn</div>
+              <div className="appt-modal-header">Appointment details</div>
               <div className="appt-modal-info">
                 <div className="appt-modal-data">
-                  <span>Họ tên:</span>
+                  <span>Name:</span>
                   <p>{fullName}</p>
                 </div>
                 <div className="appt-modal-data">
-                  <span>Số điện thoại:</span>
+                  <span>Phone number:</span>
                   <p>{phoneNumber}</p>
                 </div>
                 <div className="appt-modal-data">
                   <span>Email:</span>
-                  {email ? (
-                    <p>{email}</p>
-                  ) : (
-                    <p>Chưa cung cấp (không bắt buộc)</p>
-                  )}
+                  {email ? <p>{email}</p> : <p>Did not provided (optional)</p>}
                 </div>
                 <div className="appt-modal-data">
-                  <span>Ngày sinh:</span>
-                  <p>{dob}</p>
+                  <span>Date of birth:</span>
+                  <p>{formatDate(dob)}</p>
                 </div>
                 <div className="appt-modal-data">
-                  <span>Giới tính:</span>
+                  <span>Gender:</span>
                   <p>{gender}</p>
                 </div>
                 <div className="appt-modal-data">
-                  <span>Nhu cầu khám:</span>
+                  <span>Service:</span>
                   <p>{need}</p>
                 </div>
                 <div className="appt-modal-data">
-                  <span>Ngày hẹn khám:</span>
+                  <span>Appointment date:</span>
                   <p>
                     {date ? (
                       date
                     ) : (
                       <b>
-                        Hiện chưa có ngày khám - Tổng đài BKCare sẽ liên hệ Quý
-                        khách trong thời gian sớm nhất để xác nhận lịch hẹn.
+                        There is currently no scheduled appointment. BaySide's
+                        call center will contact you as soon as possible to
+                        confirm your appointment.
                       </b>
                     )}
                   </p>
                 </div>
                 <div className="appt-modal-data">
-                  <span>Mô tả vấn đề sức khoẻ:</span>
+                  <span>Describe your health issue:</span>
                   {reason ? (
                     <p>{reason}</p>
                   ) : (
-                    <p>Chưa được cung cấp (không bắt buộc)</p>
+                    <p>Did not provided (optional)</p>
                   )}
                 </div>
               </div>
               <div className="appt-detail-btn-2">
-                <button onClick={(e) => handleBack(e)}>Quay lại</button>
+                <button onClick={(e) => handleBack(e)}>Back</button>
               </div>
             </div>
           </div>

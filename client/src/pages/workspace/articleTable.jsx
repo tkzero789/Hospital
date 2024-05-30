@@ -23,7 +23,7 @@ export default function ArticleTable({ userRole, userInfos }) {
         setArticles(articles);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -36,7 +36,7 @@ export default function ArticleTable({ userRole, userInfos }) {
         setTempArticles(articles);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -63,7 +63,7 @@ export default function ArticleTable({ userRole, userInfos }) {
   const actionColumn = [
     {
       field: "action",
-      headerName: "Thao tác",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         const article = params.row;
@@ -74,7 +74,7 @@ export default function ArticleTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/disease/${article.diseaseId}/article/${article.id}/view`}
               >
-                <div className="viewButton">Xem</div>
+                <div className="viewButton">View</div>
               </NavLink>
             )}
             {article.status === "Approved" &&
@@ -83,7 +83,7 @@ export default function ArticleTable({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/disease/${article.diseaseId}/article/${article.id}/edit`}
                 >
-                  <div className="editButton">Sửa</div>
+                  <div className="editButton">Edit</div>
                 </NavLink>
               )}
             {article.status !== "Approved" &&
@@ -92,7 +92,7 @@ export default function ArticleTable({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/article-temp/${article.idTemp}/approve`}
                 >
-                  <div className="viewButton">Xem</div>
+                  <div className="viewButton">View</div>
                 </NavLink>
               )}
             {article.status !== "Approved" && userRole === "head-doctor" && (
@@ -100,7 +100,7 @@ export default function ArticleTable({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/article-temp/${article.idTemp}/approve`}
               >
-                <div className="checkButton">Xét duyệt</div>
+                <div className="checkButton">Approve</div>
               </NavLink>
             )}
           </div>
@@ -110,16 +110,16 @@ export default function ArticleTable({ userRole, userInfos }) {
   ];
 
   const columns = [
-    { field: "number", headerName: "Stt", width: 50 },
+    { field: "number", headerName: "No.", width: 50 },
     { field: "id", headerName: "ID", width: 80 },
-    { field: "title", headerName: "Tựa đề", width: 200 },
-    { field: "diseaseName", headerName: "Bệnh đi kèm", width: 200 },
-    { field: "doctorCreated", headerName: "Tác giả", width: 180 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "timeCreated", headerName: "Ngày viết", width: 160 },
+    { field: "title", headerName: "Title", width: 200 },
+    { field: "diseaseName", headerName: "Disease", width: 200 },
+    { field: "doctorCreated", headerName: "Created by", width: 180 },
+    { field: "doctorID", headerName: "Doctor ID", width: 120 },
+    { field: "timeCreated", headerName: "Created on", width: 160 },
     {
       field: "status",
-      headerName: "Trạng thái",
+      headerName: "Status",
       width: 120,
       renderCell: (params) => {
         return (
@@ -135,20 +135,20 @@ export default function ArticleTable({ userRole, userInfos }) {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Bài viết</title>
+          <title>Articles list</title>
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Danh sách bài viết
+          List of articles
           {userRole !== "admin" && part === 1 && (
             <button type="button" onClick={() => setPart(2)}>
-              Bài viết của tôi
+              My articles
             </button>
           )}
           {userRole !== "admin" && part === 2 && (
             <button type="button" onClick={() => setPart(1)}>
-              Xem tất cả các bài viết
+              All articles
             </button>
           )}
         </div>

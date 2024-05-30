@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -103,196 +103,166 @@ export default function Signup({ userRole, userInfos }) {
 
   return (
     <div>
-      <h3 className="container text-center text-primary pt-5">
-        ĐĂNG KÝ TÀI KHOẢN BÁC SĨ
+      <h3 className="content-container text-center text-blue-2 pt-5">
+        Account registration
       </h3>
-      <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
-          <form className="needs-validation" noValidate>
-            <div className="row">
-              <div className="col-12 p-0">
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Họ và tên:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="text"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputFullName"
-                      name="fullName"
-                      value={user.userInfos.fullName}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Giới tính:
-                  </h6>
-                  <div className="col-10">
-                    <select
-                      type="text"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputGender"
-                      name="gender"
-                      value={user.userInfos.gender}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    >
-                      <option value="">Chọn giới tính</option>
-                      <option value="Nam">Nam</option>
-                      <option value="Nữ">Nữ</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Ngày sinh:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="text"
-                      className="form-control border-primary-subtle px-2"
-                      placeholder="dd/mm/yyyy"
-                      id="inputDob"
-                      name="dob"
-                      value={user.userInfos.dob}
-                      pattern="^\d{2}\/\d{2}\/\d{4}$"
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Mã số bác sĩ:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="text"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputDoctorID"
-                      name="doctorID"
-                      value={user.userInfos.ageRange}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Chuyên khoa:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="text"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputMedSpecialty"
-                      name="medSpecialty"
-                      value={user.userInfos.medSpecialty}
-                      required
-                      onChange={(e) => updateInfoField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Chức danh:
-                  </h6>
-                  <div className="col-10">
-                    <select
-                      type="text"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputRole"
-                      name="role"
-                      value={user.role}
-                      required
-                      onChange={(e) => updateUserField(e)}
-                    >
-                      <option value="">Chọn chức danh</option>
-                      <option value="doctor">Bác sĩ</option>
-                      <option value="head-doctor">Bác sĩ trưởng khoa</option>
-                      <option value="admin">Quản trị viên</option>
-                    </select>
-                  </div>
-                </div>
+      <div className="content-container pt-5">
+        <div className="border rounded bg-light">
+          <form className="d-flex px-6 py-5">
+            {/* Left box */}
+            <div className="c-6 d-flex flex-column pe-8">
+              {/* Full name */}
+              <div className="pb-4">
+                <h6 className="pb-2">Full name:</h6>
+                <input
+                  type="text"
+                  className="form-control border-secondary"
+                  id="inputFullName"
+                  name="fullName"
+                  value={user.userInfos.fullName}
+                  required
+                  onChange={(e) => updateInfoField(e)}
+                />
               </div>
-
-              <div className="col-12 p-0">
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Email:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="email"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputEmail"
-                      name="email"
-                      value={user.email}
-                      placeholder="abc@gmail.com"
-                      required
-                      onChange={(e) => updateUserField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Số điện thoại:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="tel"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputPhoneNumber"
-                      name="phoneNumber"
-                      value={user.phoneNumber}
-                      pattern="[0-9]{10}"
-                      required
-                      onChange={(e) => updateUserField(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row pb-5">
-                  <h6 className="col-2 d-flex justify-content-end align-items-center">
-                    Mật khẩu:
-                  </h6>
-                  <div className="col-10">
-                    <input
-                      type="password"
-                      className="form-control border-primary-subtle px-2"
-                      id="inputPassword"
-                      name="password"
-                      value={user.password}
-                      minLength="8"
-                      placeholder="Ít nhất 8 ký tự"
-                      required
-                      onChange={(e) => updateUserField(e)}
-                    />
-                  </div>
-                </div>
+              {/* Gender */}
+              <div className="pb-4">
+                <h6 className="pb-2">Gender:</h6>
+                <select
+                  type="text"
+                  className="form-control border-secondary"
+                  id="inputGender"
+                  name="gender"
+                  value={user.userInfos.gender}
+                  required
+                  onChange={(e) => updateInfoField(e)}
+                >
+                  <option value="">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              {/* DOB */}
+              <div className="pb-4">
+                <h6 className="pb-2">Date of birth:</h6>
+                <input
+                  type="text"
+                  className="form-control border-secondary"
+                  placeholder="dd/mm/yyyy"
+                  id="inputDob"
+                  name="dob"
+                  value={user.userInfos.dob}
+                  pattern="^\d{2}\/\d{2}\/\d{4}$"
+                  required
+                  onChange={(e) => updateInfoField(e)}
+                />
+              </div>
+              {/* Email */}
+              <div className="pb-4">
+                <h6 className="pb-2">Email:</h6>
+                <input
+                  type="email"
+                  className="form-control border-secondary"
+                  id="inputEmail"
+                  name="email"
+                  value={user.email}
+                  placeholder="abc@gmail.com"
+                  required
+                  onChange={(e) => updateUserField(e)}
+                />
+              </div>
+              {/* Password */}
+              <div className="pb-4">
+                <h6 className="pb-2">Password:</h6>
+                <input
+                  type="password"
+                  className="form-control border-secondary"
+                  id="inputPassword"
+                  name="password"
+                  value={user.password}
+                  minLength="8"
+                  placeholder="Minimum 8 characters"
+                  required
+                  onChange={(e) => updateUserField(e)}
+                />
               </div>
             </div>
-
-            <div className="row pt-3 pb-3 justify-content-center">
-              <div className="col-3 d-grid gap-2">
-                <NavLink
-                  type="button"
-                  className="btn btn-outline-primary"
+            {/* Right box */}
+            <div className="c-6 d-flex flex-column">
+              {/* Doctor ID */}
+              <div className="pb-4">
+                <h6 className="pb-2">Doctor ID:</h6>
+                <input
+                  type="text"
+                  className="form-control border-secondary"
+                  id="inputDoctorID"
+                  name="doctorID"
+                  value={user.userInfos.ageRange}
+                  required
+                  onChange={(e) => updateInfoField(e)}
+                />
+              </div>
+              {/* Specialty */}
+              <div className="pb-4">
+                <h6 className="pb-2">Specialty:</h6>
+                <select
+                  type="text"
+                  className="form-control border-secondary"
+                  id="inputMedSpecialty"
+                  name="medSpecialty"
+                  value={user.userInfos.medSpecialty}
+                  required
+                  onChange={(e) => updateInfoField(e)}
+                >
+                  <option value="">Select specialty</option>
+                  <option value="Cardiology">Cardiology</option>
+                </select>
+              </div>
+              {/* Role */}
+              <div className="pb-4">
+                <h6 className="pb-2">Role:</h6>
+                <select
+                  type="text"
+                  className="form-control border-secondary"
+                  id="inputRole"
+                  name="role"
+                  value={user.role}
+                  required
+                  onChange={(e) => updateUserField(e)}
+                >
+                  <option value="">Select role</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="head-doctor">Head doctor</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              {/* Phone number */}
+              <div className="pb-5">
+                <h6 className="pb-2">Phone number:</h6>
+                <input
+                  type="tel"
+                  className="form-control border-secondary"
+                  id="inputPhoneNumber"
+                  name="phoneNumber"
+                  value={user.phoneNumber}
+                  pattern="[0-9]{10}"
+                  required
+                  onChange={(e) => updateUserField(e)}
+                />
+              </div>
+              {/* Buttons */}
+              <div className="d-flex justify-content-end pt-2">
+                <Link
+                  className="btn btn-outline-secondary px-5 me-3"
                   to="/user-table"
                 >
-                  QUAY LẠI
-                </NavLink>
-              </div>
-              <div className="col-3 d-grid gap-2">
+                  Back
+                </Link>
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-primary px-5"
                   onClick={confirmSignup}
                 >
-                  XÁC NHẬN ĐĂNG KÝ
+                  Register
                 </button>
               </div>
             </div>

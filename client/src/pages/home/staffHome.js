@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "../../components/Home/HeroSection";
 import Options from "../../components/Home/Options";
 import About from "../../components/Home/About";
-import BKCSystem from "../../components/Home/BKCSystem";
+import BKCSystem from "../../components/Home/BaySideSystem";
 import Specialty from "../../components/Home/Specialty";
 import News from "../../components/Home/News";
 import Footer from "../../components/Home/Footer";

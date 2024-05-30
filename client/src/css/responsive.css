@@ -68,8 +68,8 @@
 
 /* Mobile phone */
 @media only screen and (max-width: 767px) {
-  #main {
-    padding-top: 72px;
+  .main-padding-1 {
+    padding-top: 58px;
   }
 
   .navbar-wrapper {

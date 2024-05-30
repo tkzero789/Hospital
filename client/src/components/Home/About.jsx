@@ -11,23 +11,22 @@ export default function About() {
             <div className="c-6 md-12">
               <div className="about-section">
                 <div className="about-header">
-                  BKCare - Nơi gửi gắm niềm tin sức khỏe
+                  BaySide Hospital: Your Guiding Star to Health & Wellness
                 </div>
                 <div className="about-body">
                   <span>
-                    Chào mừng bạn đến với Bệnh viện BKC, nơi cung cấp dịch vụ
-                    chăm sóc sức khỏe chất lượng cao với sự tận tâm và chuyên
-                    nghiệp. BKCare tự hào là một trong những bệnh viện uy tín
-                    tại Việt Nam, với đội ngũ y bác sĩ giàu kinh nghiệm và trang
-                    thiết bị hiện đại.
+                    At BaySide Hospital, we illuminate your healthcare journey.
+                    Our team of dedicated professionals, equipped with advanced
+                    technology and a compassionate approach, guides you every
+                    step of the way.
                   </span>
                   <br />
                   <br />
                   <span>
-                    BKCare luôn chú trọng đến việc tạo dựng môi trường y tế thân
-                    thiện, ấm áp, giúp người bệnh cảm thấy thoải mái và an tâm
-                    khi điều trị. Chúng tôi tự tin là điểm đến lý tưởng cho bạn
-                    khi cần chăm sóc sức khỏe bản thân và gia đình.
+                    From preventative screenings and personalized treatment
+                    plans to comprehensive emergency care, BaySide Hospital
+                    offers a holistic spectrum of services designed to empower
+                    you to take charge of your health.
                   </span>
                 </div>
               </div>

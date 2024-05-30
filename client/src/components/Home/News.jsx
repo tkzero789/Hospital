@@ -51,7 +51,7 @@ export default function News() {
         <section className="news w-100">
           <div className="content-container">
             <div className="news-wrapper">
-              <div className="news-header">Tin tức - Y học thường thức</div>
+              <div className="news-header">Latest News</div>
               <div className="news-section">
                 <div className="c-7 md-12">
                   <div className="news-section-left">
@@ -114,7 +114,7 @@ export default function News() {
                     })}
                     <div className="news-btn-wrapper">
                       <Link className="news-btn-link" to="/view-blog-list">
-                        Xem tất cả tin tức
+                        View all news
                       </Link>
                     </div>
                   </div>

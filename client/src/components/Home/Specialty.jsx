@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HeartSVG from "../../assets/home/heartSVG.svg";
-import DentistSVG from "../../assets/home/dentistSVG.svg";
-import LungSVG from "../../assets/home/lungSVG.svg";
-import EyesSVG from "../../assets/home/eyesSVG.svg";
 import BoneSVG from "../../assets/home/boneSVG.svg";
-import EarSVG from "../../assets/home/earSVG.svg";
+import MedicationSVG from "../../assets/home/medicationSVG.svg";
+import FileSVG from "../../assets/home/fileSVG.svg";
+import HandSVG from "../../assets/home/handSVG.svg";
+import RibbonSVG from "../../assets/home/ribbonSVG.svg";
+import ProtectionSVG from "../../assets/home/protectionSVG.svg";
 import DnaSVG from "../../assets/home/dnaSVG.svg";
-import TubeSVG from "../../assets/home/tubesSVG.svg";
 
 export default function Specialty() {
   return (
@@ -17,60 +17,58 @@ export default function Specialty() {
           <div className="splty-wrapper">
             <div className="c-12">
               <div className="splty-section">
-                <div className="splty-section-header">
-                  Chuyên khoa tiêu biểu
-                </div>
+                <div className="splty-section-header">Specialties</div>
                 <div className="splty-items-container">
                   <div className="splty-items-wrapper">
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/tim-mach"
+                        to="/specialty-page/cardiology"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
                           <img src={HeartSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Tim mạch</span>
+                          <span>Cardiology</span>
                         </div>
                       </Link>
                     </div>
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/co-xuong-khop"
+                        to="/specialty-page/orthopedics"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
                           <img src={BoneSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Cơ – xương – khớp</span>
+                          <span>Orthopedics</span>
                         </div>
                       </Link>
                     </div>
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/noi-tong-hop"
+                        to="/specialty-page/surgery"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
-                          <img src={LungSVG} alt="specialty"></img>
+                          <img src={MedicationSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Nội tổng hợp</span>
+                          <span>Surgery</span>
                         </div>
                       </Link>
                     </div>
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/rang-ham-mat"
+                        to="/specialty-page/pediatricians"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
-                          <img src={DentistSVG} alt="specialty"></img>
+                          <img src={FileSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Răng - hàm - mặt</span>
+                          <span>Pediatricians</span>
                         </div>
                       </Link>
                     </div>
@@ -78,61 +76,61 @@ export default function Specialty() {
                   <div className="splty-items-wrapper">
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/mat"
+                        to="/specialty-page/diabetes"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
-                          <img src={EyesSVG} alt="specialty"></img>
+                          <img src={HandSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Mắt</span>
+                          <span>Diabetes</span>
                         </div>
                       </Link>
                     </div>
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/xet-nghiem"
+                        to="/specialty-page/women-care"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
-                          <img src={TubeSVG} alt="specialty"></img>
+                          <img src={RibbonSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Xét nghiệm</span>
+                          <span>Women's care</span>
                         </div>
                       </Link>
                     </div>
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/tai-mui-hong"
+                        to="/specialty-page/family-medicine"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
-                          <img src={EarSVG} alt="specialty"></img>
+                          <img src={ProtectionSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Tai - mũi - họng</span>
+                          <span>Family Medicine</span>
                         </div>
                       </Link>
                     </div>
 
                     <div className="splty-item">
                       <Link
-                        to="/specialty-page/than-kinh"
+                        to="/specialty-page/neurology"
                         className="splty-item__link"
                       >
                         <div className="splty-item-img">
                           <img src={DnaSVG} alt="specialty"></img>
                         </div>
                         <div className="splty-item-header">
-                          <span>Thần kinh</span>
+                          <span>Neurology</span>
                         </div>
                       </Link>
                     </div>
                   </div>
                   <div className="splty-btn-wrapper">
                     <Link to="/specialty-page" className="splty-btn-link">
-                      Xem chi tiết các chuyên khoa
+                      View more details
                     </Link>
                   </div>
                 </div>

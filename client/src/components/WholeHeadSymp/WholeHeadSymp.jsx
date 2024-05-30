@@ -15,6 +15,7 @@ const WholeHeadSymp = ({
             .filter(
               (symptom) =>
                 symptom.position === position &&
+                symptom.status === "Approved" &&
                 !chosenSymps.includes(symptom.id)
             )
             .map((symptom) => (

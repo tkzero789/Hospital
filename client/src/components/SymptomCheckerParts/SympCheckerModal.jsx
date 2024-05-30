@@ -12,43 +12,40 @@ function SympCheckerModal() {
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" centered>
       <Modal.Header className="text-center">
-        <Modal.Title className="w-100">
-          Chính Sách và Điều Khoản Sử Dụng
-        </Modal.Title>
+        <Modal.Title className="w-100">Terms and Conditions of Use</Modal.Title>
       </Modal.Header>
       <Modal.Body className="px-4">
         <p>
-          Việc sử dụng chức năng <b>chẩn đoán bệnh trực tuyến</b> này đồng nghĩa
-          với việc bạn đồng ý tuân thủ các điều khoản sau đây:
+          By using this <b>online diagnosis function</b> you agree to abide by
+          the following terms:
         </p>
         <ul className="ps-4 py-3">
           <li className="py-2">
             <p>
-              <strong>Bảo mật Thông tin:</strong>
+              <strong>Information Security:</strong>
             </p>
             <p>
-              Chúng tôi bảo mật thông tin cá nhân của bạn và chỉ sử dụng nó cho
-              mục đích đã quy định trong Chính Sách Bảo Mật. Bạn cam kết cung
-              cấp thông tin chính xác và đầy đủ.
-            </p>
-          </li>
-          <li className="py-2">
-            <p>
-              <strong>Trách Nhiệm Sử Dụng:</strong>
-            </p>
-            <p>
-              Bạn không được sử dụng dịch vụ để vi phạm pháp luật hoặc gây hại
-              cho người khác. Bạn hoàn toàn chịu trách nhiệm về các hoạt động
-              dưới tên của mình.
+              We protect your personal information and use it only for the
+              purposes specified in our Privacy Policy. You agree to provide
+              accurate and complete information.
             </p>
           </li>
           <li className="py-2">
             <p>
-              <strong>Giới Hạn Trách Nhiệm:</strong>
+              <strong>Responsibility:</strong>
             </p>
             <p>
-              Chúng tôi không chịu trách nhiệm đối với bất kỳ thiệt hại nào phát
-              sinh từ việc sử dụng dịch vụ của chúng tôi.
+              You may not use the service to violate the law or harm others. You
+              are fully responsible for all activities under your name.
+            </p>
+          </li>
+          <li className="py-2">
+            <p>
+              <strong>Liability:</strong>
+            </p>
+            <p>
+              We are not liable for any damages arising from the use of our
+              services.
             </p>
           </li>
         </ul>
@@ -62,9 +59,9 @@ function SympCheckerModal() {
                   className="border border-secondary"
                 />
                 <Form.Check.Label>
-                  Tôi đồng ý với{" "}
+                  I agree to the{" "}
                   <Link className="text-decoration-none">
-                    Chính Sách và Điều Khoản Sử Dụng
+                    Terms and Conditions of Use
                   </Link>
                 </Form.Check.Label>
               </Form.Check>
@@ -74,7 +71,7 @@ function SympCheckerModal() {
       </Modal.Body>
       <Modal.Footer>
         <Link to="/home" className="btn btn-outline-secondary me-3">
-          Quay lại
+          Back
         </Link>
         <Button
           //   className="btn btn-primary px-4"
@@ -84,7 +81,7 @@ function SympCheckerModal() {
           onClick={handleClose}
           disabled={!isChecked}
         >
-          Tiếp theo
+          Next
         </Button>
       </Modal.Footer>
     </Modal>

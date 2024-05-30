@@ -22,7 +22,7 @@ export default function BlogTable({ userRole, userInfos }) {
         setBlog(reverseDataWithNo);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -59,14 +59,14 @@ export default function BlogTable({ userRole, userInfos }) {
   const actionColumn = [
     {
       field: "action",
-      headerName: "Thao tác",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         const blog = params.row;
         return (
           <div className="cellAction">
             <NavLink className="viewLink" to={`/blog/${blog.id}/view`}>
-              <div className="viewButton">Xem</div>
+              <div className="viewButton">View</div>
             </NavLink>
           </div>
         );
@@ -77,16 +77,16 @@ export default function BlogTable({ userRole, userInfos }) {
   const columns = [
     {
       field: "title",
-      headerName: "Tựa đề",
+      headerName: "Title",
       width: 400,
     },
-    { field: "author", headerName: "Tác giả", width: 200 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "createdAt", headerName: "Ngày tạo", width: 150 },
+    { field: "author", headerName: "Author", width: 200 },
+    { field: "doctorID", headerName: "Doctor ID", width: 120 },
+    { field: "createdAt", headerName: "Created on", width: 150 },
 
     {
       field: "status",
-      headerName: "Trạng thái",
+      headerName: "Status",
       width: 140,
       renderCell: (params) => {
         const status = params.row.status.replace(" ", "-");
@@ -106,14 +106,14 @@ export default function BlogTable({ userRole, userInfos }) {
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Danh sách blogs
+          List of blogs
           {(userRole === "head-doctor" || userRole === "doctor") && (
             <>
               <button onClick={handleMyBlogClick}>
-                {myBlog ? "Xem tất cả blogs" : "Blogs của tôi"}
+                {myBlog ? "All blogs" : "My blogs"}
               </button>
               <NavLink to="/create-blog" className="add-link">
-                Thêm bài blog
+                Create a blog
               </NavLink>
             </>
           )}

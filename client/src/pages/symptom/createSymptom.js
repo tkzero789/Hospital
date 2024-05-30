@@ -19,23 +19,20 @@ export default function CreateSymptom({ userRole, userInfos }) {
 
   const [symptom, setSymptom] = useState({
     id: uuidv4(),
-    idTemp: uuidv4(),
     name: "",
-    position: "Đầu",
+    position: "Head",
     categories: [
       {
         id: uuidv4(),
-        categoryName: "Vị trí",
+        categoryName: "Position",
         descriptions: [
           {
             id: uuidv4(),
             descriptionDetail: "",
-            descriptionImg: "",
           },
         ],
       },
     ],
-    diseaseUsedIds: [],
     createInfos: {
       doctorCreated: userInfos.fullName,
       doctorID: userInfos.doctorID,
@@ -48,41 +45,22 @@ export default function CreateSymptom({ userRole, userInfos }) {
 
   const navigate = useNavigate();
 
-  function confirmCancle(e) {
-    if (window.confirm("Hủy tạo và trở về")) {
-      setSymptom((prev) => ({
-        ...prev,
-        name: "",
-        categories: [
-          {
-            index: uuidv4(),
-            categoryName: "Vị trí",
-            descriptions: [
-              {
-                index: uuidv4(),
-                descriptionDetail: "",
-                descriptionImg: null,
-              },
-            ],
-          },
-        ],
-      }));
-      navigate(-1);
-    }
+  function confirmCancel() {
+    navigate("/symptom-table");
   }
 
   async function confirmCreate(e) {
     if (symptom.name === "") {
-      window.alert("Chưa nhập tên bệnh");
+      window.alert("Please enter symptom name");
       return;
     } else if (symptom.categories.length === 0) {
-      window.alert("Triệu chứng chưa có mô tả nào");
+      window.alert("Please add symptom's description");
       return;
     } else
       for (const cat of symptom.categories) {
         for (const des of cat.descriptions) {
           if (des.descriptionDetail === "") {
-            window.alert("Chưa nhập mô tả");
+            window.alert("Please add symptom's description");
             return;
           }
         }
@@ -90,69 +68,25 @@ export default function CreateSymptom({ userRole, userInfos }) {
     e.preventDefault();
     try {
       // Create new symptom
+      const updatedSymptom = { ...symptom };
       await axios
-        .post("http://localhost:5000/symptom-temp/add", symptom, apiConfig)
+        .post("http://localhost:5000/symptom/add", updatedSymptom, apiConfig)
         .then((res) => {
           if (res.data && res.data.message === "Symptom already exists") {
-            throw new Error(
-              "Triệu chứng cùng tên đang được người khác thêm vào!"
-            );
+            throw new Error("Duplicated symptom!");
           }
           console.log("Symptom created", res.data);
         });
-      // Create notification to admin
-      const notif = {
-        id: uuidv4(),
-        fromInfos: {
-          name: userInfos.fullName,
-          role: userRole,
-          medSpecialty: userInfos.medSpecialty,
-          doctorID: userInfos.doctorID,
-        },
-        toDoctorID: ["ADMIN"],
-        content: {
-          type: "Tạo triệu chứng",
-          detail: `Bác sĩ trưởng Khoa ${userInfos.medSpecialty} đã tạo triệu chứng ${symptom.name}`,
-          link: `/symptom-temp/${symptom.idTemp}/approve`,
-        },
-        timeSent: formattedTime,
-        status: "Chưa xem",
-      };
-      await axios
-        .post("http://localhost:5000/notification/add", notif, apiConfig)
-        .then((res) => {
-          console.log("Notification created", res.data);
-        });
-      // Set default and navigate
-      setSymptom((prev) => ({
-        ...prev,
-        name: "",
-        categories: [
-          {
-            index: uuidv4(),
-            categoryName: "Vị trí",
-            descriptions: [
-              {
-                index: uuidv4(),
-                descriptionDetail: "",
-                descriptionImg: null,
-              },
-            ],
-          },
-        ],
-      }));
       navigate(`/symptom-table`);
     } catch (err) {
-      const message = `Có lỗi xảy ra: ${err}`;
+      const message = `Error: ${err}`;
       window.alert(message);
     }
   }
 
   return (
     <div>
-      <h3 className="container text-center text-body pt-5">
-        TẠO TRIỆU CHỨNG VÀ MÔ TẢ
-      </h3>
+      <h3 className="container text-center text-body pt-5">Create symptom</h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -171,10 +105,10 @@ export default function CreateSymptom({ userRole, userInfos }) {
                   type="button"
                   className="btn btn-outline-primary"
                   onClick={(e) => {
-                    confirmCancle(e);
+                    confirmCancel();
                   }}
                 >
-                  HỦY TẠO
+                  Cancel
                 </button>
               </div>
               <div className="col-3 d-grid gap-2">
@@ -185,7 +119,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
                     confirmCreate(e);
                   }}
                 >
-                  XÁC NHẬN TẠO
+                  Create
                 </button>
               </div>
             </div>

@@ -57,7 +57,7 @@ export default function DiseaseSymps({ disease, setDisease, dbSymps, mode }) {
   return (
     <div>
       <div className="w-100">
-        <h5 className="card-title text-body mb-4">Triệu chứng đã có:</h5>
+        <h5 className="card-title text-body mb-4">List of symptoms</h5>
         <SearchBarSymp
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -81,7 +81,7 @@ export default function DiseaseSymps({ disease, setDisease, dbSymps, mode }) {
         })}
       </div>
       <div>
-        <h5>Các triệu chứng đã chọn:</h5>
+        <h5>Selected symptoms:</h5>
         {disease.symptomIds.length > 0 && (
           <div className="ad-chosen-symp">
             {disease.symptomIds.map((id) => {

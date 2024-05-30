@@ -21,15 +21,30 @@ export default function ApptForm({
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
 
-  const dates = Array.from({ length: 31 }, (_, i) => i + 1);
-
-  const hasThirtyOneDays = (month, year) => {
-    const months31Days = [0, 2, 4, 6, 7, 9, 11]; // Months with 31 days (0-based indexing)
-    return months31Days.includes(month - 1); // Subtract 1 from the month to get the zero-based index
+  const getDaysInMonth = (month, year) => {
+    // February
+    if (month === "02") {
+      return 29;
+    }
+    // April, June, September, November
+    if (["04", "06", "09", "11"].includes(month)) {
+      return 30;
+    }
+    // January, March, May, July, August, October, December
+    return 31;
   };
 
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    if (month) {
+      const daysInMonth = getDaysInMonth(month);
+      setDays(Array.from({ length: daysInMonth }, (_, i) => i + 1));
+    }
+  }, [month]);
+
   const months = [
-    { value: "", label: "Tháng" },
+    { value: "", label: "Month" },
     { value: "01", label: "1" },
     { value: "02", label: "2" },
     { value: "03", label: "3" },
@@ -50,27 +65,27 @@ export default function ApptForm({
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   };
 
-  const handleDateChange = (e) => {
-    const selectedDate = e.target.value;
-    setDate(selectedDate);
-    setMonth("");
-    setYear("");
-    setAppt((apptObject) => ({
-      ...apptObject,
-      dob: `${selectedDate}/${month}/${year}`,
-    }));
-  };
-
   const handleMonthChange = (e) => {
     const selectedMonth = e.target.value;
-    if (selectedMonth === "02") {
-      setYear("");
-    }
+    setDate("");
+    setYear("");
     const formattedMonth = selectedMonth.padStart(2, "0");
     setMonth(formattedMonth);
     setAppt((apptObject) => ({
       ...apptObject,
-      dob: `${date}/${formattedMonth}/${year}`,
+      dob: `${formattedMonth}/${date}/${year}`,
+    }));
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = Number(e.target.value);
+    if (selectedDate === 29 && month === "02") {
+      setYear("");
+    }
+    setDate(selectedDate);
+    setAppt((apptObject) => ({
+      ...apptObject,
+      dob: `${month}/${selectedDate}/${year}`,
     }));
   };
 
@@ -79,7 +94,7 @@ export default function ApptForm({
     setYear(selectedYear);
     setAppt((apptObject) => ({
       ...apptObject,
-      dob: `${date}/${month}/${selectedYear}`,
+      dob: `${month}/${date}/${selectedYear}`,
     }));
   };
   // --- DOB: End ---
@@ -93,7 +108,7 @@ export default function ApptForm({
 
   // Format the selected date for display (optional)
   const formattedCalendarDate = calendarDate
-    ? calendarDate.toLocaleDateString("vi-VN", {
+    ? calendarDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -102,7 +117,7 @@ export default function ApptForm({
 
   const handleCalendarChange = (date) => {
     setCalendarDate(date);
-    const formattedDate = date.toLocaleDateString("vi-VN", {
+    const formattedDate = date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -147,21 +162,21 @@ export default function ApptForm({
     const inputPhoneNumber = document.getElementById("inputPhoneNumber");
     const inputEmail = document.getElementById("inputEmail");
     if (!inputFullName.checkValidity()) {
-      toast.warning("Thiếu họ và tên");
+      toast.error("Please enter name");
     } else if (!inputPhoneNumber.checkValidity()) {
-      toast.warning("Số điện thoại không hợp lệ");
+      toast.error("Invalid phone number");
     } else if (!inputEmail.checkValidity()) {
-      toast.warning("Email không hợp lệ");
+      toast.error("Invalid email");
     } else if (!date) {
-      toast.warning("Vui lòng chọn ngày");
+      toast.error("Please select date");
     } else if (!month || month === "00") {
-      toast.warning("Vui lòng chọn tháng");
+      toast.error("Please select month");
     } else if (!year) {
-      toast.warning("Vui lòng chọn năm");
-    } else if (appt.gender === "" || appt.gender === "Chọn giới tính") {
-      toast.warning("Vui lòng chọn giới tính");
-    } else if (appt.need === "" || appt.need === "Chọn nhu cầu") {
-      toast.warning("Vui lòng chọn Nhu cầu khám");
+      toast.error("Please select year");
+    } else if (appt.gender === "" || appt.gender === "Select gender") {
+      toast.error("Vui lòng chọn giới tính");
+    } else if (appt.need === "" || appt.need === "Select services") {
+      toast.error("Please select a service");
     } else {
       displayModal();
     }
@@ -174,7 +189,7 @@ export default function ApptForm({
     setShowModal(!showModal);
   };
   const formatDateForModal = (date) => {
-    return date.padStart(2, "0");
+    return String(date).padStart(2, "0");
   };
 
   useEffect(() => {
@@ -188,7 +203,7 @@ export default function ApptForm({
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Đăng ký khám bệnh</title>
+          <title>Appointment schedule</title>
         </Helmet>
       </HelmetProvider>
 
@@ -202,19 +217,19 @@ export default function ApptForm({
         <div className="content-container">
           <div className={`appt-wrapper ${showModal ? "hidden" : ""}`}>
             <div className="appt-title">
-              <div className="appt-title-text">Đăng ký khám bệnh</div>
+              <div className="appt-title-text">Schedule an appointment</div>
             </div>
             <form className="appt-form">
               <div className="c-4 md-12">
                 {/* Name */}
                 <div className="name-form">
                   <label htmlFor="name">
-                    Họ và tên <span>*</span>
+                    Your name <span>*</span>
                   </label>
                   <input
                     className="appt-input"
                     type="text"
-                    placeholder="Họ và tên"
+                    placeholder="Enter your name"
                     id="inputFullName"
                     name="fullName"
                     value={appt.fullName}
@@ -226,16 +241,16 @@ export default function ApptForm({
                 {/* Phone */}
                 <div className="phone-form">
                   <label htmlFor="phone">
-                    Số điện thoại <span>*</span>
+                    Phone number <span>*</span>
                   </label>
                   <input
                     className="appt-input"
                     type="text"
-                    placeholder="Số điện thoại"
+                    placeholder="Enter phone number"
                     id="inputPhoneNumber"
                     name="phoneNumber"
                     value={appt.phoneNumber}
-                    pattern="^0[0-9]{9}$"
+                    pattern="^[2-9]{1}[0-9]{2}[2-9]{1}[0-9]{2}[0-9]{4}$"
                     readOnly={!editMode}
                     required
                     onChange={(e) => updateApptField(e)}
@@ -247,7 +262,7 @@ export default function ApptForm({
                   <input
                     className="appt-input"
                     type="email"
-                    placeholder="Email (không bắt buộc)"
+                    placeholder="Email (optional)"
                     id="inputEmail"
                     name="email"
                     value={appt.email}
@@ -261,45 +276,32 @@ export default function ApptForm({
                 <div className="dob-form">
                   <label htmlFor="dob">
                     {" "}
-                    Ngày sinh <span>*</span>{" "}
+                    Date of birth <span>*</span>{" "}
                   </label>
                   <div className="select-wrapper">
-                    <select
-                      id="dateSelect"
-                      value={date}
-                      readOnly={!editMode}
-                      onChange={handleDateChange}
-                    >
-                      <option value="">Ngày</option>
-                      {dates.map((date) => (
-                        <option key={date} value={date}>
-                          {date}
-                        </option>
-                      ))}
-                    </select>
                     <select
                       id="monthSelect"
                       value={month}
                       readOnly={!editMode}
                       onChange={handleMonthChange}
-                      disabled={!date}
                     >
                       {months.map(({ value, label }) => (
-                        <option
-                          key={value}
-                          value={value}
-                          disabled={
-                            (value === "02" &&
-                              date !== "" &&
-                              parseInt(date, 10) > 29) ||
-                            (date === "31" &&
-                              !hasThirtyOneDays(
-                                parseInt(value, 10),
-                                parseInt(year, 10)
-                              ))
-                          }
-                        >
+                        <option key={value} value={value}>
                           {label}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      id="dateSelect"
+                      value={date}
+                      readOnly={!editMode}
+                      onChange={handleDateChange}
+                      disabled={!month}
+                    >
+                      <option value="">Date</option>
+                      {days.map((day) => (
+                        <option key={day} value={day}>
+                          {day}
                         </option>
                       ))}
                     </select>
@@ -308,15 +310,15 @@ export default function ApptForm({
                       value={year}
                       readOnly={!editMode}
                       onChange={handleYearChange}
-                      disabled={!month}
+                      disabled={!date}
                     >
-                      <option value="">Năm</option>
+                      <option value="">Year</option>
                       {years.map((year) => (
                         <option
                           key={year}
                           value={year}
                           disabled={
-                            month === "02" && date === "29" && !isLeapYear(year)
+                            month === "02" && date === 29 && !isLeapYear(year)
                           }
                         >
                           {year}
@@ -328,7 +330,7 @@ export default function ApptForm({
                 {/* Gender */}
                 <div className="gender">
                   <label htmlFor="gender">
-                    Giới tính <span>*</span>
+                    Gender <span>*</span>
                   </label>
                   <select
                     id="inputGender"
@@ -340,15 +342,15 @@ export default function ApptForm({
                     required
                     onChange={(e) => updateApptField(e)}
                   >
-                    <option value="Chọn giới tính">Chọn giới tính</option>
-                    <option value="Nam">Nam</option>
-                    <option value="Nữ">Nữ</option>
+                    <option value="Select gender">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                   </select>
                 </div>
                 {/* Specialties */}
                 <div className="need">
                   <label htmlFor="need">
-                    Nhu cầu khám <span>*</span>
+                    Services <span>*</span>
                   </label>
                   <select
                     id="inputNeed"
@@ -360,21 +362,17 @@ export default function ApptForm({
                     required
                     onChange={(e) => updateApptField(e)}
                   >
-                    <option value="Chọn nhu cầu">Chọn nhu cầu</option>
-                    <option value="Khám chuyên khoa">Khám chuyên khoa</option>
-                    <option value="Kiểm tra sức khoẻ tổng quát">
-                      Kiểm tra sức khoẻ tổng quát
-                    </option>
-                    <option value="Xét nghiệm, chẩn đoán hình ảnh">
-                      Xét nghiệm, chẩn đoán hình ảnh
-                    </option>
+                    <option value="Select services">Select services</option>
+                    <option value="Primary care">Primary care</option>
+                    <option value="Imaging">Imaging</option>
+                    <option value="Senior care">Senior care</option>
                   </select>
                 </div>
               </div>
               <div className="c-4 md-12">
                 {/* Appt Date */}
                 <div className="appt-date">
-                  <label htmlFor="appt-date">Đặt lịch khám</label>
+                  <label htmlFor="appt-date">Appointment date</label>
                   <div className="appt-date-container d-flex">
                     <input
                       className="appt-date-input"
@@ -382,7 +380,7 @@ export default function ApptForm({
                       value={formattedCalendarDate}
                       readOnly // Make the input read-only
                       onClick={handleCalendarClick} // Toggle calendar on click
-                      placeholder="Đặt lịch (không bắt buộc)"
+                      placeholder="Select a date (optional)"
                       id="inputDate"
                       name="date"
                       required
@@ -396,40 +394,18 @@ export default function ApptForm({
                     <div ref={calendarRef} className="calendar-box">
                       <Calendar
                         onChange={handleCalendarChange}
-                        locale="vi-VN"
                         value={calendarDate}
                         minDate={new Date()}
                         maxDate={maxDate}
-                        tileClassName={({ date, view }) => {
-                          if (view === "month") {
-                            const currentDate = new Date().setHours(0, 0, 0, 0);
-                            const selectedDate = calendarDate?.getTime();
-                            if (
-                              date.getTime() === currentDate &&
-                              (selectedDate === null ||
-                                selectedDate !== currentDate)
-                            ) {
-                              return "react-calendar__tile--now";
-                            } else if (date.getTime() === selectedDate) {
-                              return "react-calendar__tile--selected";
-                            } else if (
-                              date.getTime() === currentDate &&
-                              selectedDate === currentDate
-                            ) {
-                              return "react-calendar__tile--now-unselected";
-                            }
-                          }
-                          return null;
-                        }}
                       />
                     </div>
                   )}
                 </div>
                 {/* Symptom Description */}
                 <div className="reason-textarea">
-                  <label htmlFor="reason">Mô tả vấn đề sức khoẻ</label>
+                  <label htmlFor="reason">Describe your health issue</label>
                   <textarea
-                    placeholder="Nhập mô tả vấn đề sức khoẻ (không bắt buộc)"
+                    placeholder="Enter your health issue (optional)"
                     id="inputReason"
                     name="reason"
                     value={appt.reason}
@@ -443,12 +419,12 @@ export default function ApptForm({
             <div className="text-center">
               <hr />
               <span>
-                <b>Lưu ý:</b> Thời gian{" "}
+                <b>Note:</b> The{" "}
                 <b style={{ fontWeight: "var(--roboto-medium-weight)" }}>
-                  đặt lịch khám
+                  appointment time
                 </b>{" "}
-                trên chỉ là thời gian dự kiến, tổng đài sẽ liên hệ xác nhận thời
-                gian khám chính xác tới quý khách sau khi quý khách đặt hẹn.
+                is only an estimate. Our call center will contact you to confirm
+                the exact appointment time after you have booked.
               </span>
               <div className="appt-btn">
                 <Toaster
@@ -458,7 +434,7 @@ export default function ApptForm({
                   position="top-center"
                   richColors
                 />
-                <button onClick={validateInput}>Tiếp tục</button>
+                <button onClick={validateInput}>Next</button>
               </div>
             </div>
           </div>
@@ -471,16 +447,14 @@ export default function ApptForm({
           <div className="content-container">
             <div className="appt-modal">
               <div className="appt-modal-wrapper">
-                <div className="appt-modal-header">
-                  Xác nhận thông tin đặt lịch khám
-                </div>
+                <div className="appt-modal-header">Confirm appointment</div>
                 <div className="appt-modal-info">
                   <div className="appt-modal-data">
-                    <span>Họ và tên:</span>
+                    <span>Name:</span>
                     <p>{appt.fullName}</p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>Số điện thoại:</span>
+                    <span>Phone number:</span>
                     <p>{appt.phoneNumber}</p>
                   </div>
                   <div className="appt-modal-data">
@@ -488,56 +462,58 @@ export default function ApptForm({
                     {appt.email ? (
                       <p>{appt.email}</p>
                     ) : (
-                      <p>Chưa cung cấp (không bắt buộc)</p>
+                      <p>Did not provided (optional)</p>
                     )}
                   </div>
                   <div className="appt-modal-data">
-                    <span>Ngày sinh:</span>
+                    <span>Date of birth:</span>
                     <p>
-                      {formatDateForModal(date)}/{month}/{year}
+                      {month}/{formatDateForModal(date)}/{year}
                     </p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>Giới tính:</span>
+                    <span>Gender:</span>
                     <p>{appt.gender}</p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>Nhu cầu khám:</span>
+                    <span>Service:</span>
                     <p>{appt.need}</p>
                   </div>
                   <div className="appt-modal-data">
-                    <span>Ngày đặt khám:</span>
+                    <span>Appointment date:</span>
                     {appt.date ? (
                       <p>{appt.date}</p>
                     ) : (
                       <p>
-                        Tổng đài BKCare sẽ liên hệ Quý khách trong thời gian sớm
-                        nhất để xác nhận lịch hẹn.
+                        <b>
+                          BaySide's call center will contact you as soon as
+                          possible to confirm your appointment.
+                        </b>
                       </p>
                     )}
                   </div>
                   <div className="appt-modal-data">
-                    <span>Mô tả vấn đề sức khoẻ:</span>
+                    <span>Describe your health issue:</span>
                     {appt.reason ? (
                       <p>{appt.reason}</p>
                     ) : (
-                      <p>Chưa cung cấp (không bắt buộc)</p>
+                      <p>Did not provided (optional)</p>
                     )}
                   </div>
                   <hr style={{ marginTop: "3rem" }} />
                   <div className="attention-text">
                     <p>
-                      Bằng cách chọn <strong>“Đăng ký khám“</strong>, tôi xác
-                      nhận đã đọc và đồng ý với các{" "}
+                      By clicking <strong>“Confirm“</strong>, I confirm that I
+                      have read and agree to the{" "}
                       <Link style={{ textDecoration: "none" }}>
-                        Chính sách và Điều khoản sử dụng
+                        Terms and Conditions of Use
                       </Link>{" "}
-                      của dịch vụ.
+                      of the service.
                     </p>
                   </div>
                   <div className="appt-modal-btn">
                     <button type="button" onClick={closeModal}>
-                      Quay lại
+                      Back
                     </button>
                     <button type="button" onClick={checkPhoneNumber}>
                       <Toaster
@@ -547,7 +523,7 @@ export default function ApptForm({
                         position="top-center"
                         richColors
                       />
-                      Đăng ký khám
+                      Confirm
                     </button>{" "}
                   </div>
                 </div>

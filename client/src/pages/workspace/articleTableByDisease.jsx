@@ -62,7 +62,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
   const actionColumn = [
     {
       field: "action",
-      headerName: "Thao tác",
+      headerName: "Action",
       width: 200,
       renderCell: (params) => {
         const article = params.row;
@@ -73,7 +73,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/disease/${article.diseaseId}/article/${article.id}/view`}
               >
-                <div className="viewButton">Xem</div>
+                <div className="viewButton">View</div>
               </NavLink>
             )}
 
@@ -83,7 +83,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/disease/${article.diseaseId}/article/${article.id}/edit`}
                 >
-                  <div className="viewButton">Sửa</div>
+                  <div className="viewButton">Edit</div>
                 </NavLink>
               )}
             {article.status !== "Approved" &&
@@ -92,7 +92,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
                   className="viewLink"
                   to={`/article-temp/${article.idTemp}/approve`}
                 >
-                  <div className="viewButton">Xem</div>
+                  <div className="viewButton">View</div>
                 </NavLink>
               )}
             {article.status !== "Approved" && userRole === "head-doctor" && (
@@ -100,7 +100,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
                 className="viewLink"
                 to={`/article-temp/${article.idTemp}/approve`}
               >
-                <div className="viewButton">Xét duyệt</div>
+                <div className="viewButton">Approve</div>
               </NavLink>
             )}
           </div>
@@ -110,31 +110,31 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
   ];
 
   const columns = [
-    { field: "number", headerName: "Stt", width: 50 },
+    { field: "number", headerName: "No.", width: 50 },
     { field: "id", headerName: "ID", width: 200 },
-    { field: "title", headerName: "Tựa đề", width: 300 },
-    { field: "diseaseName", headerName: "Bệnh đi kèm", width: 200 },
-    { field: "doctorCreated", headerName: "Tác giả", width: 180 },
-    { field: "doctorID", headerName: "Mã số bác sĩ", width: 120 },
-    { field: "timeCreated", headerName: "Ngày viết", width: 160 },
+    { field: "title", headerName: "Title", width: 300 },
+    { field: "diseaseName", headerName: "Disease", width: 200 },
+    { field: "doctorCreated", headerName: "Created by", width: 180 },
+    { field: "doctorID", headerName: "Doctor ID", width: 120 },
+    { field: "timeCreated", headerName: "Created on", width: 160 },
   ].concat(actionColumn);
 
   return (
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Bài viết theo căn bệnh</title>
+          <title>Articles by diseases list</title>
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Danh sách bài viết về bệnh {diseaseName}
+          Articles about {diseaseName}
           {userRole !== "admin" && (
             <NavLink
               to={`/disease/${diseaseId}/article/create`}
               className="add-link ms-auto"
             >
-              Thêm bài viết
+              Create an article
             </NavLink>
           )}
         </div>

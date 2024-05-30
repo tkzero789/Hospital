@@ -35,7 +35,7 @@ const MobileSearchBarSymp = ({
           <input
             ref={inputRef}
             type="text"
-            placeholder="Tìm kiếm triệu chứng..."
+            placeholder="Enter your symptom here..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -57,7 +57,11 @@ const MobileSearchBarSymp = ({
           <div ref={searchSympRef} className="search-symp-display">
             {delay
               ? filteredSymps
-                  .filter((symptom) => !chosenSymps.includes(symptom.id)) // Filter out chosen symptoms
+                  .filter(
+                    (symptom) =>
+                      !chosenSymps.includes(symptom.id) &&
+                      symptom.status === "Approved"
+                  ) // Filter out chosen symptoms
                   .map((symptom) => (
                     <MobileSymptom
                       symptom={symptom}
@@ -88,7 +92,7 @@ const MobileSearchBarSymp = ({
               window.scrollTo({ top: 0, left: 0, behavior: "instant" });
             }}
           >
-            Huỷ
+            Cancel
           </button>
         </div>
       </div>

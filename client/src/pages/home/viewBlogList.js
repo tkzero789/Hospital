@@ -65,7 +65,7 @@ const ViewBlogList = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Tin tức - Y học thường thức</title>
+          <title>News</title>
         </Helmet>
       </HelmetProvider>
       {isLoading ? (
@@ -79,14 +79,14 @@ const ViewBlogList = () => {
               aria-label="breadcrumb"
             >
               <Link className="text-secondary" to="/home">
-                Trang chủ
+                Home
               </Link>
-              ,<Typography className="text-dark">Tin tức</Typography>,
+              ,<Typography className="text-dark">News</Typography>,
             </Breadcrumbs>
           </div>
           <div className="blog-list w-100">
             <div className="content-container">
-              <h1>Tin tức - Y học thường thức</h1>
+              <h1>Latest news</h1>
               <div className="blog-list-items">
                 {currentBlogs.map((blog) => {
                   if (blog.status === "Pending") {

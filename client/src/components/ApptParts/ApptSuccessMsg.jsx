@@ -13,31 +13,31 @@ const ApptSuccessMsg = () => {
         <div className="content-container">
           <div className="appt-success">
             <div className="appt-success-wrapper">
-              <div className="appt-success-header">
-                Cảm ơn quý khách đã đặt hẹn
-              </div>
+              <div className="appt-success-header">Thank you</div>
               <div className="appt-success-info">
                 <div className="appt-success-icon">
                   <img src={ConfirmIcon} alt="Success icon" />
                 </div>
                 <p>
-                  Tổng đài BKCare sẽ liên hệ Quý khách trong thời gian sớm nhất
-                  để xác nhận lịch hẹn. <br />
-                  Cảm ơn Quý khách đã lựa chọn dịch vụ của BKCare.
+                  BaySide's call center will contact you as soon as possible to
+                  confirm your appointment.. <br />
+                  Thank you for choosing BaySide Hospital.
                 </p>
 
                 <Link to="/view-blog-list">
-                  Xem tin tức mới nhất về y học và các hoạt động của bệnh viện
+                  Read latest news about health and hospital's activities
                 </Link>
                 <Link to="/symptom-checker">
-                  Sử dụng dịch vụ chẩn đoán sức khoẻ trực tuyến
+                  Give it a try - Online health check
                 </Link>
-                <Link to="/appt-detail-guest">Kiểm tra lịch hẹn</Link>
+                <Link to="/appt-detail-guest">
+                  Check your appointment status
+                </Link>
               </div>
               <hr />
               <div className="back-to-home">
                 <Link to="/home" className="text-decoration-none">
-                  Trở về trang chủ
+                  Back to home page
                 </Link>
               </div>
             </div>

@@ -4,7 +4,7 @@ import AmbulanceSVG from "../../assets/home/ambulanceSVG.svg";
 import ClipboardSVG from "../../assets/home/clipboardSVG.svg";
 import HospitalSVG from "../../assets/home/hospitalSVG.svg";
 
-export default function BKCSystem() {
+export default function BaySideSystem() {
   return (
     <>
       {/* BKC SYSTEM SECTION */}
@@ -14,14 +14,15 @@ export default function BKCSystem() {
             <div className="c-12">
               <div className="syst-section">
                 <div className="syst-header">
-                  Hệ thống BKCare - Vì một cuộc sống tốt đẹp hơn
+                  BaySide System: For a Better Life
                 </div>
                 <div className="syst-body">
-                  Một hệ thống được xây dựng với mục đích nâng cao chất lượng
-                  dịch vụ cho người bệnh, và tạo ra một cộng đồng nơi mọi người
-                  có thể chia sẻ kinh nghiệm và kiến thức về chăm sóc sức khoẻ.
-                  Chúng tôi tin rằng, thông qua việc san sẻ và học hỏi, chúng ta
-                  sẽ góp phần xây dựng một xã hội khoẻ mạnh hơn.
+                  A system built to elevate patient care and foster a community
+                  for sharing healthcare experiences and knowledge. We leverage
+                  cutting-edge technology and a patient-centric approach to
+                  ensure that each individual receives personalized and
+                  effective treatment. Through sharing and learning, we can
+                  collectively contribute to a healthier society.
                 </div>
                 <div className="syst-card-wrapper">
                   <div className="syst-card">
@@ -34,11 +35,11 @@ export default function BKCSystem() {
                         ></img>
                       </div>
                       <div className="syst-card-header">
-                        Giải pháp y tế khẩn cấp
+                        Emergency Medical Solutions
                       </div>
                       <div className="syst-card-body">
-                        Trang thiết bị tiên tiến giúp chúng tôi đáp ứng mọi nhu
-                        cầu y tế của bạn một cách nhanh chóng và chính xác.
+                        Advanced equipment helps us meet all your medical needs
+                        quickly and accurately.
                       </div>
                     </NavLink>
                   </div>
@@ -52,11 +53,11 @@ export default function BKCSystem() {
                         ></img>
                       </div>
                       <div className="syst-card-header">
-                        Hệ thống bệnh viện chuyên nghiệp
+                        Professional Hospital System
                       </div>
                       <div className="syst-card-body">
-                        Cam kết cung cấp dịch vụ y tế hàng đầu với đội ngũ y bác
-                        sĩ và y tá tận tâm và giàu kinh nghiệm.
+                        Delivering exceptional healthcare outcomes with our team
+                        of dedicated and experienced doctors and nurses.
                       </div>
                     </NavLink>
                   </div>
@@ -70,11 +71,11 @@ export default function BKCSystem() {
                         ></img>
                       </div>
                       <div className="syst-card-header">
-                        Chăm sóc y tế chất lượng cao
+                        High-quality healthcare
                       </div>
                       <div className="syst-card-body">
-                        Cải thiện chất lượng cuộc sống của bạn thông qua dịch vụ
-                        y tế tốt nhất, vì bạn là ưu tiên hàng đầu của chúng tôi.
+                        Improve your quality of life through the best healthcare
+                        services, because you are our top priority.
                       </div>
                     </NavLink>
                   </div>

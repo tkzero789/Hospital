@@ -9,42 +9,42 @@ export default function SymptomForm({
   origDescs,
 }) {
   const categoryOptions = [
-    { value: "Vị trí", label: "Vị trí" },
-    { value: "Mức độ", label: "Mức độ" },
-    { value: "Như thế nào", label: "Như thế nào" },
+    { value: "Pain location", label: "Pain location" },
+    { value: "Pain level", label: "Pain level" },
+    { value: "Types of pain", label: "Types of pain" },
     {
-      value: "Thời gian bị và tần suất xảy ra",
-      label: "Thời gian bị và tần suất xảy ra",
+      value: "Pain frequency",
+      label: "Pain frequency",
     },
     {
-      value: "Tình trạng trước kia và sự kiện dẫn đến",
-      label: "Tình trạng trước kia và sự kiện dẫn đến",
+      value: "Leading cause",
+      label: "Leading cause",
     },
     {
-      value: "Xảy ra hoặc tồi tệ hơn khi",
-      label: "Xảy ra hoặc tồi tệ hơn khi",
+      value: "The pain is getting worse when",
+      label: "The pain is getting worse when",
     },
-    { value: "Yếu tố làm thuyên giảm", label: "Yếu tố làm thuyên giảm" },
-    { value: "Các triệu chứng đi kèm", label: "Các triệu chứng đi kèm" },
+    { value: "Find relief by", label: "Find relief by" },
+    { value: "Symptom(s)", label: "Symptom(s)" },
   ];
 
   const positionOptions = [
-    { value: "Đầu", label: "Đầu" },
-    { value: "Mắt", label: "Mắt" },
-    { value: "Tai", label: "Tai" },
-    { value: "Mũi", label: "Mũi" },
-    { value: "Miệng", label: "Miệng" },
-    { value: "Cổ", label: "Cổ" },
-    { value: "Vai", label: "Vai" },
-    { value: "Ngực", label: "Ngực" },
-    { value: "Bụng", label: "Bụng" },
-    { value: "Hông, đùi và mông", label: "Hông, đùi và mông" },
-    { value: "Cánh tay", label: "Cánh tay" },
-    { value: "Bàn tay", label: "Bàn tay" },
-    { value: "Vùng dưới", label: "Vùng dưới" },
-    { value: "Đầu gối", label: "Đầu gối" },
-    { value: "Cẳng chân", label: "Cẳng chân" },
-    { value: "Bàn chân", label: "Bàn chân" },
+    { value: "Head", label: "Head" },
+    { value: "Eyes", label: "Eyes" },
+    { value: "Ears", label: "Ears" },
+    { value: "Nose", label: "Nose" },
+    { value: "Mouth", label: "Mouth" },
+    { value: "Neck", label: "Neck" },
+    { value: "Shoulder", label: "Shoulder" },
+    { value: "Chest", label: "Chest" },
+    { value: "Middle abdomen", label: "Middle abdomen" },
+    { value: "Pelvis, gluteal and thigh", label: "Pelvis, gluteal and thigh" },
+    { value: "Forearm", label: "Forearm" },
+    { value: "Hand", label: "Hand" },
+    { value: "Lower abdomen", label: "Lower abdomen" },
+    { value: "Knee", label: "Knee" },
+    { value: "Shin", label: "Shin" },
+    { value: "Foot", label: "Foot" },
   ];
 
   function updateField(event) {
@@ -54,7 +54,7 @@ export default function SymptomForm({
   function addCatField() {
     const newCat = {
       id: uuidv4(),
-      categoryName: "Vị trí",
+      categoryName: "Position",
       descriptions: [
         {
           id: uuidv4(),
@@ -169,19 +169,19 @@ export default function SymptomForm({
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="card-title text-body col-3">Tên triệu chứng:</h4>
+        <h4 className="card-title text-body col-3">Symptom:</h4>
         <input
           type="text"
           className="form-control border-primary col border-dark-subtle shadow-sm"
           name="name"
           value={symptom.name}
-          placeholder="Nhập tên triệu chứng"
+          placeholder="Enter symptom name"
           disabled={mode === "view" || mode === "doctor edit"}
           onChange={(e) => updateField(e)}
         />
       </div>
       <div className="form-group row pb-5">
-        <h4 className="card-title text-body col-3">Vị trí:</h4>
+        <h4 className="card-title text-body col-3">Position:</h4>
         <select
           name="position"
           value={symptom.position}
@@ -196,22 +196,21 @@ export default function SymptomForm({
           ))}
         </select>
       </div>
-      <h4 className="card-title text-body">Thêm mô tả chi tiết:</h4>
-      {symptom.categories.map((cat) => {
+      <h4 className="card-title text-body">Description:</h4>
+      {symptom.categories?.map((cat) => {
         return (
           <div key={cat.id}>
-            <div className="form row pb-3 mt-5">
-              <div className="col-2" style={{ display: "flex" }}>
+            <div className="form d-flex pb-3 mt-5">
+              <div className="d-flex">
                 {(mode === "create" ||
                   mode === "admin edit" ||
                   (mode === "doctor edit" && !origCats.includes(cat.id))) && (
                   <i
-                    class="btn py-0 px-0 bi bi-file-minus"
-                    style={{ color: "#000", marginRight: "5px" }}
+                    className="btn py-0 px-0 bi bi-file-minus me-2"
                     onClick={() => deleteCatField(cat.id)}
                   ></i>
                 )}
-                <h5 className="text-body">Thuộc tính:</h5>
+                <h5 className="text-body pe-2">Properties:</h5>
               </div>
               <select
                 name="categoryName"
@@ -231,42 +230,35 @@ export default function SymptomForm({
               </select>
             </div>
 
-            <div className="row">
-              {cat.descriptions.map((desc) => (
-                <div
-                  className="form-group pb-3 col-12"
-                  style={{ display: "flex" }}
-                >
-                  {(mode === "create" ||
-                    mode === "admin edit" ||
-                    (mode === "doctor edit" &&
-                      !origDescs.includes(desc.id))) && (
-                    <i
-                      class="btn py-0 px-0 bi bi-file-minus"
-                      style={{ color: "#000", marginRight: "5px" }}
-                      onClick={() => deleteDesField(cat.id, desc.id)}
-                    ></i>
-                  )}
-                  <input
-                    name="descriptionDetail"
-                    value={desc.descriptionDetail}
-                    type="text"
-                    className="form-control border border-dark-subtle shadow-sm rounded "
-                    placeholder="Nhập mô tả"
-                    disabled={
-                      mode === "view" ||
-                      (mode === "doctor edit" && origDescs.includes(desc.id))
-                    }
-                    onChange={(e) => updateDesField(cat.id, desc.id, e)}
-                  />
-                </div>
-              ))}
-            </div>
+            {cat.descriptions?.map((desc) => (
+              <div key={desc.id} className="form d-flex pb-3">
+                {(mode === "create" ||
+                  (mode === "doctor edit" && !origDescs.includes(desc.id))) && (
+                  <i
+                    className="btn py-0 px-0 bi bi-file-minus me-2"
+                    onClick={() => deleteDesField(cat.id, desc.id)}
+                  ></i>
+                )}
+                <input
+                  name="descriptionDetail"
+                  value={desc.descriptionDetail}
+                  type="text"
+                  className="form-control border border-dark-subtle shadow-sm rounded "
+                  placeholder="Description"
+                  disabled={
+                    mode === "view" ||
+                    (mode === "doctor edit" && origDescs.includes(desc.id))
+                  }
+                  onChange={(e) => updateDesField(cat.id, desc.id, e)}
+                />
+              </div>
+            ))}
+
             {(mode === "create" || mode === "doctor edit") && (
               <div className="row justify-content-center">
                 <div className="col-1 rounded-5 btn btn-light border-secondary-subtle border-0 py-0 px-0">
                   <div onClick={() => addDesField(cat.id)}>
-                    <i class="text-secondary fs-3 bi bi-plus-circle"></i>
+                    <i className="text-secondary fs-3 bi bi-plus-circle"></i>
                   </div>
                 </div>
               </div>
@@ -279,7 +271,7 @@ export default function SymptomForm({
           onClick={addCatField}
           className="btn btn-secondary bg-gradient mt-5"
         >
-          Thêm thuộc tính
+          Add a property
         </div>
       )}
     </div>

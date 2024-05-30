@@ -9,7 +9,7 @@ const WorkSchedule = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Lịch làm việc</title>
+          <title>Business hours</title>
         </Helmet>
       </HelmetProvider>
       <div className="content-container">
@@ -19,35 +19,36 @@ const WorkSchedule = () => {
           aria-label="breadcrumb"
         >
           <Link className="text-secondary" to="/home">
-            Trang chủ
+            Home
           </Link>
-          ,<Typography className="text-dark">Lịch làm việc</Typography>,
+          ,<Typography className="text-dark">Business hours</Typography>,
         </Breadcrumbs>
       </div>
       <div className="work">
         <div className="content-container">
           <div className="work-wrapper">
-            <h1>Lịch làm việc tại bệnh viện đa khoa BKCare</h1>
-            <h2>Dịch vụ cấp cứu 24/7</h2>
+            <h1>BaySide Hospital business hours</h1>
+            <h2>Emergency room 24/7</h2>
             <ul>
               <li>
-                Khách hàng có nhu cầu dịch vụ cấp cứu, vận chuyển cấp cứu, khám
-                nội đa khoa được phục vụ 24 giờ.
+                Customers who require emergency services, emergency
+                transportation, and internal medicine examinations are served 24
+                hours a day.
               </li>
               <li>
-                Hệ thống phòng mổ, chẩn đoán hình ảnh và xét nghiệm hoạt động 24
-                giờ để phục vụ nhu cầu cấp cứu.
+                The operating room, imaging diagnostics, and laboratory systems
+                operate 24 hours a day to meet emergency needs.
               </li>
             </ul>
-            <h2>Giờ làm việc của các phòng khám</h2>
-            <p>Từ thứ Hai đến thứ Sáu</p>
+            <h2>Clinic's business hours</h2>
+            <p>Monday - Friday</p>
             <ul>
-              <li>Sáng: 7:30 - 12:00</li>
-              <li>Chiều: 13:30 - 17:00</li>
+              <li>Morning: 7:30 am - 12:00 pm</li>
+              <li>Afternoon: 1:30 pm - 5:00 pm</li>
             </ul>
-            <p>Thứ Bảy và Chủ Nhật</p>
+            <p>Saturday - Sunday</p>
             <ul>
-              <li>Sáng: 7:30 - 11:30</li>
+              <li>Morning: 7:30 am - 11:30 am</li>
             </ul>
           </div>
         </div>

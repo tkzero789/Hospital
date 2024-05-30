@@ -1,4 +1,5 @@
 /* CUSTOM SPACING */
+/* Margin-top */
 .mt-6 {
   margin-top: 4rem;
 }
@@ -23,6 +24,36 @@
   margin-left: 5rem;
 }
 
+/* Padding lef */
+.pe-6 {
+  padding-left: 4rem;
+}
+
+.pe-7 {
+  padding-right: 5rem;
+}
+
+.pe-8 {
+  padding-right: 6rem;
+}
+
+.pe-9 {
+  padding-right: 7rem;
+}
+
+.pe-10 {
+  padding-right: 8rem;
+}
+
+.pe-11 {
+  padding-right: 9rem;
+}
+
+.pe-12 {
+  padding-right: 10rem;
+}
+
+/* Padding left-right */
 .px-6 {
   padding: 0 4rem;
 }
@@ -115,14 +146,17 @@
   margin-right: 30px;
 }
 
-.nav-item-last {
-  background-color: #ff0f17;
-  border-radius: 3px;
-  padding: 4px 12px;
-  pointer-events: none;
+.nav-item-style {
+  background-color: #f73527;
+  padding: 8px 12px;
+  border-radius: 100px;
 }
 
-.nav-item.nav-item-last .main-nav-text {
+.nav-item-style:hover {
+  background-color: #d30e00;
+}
+
+.nav-item.nav-item-style .main-nav-text {
   color: var(--text-white);
 }
 
@@ -817,7 +851,7 @@
   border: none;
   border-radius: 3px;
   padding: 8px 12px;
-  width: 150px;
+  width: 162px;
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -837,7 +871,7 @@
 }
 
 .appt-detail-filter .dropdown-filter {
-  width: 229px;
+  width: 274px;
   z-index: 5;
   position: absolute;
   border-radius: 6px;
@@ -1552,23 +1586,21 @@
 }
 
 .footer-socials__link {
+  display: inline-block;
   text-decoration: none;
-}
-
-.footer-socials__link:first-child {
   color: #e7e7e7;
 }
 
-.footer-socials__link:last-child {
-  color: #e7e7e7;
+.footer-socials__link:not(:last-child) {
+  margin-right: 16px;
+}
+
+.footer-socials__link:hover {
+  color: #dbdbdb;
 }
 
 .footer-socials {
   display: flex;
-}
-
-.footer-socials-icon {
-  padding: 4px 8px;
 }
 
 .footer-socials-icon span {
@@ -2079,17 +2111,17 @@
   font-weight: var(--roboto-medium-weight);
 }
 
-.specialty-detail-wrapper {
-  display: flex;
-}
-
-.specialty-detail-wrapper .c-7 > p {
+.specialty-detail-wrapper .specialty-detail-intro > p {
   color: var(--text-dark-sub);
   padding-right: 24px;
 }
 
+.specialty-detail-wrapper .specialty-detail-img {
+  text-align: center;
+}
+
 .specialty-detail-wrapper img {
-  width: 100%;
+  width: 80%;
   height: 90%;
   border-radius: 12px;
 }

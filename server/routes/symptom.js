@@ -99,58 +99,76 @@ symptomRoutes.route("/symptom/:name").get(async function (req, res) {
 });
 
 // add new symptom
-symptomRoutes
-  .route("/symptom/add")
-  .post(verifyJWT, isAdmin, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const dupCheck = await db_connect
-        .collection("symptoms")
-        .findOne({ name: req.body.name });
-      if (dupCheck) {
-        return res.json({ message: "Symptom already exists" });
-      } else {
-        const myobj = {
-          id: req.body.id,
-          name: req.body.name,
-          position: req.body.position,
-          categories: req.body.categories,
-          diseaseUsedIds: reqSymptom.diseaseUsedIds,
-          createInfos: req.body.createInfos,
-          status: req.body.status,
-        };
-        const result = await db_connect.collection("symptoms").insertOne(myobj);
-        res.json({ result, myobj });
-      }
-    } catch (err) {
-      throw err;
-    }
-  });
-
-// update symptom by id
-symptomRoutes
-  .route("/symptom/update/:id")
-  .post(verifyJWT, isAdmin, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const myquery = { id: req.params.id };
-      const newvalues = {
-        $set: {
-          name: req.body.name,
-          position: req.body.position,
-          categories: req.body.categories,
-          createInfos: req.body.createInfos,
-          status: req.body.status,
-        },
+symptomRoutes.route("/symptom/add").post(verifyJWT, async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const dupCheck = await db_connect
+      .collection("symptoms")
+      .findOne({ name: req.body.name });
+    if (dupCheck) {
+      return res.json({ message: "Symptom already exists" });
+    } else {
+      const myobj = {
+        id: req.body.id,
+        name: req.body.name,
+        position: req.body.position,
+        categories: req.body.categories,
+        createInfos: req.body.createInfos,
+        status: req.body.status,
       };
-      const result = await db_connect
-        .collection("symptoms")
-        .updateOne(myquery, newvalues);
-      res.json({ result, newvalues });
-    } catch (err) {
-      throw err;
+      const result = await db_connect.collection("symptoms").insertOne(myobj);
+      res.json({ result, myobj });
     }
-  });
+  } catch (err) {
+    throw err;
+  }
+});
+
+// Update/edit symptom info
+symptomRoutes.route("/symptom/edit/:id").put(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const myquery = { id: req.params.id };
+    const newvalues = {
+      $set: {
+        name: req.body.name,
+        position: req.body.position,
+        categories: req.body.categories,
+        createInfos: req.body.createInfos,
+        status: req.body.status,
+      },
+    };
+    const result = await db_connect
+      .collection("symptoms")
+      .updateOne(myquery, newvalues);
+    if (result.modifiedCount === 0) {
+      return res.json({ message: "There was no edit" });
+    } else {
+      res.json({ message: "Symptom updated successfully" });
+    }
+  } catch (err) {
+    throw err;
+  }
+});
+
+// update symptom status by id
+symptomRoutes.route("/symptom/update/:id").post(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const myquery = { id: req.params.id };
+    const newvalues = {
+      $set: {
+        status: req.body.status,
+      },
+    };
+    const result = await db_connect
+      .collection("symptoms")
+      .updateOne(myquery, newvalues);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
 
 // update symptom categories by id from disease
 symptomRoutes
@@ -197,122 +215,15 @@ symptomRoutes
   });
 
 // delete symptom by id
-symptomRoutes
-  .route("/symptom/:id")
-  .delete(verifyJWT, isAdmin, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const myquery = { id: req.params.id };
-      const result = await db_connect.collection("symptoms").deleteOne(myquery);
-      res.json(result);
-    } catch (err) {
-      throw err;
-    }
-  });
-
-// ------------------------------- Symptom-temp -------------------------------
-
-// get all symptoms in temp
-symptomRoutes
-  .route("/symptom-temp")
-  .get(verifyJWT, isStaff, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const result = await db_connect
-        .collection("symptoms-temp")
-        .find({})
-        .toArray();
-      res.json(result);
-    } catch (err) {
-      throw err;
-    }
-  });
-
-//get symptom by idTemp in temp
-symptomRoutes
-  .route("/symptom-temp/:idTemp")
-  .get(verifyJWT, isStaff, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const myquery = { idTemp: req.params.idTemp };
-      const result = await db_connect
-        .collection("symptoms-temp")
-        .findOne(myquery);
-      res.json(result);
-    } catch (err) {
-      throw err;
-    }
-  });
-
-// get symptom by many ids in temp
-symptomRoutes
-  .route("/symptom-temp/by-ids")
-  .post(verifyJWT, isStaff, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const result = await db_connect
-        .collection("symptoms-temp")
-        .find({ id: { $in: req.body.ids }, diseaseId: req.body.diseaseId })
-        .toArray();
-      res.json(result);
-    } catch (err) {
-      throw err;
-    }
-  });
-
-// add new symptom to temp
-symptomRoutes
-  .route("/symptom-temp/add")
-  .post(verifyJWT, isHeadDoctor, async function (req, res) {
-    try {
-      const reqSymptom = req.body;
-      const db_connect = await dbo.getDb("hospital");
-      const dupCheck = await db_connect
-        .collection("symptoms-temp")
-        .findOne({ name: reqSymptom.name });
-      if (dupCheck && reqSymptom.status === "Pending Create") {
-        return res.json({ message: "Symptom already exists" });
-      }
-      if (dupCheck && dupCheck.doctorReqID === reqSymptom.doctorReqID) {
-        return res.json({ message: "Symptom already exists" });
-      }
-      const myobj = {
-        id: reqSymptom.id,
-        idTemp: reqSymptom.idTemp,
-        name: reqSymptom.name,
-        position: reqSymptom.position,
-        categories: reqSymptom.categories,
-        diseaseUsedIds: reqSymptom.diseaseUsedIds,
-        createInfos: reqSymptom.createInfos,
-        status: reqSymptom.status,
-        doctorReqID: reqSymptom.doctorReqID,
-      };
-      const result = await db_connect
-        .collection("symptoms-temp")
-        .insertOne(myobj);
-      res.json({ result, myobj });
-    } catch (err) {
-      throw err;
-    }
-  });
-
-// delete symptom by id in temp
-symptomRoutes
-  .route("/symptom-temp/:idTemp")
-  .delete(verifyJWT, isHDrOrAdmin, async function (req, res) {
-    try {
-      const db_connect = await dbo.getDb("hospital");
-      const myquery = {
-        idTemp: req.params.idTemp,
-        diseaseId: req.params.diseaseId,
-      };
-      const result = await db_connect
-        .collection("symptoms-temp")
-        .deleteOne(myquery);
-      res.json(result);
-    } catch (err) {
-      throw err;
-    }
-  });
+symptomRoutes.route("/symptom/delete/:id").delete(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const myquery = { id: req.params.id };
+    const result = await db_connect.collection("symptoms").deleteOne(myquery);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
 
 module.exports = symptomRoutes;

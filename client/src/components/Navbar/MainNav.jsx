@@ -9,9 +9,11 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const navLinks = [
   { link: "/home", text: "" },
-  { link: "/appt-request", text: "Đăng ký khám bệnh" },
-  { link: "/symptom-checker", text: "Phòng khám online" },
-  { link: "", text: "Hotline: 0938 888 888" },
+  { link: "/symptom-checker", text: "Online Health Check" },
+  { link: "/appt-request", text: "Book an appointment" },
+
+  { link: "", text: "Find doctor" },
+  { link: "", text: "Contact" },
 ];
 
 export default function MainNav() {
@@ -72,9 +74,9 @@ export default function MainNav() {
           <ul className="main-nav-list">
             {navLinks.map((link, index) => (
               <li
-                key={link.link}
+                key={index}
                 className={`nav-item item ${
-                  index === navLinks.length - 1 ? "nav-item-last" : ""
+                  index === 1 ? "nav-item-style" : ""
                 }`}
               >
                 <NavLink className="nav-link nav-link-first" to={link.link}>
@@ -115,11 +117,11 @@ export default function MainNav() {
                       </NavLink>
                       <NavLink>
                         <SettingsIcon />
-                        <span>Cài đặt</span>
+                        <span>Setting</span>
                       </NavLink>
                       <NavLink onClick={handleSignOut}>
                         <ExitToAppIcon />
-                        <span>Đăng xuất</span>
+                        <span>Logout</span>
                       </NavLink>
                     </div>
                   </NavLink>
@@ -127,8 +129,8 @@ export default function MainNav() {
               </li>
             ) : (
               <li key={"signout"}>
-                <NavLink className="nav-link nav-link-first" to="/test-signin">
-                  <div className="main-nav-text">Đăng nhập</div>
+                <NavLink className="nav-link nav-link-first" to="/signin-staff">
+                  <div className="main-nav-text">Login</div>
                 </NavLink>
               </li>
             )}
