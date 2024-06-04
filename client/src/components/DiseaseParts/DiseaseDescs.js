@@ -26,7 +26,7 @@ export default function DiseaseDescs({
     <div className="row pt-3 pb-3">
       <div className="form-group row pb-4">
         <h4 className="card-title text-blue-2">
-          Mô tả chi tiết triệu chứng {chosenSymp.name}
+          Symptom's info - {chosenSymp.name}
         </h4>
       </div>
       {chosenSymp.categories.map((category) => {

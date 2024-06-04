@@ -9,7 +9,7 @@ export const MobileSympBtn = ({ toggleFunction }) => {
           toggleFunction();
         }}
       >
-        Huỷ
+        Cancel
       </button>
     </div>
   );

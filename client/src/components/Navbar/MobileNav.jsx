@@ -52,7 +52,7 @@ export default function MobileNav() {
                     data-to="/home"
                     onClick={handleLinkClick}
                   >
-                    Trang chủ
+                    Home
                   </NavLink>
                 </li>
                 <li>
@@ -62,7 +62,7 @@ export default function MobileNav() {
                     data-to="/specialty-page"
                     onClick={handleLinkClick}
                   >
-                    Chuyên khoa
+                    Specialty
                   </NavLink>
                 </li>
                 <li>
@@ -72,7 +72,7 @@ export default function MobileNav() {
                     data-to="/appt-request"
                     onClick={handleLinkClick}
                   >
-                    Đăng ký khám bệnh
+                    Schedule an appointment
                   </NavLink>
                 </li>
                 <li>
@@ -82,7 +82,7 @@ export default function MobileNav() {
                     data-to="/appt-detail-guest"
                     onClick={handleLinkClick}
                   >
-                    Kiểm tra lịch hẹn
+                    Appointment status
                   </NavLink>
                 </li>
                 <li>
@@ -92,7 +92,7 @@ export default function MobileNav() {
                     data-to="/symptom-checker"
                     onClick={handleLinkClick}
                   >
-                    Chẩn đoán sức khoẻ trực tuyến
+                    Online health check
                   </NavLink>
                 </li>
                 <li>
@@ -112,7 +112,7 @@ export default function MobileNav() {
                     data-to="/work-schedule"
                     onClick={handleLinkClick}
                   >
-                    Lịch làm việc
+                    Business hours
                   </NavLink>
                 </li>
               </ul>

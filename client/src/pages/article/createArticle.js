@@ -8,11 +8,6 @@ import ArticleForm from "../../components/ArticleParts/ArticleForm";
 import ArticlePatView from "../../components/ArticleParts/ArticlePatView";
 
 export default function CreateArticle({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
-
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -74,28 +69,19 @@ export default function CreateArticle({ userRole, userInfos }) {
         });
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [diseaseId]);
 
-  function confirmCancle(e) {
-    if (window.confirm("Hủy tạo và trở về?")) {
-      setArticle((prev) => ({
-        ...prev,
-        title: "",
-        infos: [],
-        treatments: [],
-      }));
-      navigate(-1);
-    }
+  function confirmCancel() {
+    navigate("/disease-table");
   }
 
-  async function confirmCreate(e) {
-    e.preventDefault();
+  async function confirmCreate() {
     // validation fields
     if (article.title === "") {
-      alert("Thiếu tên bài viết");
+      alert("Please enter title");
       return;
     } else if (
       article.infos.filter(
@@ -103,66 +89,30 @@ export default function CreateArticle({ userRole, userInfos }) {
           info.about === "" || info.overview === "" || info.detail === ""
       ).length > 0
     ) {
-      alert("Thiếu thông tin bệnh");
+      alert("Disease info missing");
       return;
     } else if (
       article.treatments.filter(
         (trm) => trm.about === "" || trm.overview === "" || trm.detail === ""
       ).length > 0
     ) {
-      alert("Thiếu phương pháp chữa trị");
+      alert("Disease treatment missing");
       return;
     } else {
       try {
         // Create new article
         await axios
-          .post("http://localhost:5000/article-temp/add", article, apiConfig)
+          .post("http://localhost:5000/article/add", article)
           .then((res) => {
             if (res.data && res.data.message === "Article already exists") {
-              throw new Error(
-                "Bài viết cùng tên cho bệnh này đang được người khác thêm vào!"
-              );
+              throw new Error("Duplicated");
             }
             console.log("Article created:", res.data);
           });
-        // Create notification to head-doctor
-        const resId = await axios.post(
-          `http://localhost:5000/user/medspec-hdoctor-id`,
-          { medSpecialty: userInfos.medSpecialty }
-        );
-        const hdoctorID = resId.data;
-        const notif = {
-          id: uuidv4(),
-          fromInfos: {
-            name: userInfos.fullName,
-            role: userRole,
-            medSpecialty: userInfos.medSpecialty,
-            doctorID: userInfos.doctorID,
-          },
-          toDoctorID: [hdoctorID],
-          content: {
-            type: "Tạo bài viết",
-            detail: `Bác sĩ ${userInfos.fullName} đã tạo bài viết ${article.title}`,
-            link: `/article-temp/${article.idTemp}/approve`,
-          },
-          timeSent: formattedTime,
-          status: "Chưa xem",
-        };
-        await axios
-          .post("http://localhost:5000/notification/add", notif, apiConfig)
-          .then((res) => {
-            console.log("Notification created", res.data);
-          });
       } catch (err) {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       }
-      setArticle((prev) => ({
-        ...prev,
-        title: "",
-        infos: [],
-        treatments: [],
-      }));
       navigate(`/disease/${diseaseId}/article-table`);
     }
   }
@@ -173,7 +123,9 @@ export default function CreateArticle({ userRole, userInfos }) {
         ArticlePatView({ article, setIsPatView })
       ) : (
         <div>
-          <h3 className="container text-center text-body pt-5">TẠO BÀI VIẾT</h3>
+          <h3 className="container text-center text-body pt-5">
+            Create new article
+          </h3>
           <div className="container p-5">
             <div className="card border-primary-subtle p-5">
               <form>
@@ -192,9 +144,9 @@ export default function CreateArticle({ userRole, userInfos }) {
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
-                      onClick={(e) => confirmCancle(e)}
+                      onClick={confirmCancel}
                     >
-                      Huỷ tạo
+                      Cancel
                     </button>
                   </div>
                   <div className="col-3 d-grid gap-2">
@@ -203,18 +155,16 @@ export default function CreateArticle({ userRole, userInfos }) {
                       className="btn btn-outline-primary"
                       onClick={() => setIsPatView(true)}
                     >
-                      Xem chế độ người dùng
+                      User's view
                     </button>
                   </div>
                   <div className="col-3 d-grid gap-2">
                     <button
                       type="button"
                       className="btn btn-outline-primary"
-                      onClick={(e) => {
-                        confirmCreate(e);
-                      }}
+                      onClick={confirmCreate}
                     >
-                      Xác nhận tạo
+                      Create
                     </button>
                   </div>
                 </div>

@@ -7,15 +7,15 @@ import Specialty from "../../components/Home/Specialty";
 import News from "../../components/Home/News";
 import Footer from "../../components/Home/Footer";
 import MainNav from "../../components/Navbar/MainNav";
-import LowNav from "../../components/Navbar/LowNav";
+import SubNav from "../../components/Navbar/SubNav";
 import MobileNav from "../../components/Navbar/MobileNav";
 
 export default function staffHome() {
   return (
-    <div>
+    <>
       <header>
         <MainNav />
-        <LowNav />
+        <SubNav />
         <MobileNav />
       </header>
       {/* Main */}
@@ -28,6 +28,6 @@ export default function staffHome() {
         <News />
         <Footer />
       </main>
-    </div>
+    </>
   );
 }

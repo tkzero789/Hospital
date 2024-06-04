@@ -1,13 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-export default function LowNav() {
+export default function SubNav() {
   const navLinks = [
-    { link: "/view-blog-list", text: "News" },
-    { link: "/specialty-page", text: "Specialty" },
-    { link: "/symptom-checker", text: "Online health check" },
-    { link: "/appt-detail-guest", text: "Appointment status" },
-    { link: "/work-schedule", text: "Business hours" },
+    { link: "/view-blog-list", text: "News & Insights" },
+    { link: "/symptom-checker", text: "Health checker" },
+    { link: "/appt-detail-guest", text: "Appointments" },
+    { link: "work-schedule", text: "Locations" },
+    { link: "work-schedule", text: "813-784-4581" },
+    { link: "work-schedule", text: "Search" },
   ];
 
   return (
@@ -17,13 +18,6 @@ export default function LowNav() {
         <div className="nav-container">
           <nav className="low-nav-bg py-0 d-none d-lg-block d-xl-block">
             <ul className="low-nav-list">
-              {navLinks.map((link) => (
-                <li key={link.link} className="low-nav-item">
-                  <NavLink to={link.link}>
-                    <div className="low-nav-text">{link.text}</div>
-                  </NavLink>
-                </li>
-              ))}
               {/* DROPDOWN  */}
               <li className="low-nav-item dropdown-list-item">
                 <div className="dropdown-list-box">
@@ -38,6 +32,19 @@ export default function LowNav() {
                   </div>
                 </div>
               </li>
+              {navLinks.map((link, index) => (
+                <li key={index} className="low-nav-item">
+                  <NavLink to={link.link}>
+                    {index === navLinks.length - 1 && (
+                      <i className="bi bi-search"></i>
+                    )}
+                    {index === navLinks.length - 2 && (
+                      <i className="bi bi-telephone-fill"></i>
+                    )}
+                    <div className="low-nav-text">{link.text}</div>
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>

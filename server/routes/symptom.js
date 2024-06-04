@@ -152,7 +152,7 @@ symptomRoutes.route("/symptom/edit/:id").put(async function (req, res) {
 });
 
 // update symptom status by id
-symptomRoutes.route("/symptom/update/:id").post(async function (req, res) {
+symptomRoutes.route("/symptom/update/:id").put(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("hospital");
     const myquery = { id: req.params.id };

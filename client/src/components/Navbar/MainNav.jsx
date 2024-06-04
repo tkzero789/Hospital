@@ -9,11 +9,10 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const navLinks = [
   { link: "/home", text: "" },
-  { link: "/symptom-checker", text: "Online Health Check" },
-  { link: "/appt-request", text: "Book an appointment" },
-
-  { link: "", text: "Find doctor" },
-  { link: "", text: "Contact" },
+  { link: "/symptom-checker", text: "Health Checker" },
+  { link: "", text: "Services" },
+  { link: "", text: "Patients & Visitors" },
+  { link: "", text: "Find care" },
 ];
 
 export default function MainNav() {
@@ -73,12 +72,7 @@ export default function MainNav() {
         <nav className="nav-bg py-0 d-none d-lg-block d-xl-block">
           <ul className="main-nav-list">
             {navLinks.map((link, index) => (
-              <li
-                key={index}
-                className={`nav-item item ${
-                  index === 1 ? "nav-item-style" : ""
-                }`}
-              >
+              <li key={index} className="nav-item item">
                 <NavLink className="nav-link nav-link-first" to={link.link}>
                   {index === 0 && (
                     <div className="home-logo">
@@ -130,7 +124,7 @@ export default function MainNav() {
             ) : (
               <li key={"signout"}>
                 <NavLink className="nav-link nav-link-first" to="/signin-staff">
-                  <div className="main-nav-text">Login</div>
+                  <div className="main-nav-text">Patient portal</div>
                 </NavLink>
               </li>
             )}

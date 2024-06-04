@@ -7,15 +7,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./table.scss";
 
 export default function ArticleTableByDisease({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
-  const [diseaseName, setDiseaseName] = useState("");
   const [articles, setArticles] = useState([]);
-  const [tempArticles, setTempArticles] = useState([]);
-  const [flatData, setFlatData] = useState([]);
-  const [doctorFlatData, setDoctorFlatData] = useState([]);
   const { diseaseId } = useParams();
 
   useEffect(() => {
@@ -24,40 +16,17 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
         const articleRes = await axios.get(
           `http://localhost:5000/article/by-disease/${diseaseId}`
         );
-        const tempArticleRes = await axios.get(
-          `http://localhost:5000/article-temp/by-disease/${diseaseId}`,
-          apiConfig
-        );
+
         setArticles(articleRes.data);
-        setTempArticles(tempArticleRes.data);
       } catch (err) {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       }
     }
     fetchData();
   }, [diseaseId]);
 
-  useEffect(() => {
-    const flatData = [...tempArticles, ...articles].map((item, index) => {
-      const createInfos = item.createInfos || {};
-      return {
-        ...item,
-        doctorCreated: createInfos.doctorCreated || "",
-        doctorID: createInfos.doctorID || "",
-        timeCreated: createInfos.timeCreated || "",
-        number: index + 1,
-      };
-    });
-    setFlatData(flatData);
-  }, [articles, tempArticles]);
-
-  useEffect(() => {
-    const doctorFlatData = flatData
-      .filter((item) => item.medSpecialty === userInfos.medSpecialty)
-      .map((item, index) => ({ ...item, number: index + 1 }));
-    setDoctorFlatData(doctorFlatData);
-  }, [flatData]);
+  console.log(articles);
 
   const actionColumn = [
     {
@@ -90,19 +59,11 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
               userInfos.doctorID === params.row.createInfos.doctorID && (
                 <NavLink
                   className="viewLink"
-                  to={`/article-temp/${article.idTemp}/approve`}
+                  to={`/article/${article.id}/approve`}
                 >
                   <div className="viewButton">View</div>
                 </NavLink>
               )}
-            {article.status !== "Approved" && userRole === "head-doctor" && (
-              <NavLink
-                className="viewLink"
-                to={`/article-temp/${article.idTemp}/approve`}
-              >
-                <div className="viewButton">Approve</div>
-              </NavLink>
-            )}
           </div>
         );
       },
@@ -114,9 +75,35 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
     { field: "id", headerName: "ID", width: 200 },
     { field: "title", headerName: "Title", width: 300 },
     { field: "diseaseName", headerName: "Disease", width: 200 },
-    { field: "doctorCreated", headerName: "Created by", width: 180 },
-    { field: "doctorID", headerName: "Doctor ID", width: 120 },
-    { field: "timeCreated", headerName: "Created on", width: 160 },
+    {
+      field: "doctorCreated",
+      headerName: "Created by",
+      width: 180,
+      valueGetter: (params) => params.row.createInfos.doctorCreated,
+    },
+    {
+      field: "doctorID",
+      headerName: "Doctor ID",
+      width: 120,
+      valueGetter: (params) => params.row.createInfos.doctorID,
+    },
+    {
+      field: "timeCreated",
+      headerName: "Created on",
+      width: 160,
+      valueGetter: (params) => params.row.createInfos.timeCreated,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 120,
+      renderCell: (params) => {
+        const status = params.row.status.replace(" ", "-");
+        return (
+          <div className={`cellWithStatus ${status}`}>{params.row.status}</div>
+        );
+      },
+    },
   ].concat(actionColumn);
 
   return (
@@ -128,7 +115,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
       </HelmetProvider>
       <div className="datatable">
         <div className="datatableTitle">
-          Articles about {diseaseName}
+          Articles about {articles[0]?.diseaseName}
           {userRole !== "admin" && (
             <NavLink
               to={`/disease/${diseaseId}/article/create`}
@@ -141,7 +128,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
         {userRole === "admin" && (
           <DataGrid
             className="datagrid"
-            rows={flatData}
+            rows={articles}
             getRowId={(row) => row._id}
             columns={columns}
             pageSize={10}
@@ -158,8 +145,11 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
         {userRole !== "admin" && (
           <DataGrid
             className="datagrid"
-            rows={doctorFlatData}
+            rows={articles}
             getRowId={(row) => row._id}
+            getRowClassName={(params) =>
+              `rowWithStatus ${params.row.status.replace(" ", "-")}`
+            }
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10]}

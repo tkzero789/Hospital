@@ -46,7 +46,7 @@ export default function SymptomChecker() {
         setPatientResult(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -58,7 +58,7 @@ export default function SymptomChecker() {
         setDbSymps(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
         return;
       });
@@ -118,7 +118,7 @@ export default function SymptomChecker() {
   const checkHandleNext = () => {
     if (step === 1) {
       if (patientForm.age === "" || patientForm.gender === "") {
-        toast.error("Hãy nhập đầy đủ tuổi và giới tính");
+        toast.error("Please enter all informations");
         return;
       }
       // filter disease with suitable age and gender
@@ -152,7 +152,7 @@ export default function SymptomChecker() {
       setPatientResult(_patientResult);
     } else if (step === 2) {
       if (patientForm.chosenSymps.length === 0) {
-        toast.error("Hãy chọn ít nhất 1 triệu chứng");
+        toast.error("Please select at least one symptoms");
         return;
       }
       const chosenSymps = patientForm.chosenSymps;
@@ -172,7 +172,7 @@ export default function SymptomChecker() {
           (desc) => desc.symptomId === chosenSymps[step - 3].id
         ).length === 0
       ) {
-        toast.error("Hãy chọn ít nhất 1 mô tả");
+        toast.error("Please select at least one description");
         return;
       }
       const chosenDescs = patientForm.chosenDescs.map(
@@ -220,10 +220,10 @@ export default function SymptomChecker() {
         className={
           "p-2 col-3 " +
           (props.number === 0
-            ? "blue-bg-1 border rounded-start border-secondary"
+            ? "bg-primary border rounded-start border-secondary"
             : "") +
           (props.number < props.currStep
-            ? "blue-bg-1 border-end border-top border-bottom border-secondary"
+            ? "bg-primary border-end border-top border-bottom border-secondary"
             : "bg-white border-end border-top border-bottom border-secondary") +
           (props.number === 3 ? " rounded-end" : "")
         }
@@ -294,7 +294,7 @@ export default function SymptomChecker() {
                     {step === finalStep ? (
                       <Link
                         type="button"
-                        className="btn btn-outline-primary"
+                        className="btn btn-primary"
                         to={`/appt-request`}
                       >
                         Schedule an appointment

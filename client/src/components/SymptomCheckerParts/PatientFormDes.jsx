@@ -29,7 +29,7 @@ export default function PatientFormDes({
     <div className="row pt-3 pb-3">
       <div className="form-group row pb-4">
         <h4 className="card-title text-blue-1 fw-med text-center text-underline m-symp-name">
-          Mô tả chi tiết triệu chứng {chosenSymp.name}
+          Details about {chosenSymp.name}
         </h4>
       </div>
       {chosenSymp.categories.map((category) => {

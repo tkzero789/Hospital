@@ -32,7 +32,7 @@ export default function DiseaseSymps({ disease, setDisease, dbSymps, mode }) {
                 onCheck(symptom.id);
               }}
             />
-            <p className="text-black-1">
+            <p className="text-dark-1">
               <span>{symptom.name}</span>
             </p>
           </label>
@@ -69,16 +69,18 @@ export default function DiseaseSymps({ disease, setDisease, dbSymps, mode }) {
         />
       </div>
       <div className="d-flex flex-wrap pt-3 pb-3">
-        {filteredSymps.map((symptom) => {
-          return (
-            <Symptom
-              symptom={symptom}
-              onCheck={() => onCheck(symptom.id, symptom.name)}
-              isChecked={disease.symptomIds.includes(symptom.id)}
-              key={symptom.id}
-            />
-          );
-        })}
+        {filteredSymps
+          .filter((symptom) => symptom.status === "Approved")
+          .map((symptom) => {
+            return (
+              <Symptom
+                symptom={symptom}
+                onCheck={() => onCheck(symptom.id, symptom.name)}
+                isChecked={disease.symptomIds.includes(symptom.id)}
+                key={symptom.id}
+              />
+            );
+          })}
       </div>
       <div>
         <h5>Selected symptoms:</h5>

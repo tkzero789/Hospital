@@ -27,26 +27,13 @@ export default function DiseaseTable({ userRole, userInfos }) {
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/disease-temp/`, apiConfig)
-      .then((res) => {
-        const tempDiseases = res.data;
-        setTempDiseases(tempDiseases);
-      })
-      .catch((err) => {
-        const message = `Error: ${err}`;
-        window.alert(message);
-      });
-  }, []);
-
   const flatData = [...tempDiseases, ...diseases].map((item, index) => {
     const createInfos = item.createInfos || {};
     return {
       ...item,
-      doctorCreated: createInfos.doctorCreated || "",
+      doctorCreated: createInfos?.doctorCreated || "",
       doctorID: createInfos.doctorID || "",
-      timeCreated: createInfos.timeCreated || "",
+      timeCreated: createInfos?.timeCreated || "",
       number: index + 1,
     };
   });
@@ -69,34 +56,13 @@ export default function DiseaseTable({ userRole, userInfos }) {
         return (
           <div className="cellAction">
             {disease.status === "Approved" && (
-              <NavLink className="viewLink" to={`/disease/${disease.id}/view`}>
+              <NavLink className="viewLink" to={`/disease/view/${disease.id}`}>
                 <div className="viewButton">View</div>
               </NavLink>
             )}
-            {disease.status === "Approved" &&
-              userInfos.doctorID === disease.createInfos.doctorID && (
-                <NavLink
-                  className="viewLink"
-                  to={`/disease/${disease.id}/edit`}
-                >
-                  <div className="editButton">Edit</div>
-                </NavLink>
-              )}
-            {disease.status !== "Approved" &&
-              userInfos.doctorID === disease.createInfos.doctorID && (
-                <NavLink
-                  className="viewLink"
-                  to={`/disease-temp/${disease.idTemp}/approve`}
-                >
-                  <div className="viewButton">View</div>
-                </NavLink>
-              )}
-            {disease.status !== "Approved" && userRole === "admin" && (
-              <NavLink
-                className="viewLink"
-                to={`/disease-temp/${disease.idTemp}/approve`}
-              >
-                <div className="checkButton">Approve</div>
+            {disease.status !== "Approved" && (
+              <NavLink className="viewLink" to={`/disease/view/${disease.id}`}>
+                <div className="viewButton">View</div>
               </NavLink>
             )}
           </div>
@@ -118,10 +84,9 @@ export default function DiseaseTable({ userRole, userInfos }) {
       headerName: "Status",
       width: 120,
       renderCell: (params) => {
+        const status = params.row.status.replace(" ", "-");
         return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
+          <div className={`cellWithStatus ${status}`}>{params.row.status}</div>
         );
       },
     },

@@ -9,7 +9,7 @@ export const ExtraMobileSympBtn = ({ toggleExtraM }) => {
           toggleExtraM();
         }}
       >
-        Quay lại
+        Back
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-// import BKCsvg from "../../assets/logo/footerLogo.svg";
 import BaySideLogo from "../../assets/logo/BaySide-logo-2.svg";
+import { useLocation } from "react-router-dom";
 
 const footerLinks1 = [
   { name: "Home", link: "/" },
@@ -22,8 +22,10 @@ const footerLinks2 = [
 ];
 
 export default function Footer() {
+  const location = useLocation();
+  const footerClass = location.pathname === "/home" ? "footer-home-mt" : "";
   return (
-    <footer className="footer w-100 footer-bg">
+    <footer className={`footer w-100 footer-bg ${footerClass}`}>
       <div className="content-container">
         <div className="footer-wrapper">
           <div className="c-3 md-12">

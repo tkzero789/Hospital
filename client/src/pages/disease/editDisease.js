@@ -9,10 +9,6 @@ import DiseaseDescs from "../../components/DiseaseParts/DiseaseDescs";
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 
 export default function EditDisease({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -184,8 +180,7 @@ export default function EditDisease({ userRole, userInfos }) {
     }
   }
 
-  async function confirmEdit(e) {
-    e.preventDefault();
+  async function confirmEdit() {
     if (disease.name === "") {
       window.alert("Chưa nhập tên bệnh");
       return;
@@ -208,67 +203,29 @@ export default function EditDisease({ userRole, userInfos }) {
           .get(`http://localhost:5000/disease/${disease.name}`)
           .then((res) => {
             if (res.data) {
-              throw new Error(
-                "Căn bệnh cùng tên đã có sẵn trong cơ sở dữ liệu!"
-              );
+              throw new Error("Duplicated disease name!");
             }
           });
       }
       // Edit disease
       await axios
-        .post(`http://localhost:5000/disease-temp/add`, disease, apiConfig)
+        .put(`http://localhost:5000/disease/update/${diseaseId}`, disease)
         .then((res) => {
           if (res.data && res.data.message === "Disease already exists") {
-            throw new Error(
-              "Bạn đã chỉnh sửa căn bệnh này, vui lòng đợi admin xét duyệt!"
-            );
+            throw new Error("Waiting for approval");
           }
           console.log("Symptom edited", res.data);
         });
-      // Create notification to admin
-      const notif = {
-        id: uuidv4(),
-        fromInfos: {
-          name: userInfos.fullName,
-          role: userRole,
-          medSpecialty: userInfos.medSpecialty,
-          doctorID: userInfos.doctorID,
-        },
-        toDoctorID: ["ADMIN"],
-        content: {
-          type: "Chỉnh sửa căn bệnh",
-          detail: `Bác sĩ trưởng Khoa ${userInfos.medSpecialty} đã chỉnh sửa căn bệnh ${disease.name}`,
-          link: `/disease-temp/${disease.idTemp}/approve`,
-        },
-        timeSent: formattedTime,
-        status: "Chưa xem",
-      };
-      await axios
-        .post("http://localhost:5000/notification/add", notif, apiConfig)
-        .then((res) => {
-          console.log("Notification created", res.data);
-        });
-      // Set default and navigate
-      setDisease((prev) => ({
-        ...prev,
-        name: "",
-        ageRanges: [],
-        genders: [],
-        symptomIds: [],
-        descIds: [],
-      }));
-      navigate(`/disease-table`);
     } catch (err) {
       const message = `Có lỗi xảy ra: ${err}`;
       window.alert(message);
     }
+    navigate("/disease-table");
   }
 
   return (
     <div>
-      <h3 className="container text-center text-body pt-5">
-        CHỈNH SỬA CĂN BỆNH
-      </h3>
+      <h3 className="container text-center text-body pt-5">Edit disease</h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -281,7 +238,7 @@ export default function EditDisease({ userRole, userInfos }) {
                     className="btn btn-outline-primary"
                     onClick={(e) => confirmCancle(e)}
                   >
-                    HỦY CHỈNH SỬA
+                    Cancel
                   </button>
                 ) : (
                   <button
@@ -289,7 +246,7 @@ export default function EditDisease({ userRole, userInfos }) {
                     className="btn btn-outline-primary"
                     onClick={handlePrev}
                   >
-                    QUAY LẠI
+                    Back
                   </button>
                 )}
               </div>
@@ -299,13 +256,13 @@ export default function EditDisease({ userRole, userInfos }) {
                   className="btn btn-outline-primary"
                   onClick={(e) => {
                     if (step === finalStep) {
-                      confirmEdit(e);
+                      confirmEdit();
                     } else {
                       checkStep(step);
                     }
                   }}
                 >
-                  {step === finalStep ? "XÁC NHẬN CHỈNH SỬA" : "TIẾP THEO"}
+                  {step === finalStep ? "Confirm edit" : "Next"}
                 </button>
               </div>
             </div>

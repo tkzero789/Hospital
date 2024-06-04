@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AmbulanceSVG from "../../assets/home/ambulanceSVG.svg";
 import ClipboardSVG from "../../assets/home/clipboardSVG.svg";
 import HospitalSVG from "../../assets/home/hospitalSVG.svg";
@@ -26,7 +26,7 @@ export default function BaySideSystem() {
                 </div>
                 <div className="syst-card-wrapper">
                   <div className="syst-card">
-                    <NavLink className="syst-card-link">
+                    <Link className="syst-card-link">
                       <div className="syst-card-img">
                         <img
                           className="card-img"
@@ -41,10 +41,15 @@ export default function BaySideSystem() {
                         Advanced equipment helps us meet all your medical needs
                         quickly and accurately.
                       </div>
-                    </NavLink>
+                      <div className="syst-card-btn">
+                        <Link>
+                          Emergency <i className="bi bi-arrow-right"></i>
+                        </Link>
+                      </div>
+                    </Link>
                   </div>
                   <div className="syst-card">
-                    <NavLink className="syst-card-link">
+                    <Link className="syst-card-link">
                       <div className="syst-card-img">
                         <img
                           className="card-img"
@@ -59,10 +64,15 @@ export default function BaySideSystem() {
                         Delivering exceptional healthcare outcomes with our team
                         of dedicated and experienced doctors and nurses.
                       </div>
-                    </NavLink>
+                      <div className="syst-card-btn">
+                        <Link>
+                          Explore <i className="bi bi-arrow-right"></i>
+                        </Link>
+                      </div>
+                    </Link>
                   </div>
                   <div className="syst-card">
-                    <NavLink className="syst-card-link">
+                    <Link className="syst-card-link">
                       <div className="syst-card-img">
                         <img
                           className="card-img"
@@ -77,7 +87,12 @@ export default function BaySideSystem() {
                         Improve your quality of life through the best healthcare
                         services, because you are our top priority.
                       </div>
-                    </NavLink>
+                      <div className="syst-card-btn">
+                        <Link>
+                          Find care <i className="bi bi-arrow-right"></i>
+                        </Link>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </div>

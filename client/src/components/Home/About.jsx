@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import HospitalImg from "../../assets/home/hospitalBuilding.jpg";
 
 export default function About() {
@@ -29,6 +30,9 @@ export default function About() {
                     you to take charge of your health.
                   </span>
                 </div>
+              </div>
+              <div className="about-section-btn">
+                <Link>Learn more</Link>
               </div>
             </div>
             <div className="c-6 md-12">

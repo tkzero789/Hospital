@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
 import axios from "axios";
-
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 import ArticlePatView from "../../components/ArticleParts/ArticlePatView";
 
@@ -39,36 +38,35 @@ export default function ViewArticle({ userRole, userInfos }) {
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
-          window.alert(`Không tìm thấy bài viết với id ${articleId} `);
+          window.alert(`Can't find this article with id ${articleId} `);
           navigate(-1);
           return;
         }
         setArticle(dbArticle);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [articleId, navigate]);
 
   // delete article by articleId
-  function confirmDelete(e) {
-    e.prevenDefault();
-    if (window.confirm("Bạn có chắc muốn xóa bài viết này?")) {
+  function confirmDelete() {
+    if (window.confirm("Do you want to delete?")) {
       // delete article in disease
       axios
         .post(
           `http://localhost:5000/disease/${diseaseId}/delete-article/${articleId}`
         )
         .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
+          const message = `Error: ${err}`;
           window.alert(message);
         });
       // delete article
       axios
         .delete(`http://localhost:5000/article/${articleId}`)
         .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
+          const message = `Error: ${err}`;
           window.alert(message);
         });
       navigate(`disease/${diseaseId}/article-table`);
@@ -85,7 +83,7 @@ export default function ViewArticle({ userRole, userInfos }) {
           apiConfig
         )
         .then((res) => {
-          window.alert("Bài viết đã được đặt mặc định");
+          window.alert("Default article");
           console.log(res);
           setArticle({
             ...article,
@@ -93,8 +91,18 @@ export default function ViewArticle({ userRole, userInfos }) {
           });
         });
     } catch (err) {
-      const message = `Có lỗi xảy ra: ${err}`;
+      const message = `Error: ${err}`;
       window.alert(message);
+    }
+  }
+
+  async function requestEdit() {
+    try {
+      axios.put(`http://localhost:5000/article/update/${articleId}`, {
+        status: "Request Edit",
+      });
+    } catch (err) {
+      console.log(`${err}`);
     }
   }
 
@@ -104,7 +112,7 @@ export default function ViewArticle({ userRole, userInfos }) {
         ArticlePatView({ article, setIsPatView })
       ) : (
         <div>
-          <h3 className="container text-center text-body pt-5">XEM BÀI VIẾT</h3>
+          <h3 className="container text-center text-body pt-5">View article</h3>
           <div className="container p-5">
             <div className="card border-primary-subtle p-5">
               <form>
@@ -126,8 +134,8 @@ export default function ViewArticle({ userRole, userInfos }) {
                       onClick={() => setDisplay()}
                     >
                       {article.isDisplay === true
-                        ? "ĐANG LÀ BÀI VIẾT MẶC ĐỊNH"
-                        : "ĐẶT LÀM BÀI VIẾT MẶC ĐỊNH"}
+                        ? "Default article"
+                        : "Set default article"}
                     </button>
                   </div>
                 )}
@@ -140,17 +148,14 @@ export default function ViewArticle({ userRole, userInfos }) {
                         navigate(-1);
                       }}
                     >
-                      Quay lại
+                      Back
                     </button>
                   </div>
-                  {userInfos.doctorID === article.createInfos.doctorID && (
+                  {userRole === "admin" && (
                     <div className="col-3 d-grid gap-2">
-                      <NavLink
-                        className="btn btn-outline-primary"
-                        to={`/disease/${diseaseId}/article/${articleId}/edit`}
-                      >
-                        Chỉnh sửa bài viết
-                      </NavLink>
+                      <button className="btn btn-warning" onClick={requestEdit}>
+                        Request edit
+                      </button>
                     </div>
                   )}
                   <div className="col-3 d-grid gap-2">
@@ -159,17 +164,17 @@ export default function ViewArticle({ userRole, userInfos }) {
                       className="btn btn-outline-primary"
                       onClick={() => setIsPatView(true)}
                     >
-                      Xem chế độ người dùng
+                      See user's view
                     </button>
                   </div>
-                  {userInfos.doctorID === article.createInfos.doctorID && (
+                  {userRole === "admin" && (
                     <div className="col-3 d-grid gap-2">
                       <button
                         type="button"
                         className="btn btn-outline-danger"
-                        onClick={(e) => confirmDelete(e)}
+                        onClick={confirmDelete}
                       >
-                        Xoá bài viết
+                        Delete
                       </button>
                     </div>
                   )}

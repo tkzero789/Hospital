@@ -302,7 +302,7 @@
   }
 
   .news-link-right:hover .news-title-right {
-    color: var(--text-color);
+    color: var(--text-dark-1);
   }
 
   .news-btn-wrapper {
@@ -605,29 +605,6 @@
   }
 
   /* Step 4 */
-  .final-results {
-    flex-direction: column-reverse;
-  }
-
-  .final-results .extra-articles {
-    overflow-y: auto;
-    max-height: 300px;
-  }
-
-  .final-results .main-article {
-    max-height: 600px;
-    overflow-y: auto;
-  }
-
-  .main-article .d-flex .c-6 button {
-    font-size: 14px;
-    padding: 8px 4px;
-    width: 95% !important;
-  }
-
-  .steps-next-button a {
-    width: 100%;
-  }
 
   /* Specialty Page */
   .breadcrumbs {
@@ -744,7 +721,7 @@
 
   .mobile-blog-intro span {
     font-size: 14px;
-    color: var(--text-dark-sub);
+    color: var(--text-dark-body);
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     display: -webkit-box;

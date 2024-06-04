@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const ArticleForm = ({ article, setArticle, mode }) => {
@@ -13,7 +13,12 @@ const ArticleForm = ({ article, setArticle, mode }) => {
   useEffect(() => {
     setFinalInfoNumber(article.infos.length + 1);
     setFinalTreatmentNumber(article.treatments.length + 1);
-  }, [article]);
+  }, [article.infos.length, article.treatments.length]);
+
+  // Article title
+  const updateTitleField = (event) => {
+    setArticle({ ...article, title: event.target.value });
+  };
 
   const addInfoField = () => {
     setArticle({
@@ -161,14 +166,10 @@ const ArticleForm = ({ article, setArticle, mode }) => {
     setFinalTreatmentNumber(finalTreatmentNumber - 1);
   };
 
-  const updateTitleField = (event) => {
-    setArticle({ ...article, title: event.target.value });
-  };
-
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Tên căn bệnh</h4>
+        <h4 className="text-blue-2 col-3">Disease</h4>
         <input
           type="text"
           className="form-control border-primary-subtle col"
@@ -178,11 +179,12 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         />
       </div>
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Tên bài viết</h4>
+        <h4 className="text-blue-2 col-3">Article title</h4>
         <input
           type="text"
           className="form-control border-primary-subtle col"
           name="title"
+          placeholder="Enter title for article"
           value={article.title}
           readOnly={mode === "view"}
           onChange={(e) => updateTitleField(e)}
@@ -203,40 +205,31 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                     ></i>
                   )}
 
-                  <h4 className="text-blue-2">Thông tin {info.number}</h4>
+                  <h4 className="text-blue-2">Info {info.number}</h4>
                 </div>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col-9 mb-2"
                   name="about"
                   value={info.about}
-                  placeholder="Loại thông tin"
+                  placeholder="Types of info"
                   readOnly={mode === "view"}
                   onChange={(e) => updateInfoField(info.number, e)}
                 />
-                {info.image === null ? (
-                  mode !== "view" && (
-                    <input
-                      type="file"
-                      name="image"
-                      className="form-control border-primary-subtle col-9 mb-2"
-                      placeholder="Ảnh minh họa"
-                      onChange={(e) => updateInfoImage(info.number, e)}
-                    />
-                  )
-                ) : (
-                  <img
-                    alt={info.image}
-                    src={info.image}
-                    className="form-control border-primary-subtle col-9 mb-2"
-                  />
-                )}
+                <input
+                  type="file"
+                  name="image"
+                  className="form-control border-primary-subtle col-9 mb-2"
+                  disabled={mode === "view"}
+                  placeholder="Upload image"
+                  onChange={(e) => updateInfoImage(info.number, e)}
+                />
                 <textarea
                   name="overview"
                   value={info.overview}
                   readOnly={mode === "view"}
                   className="form-control border-primary-subtle col-9 mb-2"
-                  placeholder="Tổng quan"
+                  placeholder="Subtitle"
                   rows="5"
                   onChange={(e) => updateInfoField(info.number, e)}
                 />
@@ -245,7 +238,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   value={info.detail}
                   readOnly={mode === "view"}
                   className="form-control border-primary-subtle col-9"
-                  placeholder="Thông tin chi tiết"
+                  placeholder="Details"
                   rows="10"
                   onChange={(e) => updateInfoField(info.number, e)}
                 />
@@ -255,7 +248,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         })}
         {mode !== "view" && (
           <div onClick={addInfoField} className="btn btn-primary">
-            <h5>Thêm thông tin</h5>
+            <h5>Add info</h5>
           </div>
         )}
       </div>
@@ -273,44 +266,31 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                       onClick={(e) => deleteTreatmentField(treatment.number)}
                     ></i>
                   )}
-                  <h4 className="text-blue-2">
-                    Phương pháp {treatment.number}
-                  </h4>
+                  <h4 className="text-blue-2">Treament {treatment.number}</h4>
                 </div>
                 <input
                   type="text"
                   className="form-control border-primary-subtle col-9 mb-2"
                   name="about"
                   value={treatment.about}
-                  placeholder="Loại thông tin"
+                  placeholder="Types of info"
                   readOnly={mode === "view"}
                   onChange={(e) => updateTreatmentField(treatment.number, e)}
                 />
-                {treatment.image === null ? (
-                  mode !== "view" && (
-                    <input
-                      type="file"
-                      name="image"
-                      className="form-control border-primary-subtle col-9 mb-2"
-                      placeholder="Ảnh minh họa"
-                      onChange={(e) =>
-                        updateTreatmentImage(treatment.number, e)
-                      }
-                    />
-                  )
-                ) : (
-                  <img
-                    alt={treatment.image}
-                    src={treatment.image}
-                    className="form-control border-primary-subtle col-9 mb-2"
-                  />
-                )}
+                <input
+                  type="file"
+                  name="image"
+                  className="form-control border-primary-subtle col-9 mb-2"
+                  disabled={mode === "view"}
+                  placeholder="Upload image"
+                  onChange={(e) => updateTreatmentImage(treatment.number, e)}
+                />
                 <textarea
                   name="overview"
                   value={treatment.overview}
                   readOnly={mode === "view"}
                   className="form-control border-primary-subtle col-9 mb-2"
-                  placeholder="Tổng quan"
+                  placeholder="Subtitle"
                   rows="5"
                   onChange={(e) => updateTreatmentField(treatment.number, e)}
                 />
@@ -319,7 +299,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   value={treatment.detail}
                   readOnly={mode === "view"}
                   className="form-control border-primary-subtle col-9"
-                  placeholder="Thông tin chi tiết"
+                  placeholder="Details"
                   rows="10"
                   onChange={(e) => updateTreatmentField(treatment.number, e)}
                 />
@@ -329,7 +309,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         })}
         {mode !== "view" && (
           <div onClick={addTreatmentField} className="btn btn-primary">
-            <h5>Thêm phương pháp chữa trị</h5>
+            <h5>Add treatment</h5>
           </div>
         )}
       </div>

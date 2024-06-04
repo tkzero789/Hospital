@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainNav from "../../components/Navbar/MainNav";
-import LowNav from "../../components/Navbar/LowNav";
+import SubNav from "../../components/Navbar/SubNav";
 import MobileNav from "../../components/Navbar/MobileNav";
 import { useLocation } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export default function NavbarLayout({ title, children }) {
   const navbarClass = location.pathname === "/home" ? "fixed-top" : "";
 
   return (
-    <div>
+    <>
       <HelmetProvider>
         <Helmet>
           <title>{title}</title>
@@ -18,12 +18,12 @@ export default function NavbarLayout({ title, children }) {
       </HelmetProvider>
       <div className="body-bg-2">
         <header className={navbarClass}>
+          <SubNav />
           <MainNav />
-          <LowNav />
           <MobileNav />
         </header>
         {children}
       </div>
-    </div>
+    </>
   );
 }

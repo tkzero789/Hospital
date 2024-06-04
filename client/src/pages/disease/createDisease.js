@@ -8,11 +8,6 @@ import DiseaseDescs from "../../components/DiseaseParts/DiseaseDescs";
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 
 export default function CreateDisease({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
-
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -54,7 +49,7 @@ export default function CreateDisease({ userRole, userInfos }) {
         setDbSymps(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
@@ -136,22 +131,11 @@ export default function CreateDisease({ userRole, userInfos }) {
     handleNext();
   }
 
-  function confirmCancle(e) {
-    if (window.confirm("Cancel creating symptom?")) {
-      setDisease((prev) => ({
-        ...prev,
-        name: "",
-        ageRanges: [],
-        genders: [],
-        symptomIds: [],
-        descIds: [],
-      }));
-      navigate(-1);
-    }
+  function confirmCancel() {
+    navigate("/disease-table");
   }
 
-  async function confirmCreate(e) {
-    e.preventDefault();
+  async function confirmCreate() {
     if (disease.name === "") {
       window.alert("Please enter disease name");
       return;
@@ -171,50 +155,18 @@ export default function CreateDisease({ userRole, userInfos }) {
     try {
       // Create disease
       await axios
-        .post("http://localhost:5000/disease-temp/add", disease, apiConfig)
+        .post("http://localhost:5000/disease/add", disease)
         .then((res) => {
           if (res.data && res.data.message === "Disease already exists") {
-            throw new Error("Căn bệnh cùng tên đang được người khác thêm vào!");
+            throw new Error("Duplicated disease!");
           }
           console.log("Disease created", res.data);
         });
-      // Create notification to admin
-      const notif = {
-        id: uuidv4(),
-        fromInfos: {
-          name: userInfos.fullName,
-          role: userRole,
-          medSpecialty: userInfos.medSpecialty,
-          doctorID: userInfos.doctorID,
-        },
-        toDoctorID: ["ADMIN"],
-        content: {
-          type: "Tạo căn bệnh",
-          detail: `Bác sĩ trưởng Khoa ${userInfos.medSpecialty} đã tạo căn bệnh ${disease.name}`,
-          link: `/disease-temp/${disease.idTemp}/approve`,
-        },
-        timeSent: formattedTime,
-        status: "Chưa xem",
-      };
-      await axios
-        .post("http://localhost:5000/notification/add", notif, apiConfig)
-        .then((res) => {
-          console.log("Notification created", res.data);
-        });
-      // Set default and navigate
-      setDisease((prev) => ({
-        ...prev,
-        name: "",
-        ageRanges: [],
-        genders: [],
-        symptomIds: [],
-        descIds: [],
-      }));
-      navigate(`/disease-table`);
     } catch (err) {
-      const message = `Có lỗi xảy ra: ${err}`;
+      const message = `Error: ${err}`;
       window.alert(message);
     }
+    navigate("/disease-table");
   }
 
   return (
@@ -231,7 +183,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                   <button
                     type="button"
                     className="btn btn-outline-primary"
-                    onClick={(e) => confirmCancle(e)}
+                    onClick={confirmCancel}
                   >
                     Cancel
                   </button>
@@ -251,7 +203,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                   className="btn btn-outline-primary"
                   onClick={(e) => {
                     if (step === finalStep) {
-                      confirmCreate(e);
+                      confirmCreate();
                     } else {
                       checkStep(step);
                     }

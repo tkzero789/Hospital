@@ -775,7 +775,7 @@ export default function PatientFormSymptoms({
               toggleIsAddClick();
             }}
           >
-            <span>Thêm triệu chứng</span>
+            <span>Add a symptom</span>
             <i className="bi bi-plus-circle-fill"></i>
           </button>
           {isAddClick && (

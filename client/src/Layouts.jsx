@@ -15,7 +15,6 @@ import ViewSymptom from "./pages/symptom/viewSymptom";
 import DiseaseTable from "./pages/workspace/diseaseTable";
 import CreateDisease from "./pages/disease/createDisease";
 import EditDisease from "./pages/disease/editDisease";
-import ApproveDisease from "./pages/disease/approveDisease";
 import ViewDisease from "./pages/disease/viewDisease";
 // article pages
 import ArticleTable from "./pages/workspace/articleTable";
@@ -150,18 +149,7 @@ export default function Layouts({ userRole, userInfos }) {
               }
             />
             <Route
-              path="/disease-temp/:diseaseIdTemp/approve"
-              element={
-                <RequireAuth
-                  userRole={userRole}
-                  allowedRoles={["head-doctor", "admin"]}
-                >
-                  <ApproveDisease userRole={userRole} userInfos={userInfos} />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/disease/:diseaseId/view"
+              path="/disease/view/:diseaseId"
               element={
                 <RequireAuth
                   userRole={userRole}
@@ -220,11 +208,11 @@ export default function Layouts({ userRole, userInfos }) {
               }
             />
             <Route
-              path="article-temp/:articleIdTemp/approve"
+              path="/article/:articleId/approve"
               element={
                 <RequireAuth
                   userRole={userRole}
-                  allowedRoles={["head-doctor", "doctor"]}
+                  allowedRoles={["head-doctor", "doctor", "admin"]}
                 >
                   <ApproveArticle userRole={userRole} userInfos={userInfos} />
                 </RequireAuth>

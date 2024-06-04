@@ -1,27 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
 import axios from "axios";
-
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 
 export default function ViewDisease({ userRole, userInfos }) {
-  const [disease, setDisease] = useState({
-    id: "",
-    name: "",
-    ageRanges: [],
-    genders: [],
-    symptomIds: [],
-    descIds: [],
-    medSpecialty: "",
-    relatedArticles: [],
-    createInfos: {
-      doctorCreated: "",
-      doctorId: "",
-      timeCreated: "",
-      timeEdited: "",
-    },
-    status: "",
-  });
+  const [disease, setDisease] = useState([]);
   const [dbSymps, setDbSymps] = useState([]);
   const { diseaseId } = useParams();
   const navigate = useNavigate();
@@ -31,17 +14,12 @@ export default function ViewDisease({ userRole, userInfos }) {
     axios
       .get(`http://localhost:5000/disease/${diseaseId}`)
       .then((res) => {
+        console.log(res.data);
         const dbdisease = res.data;
-        console.log(dbdisease);
-        if (!dbdisease) {
-          window.alert(`Không tìm thấy căn bệnh với id ${diseaseId}`);
-          navigate("/disease-table");
-          return;
-        }
         setDisease(dbdisease);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [diseaseId, navigate]);
@@ -54,24 +32,62 @@ export default function ViewDisease({ userRole, userInfos }) {
         setDbSymps(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
 
   // delete disease
-  function confirmDelete(e) {
-    e.preventDefault();
-    if (window.confirm("Bạn có chắc muốn xóa căn bệnh này?")) {
-      axios
-        .delete(`http://localhost:5000/disease/${diseaseId}`)
-        .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
-          window.alert(message);
-        });
-
-      navigate("/disease-table");
+  async function confirmDelete() {
+    try {
+      await axios.delete(`http://localhost:5000/disease/delete/${diseaseId}`);
+    } catch (err) {
+      console.log(`${err}`);
     }
+    navigate("/disease-table");
+  }
+
+  async function confirmApprove() {
+    if (
+      disease.status === "Pending Create" ||
+      disease.status === "Pending Update" ||
+      disease.status === "Request Edit"
+    ) {
+      try {
+        // Update status symptom
+        await axios
+          .put(`http://localhost:5000/disease/update/${diseaseId}`, {
+            status: "Approved",
+          })
+          .then((res) => {
+            if (res.data && res.data.message === "Symptom already exists") {
+              throw new Error("Duplicated symptom!");
+            }
+            console.log("Symptom created", res.data);
+          });
+      } catch (err) {
+        const message = `Error: ${err}`;
+        window.alert(message);
+      }
+    } else if (disease.status === "Approved") {
+      try {
+        // Update status symptom
+        await axios
+          .put(`http://localhost:5000/disease/update/${diseaseId}`, {
+            status: "Request Edit",
+          })
+          .then((res) => {
+            if (res.data && res.data.message === "Symptom already exists") {
+              throw new Error("Duplicated symptom!");
+            }
+            console.log("Symptom created", res.data);
+          });
+      } catch (err) {
+        const message = `Error: ${err}`;
+        window.alert(message);
+      }
+    }
+    navigate("/disease-table");
   }
 
   return (
@@ -98,7 +114,7 @@ export default function ViewDisease({ userRole, userInfos }) {
                     navigate(-1);
                   }}
                 >
-                  Quay lại
+                  Back
                 </button>
               </div>
               <div className="col-3 d-grid gap-2">
@@ -106,28 +122,50 @@ export default function ViewDisease({ userRole, userInfos }) {
                   className="btn btn-outline-primary"
                   to={`/disease/${diseaseId}/article-table`}
                 >
-                  Danh sách bài viết
+                  Articles
                 </NavLink>
               </div>
-              {userInfos.doctorID === disease.createInfos.doctorID && (
-                <div className="col-3 d-grid gap-2">
-                  <NavLink
-                    className="btn btn-outline-primary"
-                    to={`/disease/${diseaseId}/edit`}
-                  >
-                    Chỉnh sửa
-                  </NavLink>
-                </div>
-              )}
-              {(userInfos.doctorID === disease.createInfos.doctorID ||
-                userRole === "admin") && (
+              {userRole === "admin" && (
                 <div className="col-3 d-grid gap-2">
                   <button
                     type="button"
                     className="btn btn-outline-danger"
-                    onClick={() => confirmDelete(diseaseId)}
+                    onClick={confirmDelete}
                   >
-                    Xoá căn bệnh
+                    Delete
+                  </button>
+                </div>
+              )}
+              {userInfos.doctorID === disease?.createInfos?.doctorID &&
+                disease.status === "Request Edit" && (
+                  <div className="col-3 d-grid gap-2">
+                    <NavLink
+                      className="btn btn-warning"
+                      to={`/disease/${diseaseId}/edit`}
+                    >
+                      Edit
+                    </NavLink>
+                  </div>
+                )}
+              {userRole === "admin" && disease.status !== "Approved" && (
+                <div className="col-3 d-grid gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={confirmApprove}
+                  >
+                    Approve
+                  </button>
+                </div>
+              )}
+              {userRole === "admin" && disease.status === "Approved" && (
+                <div className="col-3 d-grid gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={confirmApprove}
+                  >
+                    Request edit
                   </button>
                 </div>
               )}

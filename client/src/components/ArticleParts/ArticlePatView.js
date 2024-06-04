@@ -29,11 +29,11 @@ export default function ArticlePatView({ article, setIsPatView }) {
       <div className="content-container">
         <h3 className="text-center">{article.title}</h3>
         <div className="symp-checker-steps">
-          <h5>THÔNG TIN CĂN BỆNH</h5>
+          <h5>Disease</h5>
           {article.infos.map((info) => (
             <ArticleContent element={info} key={info.id} />
           ))}
-          <h5>PHƯƠNG PHÁP ĐIỀU TRỊ</h5>
+          <h5>Treatments</h5>
           {article.treatments.map((trm) => (
             <ArticleContent element={trm} key={trm.id} />
           ))}
@@ -45,11 +45,11 @@ export default function ArticlePatView({ article, setIsPatView }) {
                 className="btn btn-outline-primary"
                 onClick={() => setIsPatView(false)}
               >
-                QUAY LẠI
+                Back
               </button>
             </div>
             <p className="col-6 d-grid gap-2 justify-content-end">
-              Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
+              Written by {article.createInfos.doctorCreated}
             </p>
           </div>
         </div>

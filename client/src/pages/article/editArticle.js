@@ -6,10 +6,6 @@ import axios from "axios";
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 
 export default function EditArticle({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -64,12 +60,12 @@ export default function EditArticle({ userRole, userInfos }) {
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
-          window.alert(`Không tìm thấy bài viết với id ${articleId} `);
+          window.alert(`Can't find article with id ${articleId} `);
           navigate(-1);
           return;
         }
         if (dbArticle.createInfos.doctorID !== userInfos.doctorID) {
-          window.alert("Chỉ có bác sĩ tạo ra mới được chỉnh sửa dữ liệu");
+          window.alert("Only head doctors can modify this article");
           navigate(-1);
           return;
         }
@@ -86,28 +82,20 @@ export default function EditArticle({ userRole, userInfos }) {
         setOrigTitle(dbArticle.title);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [articleId, navigate]);
 
-  function confirmCancle(e) {
-    if (window.confirm("Hủy và trở về trạng thái xem?")) {
-      setArticle((prev) => ({
-        ...prev,
-        title: "",
-        infos: [],
-        treatments: [],
-      }));
-      navigate(-1);
-    }
+  function confirmCancel() {
+    navigate("/article-table");
   }
 
   async function confirmEdit(e) {
     e.preventDefault();
     // validation fields
     if (article.title === "") {
-      alert("Thiếu tên bài viết");
+      alert("Please enter article title");
       return;
     } else if (
       article.infos.filter(
@@ -115,14 +103,14 @@ export default function EditArticle({ userRole, userInfos }) {
           info.about === "" || info.overview === "" || info.detail === ""
       ).length > 0
     ) {
-      alert("Thiếu thông tin bệnh");
+      alert("Please enter info for this article");
       return;
     } else if (
       article.treatments.filter(
         (trm) => trm.about === "" || trm.overview === "" || trm.detail === ""
       ).length > 0
     ) {
-      alert("Thiếu phương pháp chữa trị");
+      alert("Please enter treatments info for this article");
       return;
     } else {
       try {
@@ -131,61 +119,22 @@ export default function EditArticle({ userRole, userInfos }) {
             .get(`http://localhost:5000/article/${article.title}`)
             .then((res) => {
               if (res.data) {
-                throw new Error(
-                  "Bài viết cùng tiêu đề đã có sẵn trong cơ sở dữ liệu!"
-                );
+                throw new Error("Duplicated article name!");
               }
             });
         }
         // Edit article
         axios
-          .post(`http://localhost:5000/article-temp/add/`, article, apiConfig)
+          .put(`http://localhost:5000/article/edit/${articleId}`, article)
           .then((res) => {
             if (res.data && res.data.message === "Article already exists") {
-              throw new Error(
-                "Bạn đã chỉnh sửa bài viết này, vui lòng đợi admin xét duyệt!"
-              );
+              throw new Error("Thanks, wait for admin approval!");
             }
             console.log("Article edited", res.data);
           });
-        // Create notification to head-doctor
-        const resId = await axios.post(
-          `http://localhost:5000/user/medspec-hdoctor-id`,
-          { medSpecialty: userInfos.medSpecialty }
-        );
-        const hdoctorID = resId.data;
-        const notif = {
-          id: uuidv4(),
-          fromInfos: {
-            name: userInfos.fullName,
-            role: userRole,
-            medSpecialty: userInfos.medSpecialty,
-            doctorID: userInfos.doctorID,
-          },
-          toDoctorID: [hdoctorID],
-          content: {
-            type: "Chỉnh sửa bài viết",
-            detail: `Bác sĩ ${userInfos.fullName} đã chỉnh sửa bài viết ${article.title}`,
-            link: `/article-temp/${article.idTemp}/approve`,
-          },
-          timeSent: formattedTime,
-          status: "Chưa xem",
-        };
-        await axios
-          .post("http://localhost:5000/notification/add", notif, apiConfig)
-          .then((res) => {
-            console.log("Notification created", res.data);
-          });
-
-        setArticle((prev) => ({
-          ...prev,
-          title: "",
-          infos: [],
-          treatments: [],
-        }));
         navigate(`/disease/${diseaseId}/article-table`);
       } catch (err) {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       }
     }
@@ -193,9 +142,7 @@ export default function EditArticle({ userRole, userInfos }) {
 
   return (
     <div>
-      <h3 className="container text-center text-body pt-5">
-        CHỈNH SỬA BÀI VIẾT
-      </h3>
+      <h3 className="container text-center text-body pt-5">Edit article</h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -213,9 +160,9 @@ export default function EditArticle({ userRole, userInfos }) {
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
-                  onClick={(e) => confirmCancle(e)}
+                  onClick={confirmCancel}
                 >
-                  Huỷ chỉnh sửa
+                  Cancel
                 </button>
               </div>
               <div className="col-3 d-grid gap-2">
@@ -226,7 +173,7 @@ export default function EditArticle({ userRole, userInfos }) {
                     confirmEdit(e);
                   }}
                 >
-                  Xác nhận chỉnh sửa
+                  Confirm edit
                 </button>
               </div>
             </div>

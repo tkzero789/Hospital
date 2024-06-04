@@ -29,7 +29,7 @@ export default function ArticlePatientView({ userRole, userInfos }) {
         setIsLoading(false);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [articleId]);
@@ -70,7 +70,7 @@ export default function ArticlePatientView({ userRole, userInfos }) {
           <div className="content-container">
             <h3 className="text-center">{article.title}</h3>
             <div className="symp-checker-steps">
-              <h2>Thông tin căn bệnh</h2>
+              <h2>Disease</h2>
               {article.infos.map((info) => (
                 <ArticleContent element={info} key={info.id} />
               ))}

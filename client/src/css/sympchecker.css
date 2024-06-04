@@ -155,7 +155,7 @@
 
 .selected-symp-header span {
   font-size: 18px;
-  color: var(--text-white);
+  color: var(--text-white-1);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -200,7 +200,7 @@
 .selected-symp-item button {
   border: none;
   background-color: #e9e9e9;
-  color: var(--text-white);
+  color: var(--text-white-1);
   border-radius: 6px;
 }
 
@@ -550,7 +550,7 @@
 }
 
 .mobile-symp-list-button button:first-child {
-  color: var(--text-color);
+  color: var(--text-dark-1);
   border: none;
   background-color: #ebebeb;
   padding: 8px 12px;
@@ -558,7 +558,7 @@
 }
 
 .mobile-symp-list-button button:last-child {
-  color: var(--text-white);
+  color: var(--text-white-1);
   background-color: #3498db;
   border: none;
   padding: 8px 12px;
@@ -574,55 +574,53 @@
 }
 
 /* Final results - Step 4 */
-.final-results .main-article {
-  max-height: 500px;
-  overflow-y: auto;
+.symp-step-4 {
+  display: flex;
 }
 
-.final-results .extra-articles {
-  padding-top: 2px;
-  max-height: 500px;
-  overflow-y: auto;
+.symp-step-4 .disease-list {
+  display: flex;
+  flex-direction: column;
 }
 
-.main-article::-webkit-scrollbar {
-  width: 4px; /* Width of the scrollbar */
+.disease-list .disease-list-item {
+  border-radius: 16px;
+  background-color: #4bc4e9;
+  padding: 8px;
 }
 
-.main-article::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the track */
+.disease-list .disease-list-item:not(:first-child) {
+  margin-top: 12px;
 }
 
-.main-article::-webkit-scrollbar-thumb {
-  background: #acacac; /* Color of the scroll thumb */
+.symp-step-4 .main-article-wrapper {
+  padding: 16px 12px 28px 12px;
+  background-color: #e2e2e2;
 }
 
-.main-article::-webkit-scrollbar-thumb:hover {
-  background: #7e7e7e; /* Color of the scroll thumb on hover */
+.main-article-title {
+  text-align: center;
 }
 
-.extra-articles::-webkit-scrollbar {
-  width: 4px; /* Width of the scrollbar */
+.main-article-title h5 {
+  color: var(--text-blue-3);
 }
 
-.extra-articles::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the track */
+.main-article-subtitle {
+  padding-top: 12px;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
 }
 
-.extra-articles::-webkit-scrollbar-thumb {
-  background: #acacac; /* Color of the scroll thumb */
+.main-article-detail {
+  padding-top: 8px;
+  color: var(--text-dark-body);
 }
 
-.extra-articles::-webkit-scrollbar-thumb:hover {
-  background: #7e7e7e; /* Color of the scroll thumb on hover */
-}
-
-.article-btn {
-  cursor: pointer;
-}
-
-.article-btn:hover {
-  box-shadow: #1b72b498 0px 1px 2px 0px, #1b72b498 0px 2px 6px 2px;
+.other-articles-wrapper .other-articles-item {
+  padding: 8px;
+  background-color: #5ca8ff;
+  margin: 8px 0;
 }
 
 /* MOBILE RESPONSIVE */
@@ -637,7 +635,7 @@
   }
 
   .active-switch-button {
-    color: var(--text-white);
+    color: var(--text-white-1);
     background-color: #3498db;
   }
 
@@ -689,7 +687,7 @@
   }
 
   .add-symp-btn > button {
-    color: var(--text-white);
+    color: var(--text-white-1);
     background-color: #004ad3;
     border: none;
     border-radius: 10px;
@@ -744,7 +742,7 @@
   }
 
   .mobile-search-symp-btn button:first-child {
-    color: var(--text-color);
+    color: var(--text-dark-1);
     border: none;
     background-color: #ebebeb;
     padding: 8px 12px;
@@ -760,7 +758,7 @@
   }
 
   .mobile-search-symp-btn button:last-child {
-    color: var(--text-white);
+    color: var(--text-white-1);
     background-color: #3498db;
     border: none;
     padding: 8px 12px;

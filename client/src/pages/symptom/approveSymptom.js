@@ -31,9 +31,9 @@ export default function ApproveSymptom({ userRole, userInfos }) {
       symptom.status === "Request Edit"
     ) {
       try {
-        // Create symptom
+        // Update status symptom
         await axios
-          .post(`http://localhost:5000/symptom/update/${symptomId}`, {
+          .put(`http://localhost:5000/symptom/update/${symptomId}`, {
             status: "Approved",
           })
           .then((res) => {

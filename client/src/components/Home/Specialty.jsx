@@ -17,7 +17,9 @@ export default function Specialty() {
           <div className="splty-wrapper">
             <div className="c-12">
               <div className="splty-section">
-                <div className="splty-section-header">Specialties</div>
+                <div className="splty-section-header">
+                  Specialties at BaySide Health
+                </div>
                 <div className="splty-items-container">
                   <div className="splty-items-wrapper">
                     <div className="splty-item">
@@ -128,11 +130,11 @@ export default function Specialty() {
                       </Link>
                     </div>
                   </div>
-                  <div className="splty-btn-wrapper">
-                    <Link to="/specialty-page" className="splty-btn-link">
-                      View more details
-                    </Link>
-                  </div>
+                </div>
+                <div className="splty-btn-wrapper">
+                  <Link to="/specialty-page" className="splty-btn-link">
+                    View more details
+                  </Link>
                 </div>
               </div>
             </div>
