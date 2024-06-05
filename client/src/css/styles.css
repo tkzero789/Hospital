@@ -1272,8 +1272,7 @@ header {
   text-align: center;
 }
 
-.syst-card-btn a {
-  text-decoration: none;
+.syst-card-btn span {
   font-size: 16px;
   display: inline-block;
   font-weight: var(--roboto-regular-weight);
@@ -1572,6 +1571,129 @@ header {
 
 .extra .extra-btn a:hover {
   background-color: var(--btn-light-hover-1);
+}
+
+/* MAP SECTION */
+.map {
+  position: relative;
+  margin: 40px 0;
+}
+
+.map .map-wrapper {
+  display: flex;
+}
+
+.map .map-left {
+  height: 100%;
+  background-color: var(--text-blue-3);
+  border-top-left-radius: var(--border-radius-1);
+  border-bottom-left-radius: var(--border-radius-1);
+}
+
+.map .map-left-wrapper {
+  padding: 48px 28px;
+}
+
+.map .map-left-wrapper .map-left-select h5 {
+  color: var(--text-white-1);
+}
+
+.map .map-left-wrapper .map-left-select select {
+  margin-top: 24px;
+  width: 100%;
+  padding: 6px;
+  border-radius: var(--border-radius-1);
+  border: 1px solid var(--border-gray-1);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.map .map-left-wrapper .map-left-newsletter {
+  padding-top: 60px;
+}
+
+.map .map-left-wrapper .map-left-newsletter h5 {
+  color: var(--text-white-1);
+}
+
+.map .map-left-wrapper .map-left-newsletter input {
+  margin-top: 24px;
+  width: 100%;
+  padding: 6px;
+  border-radius: var(--border-radius-1);
+  border: 1px solid var(--border-gray-1);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.map .map-left-wrapper button {
+  margin-top: 24px;
+  width: 100%;
+  color: var(--text-dark-1);
+  background-color: #fff;
+  border: none;
+  border-radius: var(--border-radius-1);
+  font-size: 16px;
+  padding: 8px 12px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.map .map-left-wrapper button:hover {
+  background-color: var(--btn-light-hover-1);
+}
+
+.map .location-info {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: 60%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: var(--border-radius-1);
+}
+
+.map .location-info-wrapper {
+  position: relative;
+  height: 100%;
+  padding: 20px 32px;
+  background-color: #fff;
+  border-radius: var(--border-radius-1);
+}
+
+.map .location-info-wrapper h6 {
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+}
+
+.map .location-info-wrapper p {
+  padding-top: 12px;
+  font-size: 18px;
+  font-weight: var(--roboto-light-weight);
+}
+
+.map .location-info-wrapper p i {
+  padding-right: 8px;
+  color: var(--text-blue-4);
+}
+
+.map .location-info-wrapper a {
+  padding-top: 8px;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: var(--roboto-light-weight);
+}
+
+.map .location-info-wrapper a i {
+  padding-right: 8px;
+  color: var(--text-blue-4);
+}
+
+.map .location-info-wrapper button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  background-color: transparent;
+  padding: 4px 8px 0 0;
 }
 
 /* FOOTER SECTION */

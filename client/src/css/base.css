@@ -18,6 +18,7 @@
   --text-blue-1: #006298;
   --text-blue-2: #286ba6;
   --text-blue-3: #002c77;
+  --text-blue-4: #005eff;
 
   /* Background */
   --main-nav-bg: #ffffff;
@@ -31,6 +32,7 @@
   --border-blue-1: #006298;
   --border-blue-2: #286ba6;
   --border-blue-3: #002c77;
+  --border-gray-1: #dee2e6;
 
   /* Hover */
   --btn-light-hover-1: #dde2e9;

@@ -42,9 +42,9 @@ export default function BaySideSystem() {
                         quickly and accurately.
                       </div>
                       <div className="syst-card-btn">
-                        <Link>
+                        <span>
                           Emergency <i className="bi bi-arrow-right"></i>
-                        </Link>
+                        </span>
                       </div>
                     </Link>
                   </div>
@@ -65,9 +65,9 @@ export default function BaySideSystem() {
                         of dedicated and experienced doctors and nurses.
                       </div>
                       <div className="syst-card-btn">
-                        <Link>
+                        <span>
                           Explore <i className="bi bi-arrow-right"></i>
-                        </Link>
+                        </span>
                       </div>
                     </Link>
                   </div>
@@ -88,9 +88,9 @@ export default function BaySideSystem() {
                         services, because you are our top priority.
                       </div>
                       <div className="syst-card-btn">
-                        <Link>
+                        <span>
                           Find care <i className="bi bi-arrow-right"></i>
-                        </Link>
+                        </span>
                       </div>
                     </Link>
                   </div>
