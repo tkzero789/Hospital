@@ -8,19 +8,55 @@ import "./table.scss";
 
 export default function ArticleTable({ userRole, userInfos }) {
   const [articles, setArticles] = useState([]);
+  const [myArticles, setMyArticles] = useState(false);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/article/`)
       .then((res) => {
-        const articles = res.data;
-        setArticles(articles);
+        const articleData = res.data;
+        const articleDataWithNo = articleData.map((item, index) => ({
+          ...item,
+          number: index + 1,
+        }));
+        setArticles(articleDataWithNo);
       })
       .catch((err) => {
         const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
+
+  // Assign article priority
+  const getPriority = (status) => {
+    switch (status) {
+      case "Request Edit":
+        return 1;
+      case "Pending Create":
+        return 2;
+      case "Pending Update":
+        return 3;
+      default:
+        return 4;
+    }
+  };
+
+  // Sort articles based on status priority
+  const sortedArticles = [...articles].sort(
+    (a, b) => getPriority(a.status) - getPriority(b.status)
+  );
+
+  // Filter articles
+  const handleMyArticleClick = () => {
+    setMyArticles(!myArticles);
+  };
+
+  // Display filtered articles
+  const displayedArticles = myArticles
+    ? sortedArticles.filter(
+        (b) => b.createInfos.doctorID === userInfos.doctorID
+      )
+    : sortedArticles;
 
   const actionColumn = [
     {
@@ -47,15 +83,6 @@ export default function ArticleTable({ userRole, userInfos }) {
                 <div className="viewButton">View</div>
               </NavLink>
             )}
-            {article.status === "Request Edit" &&
-              userInfos.doctorID === params.row.createInfos.doctorID && (
-                <NavLink
-                  className="viewLink"
-                  to={`/disease/${article.diseaseId}/article/${article.id}/edit`}
-                >
-                  <div className="editButton">Edit</div>
-                </NavLink>
-              )}
           </div>
         );
       },
@@ -63,9 +90,8 @@ export default function ArticleTable({ userRole, userInfos }) {
   ];
 
   const columns = [
-    { field: "number", headerName: "No.", width: 50 },
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "title", headerName: "Title", width: 200 },
+    { field: "number", headerName: "No.", width: 80 },
+    { field: "title", headerName: "Title", width: 300 },
     { field: "diseaseName", headerName: "Disease", width: 200 },
     {
       field: "doctorCreated",
@@ -106,11 +132,20 @@ export default function ArticleTable({ userRole, userInfos }) {
         </Helmet>
       </HelmetProvider>
       <div className="datatable">
-        <div className="datatableTitle">List of articles</div>
+        <div className="datatableTitle">
+          List of articles
+          {(userRole === "head-doctor" || userRole === "doctor") && (
+            <>
+              <button onClick={handleMyArticleClick}>
+                {myArticles ? "All articles" : "My articles"}
+              </button>
+            </>
+          )}
+        </div>
 
         <DataGrid
           className="datagrid"
-          rows={articles}
+          rows={displayedArticles}
           getRowId={(row) => row._id}
           getRowClassName={(params) =>
             `rowWithStatus ${params.row.status.replace(" ", "-")}`

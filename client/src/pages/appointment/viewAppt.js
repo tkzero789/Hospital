@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { Toaster, toast } from "sonner";
 
 export default function ViewAppt() {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+  const { apptId } = useParams();
+  // Edit
   const [isEditable, setIsEditable] = useState(false);
   const [disableEdit, setDisableEdit] = useState(false);
 
-  const { apptId } = useParams();
-
+  // Form
   const [formInputs, setFormInputs] = useState({
     fullName: "",
     phoneNumber: "",
@@ -23,6 +29,7 @@ export default function ViewAppt() {
     status: "",
   });
 
+  // Fetch data
   useEffect(() => {
     console.log(apptId);
     axios
@@ -31,7 +38,7 @@ export default function ViewAppt() {
         setFormInputs(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [apptId]);
@@ -45,17 +52,28 @@ export default function ViewAppt() {
     setFormInputs({ ...formInputs, [event.target.name]: value });
   };
 
-  // Handle DOB change
-
   // Uppdate appointment status
   function updateStatus(newStatus) {
     console.log(newStatus);
     axios
-      .post(`http://localhost:5000/appointment/update/${apptId}`, {
-        status: newStatus,
+      .post(
+        `http://localhost:5000/appointment/update/${apptId}`,
+        {
+          status: newStatus,
+        },
+        apiConfig
+      )
+      .then(() => {
+        if (newStatus === "Accepted") {
+          toast.success("Accepted!");
+        } else if (newStatus === "Spam") {
+          toast.error("Mark as spam");
+        } else {
+          toast.error("Declined!");
+        }
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
     setFormInputs({ ...formInputs, status: newStatus });
@@ -67,11 +85,14 @@ export default function ViewAppt() {
     setIsEditable((prevIsEditable) => {
       if (prevIsEditable) {
         axios
-          .post(`http://localhost:5000/appointment/edit/${apptId}`, formInputs)
-          .then((res) => {
-            console.log(res);
+          .post(
+            `http://localhost:5000/appointment/edit/${apptId}`,
+            formInputs,
+            apiConfig
+          )
+          .then(() => {
             setDisableEdit(true);
-            setTimeout(() => setDisableEdit(false), 2500); // Enable the button after 2.5 seconds
+            setTimeout(() => setDisableEdit(false), 1000);
 
             // Fetch the updated data
             axios
@@ -80,17 +101,18 @@ export default function ViewAppt() {
                 setFormInputs(res.data);
               })
               .catch((err) => {
-                const message = `Có lỗi xảy ra: ${err}`;
+                const message = `Error: ${err}`;
                 window.alert(message);
               });
           })
           .catch((err) => {
-            const message = `Có lỗi xảy ra: ${err}`;
+            const message = `Error: ${err}`;
             window.alert(message);
           });
       }
       return !prevIsEditable;
     });
+    setTimeout(() => toast.success("Edited successfully!"), 1000);
   }
 
   // Format DOB
@@ -223,28 +245,14 @@ export default function ViewAppt() {
                 />
               </div>
             </div>
-            <div className="row pt-3 pb-3 justify-content-end">
+            <div className="row py-3 justify-content-end">
               <div className="c-2 d-grid gap-2">
-                <NavLink
+                <Link
                   className="btn btn-outline-secondary"
                   to={`/appointment-table`}
                 >
                   Back
-                </NavLink>
-              </div>
-              <div className="c-2 d-grid gap-2">
-                <button
-                  type="button"
-                  className={`btn btn-success ${
-                    isEditable === true || formInputs.status === "Accepted"
-                      ? "hidden"
-                      : ""
-                  }`}
-                  disabled={disableEdit}
-                  onClick={() => updateStatus("Accepted")}
-                >
-                  Accept
-                </button>
+                </Link>
               </div>
               <div className="c-2 d-grid gap-2">
                 <button
@@ -282,6 +290,22 @@ export default function ViewAppt() {
               <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
+                  className={`btn btn-success ${
+                    isEditable === true || formInputs.status === "Accepted"
+                      ? "hidden"
+                      : ""
+                  }`}
+                  disabled={disableEdit}
+                  onClick={() => updateStatus("Accepted")}
+                >
+                  Accept
+                </button>
+              </div>
+            </div>
+            <div className="row py-3">
+              <div className="c-2 d-grid gap-2">
+                <button
+                  type="button"
                   className="btn btn-outline-danger"
                   disabled={formInputs.status === "Declined"}
                   onClick={() => updateStatus("Declined")}
@@ -301,6 +325,13 @@ export default function ViewAppt() {
               </div>
             </div>
           </form>
+          <Toaster
+            toastOptions={{
+              className: "toast-noti",
+            }}
+            position="top-right"
+            richColors
+          />
         </div>
       </div>
     </div>

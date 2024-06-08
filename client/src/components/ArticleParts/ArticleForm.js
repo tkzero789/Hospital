@@ -1,60 +1,21 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React from "react";
 
 const ArticleForm = ({ article, setArticle, mode }) => {
-  const [finalInfoNumber, setFinalInfoNumber] = useState(
-    article.infos.length + 1
-  );
-  const [finalTreatmentNumber, setFinalTreatmentNumber] = useState(
-    article.treatments.length + 1
-  );
-
-  useEffect(() => {
-    setFinalInfoNumber(article.infos.length + 1);
-    setFinalTreatmentNumber(article.treatments.length + 1);
-  }, [article.infos.length, article.treatments.length]);
-
   // Article title
   const updateTitleField = (event) => {
     setArticle({ ...article, title: event.target.value });
   };
 
-  const addInfoField = () => {
-    setArticle({
-      ...article,
-      infos: [
-        ...article.infos,
-        {
-          id: uuidv4(),
-          number: finalInfoNumber,
-          about: "",
-          overview: "",
-          detail: "",
-          image: null,
-        },
-      ],
-    });
-    setFinalInfoNumber(finalInfoNumber + 1);
+  // Overview
+  const updateOverviewField = (event, field) => {
+    let infos = [...article.infos];
+    infos[0] = { ...infos[0], [field]: event.target.value };
+    setArticle({ ...article, infos: infos });
   };
 
-  const updateInfoField = (infoNo, event) => {
-    const infos = article.infos;
-    const udpatedInfo = {
-      ...infos[infoNo - 1],
-      [event.target.name]: event.target.value,
-    };
-    setArticle({
-      ...article,
-      infos: [
-        ...infos.slice(0, infoNo - 1),
-        udpatedInfo,
-        ...infos.slice(infoNo),
-      ],
-    });
-  };
-
-  const updateInfoImage = async (infoNo, event) => {
+  // Upload
+  const uploadOverviewImage = async (event, infoIndex) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
     const response = await axios.post(
@@ -66,67 +27,31 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         },
       }
     );
-    setArticle({
-      ...article,
-      infos: [
-        ...article.infos.slice(0, infoNo - 1),
-        {
-          ...article.infos[infoNo - 1],
-          image: response.data.link,
-        },
-        ...article.infos.slice(infoNo),
-      ],
-    });
-  };
+    // Create a new copy of the infos array
+    const newInfos = [...article.infos];
 
-  const deleteInfoField = (infoNo) => {
-    const filterdInfos = article.infos.filter((info) => info.number !== infoNo);
-    const updatedInfos = filterdInfos.map((info) => ({
-      ...info,
-      number: info.number > infoNo ? info.number - 1 : info.number,
-    }));
-    setArticle({
-      ...article,
-      infos: updatedInfos,
-    });
-    setFinalInfoNumber(finalInfoNumber - 1);
-  };
-
-  const addTreatmentField = () => {
-    setArticle({
-      ...article,
-      treatments: [
-        ...article.treatments,
-        {
-          id: uuidv4(),
-          number: finalTreatmentNumber,
-          about: "",
-          overview: "",
-          detail: "",
-          image: null,
-        },
-      ],
-    });
-    setFinalTreatmentNumber(finalTreatmentNumber + 1);
-  };
-
-  const updateTreatmentField = (treatmentNo, event) => {
-    const treatments = article.treatments;
-    const udpatedTrm = {
-      ...treatments[treatmentNo - 1],
-      [event.target.name]: event.target.value,
+    // Update the image field of the specific info object
+    newInfos[infoIndex] = {
+      ...newInfos[infoIndex],
+      image: response.data.link,
     };
+
+    // Update the article state
     setArticle({
       ...article,
-      treatments: [
-        ...treatments.slice(0, treatmentNo - 1),
-        udpatedTrm,
-        ...treatments.slice(treatmentNo),
-      ],
+      infos: newInfos,
     });
   };
 
-  const updateTreatmentImage = async (treatmentNo, event) => {
+  // Treatment detail
+  const updateTreatmentField = (event, field) => {
+    let treatments = [...article.treatments];
+    treatments[0] = { ...treatments[0], [field]: event.target.value };
+    setArticle({ ...article, treatments: treatments });
+  };
+
+  // Upload treatment image
+  const uploadTreatmentImage = async (event, infoIndex) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
     const response = await axios.post(
@@ -138,38 +63,26 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         },
       }
     );
-    setArticle({
-      ...article,
-      treatments: [
-        ...article.treatments.slice(0, treatmentNo - 1),
-        {
-          ...article.treatments[treatmentNo - 1],
-          image: response.data.link,
-        },
-        ...article.treatments.slice(treatmentNo),
-      ],
-    });
-  };
+    // Create a new copy of the treatments array
+    const newTreatments = [...article.treatments];
 
-  const deleteTreatmentField = (treatmentNo) => {
-    const filteredTrms = article.treatments.filter(
-      (trm) => trm.number !== treatmentNo
-    );
-    const updatedTrms = filteredTrms.map((trm) => ({
-      ...trm,
-      number: trm.number > treatmentNo ? trm.number - 1 : trm.number,
-    }));
+    // Update the image field of the specific treatment object
+    newTreatments[infoIndex] = {
+      ...newTreatments[infoIndex],
+      image: response.data.link,
+    };
+
+    // Update the article state
     setArticle({
       ...article,
-      treatments: updatedTrms,
+      treatments: newTreatments,
     });
-    setFinalTreatmentNumber(finalTreatmentNumber - 1);
   };
 
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Disease</h4>
+        <h4 className="text-dark-1 col-3">Disease</h4>
         <input
           type="text"
           className="form-control border-primary-subtle col"
@@ -179,7 +92,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         />
       </div>
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Article title</h4>
+        <h4 className="text-dark-1 col-3">Article title</h4>
         <input
           type="text"
           className="form-control border-primary-subtle col"
@@ -196,43 +109,36 @@ const ArticleForm = ({ article, setArticle, mode }) => {
           return (
             <div key={info.id}>
               <div className="form row pb-3">
-                <div className="col-12" style={{ display: "flex" }}>
-                  {mode !== "view" && (
-                    <i
-                      className="bi bi-file-minus"
-                      style={{ color: "blue", marginRight: "5px" }}
-                      onClick={(e) => deleteInfoField(info.number)}
-                    ></i>
-                  )}
-
-                  <h4 className="text-blue-2">Info {info.number}</h4>
+                <div className="d-flex col-12">
+                  <h4 className="text-dark-1 pb-2">Info</h4>
                 </div>
-                <input
-                  type="text"
-                  className="form-control border-primary-subtle col-9 mb-2"
-                  name="about"
-                  value={info.about}
-                  placeholder="Types of info"
+                {/* Overview */}
+                <textarea
+                  name="overview"
+                  value={info.overview}
                   readOnly={mode === "view"}
-                  onChange={(e) => updateInfoField(info.number, e)}
+                  className="form-control border-primary-subtle col-9 mb-2"
+                  placeholder="Overview"
+                  rows="5"
+                  onChange={(e) => updateOverviewField(e, "overview")}
                 />
+                {/* Upload image */}
                 <input
                   type="file"
                   name="image"
                   className="form-control border-primary-subtle col-9 mb-2"
                   disabled={mode === "view"}
                   placeholder="Upload image"
-                  onChange={(e) => updateInfoImage(info.number, e)}
+                  onChange={(e) => uploadOverviewImage(e, 0)}
                 />
-                <textarea
-                  name="overview"
-                  value={info.overview}
-                  readOnly={mode === "view"}
-                  className="form-control border-primary-subtle col-9 mb-2"
-                  placeholder="Subtitle"
-                  rows="5"
-                  onChange={(e) => updateInfoField(info.number, e)}
-                />
+                {article.infos[0].image && (
+                  <img
+                    className="d-block w-50 mx-auto"
+                    src={article.infos[0].image}
+                    alt="Uploaded"
+                  />
+                )}
+                {/* Detail */}
                 <textarea
                   name="detail"
                   value={info.detail}
@@ -240,17 +146,12 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   className="form-control border-primary-subtle col-9"
                   placeholder="Details"
                   rows="10"
-                  onChange={(e) => updateInfoField(info.number, e)}
+                  onChange={(e) => updateOverviewField(e, "detail")}
                 />
               </div>
             </div>
           );
         })}
-        {mode !== "view" && (
-          <div onClick={addInfoField} className="btn btn-primary">
-            <h5>Add info</h5>
-          </div>
-        )}
       </div>
 
       <div className="row pb-5">
@@ -258,42 +159,36 @@ const ArticleForm = ({ article, setArticle, mode }) => {
           return (
             <div key={treatment.id}>
               <div className="form row pb-3">
-                <div className="col-12" style={{ display: "flex" }}>
-                  {mode !== "view" && (
-                    <i
-                      className="bi bi-file-minus"
-                      style={{ color: "blue", marginRight: "5px" }}
-                      onClick={(e) => deleteTreatmentField(treatment.number)}
-                    ></i>
-                  )}
-                  <h4 className="text-blue-2">Treament {treatment.number}</h4>
+                <div className="d-flex col-12">
+                  <h4 className="text-dark-1 pb-2">Treament</h4>
                 </div>
-                <input
-                  type="text"
-                  className="form-control border-primary-subtle col-9 mb-2"
-                  name="about"
-                  value={treatment.about}
-                  placeholder="Types of info"
+                {/* Overview */}
+                <textarea
+                  name="overview"
+                  value={treatment.overview}
                   readOnly={mode === "view"}
-                  onChange={(e) => updateTreatmentField(treatment.number, e)}
+                  className="form-control border-primary-subtle col-9 mb-2"
+                  placeholder="Overview"
+                  rows="5"
+                  onChange={(e) => updateTreatmentField(e, "overview")}
                 />
+                {/* Upload image */}
                 <input
                   type="file"
                   name="image"
                   className="form-control border-primary-subtle col-9 mb-2"
                   disabled={mode === "view"}
                   placeholder="Upload image"
-                  onChange={(e) => updateTreatmentImage(treatment.number, e)}
+                  onChange={(e) => uploadTreatmentImage(e, 0)}
                 />
-                <textarea
-                  name="overview"
-                  value={treatment.overview}
-                  readOnly={mode === "view"}
-                  className="form-control border-primary-subtle col-9 mb-2"
-                  placeholder="Subtitle"
-                  rows="5"
-                  onChange={(e) => updateTreatmentField(treatment.number, e)}
-                />
+                {article.treatments[0].image && (
+                  <img
+                    className="d-block w-50 mx-auto"
+                    src={article.treatments[0].image}
+                    alt="Uploaded"
+                  />
+                )}
+                {/* Detail */}
                 <textarea
                   name="detail"
                   value={treatment.detail}
@@ -301,17 +196,12 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   className="form-control border-primary-subtle col-9"
                   placeholder="Details"
                   rows="10"
-                  onChange={(e) => updateTreatmentField(treatment.number, e)}
+                  onChange={(e) => updateTreatmentField(e, "detail")}
                 />
               </div>
             </div>
           );
         })}
-        {mode !== "view" && (
-          <div onClick={addTreatmentField} className="btn btn-primary">
-            <h5>Add treatment</h5>
-          </div>
-        )}
       </div>
     </div>
   );

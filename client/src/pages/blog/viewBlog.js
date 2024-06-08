@@ -2,8 +2,52 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function ViewBlog({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "approve":
+      action = confirmApprove;
+      break;
+    case "request":
+      action = requestEdit;
+      break;
+    case "delete":
+      action = confirmDelete;
+      break;
+
+    default:
+      action = null;
+  }
+
   const [blog, setBlog] = useState({});
   const { blogId } = useParams();
   const navigate = useNavigate();
@@ -16,39 +60,79 @@ export default function ViewBlog({ userRole, userInfos }) {
         setBlog(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [blogId]);
 
-  // Update blog status
-  function updateStatus(newStatus) {
+  // Approve
+  async function confirmApprove() {
     axios
-      .post(`http://localhost:5000/blog/update/${blogId}`, {
-        status: newStatus,
-      })
-      .then((res) => {
-        setBlog(res.data);
+      .post(
+        `http://localhost:5000/blog/update/${blogId}`,
+        {
+          status: "Approved",
+        },
+        apiConfig
+      )
+      .then(() => {
+        setIsClicked(true);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
-    navigate("/blog-table");
+    setTimeout(() => {
+      toast.success("Approve!");
+      setTimeout(() => {
+        navigate("/blog-table");
+      }, 1200);
+    }, 500);
+  }
+
+  // Request edit
+  async function requestEdit() {
+    axios
+      .post(
+        `http://localhost:5000/blog/update/${blogId}`,
+        {
+          status: "Request Edit",
+        },
+        apiConfig
+      )
+      .then(() => {
+        setIsClicked(true);
+      })
+      .catch((err) => {
+        const message = `Error: ${err}`;
+        window.alert(message);
+      });
+    setTimeout(() => {
+      toast.success("Request edit successfully!");
+      setTimeout(() => {
+        navigate("/blog-table");
+      }, 1200);
+    }, 500);
   }
 
   // Delete a blog from database
-  const deleteBlog = () => {
+  async function confirmDelete() {
     axios
-      .delete(`http://localhost:5000/blog/${blogId}`)
-      .then((res) => {
-        navigate("/blog-table");
+      .delete(`http://localhost:5000/blog/${blogId}`, apiConfig)
+      .then(() => {
+        setIsClicked(true);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
-  };
+    setTimeout(() => {
+      toast.success("Deleted successfully!");
+      setTimeout(() => {
+        navigate("/blog-table");
+      }, 1200);
+    }, 500);
+  }
 
   // Navigate to edit current viewed blog
   function editBlog() {
@@ -63,11 +147,10 @@ export default function ViewBlog({ userRole, userInfos }) {
           <div className="blog-author-info">
             <div className="d-flex flex-column">
               <div className="text-secondary-1">
-                Tác giả:{" "}
-                <span className="text-blue-1 fw-bold">{blog.author}</span>
+                By: <span className="text-blue-1 fw-bold">{blog.author}</span>
               </div>
               <span className="text-secondary-1">
-                Cập nhật lần cuối: {blog.createdAt}
+                Last updated: {blog.createdAt}
               </span>
             </div>
           </div>
@@ -164,83 +247,104 @@ export default function ViewBlog({ userRole, userInfos }) {
           })}
         </div>
       </div>
-      <div className="row justify-content-end pe-5 pt-3 pb-5">
-        <div className="col-2 d-grid">
-          <NavLink
-            className="btn btn-outline-secondary col-3 w-100"
-            to={`/blog-table`}
-          >
-            Quay lại
-          </NavLink>
-        </div>
-        {userRole === "admin" && (
-          <>
-            <div className="col-2 d-grid">
+      <div className="content-container">
+        <div className="d-flex justify-content-end pt-3 pb-5">
+          {userRole === "admin" && (
+            <div className="c-2 px-2 me-auto">
               <button
                 type="button"
-                className={`btn ${
-                  blog.status === "Accepted" || blog.status === "Request edit"
-                    ? "btn-outline-success"
-                    : "btn-success"
-                }`}
-                disabled={
-                  blog.status === "Accepted" || blog.status === "Request edit"
+                className="btn w-100 btn-outline-danger"
+                onClick={(event) =>
+                  handleShowModal(
+                    event,
+                    "delete",
+                    "Confirm delete",
+                    "Are you sure you want to delete this blog?"
+                  )
                 }
-                onClick={() => updateStatus("Accepted")}
               >
-                Chấp nhận
+                Delete
               </button>
             </div>
-            <div className="col-2 d-grid">
-              <button
-                type="button"
-                className={`btn ${
-                  blog.status === "Request edit"
-                    ? "btn-outline-warning"
-                    : "btn-warning"
-                }`}
-                disabled={blog.status === "Request edit"}
-                onClick={() => updateStatus("Request edit")}
-              >
-                Yêu cầu chỉnh sửa
-              </button>
-            </div>
-
-            <div className="col-2 d-grid">
-              <button
-                type="button"
-                className={`btn ${
-                  blog.status === "Pending" || blog.status === "Accepted"
-                    ? "btn-outline-danger"
-                    : "btn-danger"
-                }`}
-                disabled={
-                  blog.status === "Pending" || blog.status === "Accepted"
-                }
-                onClick={() => deleteBlog()}
-              >
-                Xoá
-              </button>
-            </div>
-          </>
-        )}
-
-        {(userRole === "head-doctor" || userRole === "doctor") && (
-          <div className="col-2 d-grid">
-            <button
-              type="button"
-              className="btn btn-success"
-              disabled={
-                blog.status === "Accepted" ||
-                userInfos.doctorID !== blog.doctorID
-              }
-              onClick={editBlog}
+          )}
+          <div className="c-2 px-2">
+            <NavLink
+              className="btn btn-outline-secondary w-100"
+              to={`/blog-table`}
             >
-              Chỉnh sửa
-            </button>
+              Back
+            </NavLink>
           </div>
-        )}
+          {userRole === "admin" && (
+            <>
+              <div className="c-2 px-2">
+                <button
+                  type="button"
+                  className="btn w-100 btn-warning"
+                  disabled={blog.status === "Request edit"}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "request",
+                      "Confirm request edit",
+                      "Are you sure you want to request edit this blog?"
+                    )
+                  }
+                >
+                  Request edit
+                </button>
+              </div>
+              <div className="c-2 px-2">
+                <button
+                  type="button"
+                  className="btn w-100 btn-success"
+                  disabled={
+                    blog.status === "Accepted" || blog.status === "Request edit"
+                  }
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "approve",
+                      "Confirm approve",
+                      "Are you sure you want to approve this blog?"
+                    )
+                  }
+                >
+                  Approve
+                </button>
+              </div>
+            </>
+          )}
+          {(userRole === "head-doctor" || userRole === "doctor") &&
+            blog.status === "Request Edit" &&
+            userInfos.doctorID === blog.doctorID && (
+              <div className="c-2 px-2">
+                <button
+                  type="button"
+                  className="btn btn-warning w-100"
+                  onClick={editBlog}
+                >
+                  Edit
+                </button>
+              </div>
+            )}
+        </div>
       </div>
+      <Toaster
+        toastOptions={{
+          className: "toast-noti",
+        }}
+        position="top-right"
+        richColors
+      />
+      <ConfirmModal
+        title={modalContent.title}
+        body={modalContent.body}
+        show={showModal}
+        hide={handleHideModal}
+        action={action}
+        isClicked={isClicked}
+      />
     </>
   );
 }

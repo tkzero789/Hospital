@@ -31,30 +31,28 @@ export default function SymptomTable({ userRole, userInfos }) {
         const symptom = params.row;
         return (
           <div className="cellAction">
-            {symptom.status === "Approved" && (
-              <NavLink className="viewLink" to={`/symptom/${symptom.id}/view`}>
-                <div className="viewButton">View</div>
-              </NavLink>
-            )}
-            {symptom.status !== "Approved" && userRole === "head-doctor" && (
-              <NavLink className="viewLink" to={`/symptom/${symptom.id}/edit`}>
-                <div className="editButton">Edit</div>
-              </NavLink>
-            )}
-            {symptom.status !== "Approved" && (
-              <NavLink
-                className="viewLink"
-                to={`${
-                  userRole === "admin"
-                    ? `/symptom/approve/${symptom.id}`
-                    : `/symptom/${symptom.id}/view`
-                }`}
-              >
-                <div className="checkButton">
-                  {userRole === "admin" ? "Approve" : "View"}
-                </div>
-              </NavLink>
-            )}
+            <NavLink className="viewLink" to={`/symptom/${symptom.id}/view`}>
+              <div className="viewButton">View</div>
+            </NavLink>
+            {symptom.status === "Request Edit" &&
+              userRole === "head-doctor" && (
+                <NavLink
+                  className="viewLink"
+                  to={`/symptom/${symptom.id}/edit`}
+                >
+                  <div className="editButton">Edit</div>
+                </NavLink>
+              )}
+            {(symptom.status === "Pending Create" ||
+              symptom.status === "Pending Update") &&
+              userRole === "admin" && (
+                <NavLink
+                  className="viewLink"
+                  to={`/symptom/approve/${symptom.id}`}
+                >
+                  <div className="checkButton">Approve</div>
+                </NavLink>
+              )}
           </div>
         );
       },
@@ -62,10 +60,20 @@ export default function SymptomTable({ userRole, userInfos }) {
   ];
 
   const columns = [
-    { field: "number", headerName: "No.", width: 100 },
     { field: "id", headerName: "ID", width: 80 },
     { field: "name", headerName: "Symptom", width: 500 },
-
+    {
+      field: "doctorCreated",
+      headerName: "Created by",
+      width: 180,
+      valueGetter: (params) => params.row.createInfos.doctorCreated,
+    },
+    {
+      field: "doctorID",
+      headerName: "Doctor ID",
+      width: 120,
+      valueGetter: (params) => params.row.createInfos.doctorID,
+    },
     {
       field: "status",
       headerName: "Status",

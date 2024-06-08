@@ -2,14 +2,46 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
+import { Toaster, toast } from "sonner";
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function CreateSymptom({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");
   const apiConfig = {
     headers: { Authorization: `Bearer ${userToken}` },
   };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "create":
+      action = confirmCreate;
+      break;
+    default:
+      action = null;
+  }
+
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -45,11 +77,14 @@ export default function CreateSymptom({ userRole, userInfos }) {
 
   const navigate = useNavigate();
 
+  // Cancel
   function confirmCancel() {
     navigate("/symptom-table");
   }
 
-  async function confirmCreate(e) {
+  // Create
+  async function confirmCreate() {
+    setIsClicked(true);
     if (symptom.name === "") {
       window.alert("Please enter symptom name");
       return;
@@ -65,7 +100,6 @@ export default function CreateSymptom({ userRole, userInfos }) {
           }
         }
       }
-    e.preventDefault();
     try {
       // Create new symptom
       const updatedSymptom = { ...symptom };
@@ -77,16 +111,23 @@ export default function CreateSymptom({ userRole, userInfos }) {
           }
           console.log("Symptom created", res.data);
         });
-      navigate(`/symptom-table`);
     } catch (err) {
       const message = `Error: ${err}`;
       window.alert(message);
     }
+    setTimeout(() => {
+      toast.success("Created symptom successfully!");
+      setTimeout(() => {
+        navigate("/symptom-table");
+      }, 1200);
+    }, 500);
   }
 
   return (
     <div>
-      <h3 className="container text-center text-body pt-5">Create symptom</h3>
+      <h3 className="container text-center text-dark-header pt-5">
+        Create symptom
+      </h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -103,7 +144,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-outline-secondary"
                   onClick={(e) => {
                     confirmCancel();
                   }}
@@ -115,13 +156,33 @@ export default function CreateSymptom({ userRole, userInfos }) {
                 <button
                   type="button"
                   className="btn btn-outline-primary"
-                  onClick={(e) => {
-                    confirmCreate(e);
-                  }}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "create",
+                      "Confirm create",
+                      "Are you sure you want to create this symptom?"
+                    )
+                  }
                 >
                   Create
                 </button>
               </div>
+              <Toaster
+                toastOptions={{
+                  className: "toast-noti",
+                }}
+                position="top-right"
+                richColors
+              />
+              <ConfirmModal
+                title={modalContent.title}
+                body={modalContent.body}
+                show={showModal}
+                hide={handleHideModal}
+                action={action}
+                isClicked={isClicked}
+              />
             </div>
           </form>
         </div>

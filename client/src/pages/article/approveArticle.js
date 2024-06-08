@@ -1,11 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 import ArticlePatView from "../../components/ArticleParts/ArticlePatView";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function ApproveArticle({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "approve":
+      action = confirmApprove;
+      break;
+    case "edit":
+      action = requestEdit;
+      break;
+    case "delete":
+      action = confirmDelete;
+      break;
+    default:
+      action = null;
+  }
+
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -46,7 +88,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
       doctorCreated: "",
       doctorId: "",
       timeCreated: "",
-      timeEdited: "",
+      timeEdited: formattedTime,
     },
     isDisplay: "",
     status: "",
@@ -73,31 +115,74 @@ export default function ApproveArticle({ userRole, userInfos }) {
       });
   }, [articleId, navigate]);
 
+  // Approve
   async function confirmApprove() {
     axios
-      .put(`http://localhost:5000/article/update/${articleId}`, {
-        status: "Approved",
-      })
+      .put(
+        `http://localhost:5000/article/update/${articleId}`,
+        {
+          status: "Approved",
+        },
+        apiConfig
+      )
       .then((res) => {
         if (res.data && res.data.message === "Article already exists") {
           throw new Error("Article already exists!");
         }
+        setIsClicked(true);
         console.log("Article created:", res.data);
       })
       .catch((err) => {
         const message = `Error: ${err}`;
         window.alert(message);
       });
-    navigate("/article-table");
+    setTimeout(() => {
+      toast.success("Approved!");
+      setTimeout(() => {
+        navigate("/article-table");
+      }, 1200);
+    }, 500);
   }
 
-  async function confirmDelete() {
+  // Request edit
+  async function requestEdit() {
+    setIsClicked(true);
     try {
-      await axios.delete(`http://localhost:5000/article/delete/${articleId}`);
+      axios.put(
+        `http://localhost:5000/article/update/${articleId}`,
+        {
+          status: "Request Edit",
+        },
+        apiConfig
+      );
     } catch (err) {
       console.log(`${err}`);
     }
-    navigate("/article-table");
+    setTimeout(() => {
+      toast.success("Request edit successfully");
+      setTimeout(() => {
+        navigate("/article-table");
+      }, 1200);
+    }, 500);
+  }
+
+  // Delete
+  async function confirmDelete() {
+    setIsClicked(true);
+    try {
+      await axios.delete(
+        `http://localhost:5000/article/delete/${articleId}`,
+        apiConfig
+      );
+    } catch (err) {
+      console.log(`${err}`);
+    }
+    setTimeout(() => {
+      toast.success("Delete article successfully");
+      setTimeout(() => {
+        navigate("/article-table");
+      }, 1200);
+    }, 500);
   }
 
   return (
@@ -120,7 +205,25 @@ export default function ApproveArticle({ userRole, userInfos }) {
                   }
                 </div>
                 <div className="row pt-3 pb-3 justify-content-end">
-                  <div className="col-3 d-grid gap-2">
+                  {userRole === "admin" && (
+                    <div className="c-2 d-grid gap-2 me-auto">
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={(event) =>
+                          handleShowModal(
+                            event,
+                            "delete",
+                            "Confirm delete",
+                            "Are you sure you want to delete this article?"
+                          )
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                  <div className="c-2 d-grid gap-2">
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
@@ -131,7 +234,8 @@ export default function ApproveArticle({ userRole, userInfos }) {
                       Back
                     </button>
                   </div>
-                  <div className="col-3 d-grid gap-2">
+
+                  <div className="c-2 d-grid gap-2">
                     <button
                       type="button"
                       className="btn btn-outline-primary"
@@ -141,31 +245,72 @@ export default function ApproveArticle({ userRole, userInfos }) {
                     </button>
                   </div>
                   {userRole === "admin" &&
+                    article.status !== "Request Edit" && (
+                      <div className="c-2 d-grid gap-2">
+                        <button
+                          className="btn btn-warning"
+                          onClick={(event) =>
+                            handleShowModal(
+                              event,
+                              "edit",
+                              "Confirm request edit",
+                              "Are you sure you want to request edit this article?"
+                            )
+                          }
+                        >
+                          Request edit
+                        </button>
+                      </div>
+                    )}
+
+                  {userRole === "admin" &&
                     (article.status === "Pending Update" ||
                       article.status === "Pending Create") && (
-                      <div className="col-3 d-grid gap-2">
+                      <div className="c-2 d-grid gap-2">
                         <button
                           type="button"
                           className="btn btn-success"
-                          onClick={confirmApprove}
+                          onClick={(event) =>
+                            handleShowModal(
+                              event,
+                              "approve",
+                              "Confirm approve",
+                              "Are you sure you want to approve this article?"
+                            )
+                          }
                         >
                           Approve
                         </button>
                       </div>
                     )}
-                  {userRole === "admin" && (
-                    <div className="col-3 d-grid gap-2">
-                      <button
-                        type="button"
-                        className="btn btn-outline-danger"
-                        onClick={confirmDelete}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
+                  {userRole !== "admin" &&
+                    article.status === "Request Edit" && (
+                      <div className="c-2 d-grid gap-2">
+                        <Link
+                          className="btn btn-warning"
+                          to={`/disease/${article.diseaseId}/article/${article.id}/edit`}
+                        >
+                          Edit
+                        </Link>
+                      </div>
+                    )}
                 </div>
               </form>
+              <Toaster
+                toastOptions={{
+                  className: "toast-noti",
+                }}
+                position="top-right"
+                richColors
+              />
+              <ConfirmModal
+                title={modalContent.title}
+                body={modalContent.body}
+                show={showModal}
+                hide={handleHideModal}
+                action={action}
+                isClicked={isClicked}
+              />
             </div>
           </div>
         </div>

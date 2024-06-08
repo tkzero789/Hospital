@@ -46,14 +46,14 @@ const ViewSpecificBlog = () => {
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
             >
-              <Link className="text-secondary" to="/home">
-                Trang chủ
+              <Link className="text-blue-2" to="/home">
+                Home
               </Link>
               ,
-              <Link className="text-secondary" to="/view-blog-list">
-                Tin tức
+              <Link className="text-blue-2" to="/view-blog-list">
+                News & Insights
               </Link>
-              ,<Typography className="text-dark">{blog.title}</Typography>,
+              ,
             </Breadcrumbs>
           </div>
 
@@ -63,16 +63,16 @@ const ViewSpecificBlog = () => {
               <div className="blog-author-info">
                 <div className="d-flex flex-column">
                   <div className="text-secondary-1">
-                    Tác giả:{" "}
+                    Author:{" "}
                     <span className="text-blue-1 fw-bold">{blog.author}</span>
                   </div>
                   <span className="text-secondary-1">
-                    Cập nhật lần cuối: {blog.createdAt}
+                    Last updated: {blog.createdAt}
                   </span>
                 </div>
                 <div className="ms-auto">
                   <Link
-                    className="text-decoration-none text-blue fs-3 me-3"
+                    className="text-decoration-none text-blue fs-3 me-2"
                     to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                       window.location.href
                     )}`}
@@ -86,6 +86,19 @@ const ViewSpecificBlog = () => {
                     to="#"
                   >
                     <i className="bi bi-envelope-fill"></i>
+                  </Link>
+                  <Link
+                    className="text-decoration-none text-black fs-3 me-2"
+                    to="#"
+                  >
+                    <i className="bi bi-twitter-x"></i>
+                  </Link>
+
+                  <Link
+                    className="text-decoration-none text-blue-1 fs-3 me-2"
+                    to="#"
+                  >
+                    <i className="bi bi-linkedin"></i>
                   </Link>
                 </div>
               </div>

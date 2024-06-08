@@ -39,7 +39,7 @@ export default function SwipeNews() {
                     slidesPerView: 3,
                   },
                 }}
-                spaceBetween={50}
+                spaceBetween={54}
                 pagination={{
                   clickable: true,
                 }}

@@ -9,8 +9,6 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import SwipeNews from "../../components/Home/SwipeNews";
 import Extra from "../../components/Home/Extra";
 import Map from "../../components/Home/Map";
-import { useJsApiLoader } from "@react-google-maps/api";
-import { MapConfig } from "../../components/Home/MapConfig";
 
 export default function Home(userRole) {
   return (

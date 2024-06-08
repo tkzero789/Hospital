@@ -57,7 +57,7 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Disease name</h4>
+        <h5 className="text-dark-1 fw-reg col-3">Disease name</h5>
         <input
           type="text"
           className="form-control border-primary-subtle col"
@@ -69,7 +69,7 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Ages</h4>
+        <h5 className="text-dark-1 fw-reg col-3">Ages</h5>
         <div className="border border-primary-subtle rounded col-9">
           <p className="m-1">
             {disease.ageRanges?.map((ageRange, index) => (
@@ -82,7 +82,7 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Gender</h4>
+        <h5 className="text-dark-1 fw-reg col-3">Gender</h5>
         <div className="border border-primary-subtle rounded col-9">
           <p className="m-1">
             {disease.genders?.map((gender, index) => (
@@ -95,7 +95,7 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Symptom(s)</h4>
+        <h5 className="text-dark-1 fw-reg col-3">Symptom(s)</h5>
         <div className="border border-primary-subtle rounded col-9">
           <div className="row">
             {chosenSymps?.map((symptom) => {
@@ -106,7 +106,7 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h4 className="text-blue-2 col-3">Description</h4>
+        <h5 className="text-dark-1 fw-reg col-3">Description</h5>
         <div className="border border-primary-subtle rounded col">
           {chosenSymps?.map((symptom) => {
             return <Details symptom={symptom} key={symptom.name} />;

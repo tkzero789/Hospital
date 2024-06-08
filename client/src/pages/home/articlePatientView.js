@@ -7,8 +7,8 @@ export default function ArticlePatientView({ userRole, userInfos }) {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { articleId } = useParams();
-  const navigate = useNavigate();
 
+  // Fetch data
   useEffect(() => {
     axios
       .get(`http://localhost:5000/article/${articleId}`)
@@ -16,13 +16,6 @@ export default function ArticlePatientView({ userRole, userInfos }) {
         const dbarticle = res.data;
         if (!dbarticle) {
           window.alert(`Article with id ${articleId} not found`);
-          if (!userInfos) {
-            navigate("/symptom-checker");
-          } else {
-            console.log(userInfos);
-            navigate(-1);
-          }
-          return;
         }
         console.log(dbarticle);
         setArticle(dbarticle);
@@ -34,16 +27,19 @@ export default function ArticlePatientView({ userRole, userInfos }) {
       });
   }, [articleId]);
 
+  // Article
   const ArticleContent = ({ element }) => {
-    const elemAbout = element.about;
     const elemOverview = element.overview;
     const elemDetail = element.detail;
     return (
       <div>
-        <h6>{elemAbout}:</h6>
         <p>{elemOverview}</p>
         {element.image && (
-          <img alt={element.image} src={element.image} className="w-100 p-5" />
+          <img
+            alt={element.image}
+            src={element.image}
+            className="d-block w-50 p-5 mx-auto"
+          />
         )}
         {elemDetail.split("\n\n").map((paragraph) => (
           <div key={paragraph.slice(0, 20)}>
@@ -65,34 +61,24 @@ export default function ArticlePatientView({ userRole, userInfos }) {
       </HelmetProvider>
       <div className="symp-checker w-100">
         {isLoading ? (
-          <p>Đang tải bài viết...</p>
+          <p>Loading...</p>
         ) : (
           <div className="content-container">
             <h3 className="text-center">{article.title}</h3>
             <div className="symp-checker-steps">
-              <h2>Disease</h2>
+              <h2>Overview</h2>
               {article.infos.map((info) => (
                 <ArticleContent element={info} key={info.id} />
               ))}
-              <h2>Phương pháp điều trị</h2>
+              <h2>Treatments</h2>
               {article.treatments.map((trm) => (
                 <ArticleContent element={trm} key={trm.id} />
               ))}
               <hr></hr>
               <div className="row">
                 <p className="d-flex justify-content-end">
-                  Bài viết được cung cấp bởi {article.createInfos.doctorCreated}
+                  {article.createInfos.doctorCreated}
                 </p>
-                {userRole && (
-                  <div className="col-6 d-grid gap-2 justify-content-start">
-                    <NavLink
-                      className="btn btn-outline-primary"
-                      to={`/article-table`}
-                    >
-                      QUAY LẠI
-                    </NavLink>
-                  </div>
-                )}
               </div>
             </div>
           </div>

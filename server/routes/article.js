@@ -64,11 +64,11 @@ const isHeadDoctor = (req, res, next) => {
   } else {
     return res
       .status(403)
-      .json({ message: "Forbidden (Head-doctor or Admin access required)" });
+      .json({ message: "Forbidden (Head-doctor access required)" });
   }
 };
 
-// Middleware to check for doctor head-doctor
+// Middleware to check for doctor and head-doctor
 const isDrOrHDr = (req, res, next) => {
   if (req.role === "doctor" || req.role === "head-doctor") {
     next();
@@ -76,6 +76,16 @@ const isDrOrHDr = (req, res, next) => {
     return res
       .status(403)
       .json({ message: "Forbidden (Doctor or Head-doctor access required)" });
+  }
+};
+
+const isAdmin = (req, res, next) => {
+  if (req.role === "admin") {
+    next();
+  } else {
+    return res
+      .status(403)
+      .json({ message: "Forbidden (Admin access required)" });
   }
 };
 
@@ -223,87 +233,95 @@ articleRoutes
   });
 
 // add article
-articleRoutes.route("/article/add").post(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const { title, diseaseId } = req.body;
-    const dupCheck = await db_connect
-      .collection("articles")
-      .findOne({ title, diseaseId });
-    if (dupCheck) {
-      return res.json({ message: "Article already exists" });
-    }
-    const myobj = {
-      id: req.body.id,
-      title: req.body.title,
-      diseaseId: req.body.diseaseId,
-      diseaseName: req.body.diseaseName,
-      medSpecialty: req.body.medSpecialty,
-      infos: req.body.infos,
-      treatments: req.body.treatments,
-      createInfos: req.body.createInfos,
-      isDisplay: req.body.isDisplay,
-      status: req.body.status,
-    };
-    const result = await db_connect.collection("articles").insertOne(myobj);
-    res.json({ result, myobj });
-  } catch (err) {
-    throw err;
-  }
-});
-
-// update article info by id
-articleRoutes.route("/article/edit/:id").put(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const newvalues = {
-      $set: {
+articleRoutes
+  .route("/article/add")
+  .post(verifyJWT, isDrOrHDr, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const { title, diseaseId } = req.body;
+      const dupCheck = await db_connect
+        .collection("articles")
+        .findOne({ title, diseaseId });
+      if (dupCheck) {
+        return res.json({ message: "Article already exists" });
+      }
+      const myobj = {
+        id: req.body.id,
         title: req.body.title,
+        diseaseId: req.body.diseaseId,
+        diseaseName: req.body.diseaseName,
+        medSpecialty: req.body.medSpecialty,
         infos: req.body.infos,
         treatments: req.body.treatments,
         createInfos: req.body.createInfos,
+        isDisplay: req.body.isDisplay,
         status: req.body.status,
-      },
-    };
-    const result = await db_connect
-      .collection("articles")
-      .updateOne(myquery, newvalues);
-    res.json({ result, newvalues });
-  } catch (err) {
-    throw err;
-  }
-});
+      };
+      const result = await db_connect.collection("articles").insertOne(myobj);
+      res.json({ result, myobj });
+    } catch (err) {
+      throw err;
+    }
+  });
+
+// update article info by id
+articleRoutes
+  .route("/article/edit/:id")
+  .put(verifyJWT, isDrOrHDr, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const newvalues = {
+        $set: {
+          title: req.body.title,
+          infos: req.body.infos,
+          treatments: req.body.treatments,
+          createInfos: req.body.createInfos,
+          status: req.body.status,
+        },
+      };
+      const result = await db_connect
+        .collection("articles")
+        .updateOne(myquery, newvalues);
+      res.json({ result, newvalues });
+    } catch (err) {
+      throw err;
+    }
+  });
 
 // update article status by id
-articleRoutes.route("/article/update/:id").put(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const newvalues = {
-      $set: {
-        status: req.body.status,
-      },
-    };
-    const result = await db_connect
-      .collection("articles")
-      .updateOne(myquery, newvalues);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
+articleRoutes
+  .route("/article/update/:id")
+  .put(verifyJWT, isAdmin, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const newvalues = {
+        $set: {
+          status: req.body.status,
+        },
+      };
+      const result = await db_connect
+        .collection("articles")
+        .updateOne(myquery, newvalues);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
 
 // delete article by id
-articleRoutes.route("/article/delete/:id").delete(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const result = await db_connect.collection("articles").deleteOne(myquery);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
+articleRoutes
+  .route("/article/delete/:id")
+  .delete(verifyJWT, isAdmin, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const result = await db_connect.collection("articles").deleteOne(myquery);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
 
 module.exports = articleRoutes;

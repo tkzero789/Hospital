@@ -215,6 +215,13 @@ export default function Signup({ userRole, userInfos }) {
                 >
                   <option value="">Select specialty</option>
                   <option value="Cardiology">Cardiology</option>
+                  <option value="Orthopedics">Orthopedics</option>
+                  <option value="Surgery">Surgery</option>
+                  <option value="Pediatricians">Pediatricians</option>
+                  <option value="Diabetes">Diabetes</option>
+                  <option value="Women's care">Women's care</option>
+                  <option value="Family Medicine">Family Medicine</option>
+                  <option value="Neurology">Neurology</option>
                 </select>
               </div>
               {/* Role */}

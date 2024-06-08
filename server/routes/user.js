@@ -150,7 +150,7 @@ userRoutes.route("/signin").post(async function (req, res) {
       { userId: result.id, role: result.role, userInfos: result.userInfos },
       SECRET_JWT_KEY,
       {
-        expiresIn: "6h",
+        expiresIn: "1h",
       }
     );
     res.status(200).json({ token });

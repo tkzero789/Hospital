@@ -54,14 +54,14 @@ export default function CreateAppt() {
         if (res.data && res.data.message === "Phone number spamming") {
           throw new Error(
             toast.error(
-              "Số điện thoại bị đánh dấu spam. Nếu đây là sự nhầm lẫn, quý khách vui lòng liên hệ tổng đài để giải quyết"
+              "The phone number has been marked as spam. If this is a mistake, please contact our customer service to resolve the issue"
             )
           );
         }
         if (res.data && res.data.message === "Phone number pending") {
           throw new Error(
             toast.error(
-              "Số điện thoại đã đăng ký lịch khám. Quý khách vui lòng đợi tổng đài viên liên hệ để xác nhận"
+              "The phone number has requested an appointment. Please wait for our customer service to contact you for confirmation"
             )
           );
         }
@@ -72,7 +72,7 @@ export default function CreateAppt() {
         }, 1500);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         console.log(message);
       });
   }
@@ -86,14 +86,14 @@ export default function CreateAppt() {
         if (res.data && res.data.message === "Phone number spamming") {
           throw new Error(
             toast.error(
-              "Số điện thoại bị đánh dấu spam. Nếu đây là sự nhầm lẫn, quý khách vui lòng liên hệ tổng đài để giải quyết"
+              "The phone number has been marked as spam. If this is a mistake, please contact our customer service to resolve the issue"
             )
           );
         }
         if (res.data && res.data.message === "Phone number pending") {
           throw new Error(
             toast.error(
-              "Số điện thoại đã đăng ký lịch khám. Quý khách vui lòng đợi tổng đài viên liên hệ để xác nhận"
+              "The phone number has requested an appointment. Please wait for our customer service to contact you for confirmation"
             )
           );
         }

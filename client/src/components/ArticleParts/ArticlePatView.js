@@ -2,15 +2,17 @@ import React from "react";
 
 export default function ArticlePatView({ article, setIsPatView }) {
   const ArticleContent = ({ element }) => {
-    const elemAbout = element.about;
     const elemOverview = element.overview;
     const elemDetail = element.detail;
     return (
       <div>
-        <h5>{elemAbout}</h5>
         <p>{elemOverview}</p>
         {element.image && (
-          <img alt={element.image} src={element.image} className="w-100 p-5" />
+          <img
+            alt={element.image}
+            src={element.image}
+            className="d-block w-50 mx-auto"
+          />
         )}
         {elemDetail.split("\n\n").map((paragraph) => (
           <div key={paragraph.slice(0, 20)}>
@@ -29,7 +31,7 @@ export default function ArticlePatView({ article, setIsPatView }) {
       <div className="content-container">
         <h3 className="text-center">{article.title}</h3>
         <div className="symp-checker-steps">
-          <h5>Disease</h5>
+          <h5>Overview</h5>
           {article.infos.map((info) => (
             <ArticleContent element={info} key={info.id} />
           ))}
@@ -42,14 +44,14 @@ export default function ArticlePatView({ article, setIsPatView }) {
             <div className="col-6 d-grid gap-2 justify-content-start">
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className="btn btn-outline-secondary"
                 onClick={() => setIsPatView(false)}
               >
                 Back
               </button>
             </div>
             <p className="col-6 d-grid gap-2 justify-content-end">
-              Written by {article.createInfos.doctorCreated}
+              By: {article.createInfos.doctorCreated}
             </p>
           </div>
         </div>

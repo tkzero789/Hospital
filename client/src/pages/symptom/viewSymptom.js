@@ -1,10 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink, useParams } from "react-router-dom";
 import axios from "axios";
-
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import { Toaster, toast } from "sonner";
 
 export default function ViewSymptom({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "delete":
+      action = confirmDelete;
+      break;
+    case "edit":
+      action = requestEdit;
+      break;
+    default:
+      action = null;
+  }
+
   const [symptom, setSymptom] = useState({
     id: "",
     name: "",
@@ -32,6 +70,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
   const { symptomId } = useParams();
   const navigate = useNavigate();
 
+  // Fetch data
   useEffect(() => {
     axios
       .get(`http://localhost:5000/symptom/${symptomId}`)
@@ -47,38 +86,55 @@ export default function ViewSymptom({ userRole, userInfos }) {
         setSymptom(dbsymptom);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [symptomId, navigate]);
 
-  async function confirmDelete() {
+  // Request edit
+  async function requestEdit() {
+    setIsClicked(true);
     try {
-      await axios.delete(`http://localhost:5000/symptom/delete/${symptomId}`);
+      axios.put(
+        `http://localhost:5000/symptom/update/${symptomId}`,
+        {
+          status: "Request Edit",
+        },
+        apiConfig
+      );
     } catch (err) {
       console.log(`${err}`);
     }
-    navigate("/symptom-table");
+    setTimeout(() => {
+      toast.success("Request edit successfully");
+      setTimeout(() => {
+        navigate("/symptom-table");
+      }, 1200);
+    }, 500);
   }
 
-  // Request edit
-  function requestEdit() {
-    axios
-      .post(`http://localhost:5000/symptom/update/${symptomId}`, {
-        status: "Request Edit",
-      })
-      .then((res) => {
-        setSymptom(res.data);
-      })
-      .catch((err) => {
-        const message = `Error: ${err}`;
-        window.alert(message);
-      });
-    navigate("/symptom-table");
+  // Delete
+  async function confirmDelete() {
+    setIsClicked(true);
+    try {
+      await axios.delete(
+        `http://localhost:5000/symptom/delete/${symptomId}`,
+        apiConfig
+      );
+    } catch (err) {
+      console.log(`${err}`);
+    }
+    setTimeout(() => {
+      toast.success("Delete successfully");
+      setTimeout(() => {
+        navigate("/symptom-table");
+      }, 1200);
+    }, 500);
   }
 
   return (
     <div>
+      <h3 class="container text-center text-body pt-5">View symptom</h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -91,7 +147,25 @@ export default function ViewSymptom({ userRole, userInfos }) {
               />
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              {userRole === "admin" && (
+                <div className="c-2 d-grid gap-2 me-auto">
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={(event) =>
+                      handleShowModal(
+                        event,
+                        "delete",
+                        "Confirm delete",
+                        "Are you sure you want to delete?"
+                      )
+                    }
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
@@ -102,36 +176,49 @@ export default function ViewSymptom({ userRole, userInfos }) {
                   Back
                 </button>
               </div>
-              {userRole === "admin" && (
-                <div className="col-3 d-grid gap-2">
-                  <button className="btn btn-warning" onClick={requestEdit}>
+              {userRole === "admin" && symptom.status === "Approved" && (
+                <div className="c-2 d-grid gap-2">
+                  <button
+                    className="btn btn-warning"
+                    onClick={(event) =>
+                      handleShowModal(
+                        event,
+                        "edit",
+                        "Confirmation",
+                        "Are you sure you want to request edit?"
+                      )
+                    }
+                  >
                     Request edit
                   </button>
                 </div>
               )}
-              {userRole === "head-doctor" && (
-                <div className="col-3 d-grid gap-2">
-                  <NavLink
-                    className="btn btn-warning"
-                    to={`/symptom/${symptomId}/edit`}
-                  >
-                    Edit
-                  </NavLink>
-                </div>
-              )}
-              {userRole === "admin" && (
-                <div className="col-3 d-grid gap-2">
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={(e) => {
-                      confirmDelete(e);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
+              {userRole === "head-doctor" &&
+                symptom.status === "Request Edit" && (
+                  <div className="c-2 d-grid gap-2">
+                    <NavLink
+                      className="btn btn-warning"
+                      to={`/symptom/${symptomId}/edit`}
+                    >
+                      Edit
+                    </NavLink>
+                  </div>
+                )}
+              <Toaster
+                toastOptions={{
+                  className: "toast-noti",
+                }}
+                position="top-right"
+                richColors
+              />
+              <ConfirmModal
+                title={modalContent.title}
+                body={modalContent.body}
+                show={showModal}
+                hide={handleHideModal}
+                action={action}
+                isClicked={isClicked}
+              />
             </div>
           </form>
         </div>

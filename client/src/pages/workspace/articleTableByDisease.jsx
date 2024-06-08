@@ -16,8 +16,12 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
         const articleRes = await axios.get(
           `http://localhost:5000/article/by-disease/${diseaseId}`
         );
-
-        setArticles(articleRes.data);
+        const articleData = articleRes.data;
+        const articleDataWithNo = articleData.map((item, index) => ({
+          ...item,
+          number: index + 1,
+        }));
+        setArticles(articleDataWithNo);
       } catch (err) {
         const message = `Error: ${err}`;
         window.alert(message);
@@ -55,15 +59,14 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
                   <div className="viewButton">Edit</div>
                 </NavLink>
               )}
-            {article.status !== "Approved" &&
-              userInfos.doctorID === params.row.createInfos.doctorID && (
-                <NavLink
-                  className="viewLink"
-                  to={`/article/${article.id}/approve`}
-                >
-                  <div className="viewButton">View</div>
-                </NavLink>
-              )}
+            {article.status !== "Approved" && (
+              <NavLink
+                className="viewLink"
+                to={`/article/${article.id}/approve`}
+              >
+                <div className="viewButton">View</div>
+              </NavLink>
+            )}
           </div>
         );
       },
@@ -72,7 +75,6 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "No.", width: 50 },
-    { field: "id", headerName: "ID", width: 200 },
     { field: "title", headerName: "Title", width: 300 },
     { field: "diseaseName", headerName: "Disease", width: 200 },
     {

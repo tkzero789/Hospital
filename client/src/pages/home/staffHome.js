@@ -1,14 +1,16 @@
 import React from "react";
-import Carousel from "../../components/Home/HeroSection";
+import HeroSection from "../../components/Home/HeroSection";
 import Options from "../../components/Home/Options";
 import About from "../../components/Home/About";
 import BKCSystem from "../../components/Home/BaySideSystem";
 import Specialty from "../../components/Home/Specialty";
-import News from "../../components/Home/News";
 import Footer from "../../components/Home/Footer";
 import MainNav from "../../components/Navbar/MainNav";
 import SubNav from "../../components/Navbar/SubNav";
 import MobileNav from "../../components/Navbar/MobileNav";
+import SwipeNews from "../../components/Home/SwipeNews";
+import Extra from "../../components/Home/Extra";
+import Map from "../../components/Home/Map";
 
 export default function staffHome() {
   return (
@@ -20,12 +22,14 @@ export default function staffHome() {
       </header>
       {/* Main */}
       <main>
-        <Carousel />
+        <HeroSection />
         <Options />
-        <About />
         <BKCSystem />
+        <About />
+        <SwipeNews />
         <Specialty />
-        <News />
+        <Extra />
+        <Map />
         <Footer />
       </main>
     </>

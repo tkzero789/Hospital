@@ -57,9 +57,9 @@ export default function SigninStaff() {
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
-          toast.error("Thông tin đăng nhập không chính xác. Vui lòng thử lại");
+          toast.error("Wrong username or password. Please try again");
         } else {
-          const message = `Có lỗi xảy ra: ${err}`;
+          const message = `Error: ${err}`;
           window.alert(message);
         }
         return;
@@ -92,6 +92,35 @@ export default function SigninStaff() {
           <div className="signin-wrapper zi">
             <div className="content-container">
               <div className="signin-box">
+                <div className="c-6 m-12 signin-left">
+                  <div className="signin-left-container">
+                    <div className="signin-left-header">
+                      <span>Features:</span>
+                    </div>
+                    <div className="signin-left-body">
+                      <span>
+                        By creating an account, you will be able to:
+                        <br />
+                      </span>
+                      <ul className="signin-left-list">
+                        <li>
+                          Use our online diagnostic services anytime, anywhere.
+                        </li>
+                        <li>
+                          Review your diagnostic results easily and quickly.
+                        </li>
+                        <li>
+                          Receive updates and support from our team of experts.
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="signin-left-btn">
+                      <NavLink to="/signup">
+                        <button type="button">Register account</button>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
                 <div className="c-6 md-12 signin-right">
                   <div className="signin-right-container">
                     <div className="signin-right-header">
@@ -128,7 +157,7 @@ export default function SigninStaff() {
                     <div className="signin-right-btn">
                       <Toaster
                         toastOptions={{
-                          className: "toast-noti",
+                          className: "toast-noti-3",
                         }}
                         position="top-center"
                         richColors

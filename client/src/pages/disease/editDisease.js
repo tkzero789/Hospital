@@ -2,13 +2,49 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
 import DiseaseAgeGen from "../../components/DiseaseParts/DiseaseAgeGen";
 import DiseaseSymps from "../../components/DiseaseParts/DiseaseSymps";
 import DiseaseDescs from "../../components/DiseaseParts/DiseaseDescs";
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function EditDisease({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "edit":
+      action = confirmEdit;
+      break;
+    default:
+      action = null;
+  }
+
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -43,24 +79,24 @@ export default function EditDisease({ userRole, userInfos }) {
   const { diseaseId } = useParams();
   const navigate = useNavigate();
 
+  // Fetch disease data
   useEffect(() => {
     axios
       .get(`http://localhost:5000/disease/${diseaseId}`)
       .then((res) => {
         const dbDisease = res.data;
         if (!dbDisease) {
-          window.alert(`Không tìm thấy căn bệnh với id ${diseaseId}`);
+          window.alert(`Can't find disease with this id ${diseaseId}`);
           navigate("/disease-table");
           return;
         }
         if (dbDisease.createInfos.doctorID !== userInfos.doctorID) {
-          window.alert("Chỉ có bác sĩ tạo ra mới được chỉnh sửa dữ liệu");
+          window.alert("Only doctor can edit disease");
           navigate("/disease-table");
           return;
         }
         setDisease({
           ...dbDisease,
-          idTemp: uuidv4(),
           createInfos: {
             ...dbDisease.createInfos,
             timeEdited: formattedTime,
@@ -71,12 +107,12 @@ export default function EditDisease({ userRole, userInfos }) {
         setOrigName(dbDisease.name);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [diseaseId, navigate]);
 
-  // get symptoms from DB
+  // Fetch symptoms data
   useEffect(() => {
     axios
       .get("http://localhost:5000/symptom")
@@ -84,11 +120,12 @@ export default function EditDisease({ userRole, userInfos }) {
         setDbSymps(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
 
+  // Filter symptoms
   useEffect(() => {
     setChosenSymps(
       dbSymps.filter((symptom) => disease.symptomIds.includes(symptom.id))
@@ -144,57 +181,50 @@ export default function EditDisease({ userRole, userInfos }) {
   function checkStep() {
     if (step === 1) {
       if (disease.ageRanges.length === 0) {
-        window.alert("Vui lòng chọn độ tuổi");
+        window.alert("Please select age");
         return;
       }
       if (disease.genders.length === 0) {
-        window.alert("Vui lòng chọn giới tính");
+        window.alert("Please select gender");
         return;
       }
     } else if (step === 2) {
       if (disease.symptomIds.length === 0) {
-        window.alert("Vui lòng chọn ít nhất 1 triệu chứng");
+        window.alert("Please select symptom");
         return;
       }
     } else if (step > 2 && step < finalStep) {
       const symptomId = disease.symptomIds[step - 3];
       if (!disease.descIds.some((desc) => desc.symptomId === symptomId)) {
-        window.alert("Vui không chọn mô tả cho triệu chứng");
+        window.alert("Please add symptom's description");
         return;
       }
     }
     handleNext();
   }
 
-  function confirmCancle(e) {
-    if (window.confirm("Hủy và trở về trạng thái xem?")) {
-      setDisease((prev) => ({
-        ...prev,
-        name: "",
-        ageRanges: [],
-        genders: [],
-        symptomIds: [],
-        descIds: [],
-      }));
-      navigate(-1);
-    }
+  // Cancel
+  function confirmCancel() {
+    navigate("/disease-table");
   }
 
+  // Confirm edit
   async function confirmEdit() {
+    setIsClicked(true);
     if (disease.name === "") {
-      window.alert("Chưa nhập tên bệnh");
+      window.alert("Please enter disease name");
       return;
     } else if (disease.ageRanges.length === 0) {
-      window.alert("Chưa chọn độ tuôi");
+      window.alert("Please select age");
       return;
     } else if (disease.genders.length === 0) {
-      window.alert("Chưa chọn giới tính");
+      window.alert("Please select gender");
       return;
     } else if (disease.symptomIds.length === 0) {
-      window.alert("Chưa có triệu chứng");
+      window.alert("Please select symptom");
       return;
     } else if (disease.descIds.length === 0) {
-      window.alert("Chưa có mô tả cho triệu chứng");
+      window.alert("Please add symptom's description");
       return;
     }
     try {
@@ -209,7 +239,11 @@ export default function EditDisease({ userRole, userInfos }) {
       }
       // Edit disease
       await axios
-        .put(`http://localhost:5000/disease/update/${diseaseId}`, disease)
+        .put(
+          `http://localhost:5000/disease/edit/${diseaseId}`,
+          disease,
+          apiConfig
+        )
         .then((res) => {
           if (res.data && res.data.message === "Disease already exists") {
             throw new Error("Waiting for approval");
@@ -217,10 +251,15 @@ export default function EditDisease({ userRole, userInfos }) {
           console.log("Symptom edited", res.data);
         });
     } catch (err) {
-      const message = `Có lỗi xảy ra: ${err}`;
+      const message = `Error: ${err}`;
       window.alert(message);
     }
-    navigate("/disease-table");
+    setTimeout(() => {
+      toast.success("Edited successfully!");
+      setTimeout(() => {
+        navigate("/disease-table");
+      }, 1200);
+    }, 500);
   }
 
   return (
@@ -231,32 +270,37 @@ export default function EditDisease({ userRole, userInfos }) {
           <form>
             <div>{StepDisplay()}</div>
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 {step === 1 ? (
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
-                    onClick={(e) => confirmCancle(e)}
+                    className="btn btn-outline-secondary"
+                    onClick={confirmCancel}
                   >
                     Cancel
                   </button>
                 ) : (
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-secondary"
                     onClick={handlePrev}
                   >
                     Back
                   </button>
                 )}
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
-                  onClick={(e) => {
+                  className="btn btn-primary"
+                  onClick={(event) => {
                     if (step === finalStep) {
-                      confirmEdit();
+                      handleShowModal(
+                        event,
+                        "edit",
+                        "Confirm edit",
+                        "Are you sure you want to edit this disease?"
+                      );
                     } else {
                       checkStep(step);
                     }
@@ -267,6 +311,21 @@ export default function EditDisease({ userRole, userInfos }) {
               </div>
             </div>
           </form>
+          <Toaster
+            toastOptions={{
+              className: "toast-noti",
+            }}
+            position="top-right"
+            richColors
+          />
+          <ConfirmModal
+            title={modalContent.title}
+            body={modalContent.body}
+            show={showModal}
+            hide={handleHideModal}
+            action={action}
+            isClicked={isClicked}
+          />
         </div>
       </div>
     </div>

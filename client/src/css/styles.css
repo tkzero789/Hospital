@@ -494,7 +494,7 @@ header {
   font-size: 20px;
   font-weight: var(--roboto-medium-weight);
   padding: 8px 0;
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border-radius: var(--border-radius-1);
   color: var(--text-white-1);
 }
@@ -608,7 +608,7 @@ header {
 
 .appt-btn button {
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   padding: 8px 12px;
@@ -633,7 +633,7 @@ header {
   font-size: 20px;
   font-weight: var(--roboto-medium-weight);
   padding: 8px 0;
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border-radius: var(--border-radius-1);
   color: var(--text-white-1);
   margin-bottom: 24px;
@@ -690,7 +690,7 @@ header {
 .appt-modal-btn button:last-child {
   margin-left: 4px;
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: 1px solid #c4c4c4;
   border-radius: var(--border-radius-1);
   padding: 8px 12px;
@@ -724,7 +724,7 @@ header {
   font-size: 20px;
   font-weight: var(--roboto-medium-weight);
   padding: 8px 0;
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border-radius: var(--border-radius-1);
   color: var(--text-white-1);
   margin-bottom: 24px;
@@ -766,7 +766,7 @@ header {
 .appt-success-wrapper .back-to-home a {
   display: inline-block;
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   padding: 8px 12px;
@@ -837,7 +837,7 @@ header {
   font-size: 20px;
   font-weight: var(--roboto-medium-weight);
   padding: 8px 0;
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border-radius: var(--border-radius-1);
   color: var(--text-white-1);
   margin-bottom: 24px;
@@ -861,7 +861,7 @@ header {
   width: 200px;
   padding: 4px 6px;
   border: 1px solid #cfcfcf;
-  outline-color: #3498db;
+  outline-color: var(--btn-blue-1);
   border-radius: var(--border-radius-1);
 }
 
@@ -880,7 +880,7 @@ header {
 
 .appt-detail-wrapper .appt-detail-btn button {
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   padding: 8px 12px;
@@ -964,7 +964,7 @@ header {
 
 .appt-individual-btn button {
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   padding: 4px 8px;
@@ -999,9 +999,8 @@ header {
   border-radius: var(--border-radius-1);
   padding: 8px 0 44px 0;
   margin-top: 12px;
-
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  background-color: white;
+  box-shadow: var(--box-shadow-3);
+  background-color: var(--bg-white);
 }
 
 .opt-header {
@@ -1016,11 +1015,11 @@ header {
 }
 
 .opt-box {
-  background-color: #fff;
+  background-color: var(--bg-white);
   margin: 0 15px;
   padding: 10px 20px;
   border-radius: var(--border-radius-1);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: var(--box-shadow-3);
 }
 
 .opt-box:nth-child(2) {
@@ -1047,7 +1046,7 @@ header {
 .opt-btn-link {
   text-decoration: none;
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   font-size: 16px;
@@ -1151,7 +1150,7 @@ header {
 .about-section-btn a {
   text-decoration: none;
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   font-size: 16px;
@@ -1220,7 +1219,7 @@ header {
   margin: 0 16px;
   border-radius: 12px;
   background-color: #fff;
-  box-shadow: 2px 4px 12px #00000014;
+  box-shadow: var(--box-shadow-2);
   scale: 1;
   transition: scale 0.3s ease-in-out;
 }
@@ -1396,7 +1395,7 @@ header {
 .news-btn-link {
   text-decoration: none;
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   font-size: 16px;
@@ -1443,7 +1442,7 @@ header {
 .splty-item {
   width: 20%;
   border-radius: var(--border-radius-1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: var(--box-shadow-1);
 }
 
 .splty-item__link {
@@ -1492,7 +1491,7 @@ header {
 .splty-btn-link {
   text-decoration: none;
   color: var(--text-white-1);
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   border: none;
   border-radius: var(--border-radius-1);
   font-size: 16px;
@@ -1964,8 +1963,7 @@ header {
   border: none;
   padding: 10px 12px;
   font-weight: var(--roboto-medium-weight);
-  border-top-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: var(--border-radius-1);
 }
 
 .signin-left-btn button:hover {
@@ -2002,7 +2000,7 @@ header {
   width: 100%;
   padding: 8px;
   border: 1px solid #cfcfcf;
-  outline-color: #3498db;
+  outline-color: var(--btn-blue-1);
   border-radius: var(--border-radius-1);
 }
 
@@ -2016,12 +2014,12 @@ header {
 }
 
 .signin-right-btn button {
-  background-color: #3498db;
-  color: var(--text-white-1);
-  padding: 10px 12px;
-  border-radius: 4px;
-  border: none;
   width: 100%;
+  border: none;
+  padding: 10px 12px;
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border-radius: var(--border-radius-1);
 }
 
 .signin-right-btn button:hover {
@@ -2061,7 +2059,7 @@ header {
   top: 50px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 8px;
-  z-index: 10;
+  z-index: 15;
 }
 
 .user-dropdown a {
@@ -2110,6 +2108,13 @@ header {
   padding: 12px 16px;
   font-size: 16px;
   min-width: 150px;
+}
+
+.toast-noti-3 {
+  height: 50px;
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 400px;
 }
 
 /* Symptom checker */
@@ -2272,7 +2277,7 @@ header {
   border: none;
   border-radius: var(--border-radius-1);
   padding: 8px 12px;
-  background-color: #3498db;
+  background-color: var(--btn-blue-1);
   color: var(--text-white-1);
 }
 
@@ -2350,7 +2355,7 @@ header {
 
 /* Blogs/News Page */
 .blog-list h1 {
-  padding: 28px 0 40px;
+  padding: 20px 0 40px;
   color: var(--text-blue-1);
   font-size: 36px;
   font-weight: var(--roboto-medium-weight);
@@ -2430,7 +2435,7 @@ header {
 }
 
 .individual-blog {
-  padding-top: 40px;
+  padding-top: 16px !important;
 }
 
 .individual-blog .blog-author-info {

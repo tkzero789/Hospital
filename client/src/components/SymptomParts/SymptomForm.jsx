@@ -169,7 +169,7 @@ export default function SymptomForm({
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="card-title text-body col-3">Symptom:</h4>
+        <h4 className="card-title text-dark-1 col-3">Symptom:</h4>
         <input
           type="text"
           className="form-control border-primary col border-dark-subtle shadow-sm"
@@ -181,7 +181,7 @@ export default function SymptomForm({
         />
       </div>
       <div className="form-group row pb-5">
-        <h4 className="card-title text-body col-3">Position:</h4>
+        <h4 className="card-title text-dark-1 col-3">Position:</h4>
         <select
           name="position"
           value={symptom.position}
@@ -196,7 +196,7 @@ export default function SymptomForm({
           ))}
         </select>
       </div>
-      <h4 className="card-title text-body">Description:</h4>
+      <h4 className="card-title text-dark-1">Description:</h4>
       {symptom.categories?.map((cat) => {
         return (
           <div key={cat.id}>
@@ -210,7 +210,7 @@ export default function SymptomForm({
                     onClick={() => deleteCatField(cat.id)}
                   ></i>
                 )}
-                <h5 className="text-body pe-2">Properties:</h5>
+                <h5 className="text-dark-1 pe-2">Properties:</h5>
               </div>
               <select
                 name="categoryName"

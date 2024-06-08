@@ -29,7 +29,7 @@ const ApptOtp = ({
       setIsOtpConfirmed(true);
       setShow(false);
     } else {
-      toast.error("Mã xác thực không hợp lệ");
+      toast.error("Invalid OTP");
     }
   };
 

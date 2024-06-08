@@ -81,24 +81,21 @@
       background-color: rgba(219, 211, 154, 0.5);
       color: goldenrod;
     }
-    &.Đã-xem {
-      background-color: rgba(219, 219, 219, 0.5);
-      color: rgb(139, 139, 139);
-    }
-    &.Chưa-xem {
-      background-color: rgba(231, 110, 193, 0.5);
-      color: rgb(223, 71, 174);
-    }
     &.Request-Edit {
       background-color: rgba(231, 110, 193, 0.5);
       color: rgb(223, 71, 174);
     }
+    &.Declined {
+      background-color: rgba(182, 0, 0, 0.5);
+      color: rgb(182, 0, 0);
+    }
+    &.Spam {
+      background-color: rgba(182, 0, 0, 0.5);
+      color: rgb(182, 0, 0);
+    }
   }
 
   .rowWithStatus {
-    &.Accepted {
-      background-color: #f1f6fc;
-    }
     &.Pending {
       font-weight: var(--roboto-medium-weight);
       color: black;
@@ -108,13 +105,6 @@
       color: black;
     }
     &.Pending-Update {
-      font-weight: var(--roboto-medium-weight);
-      color: black;
-    }
-    &.Đã-xem {
-      background-color: #f1f6fc;
-    }
-    &.Chưa-xem {
       font-weight: var(--roboto-medium-weight);
       color: black;
     }

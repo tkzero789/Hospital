@@ -1,10 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import SymptomForm from "../../components/SymptomParts/SymptomForm";
 
 export default function EditSymptom({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "edit":
+      action = confirmEdit;
+      break;
+    default:
+      action = null;
+  }
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -32,7 +66,7 @@ export default function EditSymptom({ userRole, userInfos }) {
       doctorCreated: "",
       doctorId: "",
       timeCreated: "",
-      timeEdited: "",
+      timeEdited: formattedTime,
     },
     status: "",
   });
@@ -40,6 +74,7 @@ export default function EditSymptom({ userRole, userInfos }) {
   const { symptomId } = useParams();
   const navigate = useNavigate();
 
+  // Fetch data
   useEffect(() => {
     axios
       .get(`http://localhost:5000/symptom/${symptomId}`)
@@ -60,15 +95,22 @@ export default function EditSymptom({ userRole, userInfos }) {
       });
   }, [symptomId, navigate]);
 
+  // Confirm edit
   async function confirmEdit() {
+    setIsClicked(true);
     try {
       const response = await axios.put(
         `http://localhost:5000/symptom/edit/${symptom.id}`,
-        { ...symptom, status: "Pending Update" }
+        { ...symptom, status: "Pending Update" },
+        apiConfig
       );
       if (response.data.message === "Symptom updated successfully") {
-        window.alert("Symptom updated successfully");
-        navigate("/symptom-table");
+        setTimeout(() => {
+          toast.success("Edit successfully");
+          setTimeout(() => {
+            navigate("/symptom-table");
+          }, 1200);
+        }, 500);
       } else {
         window.alert(response.data.message);
       }
@@ -98,7 +140,7 @@ export default function EditSymptom({ userRole, userInfos }) {
               />
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
@@ -109,15 +151,37 @@ export default function EditSymptom({ userRole, userInfos }) {
                   Cancel
                 </button>
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-warning"
-                  onClick={confirmEdit}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "edit",
+                      "Confirm edit",
+                      "Are you sure you want to confirm edit this symptom?"
+                    )
+                  }
                 >
                   Confirm edit
                 </button>
               </div>
+              <Toaster
+                toastOptions={{
+                  className: "toast-noti",
+                }}
+                position="top-right"
+                richColors
+              />
+              <ConfirmModal
+                title={modalContent.title}
+                body={modalContent.body}
+                show={showModal}
+                hide={handleHideModal}
+                action={action}
+                isClicked={isClicked}
+              />
             </div>
           </form>
         </div>

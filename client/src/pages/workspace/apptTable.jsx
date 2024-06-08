@@ -9,6 +9,7 @@ import "./table.scss";
 export default function ApptTable() {
   const [appts, setAppts] = useState([]);
 
+  // Fetch data
   useEffect(() => {
     axios
       .get("http://localhost:5000/appointment")

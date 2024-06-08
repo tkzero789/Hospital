@@ -35,7 +35,7 @@ const isHeadDoctor = (req, res, next) => {
   } else {
     return res
       .status(403)
-      .json({ message: "Forbidden (Head-doctor or Admin access required)" });
+      .json({ message: "Forbidden (Head-doctor access required)" });
   }
 };
 
@@ -46,7 +46,7 @@ const isAdmin = (req, res, next) => {
   } else {
     return res
       .status(403)
-      .json({ message: "Forbidden (Head-doctor or Admin access required)" });
+      .json({ message: "Forbidden (Admin access required)" });
   }
 };
 
@@ -99,76 +99,82 @@ symptomRoutes.route("/symptom/:name").get(async function (req, res) {
 });
 
 // add new symptom
-symptomRoutes.route("/symptom/add").post(verifyJWT, async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const dupCheck = await db_connect
-      .collection("symptoms")
-      .findOne({ name: req.body.name });
-    if (dupCheck) {
-      return res.json({ message: "Symptom already exists" });
-    } else {
-      const myobj = {
-        id: req.body.id,
-        name: req.body.name,
-        position: req.body.position,
-        categories: req.body.categories,
-        createInfos: req.body.createInfos,
-        status: req.body.status,
-      };
-      const result = await db_connect.collection("symptoms").insertOne(myobj);
-      res.json({ result, myobj });
+symptomRoutes
+  .route("/symptom/add")
+  .post(verifyJWT, isHeadDoctor, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const dupCheck = await db_connect
+        .collection("symptoms")
+        .findOne({ name: req.body.name });
+      if (dupCheck) {
+        return res.json({ message: "Symptom already exists" });
+      } else {
+        const myobj = {
+          id: req.body.id,
+          name: req.body.name,
+          position: req.body.position,
+          categories: req.body.categories,
+          createInfos: req.body.createInfos,
+          status: req.body.status,
+        };
+        const result = await db_connect.collection("symptoms").insertOne(myobj);
+        res.json({ result, myobj });
+      }
+    } catch (err) {
+      throw err;
     }
-  } catch (err) {
-    throw err;
-  }
-});
+  });
 
 // Update/edit symptom info
-symptomRoutes.route("/symptom/edit/:id").put(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const newvalues = {
-      $set: {
-        name: req.body.name,
-        position: req.body.position,
-        categories: req.body.categories,
-        createInfos: req.body.createInfos,
-        status: req.body.status,
-      },
-    };
-    const result = await db_connect
-      .collection("symptoms")
-      .updateOne(myquery, newvalues);
-    if (result.modifiedCount === 0) {
-      return res.json({ message: "There was no edit" });
-    } else {
-      res.json({ message: "Symptom updated successfully" });
+symptomRoutes
+  .route("/symptom/edit/:id")
+  .put(verifyJWT, isHeadDoctor, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const newvalues = {
+        $set: {
+          name: req.body.name,
+          position: req.body.position,
+          categories: req.body.categories,
+          createInfos: req.body.createInfos,
+          status: req.body.status,
+        },
+      };
+      const result = await db_connect
+        .collection("symptoms")
+        .updateOne(myquery, newvalues);
+      if (result.modifiedCount === 0) {
+        return res.json({ message: "There was no edit" });
+      } else {
+        res.json({ message: "Symptom updated successfully" });
+      }
+    } catch (err) {
+      throw err;
     }
-  } catch (err) {
-    throw err;
-  }
-});
+  });
 
 // update symptom status by id
-symptomRoutes.route("/symptom/update/:id").put(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const newvalues = {
-      $set: {
-        status: req.body.status,
-      },
-    };
-    const result = await db_connect
-      .collection("symptoms")
-      .updateOne(myquery, newvalues);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
+symptomRoutes
+  .route("/symptom/update/:id")
+  .put(verifyJWT, isAdmin, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const newvalues = {
+        $set: {
+          status: req.body.status,
+        },
+      };
+      const result = await db_connect
+        .collection("symptoms")
+        .updateOne(myquery, newvalues);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
 
 // update symptom categories by id from disease
 symptomRoutes
@@ -215,15 +221,17 @@ symptomRoutes
   });
 
 // delete symptom by id
-symptomRoutes.route("/symptom/delete/:id").delete(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const result = await db_connect.collection("symptoms").deleteOne(myquery);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
+symptomRoutes
+  .route("/symptom/delete/:id")
+  .delete(verifyJWT, isAdmin, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const result = await db_connect.collection("symptoms").deleteOne(myquery);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
 
 module.exports = symptomRoutes;

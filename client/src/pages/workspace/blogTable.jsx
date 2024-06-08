@@ -14,12 +14,12 @@ export default function BlogTable({ userRole, userInfos }) {
     axios
       .get("http://localhost:5000/blog")
       .then((res) => {
-        const reverseData = res.data.reverse();
-        const reverseDataWithNo = reverseData.map((item, index) => ({
+        const blogData = res.data;
+        const blogDataWithNo = blogData.map((item, index) => ({
           ...item,
           number: index + 1,
         }));
-        setBlog(reverseDataWithNo);
+        setBlog(blogDataWithNo);
       })
       .catch((err) => {
         const message = `Error: ${err}`;
@@ -30,9 +30,9 @@ export default function BlogTable({ userRole, userInfos }) {
   // Assign blog priority
   const getPriority = (status) => {
     switch (status) {
-      case "Request edit":
+      case "Request Edit":
         return 1;
-      case "Pending":
+      case "Pending Create":
         return 2;
       case "Accepted":
         return 3;

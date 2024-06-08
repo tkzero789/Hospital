@@ -61,14 +61,14 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
   return (
     <div>
       <div className="pb-5 text-center">
-        <h4 className="text-blue-1 fw-med">Select age and gender</h4>
+        <h4 className="text-blue-3 fw-med">Select age and gender</h4>
       </div>
       <div className="px-5">
         <div className="form-group row pb-5">
-          <h5 className="col-2 fw-med">Age</h5>
+          <h5 className="col-2 text-dark-1 fw-reg">Age</h5>
           <div className="col-3">
             <Dropdown className="col-12" autoClose="outside">
-              <Dropdown.Toggle className="form-select blue-border-1 col-12 fw-reg btn-light">
+              <Dropdown.Toggle className="form-select border border-black c-12 fw-reg btn-light">
                 Select age
               </Dropdown.Toggle>
               <Dropdown.Menu className="w-100">
@@ -94,12 +94,15 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
               </Dropdown.Menu>
             </Dropdown>
           </div>
+          <span className="col-7">
+            Ages selected: {chosenAges.map((a) => `(${a})`).join(" ")}
+          </span>
         </div>
         <div className="form-group row pb-5">
-          <h5 className="col-2 fw-med">Gender</h5>
+          <h5 className="col-2 text-dark-1 fw-reg">Gender</h5>
           <div className="col-3">
             <Dropdown className=" col-12" autoClose="outside">
-              <Dropdown.Toggle className="form-select blue-border-1 col-12 fw-reg btn-light">
+              <Dropdown.Toggle className="form-select border border-black c-12 fw-reg btn-light">
                 Select gender
               </Dropdown.Toggle>
               <Dropdown.Menu className="w-100">
@@ -125,6 +128,9 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
               </Dropdown.Menu>
             </Dropdown>
           </div>
+          <span className="col-7">
+            Genders selected: {chosenGens.map((g) => `(${g})`).join(" ")}
+          </span>
         </div>
       </div>
     </div>

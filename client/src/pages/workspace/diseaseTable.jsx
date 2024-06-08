@@ -6,20 +6,20 @@ import "./table.scss";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function DiseaseTable({ userRole, userInfos }) {
-  const userToken = localStorage.getItem("userToken");
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
-  const [part, setPart] = useState(1);
   const [diseases, setDiseases] = useState([]);
-  const [tempDiseases, setTempDiseases] = useState([]);
+  const [myDiseases, setMyDiseases] = useState(false);
 
+  // Fetch data
   useEffect(() => {
     axios
       .get(`http://localhost:5000/disease/`)
       .then((res) => {
-        const diseases = res.data;
-        setDiseases(diseases);
+        const reverseData = res.data.reverse();
+        const reverseDataWithNo = reverseData.map((item, index) => ({
+          ...item,
+          number: index + 1,
+        }));
+        setDiseases(reverseDataWithNo);
       })
       .catch((err) => {
         const message = `Error: ${err}`;
@@ -27,24 +27,36 @@ export default function DiseaseTable({ userRole, userInfos }) {
       });
   }, []);
 
-  const flatData = [...tempDiseases, ...diseases].map((item, index) => {
-    const createInfos = item.createInfos || {};
-    return {
-      ...item,
-      doctorCreated: createInfos?.doctorCreated || "",
-      doctorID: createInfos.doctorID || "",
-      timeCreated: createInfos?.timeCreated || "",
-      number: index + 1,
-    };
-  });
+  // Assign disease priority
+  const getPriority = (status) => {
+    switch (status) {
+      case "Request Edit":
+        return 1;
+      case "Pending Create":
+        return 2;
+      case "Pending Update":
+        return 3;
+      default:
+        return 4;
+    }
+  };
 
-  const doctorFlatData = flatData
-    .filter((item) => item.medSpecialty === userInfos.medSpecialty)
-    .map((item, index) => ({ ...item, number: index + 1 }));
+  // Sort diseases based on status priority
+  const sortedDiseases = [...diseases].sort(
+    (a, b) => getPriority(a.status) - getPriority(b.status)
+  );
 
-  const doctorOwnFlatData = doctorFlatData
-    .filter((item) => item.createInfos.doctorID === userInfos.doctorID)
-    .map((item, index) => ({ ...item, number: index + 1 }));
+  // Filter diseases
+  const handleMyDiseaseClick = () => {
+    setMyDiseases(!myDiseases);
+  };
+
+  // Display filtered diseases
+  const displayedDiseases = myDiseases
+    ? sortedDiseases.filter(
+        (b) => b.createInfos.doctorID === userInfos.doctorID
+      )
+    : sortedDiseases;
 
   const actionColumn = [
     {
@@ -73,12 +85,26 @@ export default function DiseaseTable({ userRole, userInfos }) {
 
   const columns = [
     { field: "number", headerName: "No.", width: 50 },
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Disease", width: 200 },
+    { field: "name", headerName: "Disease", width: 400 },
     { field: "medSpecialty", headerName: "Specialty", width: 160 },
-    { field: "doctorCreated", headerName: "Created by", width: 180 },
-    { field: "doctorID", headerName: "Doctor ID", width: 120 },
-    { field: "timeCreated", headerName: "Created on", width: 160 },
+    {
+      field: "doctorCreated",
+      headerName: "Created by",
+      width: 180,
+      valueGetter: (params) => params.row.createInfos.doctorCreated,
+    },
+    {
+      field: "doctorID",
+      headerName: "DoctorID",
+      width: 120,
+      valueGetter: (params) => params.row.createInfos.doctorID,
+    },
+    {
+      field: "timeCreated",
+      headerName: "Created on",
+      width: 180,
+      valueGetter: (params) => params.row.createInfos.timeCreated,
+    },
     {
       field: "status",
       headerName: "Status",
@@ -102,15 +128,12 @@ export default function DiseaseTable({ userRole, userInfos }) {
       <div className="datatable">
         <div className="datatableTitle">
           List of diseases
-          {userRole === "head-doctor" && part === 1 && (
-            <button type="button" onClick={() => setPart(2)}>
-              Diseases created by me
-            </button>
-          )}
-          {userRole === "head-doctor" && part === 2 && (
-            <button type="button" onClick={() => setPart(1)}>
-              All diseases
-            </button>
+          {(userRole === "head-doctor" || userRole === "doctor") && (
+            <>
+              <button onClick={handleMyDiseaseClick}>
+                {myDiseases ? "All diseases" : "Diseases created by me"}
+              </button>
+            </>
           )}
           {userRole === "head-doctor" && (
             <NavLink to="/disease/create" className="add-link">
@@ -118,67 +141,24 @@ export default function DiseaseTable({ userRole, userInfos }) {
             </NavLink>
           )}
         </div>
-        {userRole === "admin" && (
-          <DataGrid
-            className="datagrid"
-            rows={flatData}
-            getRowId={(row) => row._id}
-            getRowClassName={(params) =>
-              `rowWithStatus ${params.row.status.replace(" ", "-")}`
-            }
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            checkboxSelection
-            sx={{
-              "& .MuiDataGrid-row:hover": {
-                backgroundColor: "transparent",
-                boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-              },
-            }}
-          />
-        )}
-        {(userRole === "head-doctor" || userRole === "doctor") &&
-          part === 1 && (
-            <DataGrid
-              className="datagrid"
-              rows={doctorFlatData}
-              getRowId={(row) => row._id}
-              getRowClassName={(params) =>
-                `rowWithStatus ${params.row.status.replace(" ", "-")}`
-              }
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-              checkboxSelection
-              sx={{
-                "& .MuiDataGrid-row:hover": {
-                  backgroundColor: "transparent",
-                  boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                },
-              }}
-            />
-          )}
-        {userRole === "head-doctor" && part === 2 && (
-          <DataGrid
-            className="datagrid"
-            rows={doctorOwnFlatData}
-            getRowId={(row) => row._id}
-            getRowClassName={(params) =>
-              `rowWithStatus ${params.row.status.replace(" ", "-")}`
-            }
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            checkboxSelection
-            sx={{
-              "& .MuiDataGrid-row:hover": {
-                backgroundColor: "transparent",
-                boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-              },
-            }}
-          />
-        )}
+        <DataGrid
+          className="datagrid"
+          rows={displayedDiseases}
+          getRowId={(row) => row._id}
+          getRowClassName={(params) =>
+            `rowWithStatus ${params.row.status.replace(" ", "-")}`
+          }
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "transparent",
+              boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            },
+          }}
+        />
       </div>
     </>
   );

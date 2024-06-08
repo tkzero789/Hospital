@@ -6,8 +6,46 @@ import DiseaseAgeGen from "../../components/DiseaseParts/DiseaseAgeGen";
 import DiseaseSymps from "../../components/DiseaseParts/DiseaseSymps";
 import DiseaseDescs from "../../components/DiseaseParts/DiseaseDescs";
 import DiseaseName from "../../components/DiseaseParts/DiseaseName";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function CreateDisease({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "create":
+      action = confirmCreate;
+      break;
+    default:
+      action = null;
+  }
+
+  // Format date
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -41,7 +79,7 @@ export default function CreateDisease({ userRole, userInfos }) {
   const [finalStep, setFinalStep] = useState(3);
   const navigate = useNavigate();
 
-  // get symptoms from db
+  // Fetch data
   useEffect(() => {
     axios
       .get("http://localhost:5000/symptom")
@@ -109,22 +147,22 @@ export default function CreateDisease({ userRole, userInfos }) {
   function checkStep() {
     if (step === 1) {
       if (disease.ageRanges.length === 0) {
-        window.alert("Please select age");
+        toast.error("Please select age");
         return;
       }
       if (disease.genders.length === 0) {
-        window.alert("Please select gender");
+        toast.error("Please select gender");
         return;
       }
     } else if (step === 2) {
       if (disease.symptomIds.length === 0) {
-        window.alert("Please select at least 1 symptom");
+        toast.error("Please select at least 1 symptom");
         return;
       }
     } else if (step > 2 && step < finalStep) {
       const symptomId = disease.symptomIds[step - 3];
       if (!disease.descIds.some((desc) => desc.symptomId === symptomId)) {
-        window.alert("Please add symptom's description");
+        toast.error("Please select at least one symptom");
         return;
       }
     }
@@ -135,27 +173,29 @@ export default function CreateDisease({ userRole, userInfos }) {
     navigate("/disease-table");
   }
 
+  // Create disease
   async function confirmCreate() {
+    setIsClicked(true);
     if (disease.name === "") {
-      window.alert("Please enter disease name");
+      toast.error("Please enter disease name");
       return;
     } else if (disease.ageRanges.length === 0) {
-      window.alert("Please select age");
+      toast.error("Please select age");
       return;
     } else if (disease.genders.length === 0) {
-      window.alert("Please select gender");
+      toast.error("Please select gender");
       return;
     } else if (disease.symptomIds.length === 0) {
-      window.alert("Please select symptom");
+      toast.error("Please select symptom");
       return;
     } else if (disease.descIds.length === 0) {
-      window.alert("Please add symptom's description");
+      toast.error("Please add symptom's description");
       return;
     }
     try {
       // Create disease
       await axios
-        .post("http://localhost:5000/disease/add", disease)
+        .post("http://localhost:5000/disease/add", disease, apiConfig)
         .then((res) => {
           if (res.data && res.data.message === "Disease already exists") {
             throw new Error("Duplicated disease!");
@@ -166,12 +206,19 @@ export default function CreateDisease({ userRole, userInfos }) {
       const message = `Error: ${err}`;
       window.alert(message);
     }
-    navigate("/disease-table");
+    setTimeout(() => {
+      toast.success("Created successfully!");
+      setTimeout(() => {
+        navigate("/disease-table");
+      }, 1200);
+    }, 500);
   }
 
   return (
     <div>
-      <h3 className="container text-center text-body pt-5">Create disease</h3>
+      <h3 className="container text-center text-dark-header pt-5">
+        Create disease
+      </h3>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -182,7 +229,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                 {step === 1 ? (
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-secondary"
                     onClick={confirmCancel}
                   >
                     Cancel
@@ -190,7 +237,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                 ) : (
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-secondary"
                     onClick={handlePrev}
                   >
                     Back
@@ -200,10 +247,15 @@ export default function CreateDisease({ userRole, userInfos }) {
               <div className="col-3 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
-                  onClick={(e) => {
+                  className="btn btn-primary"
+                  onClick={(event) => {
                     if (step === finalStep) {
-                      confirmCreate();
+                      handleShowModal(
+                        event,
+                        "create",
+                        "Confirm create",
+                        "Are you sure you want to create this disease?"
+                      );
                     } else {
                       checkStep(step);
                     }
@@ -214,6 +266,21 @@ export default function CreateDisease({ userRole, userInfos }) {
               </div>
             </div>
           </form>
+          <Toaster
+            toastOptions={{
+              className: "toast-noti",
+            }}
+            position="top-right"
+            richColors
+          />
+          <ConfirmModal
+            title={modalContent.title}
+            body={modalContent.body}
+            show={showModal}
+            hide={handleHideModal}
+            action={action}
+            isClicked={isClicked}
+          />
         </div>
       </div>
     </div>

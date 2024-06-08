@@ -7,7 +7,10 @@ import StarterKit from "@tiptap/starter-kit";
 import Italic from "@tiptap/extension-italic";
 import Image from "@tiptap/extension-image";
 import "../../pages/blog/texteditor.scss";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
+// Menu bar
 const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
@@ -38,7 +41,7 @@ const MenuBar = ({ editor }) => {
             editor.isActive("heading", { level: 4 }) ? "is-active" : ""
           }
         >
-          Tựa đề phụ
+          H4
         </button>
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -70,6 +73,41 @@ const MenuBar = ({ editor }) => {
 };
 
 const EditBlog = ({ userInfos }) => {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "edit":
+      action = confirmEdit;
+      break;
+    default:
+      action = null;
+  }
+
   const navigate = useNavigate();
   // Create a ref for the file input
   const fileInputRef = useRef();
@@ -113,8 +151,7 @@ const EditBlog = ({ userInfos }) => {
   }
 
   // Submit button
-  const handleClick = async (e) => {
-    e.preventDefault();
+  async function confirmEdit() {
     const now = new Date();
     const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
       now.getMinutes()
@@ -123,22 +160,29 @@ const EditBlog = ({ userInfos }) => {
     ).padStart(2, "0")}/${now.getFullYear()}`;
     const updatedBlog = {
       ...blog,
-      status: "Pending",
+      status: "Pending Create",
       createdAt: formattedTime,
     };
 
     try {
       await axios.post(
         `http://localhost:5000/blog/edit/${blogId}`,
-        updatedBlog
+        updatedBlog,
+        apiConfig
       );
+      setIsClicked(true);
       setBlog(updatedBlog);
       console.log(updatedBlog);
     } catch (error) {
       console.log(error);
     }
-    navigate("/blog-table");
-  };
+    setTimeout(() => {
+      toast.success("Edited successfully!");
+      setTimeout(() => {
+        navigate("/blog-table");
+      }, 1200);
+    }, 500);
+  }
 
   // Value from title input
   const onChangeTitle = (e) => {
@@ -158,7 +202,9 @@ const EditBlog = ({ userInfos }) => {
       `http://localhost:5000/blog/upload`,
       formData,
       {
+        ...apiConfig,
         headers: {
+          ...apiConfig.headers,
           "Content-Type": "multipart/form-data",
         },
       }
@@ -178,7 +224,7 @@ const EditBlog = ({ userInfos }) => {
       // Extract the key from the image URL
       const key = blog.image.split("/").pop();
 
-      await axios.post(`http://localhost:5000/blog/delete`, { key });
+      await axios.post(`http://localhost:5000/blog/delete`, { key }, apiConfig);
 
       // Remove the image from the blog state
       setBlog((prevBlog) => ({
@@ -198,25 +244,25 @@ const EditBlog = ({ userInfos }) => {
   return (
     <>
       <div className="content-container create-blog-text-editor">
-        <h1>Chỉnh sửa bài blog:</h1>
+        <h3>Edit blog</h3>
         <span>
-          Tác giả: <span className="text-blue-1">{userInfos.fullName}</span>
+          By: <span className="text-blue-1">{userInfos.fullName}</span>
         </span>
         <div className="text-editor-title">
-          <label htmlFor="title">Tựa đề:</label>
+          <label htmlFor="title">Title:</label>
           <textarea value={blog.title} onChange={onChangeTitle} />
         </div>
         <div className="text-editor-intro">
-          <label htmlFor="intro">Đoạn mở đầu:</label>
+          <label htmlFor="intro">Introduction:</label>
           <textarea value={blog.intro} onChange={onChangeIntro} />
         </div>
         <div className="text-editor-img">
-          <label htmlFor="image">Ảnh bài blog:</label>
+          <label htmlFor="image">Blog image:</label>
           <input
             type="file"
             name="image"
             className="form-control border-primary-subtle col-9 mb-2"
-            placeholder="Ảnh minh họa"
+            placeholder="Upload image(s)"
             onChange={(e) => updateInfoImage(e)}
             ref={fileInputRef}
           />
@@ -229,7 +275,7 @@ const EditBlog = ({ userInfos }) => {
             </button>
           </div>
         ) : (
-          <div className="pt-2">Chưa có ảnh nào được upload</div>
+          <div className="pt-2">No image was uploaded</div>
         )}
         <label htmlFor="info">Info</label>
         <div className="text-editor">
@@ -239,16 +285,41 @@ const EditBlog = ({ userInfos }) => {
 
         <div className="text-editor-btn">
           <Link
-            className="btn btn-outline-secondary"
+            className="c-2 btn btn-outline-secondary"
             to={`/blog/${blogId}/view`}
           >
-            Quay lại
+            Back
           </Link>
-          <button className="btn btn-primary ms-auto" onClick={handleClick}>
-            Xác nhận chỉnh sửa
+          <button
+            className="c-2 btn btn-warning"
+            onClick={(event) =>
+              handleShowModal(
+                event,
+                "edit",
+                "Confirm edit",
+                "Are you sure you want to confirm edit this blog?"
+              )
+            }
+          >
+            Confirm edit
           </button>
         </div>
       </div>
+      <Toaster
+        toastOptions={{
+          className: "toast-noti",
+        }}
+        position="top-right"
+        richColors
+      />
+      <ConfirmModal
+        title={modalContent.title}
+        body={modalContent.body}
+        show={showModal}
+        hide={handleHideModal}
+        action={action}
+        isClicked={isClicked}
+      />
     </>
   );
 };

@@ -1,6 +1,31 @@
 const express = require("express");
 const appointmentRoutes = express.Router();
 const dbo = require("../db/conn");
+const jwt = require("jsonwebtoken");
+
+const verifyJWT = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const decoded = jwt.verify(token, process.env.SECRET_JWT_KEY);
+  if (!decoded) {
+    return res.status(403).json({ message: "Invalid token" });
+  }
+  req.role = decoded.role;
+  next();
+};
+
+// Middleware to check for admin role
+const isAdmin = (req, res, next) => {
+  if (req.role && req.role !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden (Head doctor access required)" });
+  }
+  next();
+};
 
 // Get all appointments
 appointmentRoutes.route("/appointment").get(async function (req, res) {
@@ -103,10 +128,10 @@ appointmentRoutes.route("/check-phone-number").post(async function (req, res) {
   }
 });
 
-// Update/Edit appointment status
+// Update appointment status
 appointmentRoutes
   .route("/appointment/update/:id")
-  .post(async function (req, res) {
+  .post(verifyJWT, isAdmin, async function (req, res) {
     try {
       const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
@@ -127,7 +152,7 @@ appointmentRoutes
 // Edit appointment info
 appointmentRoutes
   .route("/appointment/edit/:id")
-  .post(async function (req, res) {
+  .post(verifyJWT, isAdmin, async function (req, res) {
     try {
       const db_connect = await dbo.getDb("hospital");
       const myquery = { id: req.params.id };
@@ -153,17 +178,19 @@ appointmentRoutes
   });
 
 // Delete appointment
-appointmentRoutes.route("/appointment/:id").delete(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const myquery = { id: req.params.id };
-    const result = await db_connect
-      .collection("appointments")
-      .deleteOne(myquery);
-    res.json(result);
-  } catch (err) {
-    throw err;
-  }
-});
+appointmentRoutes
+  .route("/appointment/:id")
+  .delete(verifyJWT, isAdmin, async function (req, res) {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const myquery = { id: req.params.id };
+      const result = await db_connect
+        .collection("appointments")
+        .deleteOne(myquery);
+      res.json(result);
+    } catch (err) {
+      throw err;
+    }
+  });
 
 module.exports = appointmentRoutes;

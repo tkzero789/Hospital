@@ -2,8 +2,6 @@ import axios from "axios";
 import Footer from "../../components/Home/Footer";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Breadcrumbs, Typography } from "@mui/material";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Pagination from "@mui/material/Pagination";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
@@ -72,21 +70,9 @@ const ViewBlogList = () => {
         <div>Loading....</div>
       ) : (
         <>
-          <div className="content-container">
-            <Breadcrumbs
-              className="breadcrumbs"
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Link className="text-secondary" to="/home">
-                Home
-              </Link>
-              ,<Typography className="text-dark">News</Typography>,
-            </Breadcrumbs>
-          </div>
           <div className="blog-list w-100">
             <div className="content-container">
-              <h1>Latest news</h1>
+              <h1>News and Insights</h1>
               <div className="blog-list-items">
                 {currentBlogs.map((blog) => {
                   if (blog.status === "Pending") {

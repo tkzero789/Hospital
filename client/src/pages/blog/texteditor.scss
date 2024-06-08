@@ -1,8 +1,10 @@
 .create-blog-text-editor {
-  > h1 {
+  > h3 {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
     padding: 16px 0;
-    font-size: 36px;
-    color: var(--text-blue-1);
+    color: var(--text-dark-header);
     font-weight: var(--roboto-medium-weight);
   }
 
@@ -144,6 +146,11 @@
 }
 
 .text-editor-btn {
-  padding: 16px 0 40px 0;
+  padding: 32px 0 40px 0;
   display: flex;
+  justify-content: end;
+
+  button {
+    margin-left: 16px;
+  }
 }

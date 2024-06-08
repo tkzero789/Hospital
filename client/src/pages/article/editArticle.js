@@ -1,11 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, NavLink } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function EditArticle({ userRole, userInfos }) {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "edit":
+      action = confirmEdit;
+      break;
+    default:
+      action = null;
+  }
+
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
@@ -87,15 +123,15 @@ export default function EditArticle({ userRole, userInfos }) {
       });
   }, [articleId, navigate]);
 
+  // Cancel
   function confirmCancel() {
     navigate("/article-table");
   }
 
-  async function confirmEdit(e) {
-    e.preventDefault();
+  async function confirmEdit() {
     // validation fields
     if (article.title === "") {
-      alert("Please enter article title");
+      toast.error("Please enter article title");
       return;
     } else if (
       article.infos.filter(
@@ -103,14 +139,14 @@ export default function EditArticle({ userRole, userInfos }) {
           info.about === "" || info.overview === "" || info.detail === ""
       ).length > 0
     ) {
-      alert("Please enter info for this article");
+      toast.error("Please enter info");
       return;
     } else if (
       article.treatments.filter(
         (trm) => trm.about === "" || trm.overview === "" || trm.detail === ""
       ).length > 0
     ) {
-      alert("Please enter treatments info for this article");
+      toast.error("Please enter treatments");
       return;
     } else {
       try {
@@ -125,18 +161,28 @@ export default function EditArticle({ userRole, userInfos }) {
         }
         // Edit article
         axios
-          .put(`http://localhost:5000/article/edit/${articleId}`, article)
+          .put(
+            `http://localhost:5000/article/edit/${articleId}`,
+            article,
+            apiConfig
+          )
           .then((res) => {
             if (res.data && res.data.message === "Article already exists") {
               throw new Error("Thanks, wait for admin approval!");
             }
+            setIsClicked(true);
             console.log("Article edited", res.data);
           });
-        navigate(`/disease/${diseaseId}/article-table`);
       } catch (err) {
         const message = `Error: ${err}`;
         window.alert(message);
       }
+      setTimeout(() => {
+        toast.success("Edited article successfully");
+        setTimeout(() => {
+          navigate(`/disease/${diseaseId}/article-table`);
+        }, 1200);
+      }, 500);
     }
   }
 
@@ -156,7 +202,7 @@ export default function EditArticle({ userRole, userInfos }) {
               }
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              <div className="col-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
@@ -165,19 +211,39 @@ export default function EditArticle({ userRole, userInfos }) {
                   Cancel
                 </button>
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="col-2 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
-                  onClick={(e) => {
-                    confirmEdit(e);
-                  }}
+                  className="btn btn-warning"
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "edit",
+                      "Confirm edit",
+                      "Are you sure you want to confirm edit this article?"
+                    )
+                  }
                 >
                   Confirm edit
                 </button>
               </div>
             </div>
           </form>
+          <Toaster
+            toastOptions={{
+              className: "toast-noti",
+            }}
+            position="top-right"
+            richColors
+          />
+          <ConfirmModal
+            title={modalContent.title}
+            body={modalContent.body}
+            show={showModal}
+            hide={handleHideModal}
+            action={action}
+            isClicked={isClicked}
+          />
         </div>
       </div>
     </div>

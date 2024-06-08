@@ -1,14 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, NavLink } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ArticleForm from "../../components/ArticleParts/ArticleForm";
 import ArticlePatView from "../../components/ArticleParts/ArticlePatView";
+import { Toaster, toast } from "sonner";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 export default function ViewArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");
   const apiConfig = {
     headers: { Authorization: `Bearer ${userToken}` },
   };
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "edit":
+      action = requestEdit;
+      break;
+    case "delete":
+      action = confirmDelete;
+      break;
+    default:
+      action = null;
+  }
 
   const [article, setArticle] = useState({
     id: "",
@@ -28,7 +63,7 @@ export default function ViewArticle({ userRole, userInfos }) {
     status: "",
   });
   const [isPatView, setIsPatView] = useState(false);
-  const { diseaseId, articleId } = useParams();
+  const { articleId } = useParams();
   const navigate = useNavigate();
 
   // get article from DB by articleId
@@ -50,29 +85,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       });
   }, [articleId, navigate]);
 
-  // delete article by articleId
-  function confirmDelete() {
-    if (window.confirm("Do you want to delete?")) {
-      // delete article in disease
-      axios
-        .post(
-          `http://localhost:5000/disease/${diseaseId}/delete-article/${articleId}`
-        )
-        .catch((err) => {
-          const message = `Error: ${err}`;
-          window.alert(message);
-        });
-      // delete article
-      axios
-        .delete(`http://localhost:5000/article/${articleId}`)
-        .catch((err) => {
-          const message = `Error: ${err}`;
-          window.alert(message);
-        });
-      navigate(`disease/${diseaseId}/article-table`);
-    }
-  }
-
+  // Set display
   async function setDisplay() {
     try {
       console.log(apiConfig);
@@ -96,14 +109,45 @@ export default function ViewArticle({ userRole, userInfos }) {
     }
   }
 
-  async function requestEdit() {
+  // Delete
+  async function confirmDelete() {
+    setIsClicked(true);
     try {
-      axios.put(`http://localhost:5000/article/update/${articleId}`, {
-        status: "Request Edit",
-      });
+      await axios.delete(
+        `http://localhost:5000/article/delete/${articleId}`,
+        apiConfig
+      );
     } catch (err) {
       console.log(`${err}`);
     }
+    setTimeout(() => {
+      toast.success("Delete article successfully");
+      setTimeout(() => {
+        navigate("/article-table");
+      }, 1200);
+    }, 500);
+  }
+
+  // Request edit
+  async function requestEdit() {
+    setIsClicked(true);
+    try {
+      axios.put(
+        `http://localhost:5000/article/update/${articleId}`,
+        {
+          status: "Request Edit",
+        },
+        apiConfig
+      );
+    } catch (err) {
+      console.log(`${err}`);
+    }
+    setTimeout(() => {
+      toast.success("Request edit successfully");
+      setTimeout(() => {
+        navigate("/article-table");
+      }, 1200);
+    }, 500);
   }
 
   return (
@@ -140,7 +184,25 @@ export default function ViewArticle({ userRole, userInfos }) {
                   </div>
                 )}
                 <div className="row pt-3 pb-3 justify-content-end">
-                  <div className="col-3 d-grid gap-2">
+                  {userRole === "admin" && (
+                    <div className="col-2 d-grid gap-2 me-auto">
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={(event) =>
+                          handleShowModal(
+                            event,
+                            "delete",
+                            "Confirm delete",
+                            "Are you sure you want to delete this article?"
+                          )
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                  <div className="col-2 d-grid gap-2">
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
@@ -151,14 +213,7 @@ export default function ViewArticle({ userRole, userInfos }) {
                       Back
                     </button>
                   </div>
-                  {userRole === "admin" && (
-                    <div className="col-3 d-grid gap-2">
-                      <button className="btn btn-warning" onClick={requestEdit}>
-                        Request edit
-                      </button>
-                    </div>
-                  )}
-                  <div className="col-3 d-grid gap-2">
+                  <div className="col-2 d-grid gap-2">
                     <button
                       type="button"
                       className="btn btn-outline-primary"
@@ -168,18 +223,39 @@ export default function ViewArticle({ userRole, userInfos }) {
                     </button>
                   </div>
                   {userRole === "admin" && (
-                    <div className="col-3 d-grid gap-2">
+                    <div className="col-2 d-grid gap-2">
                       <button
-                        type="button"
-                        className="btn btn-outline-danger"
-                        onClick={confirmDelete}
+                        className="btn btn-warning"
+                        onClick={(event) =>
+                          handleShowModal(
+                            event,
+                            "edit",
+                            "Confirm request edit",
+                            "Are you sure you want to request edit this article?"
+                          )
+                        }
                       >
-                        Delete
+                        Request edit
                       </button>
                     </div>
                   )}
                 </div>
               </form>
+              <Toaster
+                toastOptions={{
+                  className: "toast-noti",
+                }}
+                position="top-right"
+                richColors
+              />
+              <ConfirmModal
+                title={modalContent.title}
+                body={modalContent.body}
+                show={showModal}
+                hide={handleHideModal}
+                action={action}
+                isClicked={isClicked}
+              />
             </div>
           </div>
         </div>
