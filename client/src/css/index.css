@@ -1,0 +1,56 @@
+/* Navbar - Global */
+header {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.fixed-top {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.main-padding-0 {
+  padding-top: 0;
+}
+
+.main-padding-1 {
+  padding-top: 129px;
+}
+
+.nav-container {
+  padding: 0 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Toast notification */
+.toast-noti {
+  height: 50px;
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 150px;
+}
+
+.toast-noti-2 {
+  height: 80px;
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 150px;
+}
+
+.toast-noti-3 {
+  height: 50px;
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 400px;
+}
+
+/* Content container */
+@media (min-width: 1200px) {
+  .nav-container {
+    width: 1190px;
+  }
+  .content-container {
+    width: 1190px;
+  }
+}

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../AuthContext";
-import axios from "axios";
-import BaySideLogo from "../../assets/logo/BaySide-logo-1.svg";
 import { Toaster, toast } from "sonner";
+import { useAuth } from "AuthContext";
+import axios from "axios";
+import BaySideLogo from "assets/logo/BaySide-logo-1.svg";
+import "pages/account/account.css";
 
 export default function SigninStaff() {
   // User

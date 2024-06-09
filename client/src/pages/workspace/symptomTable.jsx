@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-
-import "./table.scss";
+import axios from "axios";
+import "pages/workspace/table.scss";
 
 export default function SymptomTable({ userRole, userInfos }) {
   const [symptoms, setSymptoms] = useState([]);

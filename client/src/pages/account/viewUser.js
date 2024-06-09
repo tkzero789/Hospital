@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
-
-import UserForm from "../../components/UserParts/UserForm";
+import UserForm from "components/UserForm/UserForm";
 
 export default function ViewUser() {
   const [user, setUser] = useState({
@@ -48,7 +47,7 @@ export default function ViewUser() {
   function confirmDelete() {
     if (window.confirm("Are you sure you want to delete?")) {
       axios.delete(`http://localhost:5000/user/${userId}`).catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
     }
@@ -61,23 +60,7 @@ export default function ViewUser() {
           <form>
             <UserForm user={user} editMode={false} />
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
-                <NavLink
-                  className="btn btn-outline-secondary"
-                  to={`/user-table`}
-                >
-                  Quay lại
-                </NavLink>
-              </div>
-              <div className="col-3 d-grid gap-2">
-                <NavLink
-                  className="btn btn-warning"
-                  to={`/user/${userId}/edit`}
-                >
-                  Chỉnh sửa
-                </NavLink>
-              </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 {user.status === "Normal" && (
                   <button
                     type="button"
@@ -85,7 +68,7 @@ export default function ViewUser() {
                     disabled={user.status === "Blocked"}
                     onClick={() => updateStatus("Blocked")}
                   >
-                    Chặn
+                    Block
                   </button>
                 )}
                 {user.status === "Blocked" && (
@@ -95,19 +78,35 @@ export default function ViewUser() {
                     disabled={user.status === "Normal"}
                     onClick={() => updateStatus("Normal")}
                   >
-                    Gỡ chặn
+                    Un-block
                   </button>
                 )}
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2 me-auto">
                 <button
                   type="button"
                   className="btn btn-outline-danger"
                   disabled={user.status === "Spam"}
                   onClick={() => confirmDelete()}
                 >
-                  Xoá
+                  Delete
                 </button>
+              </div>
+              <div className="c-2 d-grid gap-2">
+                <NavLink
+                  className="btn btn-outline-secondary"
+                  to={`/user-table`}
+                >
+                  Back
+                </NavLink>
+              </div>
+              <div className="c-2 d-grid gap-2">
+                <NavLink
+                  className="btn btn-warning"
+                  to={`/user/${userId}/edit`}
+                >
+                  Edit
+                </NavLink>
               </div>
             </div>
           </form>

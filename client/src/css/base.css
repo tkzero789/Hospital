@@ -148,6 +148,11 @@
 .hidden {
   display: none;
 }
+
+/* Visible */
+.visible {
+  display: block;
+}
 /* Pre-defined CSS classes: End */
 
 /* Reset */

@@ -1,9 +1,9 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import MainNav from "../../components/Navbar/MainNav";
-import SubNav from "../../components/Navbar/SubNav";
-import MobileNav from "../../components/Navbar/MobileNav";
 import { useLocation } from "react-router-dom";
+import MainNav from "components/Navbar/MainNav/MainNav";
+import SubNav from "components/Navbar/SubNav/SubNav";
+import MobileNav from "components/Navbar/MobileNav/MobileNav";
 
 export default function NavbarLayout({ title, children }) {
   const location = useLocation(); // Get current route

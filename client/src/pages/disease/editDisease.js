@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import DiseaseAgeGen from "../../components/DiseaseParts/DiseaseAgeGen";
-import DiseaseSymps from "../../components/DiseaseParts/DiseaseSymps";
-import DiseaseDescs from "../../components/DiseaseParts/DiseaseDescs";
-import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import axios from "axios";
+import DiseaseAgeGen from "components/Disease/DiseaseAgeGen";
+import DiseaseSymps from "components/Disease/DiseaseSymps";
+import DiseaseDescs from "components/Disease/DiseaseDescs";
+import DiseaseName from "components/Disease/DiseaseName";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
 
 export default function EditDisease({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

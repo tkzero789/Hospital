@@ -1,0 +1,26 @@
+/* Admin Dashboard - Disease */
+.ad-chosen-symp {
+  margin-top: 20px;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 2px solid rgb(189, 189, 189);
+  padding: 8px 16px 8px 24px;
+  border-radius: 8px;
+}
+
+.ad-chosen-symp p {
+  font-weight: var(--roboto-medium-weight);
+}
+
+.ad-chosen-symp button {
+  border: none;
+  border-radius: 4px;
+}
+
+.ad-chosen-symp button i {
+  color: rgb(109, 109, 109);
+}
+
+.ad-chosen-symp button:hover i {
+  color: rgb(0, 0, 0);
+}

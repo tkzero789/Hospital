@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import axios from "axios";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import "pages/blog/blog.css";
 
 export default function ViewBlog({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

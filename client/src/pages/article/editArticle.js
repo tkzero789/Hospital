@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import ArticleForm from "../../components/ArticleParts/ArticleForm";
 import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import axios from "axios";
+import ArticleForm from "components/Article/ArticleForm";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
 
 export default function EditArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

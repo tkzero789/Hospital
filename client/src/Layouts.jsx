@@ -1,52 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import RequireAuth from "./RequireAuth";
+import RequireAuth from "RequireAuth";
 // staff pages
-import StaffLayout from "./pages/layout/StaffLayout";
+import StaffLayout from "pages/layout/StaffLayout";
 
 // symptom pages
-import SymptomTable from "./pages/workspace/symptomTable";
-import CreateSymptom from "./pages/symptom/createSymptom";
-import EditSymptom from "./pages/symptom/editSymptom";
-import ApproveSymptom from "./pages/symptom/approveSymptom";
-import ViewSymptom from "./pages/symptom/viewSymptom";
+import SymptomTable from "pages/workspace/symptomTable";
+import CreateSymptom from "pages/symptom/createSymptom";
+import EditSymptom from "pages/symptom/editSymptom";
+import ApproveSymptom from "pages/symptom/approveSymptom";
+import ViewSymptom from "pages/symptom/viewSymptom";
 // disease pages
-import DiseaseTable from "./pages/workspace/diseaseTable";
-import CreateDisease from "./pages/disease/createDisease";
-import EditDisease from "./pages/disease/editDisease";
-import ViewDisease from "./pages/disease/viewDisease";
+import DiseaseTable from "pages/workspace/diseaseTable";
+import CreateDisease from "pages/disease/createDisease";
+import EditDisease from "pages/disease/editDisease";
+import ViewDisease from "pages/disease/viewDisease";
 // article pages
-import ArticleTable from "./pages/workspace/articleTable";
-import ArticleTableByDisease from "./pages/workspace/articleTableByDisease";
-import CreateArticle from "./pages/article/createArticle";
-import ApproveArticle from "./pages/article/approveArticle";
-import ViewArticle from "./pages/article/viewArticle";
-import EditArticle from "./pages/article/editArticle";
+import ArticleTable from "pages/workspace/articleTable";
+import ArticleTableByDisease from "pages/workspace/articleTableByDisease";
+import CreateArticle from "pages/article/createArticle";
+import ApproveArticle from "pages/article/approveArticle";
+import ViewArticle from "pages/article/viewArticle";
+import EditArticle from "pages/article/editArticle";
 // appointment pages
-import ApptTable from "./pages/workspace/apptTable";
-import ViewAppt from "./pages/appointment/viewAppt";
+import ApptTable from "pages/workspace/apptTable";
+import ViewAppt from "pages/appointment/viewAppt";
 // blog pages
-import CreateBlog from "./pages/blog/createBlog";
-import BlogTable from "./pages/workspace/blogTable";
-import ViewBlog from "./pages/blog/viewBlog";
-import EditBlog from "./pages/blog/editBlog";
+import CreateBlog from "pages/blog/createBlog";
+import BlogTable from "pages/workspace/blogTable";
+import ViewBlog from "pages/blog/viewBlog";
+import EditBlog from "pages/blog/editBlog";
 // user pages
-import UserTable from "./pages/workspace/userTable";
-import ViewUser from "./pages/account/viewUser";
-import EditUser from "./pages/account/editUser";
+import UserTable from "pages/workspace/userTable";
+import ViewUser from "pages/account/viewUser";
+import EditUser from "pages/account/editUser";
 // guest pages
-import GuestLayout from "./pages/layout/GuestLayout";
-import SymptomChecker from "./pages/home/symptomChecker";
-import Home from "./pages/home/home";
-import CreateAppt from "./pages/appointment/createAppt";
-import ArticlePatientView from "./pages/home/articlePatientView";
-import Work from "./pages/home/workSchedule";
-import SpecialtyPage from "./pages/home/specialtyPage";
-import SpecialtyDetail from "./components/SpecialtyDetail/SpecialtyDetail";
-import ViewBlogList from "./pages/home/viewBlogList";
-import ViewSpecificBlog from "./pages/home/viewSpecificBlog";
-import ApptDetailGuest from "./pages/home/apptDetailGuest";
+import GuestLayout from "pages/layout/GuestLayout";
+import SymptomChecker from "pages/symptomchecker/symptomChecker";
+import Home from "pages/homepage/home";
+import CreateAppt from "pages/appointment/createAppt";
+import ArticlePatientView from "pages/article/articlePatientView";
+import Work from "pages/workschedule/workSchedule";
+import SpecialtyPage from "pages/specialty/specialtyPage";
+import SpecialtyDetail from "components/HomePage/Specialty/SpecialtyDetail";
+import ViewBlogList from "pages/blog/viewBlogList";
+import ViewSpecificBlog from "pages/blog/viewSpecificBlog";
+import ApptDetailGuest from "pages/appointment/apptDetailGuest";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);

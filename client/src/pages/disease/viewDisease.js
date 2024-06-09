@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, NavLink } from "react-router-dom";
-import axios from "axios";
-import DiseaseName from "../../components/DiseaseParts/DiseaseName";
 import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import axios from "axios";
+import DiseaseName from "components/Disease/DiseaseName";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
 
 export default function ViewDisease({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

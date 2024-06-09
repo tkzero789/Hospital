@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import ArticleForm from "../../components/ArticleParts/ArticleForm";
-import ArticlePatView from "../../components/ArticleParts/ArticlePatView";
 import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import ArticleForm from "components/Article/ArticleForm";
+import ArticlePatView from "components/Article/ArticlePatView";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
 
 export default function CreateArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

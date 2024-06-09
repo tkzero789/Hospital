@@ -1,0 +1,665 @@
+/* REQUEST APPOINTMENT FORM */
+.appt-img {
+  max-width: 100%;
+  height: 250px;
+}
+
+.appt-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 50%;
+}
+
+.appt {
+  position: relative;
+  margin-top: -120px;
+}
+
+.appt-wrapper {
+  padding: 20px 20px;
+  margin: 0 auto;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-title {
+  text-align: center;
+  padding-bottom: 24px;
+}
+
+.appt-title-text {
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+  padding: 8px 0;
+  background-color: var(--btn-blue-1);
+  border-radius: var(--border-radius-1);
+  color: var(--text-white-1);
+}
+
+.appt-form {
+  display: flex;
+  padding-top: 25px;
+  padding-bottom: 50px;
+}
+
+.appt .appt-form .c-4 > div {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+.appt .appt-form .c-4 div > label {
+  font-size: 18px;
+  margin-top: 28px;
+  margin-bottom: 2px;
+  color: var(--text-dark-1);
+  font-weight: var(--roboto-regular-weight);
+}
+
+.select-wrapper {
+  display: flex;
+}
+
+.select-wrapper select {
+  height: 40px;
+  width: 88px;
+  border: 1px solid #d9d9d6;
+  border-radius: var(--border-radius-1);
+}
+
+.select-wrapper select:nth-child(2) {
+  margin: auto;
+}
+
+.select-wrapper select:last-child {
+  width: 108px;
+}
+
+.appt .appt-form .c-4 div > input {
+  outline: none;
+}
+
+.appt-form .c-4 div label > span {
+  color: red;
+}
+
+.appt-input {
+  padding-left: 8px;
+  height: 40px;
+  border: 1px solid #d9d9d6;
+  border-radius: var(--border-radius-1);
+}
+
+.appt-form .c-4 div select option {
+  font-size: 18px;
+}
+
+.appt-date {
+  position: relative;
+}
+
+.appt-date-input {
+  width: 100%;
+  height: 40px;
+  padding-left: 8px;
+  border-radius: var(--border-radius-1);
+  border: 1px solid #d9d9d6;
+  cursor: pointer;
+}
+
+.appt-date-icon {
+  position: absolute;
+  right: 25px;
+  top: 65px;
+  pointer-events: none;
+}
+
+.calendar-box {
+  z-index: 10;
+  position: absolute;
+  top: 98px;
+}
+
+.reason-textarea {
+  height: 100%;
+}
+
+.reason-textarea textarea {
+  border-radius: var(--border-radius-1);
+  border: 1px solid #d9d9d6;
+  height: 137px;
+  resize: none;
+  outline: none;
+  padding-left: 8px;
+}
+
+.dropdown-field {
+  border: 1px solid #d9d9d6;
+  border-radius: var(--border-radius-1);
+  height: 40px;
+}
+
+.appt-btn {
+  padding-top: 20px;
+}
+
+.appt-btn button {
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border: none;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  width: 150px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-btn button:hover {
+  background-color: var(--btn-blue-hover-1);
+}
+
+/* APPOINTMENT MODAL: CONFIRMATION */
+.appt-modal-wrapper {
+  padding: 20px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-modal-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+  padding: 8px 0;
+  background-color: var(--btn-blue-1);
+  border-radius: var(--border-radius-1);
+  color: var(--text-white-1);
+  margin-bottom: 24px;
+}
+
+.appt-modal-info {
+  padding: 0 40px;
+}
+
+.appt-modal-info .attention-text {
+  text-align: center;
+}
+
+.attention-text p {
+  color: var(--text-dark-1);
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-modal-data {
+  display: flex;
+  padding-bottom: 16px;
+}
+
+.appt-modal-data span {
+  color: #2054a1;
+  font-weight: var(--roboto-medium-weight);
+  width: 220px;
+}
+
+.appt-modal-data p {
+  color: var(--text-dark-1);
+  font-weight: var(--roboto-regular-weight);
+  white-space: normal;
+  overflow-wrap: break-word;
+  width: calc(100% - 220px);
+}
+
+.appt-modal-btn {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.appt-modal-btn button:first-child {
+  margin-right: 4px;
+  color: var(--text-dark-1);
+  border: 1px solid #c4c4c4;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  width: 150px;
+
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-modal-btn button:last-child {
+  margin-left: 4px;
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border: 1px solid #c4c4c4;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  width: 150px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-modal-btn button:first-child:hover {
+  background-color: #b8b8b8;
+}
+
+.appt-modal-btn button:last-child:hover {
+  background-color: var(--btn-blue-hover-1);
+}
+
+/* APPOINTMENT SUCCESS MESSAGE */
+.appt-success {
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-success-wrapper {
+  padding: 20px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.appt-success-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+  padding: 8px 0;
+  background-color: var(--btn-blue-1);
+  border-radius: var(--border-radius-1);
+  color: var(--text-white-1);
+  margin-bottom: 24px;
+}
+
+.appt-success-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 24px;
+}
+
+.appt-success-info p {
+  font-size: 18px;
+  text-align: center;
+  font-weight: var(--roboto-medium-weight);
+}
+
+.appt-success-info .appt-success-icon {
+  height: 80px;
+}
+
+.appt-success-info .appt-success-icon img {
+  height: 100%;
+}
+
+.appt-success-info a {
+  font-size: 18px;
+  text-align: center;
+  text-underline-offset: 6px;
+}
+
+.appt-success-wrapper .back-to-home {
+  text-align: center;
+  padding-top: 28px;
+}
+
+.appt-success-wrapper .back-to-home a {
+  display: inline-block;
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border: none;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  width: 162px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-success-wrapper .back-to-home a:hover {
+  background-color: var(--btn-blue-hover-1);
+}
+
+/* APPOINTMENT DETAIL GUEST */
+.appt-detail {
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-detail-filter {
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.appt-detail-filter .dropdown-filter {
+  width: 274px;
+  z-index: 5;
+  position: absolute;
+  border-radius: 6px;
+  background-color: #ffffff;
+  margin-top: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.appt-detail-filter .dropdown-filter-header {
+  cursor: pointer;
+  padding: 6px 24px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.appt-detail-filter .dropdown-filter-header:hover {
+  background-color: #d3e6fc;
+}
+
+.appt-detail-filter .dropdown-filter-item {
+  padding: 6px 24px;
+  cursor: pointer;
+  border-top: 1px solid #d8d8d8;
+}
+
+.appt-detail-filter .dropdown-filter-item:last-child {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.appt-detail-filter .dropdown-filter-item:hover {
+  background-color: #d3e6fc;
+}
+
+.appt-detail-wrapper {
+  padding: 20px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.appt-detail-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+  padding: 8px 0;
+  background-color: var(--btn-blue-1);
+  border-radius: var(--border-radius-1);
+  color: var(--text-white-1);
+  margin-bottom: 24px;
+}
+
+.appt-detail-info {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+.appt-detail-info .phone-number-field label {
+  display: block;
+  font-weight: var(--roboto-medium-weight);
+  padding: 16px 0 8px 0;
+}
+
+.appt-detail-info .phone-number-field input {
+  width: 200px;
+  padding: 4px 6px;
+  border: 1px solid #cfcfcf;
+  outline-color: var(--btn-blue-1);
+  border-radius: var(--border-radius-1);
+}
+
+.appt-detail .appt-detail-icon {
+  height: 80px;
+}
+
+.appt-detail .appt-detail-icon img {
+  height: 100%;
+}
+
+.appt-detail-wrapper .appt-detail-btn {
+  text-align: center;
+  padding-top: 28px;
+}
+
+.appt-detail-wrapper .appt-detail-btn button {
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border: none;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  width: 150px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-detail-btn-2 {
+  text-align: center;
+  padding-top: 28px;
+}
+
+.appt-detail-btn-2 button {
+  margin-right: 4px;
+  color: var(--text-dark-1);
+  border: 1px solid #c4c4c4;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  width: 150px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-detail-btn-2 button:hover {
+  background-color: #b8b8b8;
+}
+
+.appt-detail-item {
+  margin-bottom: 16px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.appt-detail-item-wrapper {
+  display: flex;
+  padding: 12px;
+}
+
+.appt-detail-item-wrapper .appt-individual:first-child {
+  width: 15%;
+}
+
+.appt-detail-item-wrapper .appt-individual:first-child p:last-child {
+  padding-right: 20px;
+}
+
+.appt-detail-item-wrapper .appt-individual:nth-child(2) {
+  width: 25%;
+}
+
+.appt-detail-item-wrapper .appt-individual:nth-child(3) {
+  width: 20%;
+}
+
+.appt-detail-item-wrapper .appt-individual:nth-child(4) {
+  width: 20%;
+}
+
+.appt-status-pending {
+  color: goldenrod;
+  background-color: rgba(219, 211, 154, 0.5);
+  padding: 0 4px;
+  border-radius: var(--border-radius-1);
+}
+
+.appt-status-accepted {
+  color: green;
+  background-color: rgba(148, 230, 148, 0.5);
+  padding: 0 4px;
+  border-radius: var(--border-radius-1);
+}
+
+.appt-detail-item-wrapper .appt-individual p:first-child {
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-blue-1);
+}
+
+.appt-individual-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.appt-individual-btn button {
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border: none;
+  border-radius: var(--border-radius-1);
+  padding: 4px 8px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.appt-individual-btn button:hover {
+  background-color: var(--btn-blue-hover-1);
+}
+
+/* Mobile phone */
+@media only screen and (max-width: 767px) {
+  /* Appointment request  */
+  .appt .content-container {
+    padding: 0;
+  }
+
+  .appt-req-body {
+    padding-top: 58px;
+  }
+
+  .appt-wrapper {
+    padding: 8px 8px;
+    box-shadow: none;
+  }
+
+  .select-wrapper {
+    flex-direction: column;
+  }
+
+  .select-wrapper select:not(:last-child) {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .select-wrapper select:last-child {
+    width: 100%;
+  }
+
+  .appt-modal-wrapper {
+    padding: 8px 8px;
+    box-shadow: none;
+  }
+
+  .appt-title {
+    padding-bottom: 8px;
+  }
+  .appt-form {
+    padding: 0;
+    flex-direction: column;
+  }
+
+  .appt .appt-form .c-4 > div {
+    padding: 0;
+  }
+
+  .appt .appt-form .c-4 div > label {
+    margin-bottom: 16px;
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .appt .appt-form .c-4 div > input {
+    background-color: #f5f5f5;
+  }
+
+  .appt-input {
+    height: 44px;
+  }
+
+  .appt-date-input {
+    height: 44px;
+  }
+
+  .appt-date-icon {
+    top: 80px;
+    right: 12px;
+  }
+
+  .reason-textarea textarea {
+    background-color: #f5f5f5;
+  }
+
+  .appt-modal-info {
+    padding: 0 16px;
+  }
+
+  .appt-modal-data {
+    display: block;
+    padding-bottom: 20px;
+  }
+
+  .appt-modal-data span {
+    display: block;
+    font-size: 20px;
+  }
+
+  .appt-modal-data p {
+    display: block;
+    width: 100%;
+  }
+
+  .appt-btn button {
+    width: 90%;
+    font-size: 18px;
+  }
+
+  .appt-modal-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .appt-modal-btn button:first-child {
+    width: 90%;
+    font-size: 18px;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  .appt-modal-btn button:last-child {
+    width: 90%;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  /* CHECKING APPOINTMENT INFO BY PHONE NUMBER (GUEST) */
+  .appt-detail-item {
+    margin-bottom: 20px;
+  }
+
+  .appt-detail-item-wrapper {
+    flex-direction: column;
+  }
+
+  .appt-detail-item-wrapper .appt-individual {
+    display: flex;
+    width: 100% !important;
+    padding: 2px 0;
+  }
+
+  .appt-detail-item-wrapper .appt-individual p:first-child {
+    flex-grow: 1;
+  }
+
+  .appt-detail-item-wrapper .appt-individual:first-child p:last-child {
+    padding: 0;
+  }
+
+  .appt-individual-btn {
+    width: 100%;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  .appt-individual-btn button {
+    width: 100%;
+  }
+}

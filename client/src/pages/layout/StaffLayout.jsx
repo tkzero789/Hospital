@@ -1,6 +1,6 @@
-import "./list.scss";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Navbar from "../../components/Navbar/AdminNav";
+import "pages/layout/layout.scss";
+import Sidebar from "components/Navbar/Sidebar/Sidebar";
+import Navbar from "components/Navbar/AdminNav/AdminNav";
 
 export default function NavbarLayout({ title, children }) {
   return (

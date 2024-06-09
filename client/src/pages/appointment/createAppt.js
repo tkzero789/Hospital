@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import ApptForm from "../../components/ApptParts/ApptForm";
-import ApptSuccessMsg from "../../components/ApptParts/ApptSuccessMsg";
-import Footer from "../../components/Home/Footer";
-import ApptOtp from "../../components/ApptParts/ApptOtp";
 import { Toaster, toast } from "sonner";
+import ApptForm from "components/Appt/ApptForm";
+import ApptSuccessMsg from "components/Appt/ApptSuccessMsg";
+import Footer from "components/HomePage/Footer/Footer";
+import ApptOtp from "components/Appt/ApptOtp";
+import "components/Appt/appt.css";
 
 export default function CreateAppt() {
   const [isOtpConfirmed, setIsOtpConfirmed] = useState(false);

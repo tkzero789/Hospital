@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink, useParams } from "react-router-dom";
-import axios from "axios";
-import SymptomForm from "../../components/SymptomParts/SymptomForm";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import { Toaster, toast } from "sonner";
+import axios from "axios";
+import SymptomForm from "components/SymptomChecker/SymptomForm/SymptomForm";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
 
 export default function ViewSymptom({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

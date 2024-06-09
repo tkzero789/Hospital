@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
-import UserForm from "../../components/UserParts/UserForm";
+import UserForm from "components/UserForm/UserForm";
 
 export default function EditUser() {
   const [user, setUser] = useState({
@@ -29,7 +28,7 @@ export default function EditUser() {
         setUser(res.data);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [userId]);
@@ -41,17 +40,17 @@ export default function EditUser() {
     const inputEmail = document.getElementById("inputEmail");
     const inputPhoneNumber = document.getElementById("inputPhoneNumber");
     if (!inputEmail.checkValidity()) {
-      alert("Email không hợp lệ");
+      alert("Invalid email");
       return;
     } else if (!inputPhoneNumber.checkValidity()) {
-      alert("Số điện thoại không hợp lệ");
+      alert("Invalid phone number");
       return;
     } else if (
       !inputFullName.checkValidity() ||
       !inputGender.checkValidity() ||
       !inputDob.checkValidity()
     ) {
-      alert("Thông tin cá nhân không hợp lệ");
+      alert("Invalid information");
       return;
     } else {
       e.preventDefault();
@@ -78,7 +77,7 @@ export default function EditUser() {
           navigate(`/user/${userId}/view`);
         })
         .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
+          const message = `Error: ${err}`;
           window.alert(message);
         });
     }
@@ -90,16 +89,16 @@ export default function EditUser() {
         status: newStatus,
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
     setUser({ ...user, status: newStatus });
   }
 
   function confirmDelete() {
-    if (window.confirm("Bạn có chắc chắn muốn xóa tài khoản này?")) {
+    if (window.confirm("Are you sure you want to delete this account?")) {
       axios.delete(`http://localhost:5000/user/${userId}`).catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
     }
@@ -112,24 +111,7 @@ export default function EditUser() {
           <form>
             <UserForm user={user} setUser={setUser} editMode={true} />
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
-                <NavLink
-                  className="btn btn-outline-secondary"
-                  to={`/user/${userId}/view`}
-                >
-                  Quay lại
-                </NavLink>
-              </div>
-              <div className="col-3 d-grid gap-2">
-                <button
-                  type="button"
-                  className="btn btn-outline-primary"
-                  onClick={(e) => confirmEdit(e)}
-                >
-                  Xác nhận chỉnh sửa
-                </button>
-              </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 {user.status === "Normal" && (
                   <button
                     type="button"
@@ -137,7 +119,7 @@ export default function EditUser() {
                     disabled={user.status === "Blocked"}
                     onClick={() => updateStatus("Blocked")}
                   >
-                    Chặn
+                    Block
                   </button>
                 )}
                 {user.status === "Blocked" && (
@@ -147,18 +129,35 @@ export default function EditUser() {
                     disabled={user.status === "Normal"}
                     onClick={() => updateStatus("Normal")}
                   >
-                    Gỡ chặn
+                    Un-block
                   </button>
                 )}
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2 me-auto">
                 <button
                   type="button"
                   className="btn btn-outline-danger"
                   disabled={user.status === "Spam"}
                   onClick={() => confirmDelete()}
                 >
-                  Xoá
+                  Delete
+                </button>
+              </div>
+              <div className="c-2 d-grid gap-2">
+                <NavLink
+                  className="btn btn-outline-secondary"
+                  to={`/user/${userId}/view`}
+                >
+                  Back
+                </NavLink>
+              </div>
+              <div className="c-2 d-grid gap-2">
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={(e) => confirmEdit(e)}
+                >
+                  Confirm edit
                 </button>
               </div>
             </div>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ArticleForm from "../../components/ArticleParts/ArticleForm";
-import ArticlePatView from "../../components/ArticleParts/ArticlePatView";
 import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import ArticleForm from "components/Article/ArticleForm";
+import ArticlePatView from "components/Article/ArticlePatView";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
 
 export default function ApproveArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

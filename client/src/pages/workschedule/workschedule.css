@@ -1,0 +1,37 @@
+/* Work schedule Page */
+.work {
+  padding-top: 28px;
+}
+
+.work-wrapper h1 {
+  font-size: 32px;
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-blue-1);
+}
+
+.work-wrapper h2 {
+  font-size: 24px;
+  font-weight: var(--roboto-medium-weight);
+  padding-top: 24px;
+}
+
+.work-wrapper p {
+  font-size: 18px;
+  font-weight: var(--roboto-medium-weight);
+  padding-top: 12px;
+  padding-left: 8px;
+}
+
+.work-wrapper ul {
+  padding-top: 12px;
+  padding-left: 40px;
+}
+
+.work-wrapper li {
+  font-size: 16px;
+  font-weight: var(--roboto-regular-weight);
+}
+
+.work-wrapper li:not(:first-child) {
+  padding-top: 4px;
+}

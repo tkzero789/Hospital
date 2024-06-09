@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Toaster, toast } from "sonner";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Italic from "@tiptap/extension-italic";
 import Image from "@tiptap/extension-image";
-import "../../pages/blog/texteditor.scss";
-import { Toaster, toast } from "sonner";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import axios from "axios";
+import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import "pages/blog/texteditor.scss";
+import "pages/blog/blog.css";
 
 // Menu bar
 const MenuBar = ({ editor }) => {

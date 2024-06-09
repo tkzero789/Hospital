@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Toaster, toast } from "sonner";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { Toaster, toast } from "sonner";
 
 export default function ViewAppt() {
   const userToken = localStorage.getItem("userToken");

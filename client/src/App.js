@@ -3,19 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./css/styles.css";
-import "./css/responsive.css";
-import "./css/base.css";
-import { useAuth } from "./AuthContext";
-import RequireAuth from "./RequireAuth";
-import ScrollToTop from "./utilities/ScrollToTop";
+import "css/index.css";
+import "css/base.css";
+import { useAuth } from "AuthContext";
+import RequireAuth from "RequireAuth";
+import ScrollToTop from "utilities/ScrollToTop";
 // auth pages
-import SignupDoctor from "./pages/account/signupStaff";
-import SigninStaff from "./pages/account/signinStaff";
+import SignupDoctor from "pages/account/signupStaff";
+import SigninStaff from "pages/account/signinStaff";
 
 // routes
-import Layouts from "./Layouts";
-import StaffHome from "./pages/home/staffHome";
+import Layouts from "Layouts";
+import StaffHome from "pages/homepage/staffHome";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();

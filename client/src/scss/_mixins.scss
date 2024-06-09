@@ -1,0 +1,17 @@
+// Button
+@mixin btn($padding: 8px 12px, $width: auto) {
+  width: $width;
+  padding: $padding;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: var(--border-radius-1);
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  font-weight: var(--roboto-regular-weight);
+
+  &:hover {
+    background-color: var(--btn-blue-hover-1);
+  }
+}
