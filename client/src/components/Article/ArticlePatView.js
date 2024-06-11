@@ -1,5 +1,5 @@
 import React from "react";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 export default function ArticlePatView({ article, setIsPatView }) {
   const ArticleContent = ({ element }) => {

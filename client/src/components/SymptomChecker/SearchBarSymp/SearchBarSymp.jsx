@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Symptom from "components/SymptomChecker/Symptom/Symptom";
 import { Skeleton } from "@mui/material";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 const SearchBarSymp = ({
   inputRef,

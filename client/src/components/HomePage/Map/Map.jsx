@@ -1,11 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { MapConfig } from "./MapConfig";
 import LocationIcon1 from "assets/home/location-icon9.png";
 import LocationIcon3 from "assets/home/location-icon8-1.png";
-import "components/HomePage/Map/map.css";
+import "components/HomePage/Map/map.scss";
 
 const Map = () => {
+  const [radius1, setRadius1] = useState("6px");
+  const [radius2, setRadius2] = useState("6px");
+  const [mapHeight, setMapHeight] = useState("600px");
+
+  // Set border-radius for different breakpoint
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        setRadius1("0px");
+        setRadius2("6px");
+        setMapHeight("440px");
+      } else {
+        setRadius1("6px");
+        setRadius2("0px");
+        setMapHeight("600px");
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call the function initially to set the radius based on the initial window size
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: MapConfig.googleMapApiKey,
@@ -15,7 +41,7 @@ const Map = () => {
 
   const containerStyle = {
     width: "100%",
-    height: "600px",
+    height: mapHeight,
   };
 
   const center = {
@@ -64,11 +90,11 @@ const Map = () => {
       <>
         <section className="map w-100">
           <div className="content-container">
-            <div className="map-wrapper">
-              <div className="c-4">
-                <div className="map-left">
-                  <div className="map-left-wrapper">
-                    <div className="map-left-select">
+            <div className="map__wrapper">
+              <div className="c-4 md-12">
+                <div className="map__left">
+                  <div className="map__left-wrapper">
+                    <div className="map__left-select">
                       <h5>Find Locations</h5>
                       <select onChange={onChangeSelect}>
                         <option value="">Select location</option>
@@ -84,7 +110,7 @@ const Map = () => {
                         })}
                       </select>
                     </div>
-                    <div className="map-left-newsletter">
+                    <div className="map__left-newsletter">
                       <h5>
                         Subscribe to BaySide Hospital's newsletter for the
                         latest health updates!
@@ -95,14 +121,15 @@ const Map = () => {
                   </div>
                 </div>
               </div>
-              <div className="c-8">
+              <div className="c-8 md-12">
                 <GoogleMap
                   zoom={11}
                   center={center}
                   mapContainerStyle={{
                     ...containerStyle,
-                    borderTopRightRadius: "6px",
+                    borderTopRightRadius: radius1,
                     borderBottomRightRadius: "6px",
+                    borderBottomLeftRadius: radius2,
                   }}
                   options={{
                     fullscreenControl: false,
@@ -131,8 +158,8 @@ const Map = () => {
                   })}
 
                   {selectedMarker && (
-                    <div className="location-info">
-                      <div className="location-info-wrapper">
+                    <div className="location__info">
+                      <div className="location__info-wrapper">
                         <h6>{selectedMarker.location}</h6>
                         <p>
                           <i className="bi bi-geo-fill"></i>

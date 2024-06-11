@@ -3,7 +3,7 @@ import { useNavigate, useParams, NavLink } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import DiseaseName from "components/Disease/DiseaseName";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function ViewDisease({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

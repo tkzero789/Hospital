@@ -94,7 +94,7 @@ export default function Signup({ userRole, userInfos }) {
           navigate("/signin");
         })
         .catch((err) => {
-          const message = `Có lỗi xảy ra: ${err}`;
+          const message = `Error: ${err}`;
           window.alert(message);
           return;
         });

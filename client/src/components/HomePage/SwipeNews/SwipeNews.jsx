@@ -26,7 +26,7 @@ export default function SwipeNews() {
 
   return (
     <>
-      <div className="news w-100">
+      <section className="news w-100">
         <div className="content-container">
           <div className="news-wrapper">
             <div className="news-header">Latest News</div>
@@ -82,7 +82,7 @@ export default function SwipeNews() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -6,7 +6,7 @@ import DiseaseAgeGen from "components/Disease/DiseaseAgeGen";
 import DiseaseSymps from "components/Disease/DiseaseSymps";
 import DiseaseDescs from "components/Disease/DiseaseDescs";
 import DiseaseName from "components/Disease/DiseaseName";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function EditDisease({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

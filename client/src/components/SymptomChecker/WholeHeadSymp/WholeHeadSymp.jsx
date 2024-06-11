@@ -1,5 +1,5 @@
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 const WholeHeadSymp = ({
   dbSymps,

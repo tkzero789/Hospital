@@ -3,7 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 import "pages/blog/blog.css";
 
 export default function ViewBlog({ userRole, userInfos }) {

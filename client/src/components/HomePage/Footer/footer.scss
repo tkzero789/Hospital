@@ -1,0 +1,162 @@
+// Main Footer
+.footer {
+  margin-top: 100px;
+}
+
+.footer__background {
+  background-color: var(--footer-bg);
+}
+
+.footer__wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 44px 0;
+}
+
+.footer__logo {
+  margin-top: 20px;
+  overflow: hidden;
+  width: 150px;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.footer__logo-header {
+  margin-top: 24px;
+  font-size: 18px;
+  padding: 0 8px;
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-white-1);
+}
+
+.footer__logo-address {
+  padding: 0 8px;
+  margin-top: 4px;
+  font-weight: var(--roboto-light-weight);
+  color: #e7e7e7;
+}
+
+.footer__socials {
+  display: flex;
+  padding: 0 8px;
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: #e7e7e7;
+    &:not(:last-child) {
+      margin-right: 16px;
+    }
+    &:hover {
+      color: #dbdbdb;
+    }
+  }
+
+  &-icon {
+    span {
+      font-size: 28px;
+    }
+  }
+}
+
+.footer__header {
+  font-size: 18px;
+  margin-top: 24px;
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-white-1);
+}
+
+.footer__list {
+  list-style: none;
+  padding-top: 12px;
+  margin: 0;
+
+  &-item {
+    padding: 4px 0;
+
+    a {
+      display: inline-block;
+      color: #f5f5f5;
+      text-decoration: none;
+      font-weight: var(--roboto-light-weight);
+    }
+  }
+}
+
+// CopyRight
+.copyright {
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--copyright-bg);
+}
+
+.copyright__wrapper {
+  padding: 30px 0;
+
+  &-header {
+    text-align: center;
+    font-size: 16px;
+    font-weight: var(--roboto-regular-weight);
+    color: #e7e7e7;
+  }
+
+  &-body {
+    text-align: center;
+    font-weight: var(--roboto-light-weight);
+    color: #e7e7e7;
+  }
+}
+
+/* Mobile phone */
+@media only screen and (max-width: 767px) {
+  .footer__wrapper {
+    flex-direction: column;
+    padding: 0 8px;
+  }
+
+  .footer__logo {
+    img {
+      object-position: -8px 0;
+    }
+  }
+
+  .footer__logo-header {
+    padding: 0;
+  }
+
+  .footer__logo-address {
+    padding: 0;
+  }
+
+  .footer__socials {
+    padding: 0;
+  }
+
+  .footer__list {
+    padding-bottom: 12px;
+
+    &-item:first-child {
+      padding: 4px 0;
+
+      a {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .copyright__wrapper {
+    padding: 12px 26px;
+
+    &-header {
+      font-size: 14px;
+      padding-bottom: 8px;
+    }
+
+    &-body {
+      font-size: 12px;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Toaster, toast } from "sonner";
 import ArticleForm from "components/Article/ArticleForm";
 import ArticlePatView from "components/Article/ArticlePatView";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function ApproveArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");
@@ -191,7 +191,9 @@ export default function ApproveArticle({ userRole, userInfos }) {
         ArticlePatView({ article, setIsPatView })
       ) : (
         <div>
-          <h3 className="container text-center text-body pt-5">Article</h3>
+          <h3 className="container text-center text-dark-header pt-5">
+            Article
+          </h3>
           <div className="container p-5">
             <div className="card border-primary-subtle p-5">
               <form>

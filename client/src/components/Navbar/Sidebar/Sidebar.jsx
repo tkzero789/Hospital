@@ -37,7 +37,7 @@ export default function Sidebar() {
       logout();
       navigate("/home");
     } catch (err) {
-      const message = `Có lỗi xảy ra: ${err}`;
+      const message = `Error: ${err}`;
       window.alert(message);
     }
   };

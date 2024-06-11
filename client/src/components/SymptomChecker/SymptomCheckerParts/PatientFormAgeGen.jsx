@@ -1,5 +1,5 @@
 import React from "react";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
   function updateField(event) {

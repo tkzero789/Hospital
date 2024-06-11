@@ -1,27 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "components/HomePage/HeroSection/herosection.css";
+import "components/HomePage/HeroSection/herosection.scss";
 
 export default function HeroSection() {
   return (
     <>
-      <div className="hero-section">
-        <div className="hero-img">
-          <div className="hero-info">
+      <div className="hero__section">
+        <div className="hero__section-img">
+          <div className="hero__info">
             <div className="content-container">
-              <div className="hero-info-wrapper">
-                <div className="hero-info-text">
+              <div className="hero__info-wrapper">
+                <div className="hero__info-text">
                   <h1>Your path to better health</h1>
                   <p>
-                    At BaySide, we understand that seeking medical attention can
-                    be stressful. Our website provides easy access to
-                    information about our expert doctors, advanced technology,
-                    and a wide range of services.
+                    Don't let healthcare stress you out. BaySide offers a
+                    complete range of services, expert doctors, and advanced
+                    technology. Learn more on our website.
                   </p>
                 </div>
-                <div className="hero-info-btn">
-                  <Link to="/appt-request">Book an appointment</Link>
-                  <Link>Learn more</Link>
+                <div className="hero__info-btn">
+                  <Link to="/appt-request">Request appointment</Link>
+                  <Link>Find a doctor</Link>
                 </div>
               </div>
             </div>

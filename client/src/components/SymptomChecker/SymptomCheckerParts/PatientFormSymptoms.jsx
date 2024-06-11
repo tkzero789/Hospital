@@ -13,7 +13,7 @@ import WholeHeadSymp from "components/SymptomChecker/WholeHeadSymp/WholeHeadSymp
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
 import { MobileSympBtn } from "components/SymptomChecker/MobileSympBtn/MobileSympBtn";
 import { ExtraMobileSympBtn } from "components/SymptomChecker/MobileSympBtn/ExtraMobileSympBtn";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 export default function PatientFormSymptoms({
   dbSymps,

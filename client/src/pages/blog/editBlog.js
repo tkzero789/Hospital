@@ -7,7 +7,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Italic from "@tiptap/extension-italic";
 import Image from "@tiptap/extension-image";
 import axios from "axios";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 import "pages/blog/texteditor.scss";
 import "pages/blog/blog.css";
 
@@ -142,7 +142,7 @@ const EditBlog = ({ userInfos }) => {
         }
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, [blogId, editor]);

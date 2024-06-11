@@ -8,7 +8,7 @@ import "pages/workspace/table.scss";
 export default function ApptTable() {
   const [appts, setAppts] = useState([]);
 
-  // Fetch data
+  // Fetch appointment data
   useEffect(() => {
     axios
       .get("http://localhost:5000/appointment")
@@ -21,35 +21,22 @@ export default function ApptTable() {
         setAppts(reverseDataWithNo);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);
 
-  // Delete Appointment
-  const deleteAppt = (id) => {
-    axios
-      .delete(`http://localhost:5000/appointment/${id}`)
-      .then((res) => {
-        setAppts(appts.filter((appt) => appt.id !== id));
-      })
-      .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
-        window.alert(message);
-      });
-  };
-
   // Assign appointment priority
   const getPriority = (status) => {
     switch (status) {
-      case "Pending":
+      case "Reviewing":
         return 1;
       case "Accepted":
         return 2;
       case "Declined":
-        return 2;
-      default:
         return 3;
+      default:
+        return 4;
     }
   };
 
@@ -70,15 +57,6 @@ export default function ApptTable() {
             <NavLink className="viewLink" to={`/appointment/${appt.id}/view`}>
               <div className="viewButton">View</div>
             </NavLink>
-            {appt.status === "Spam" && (
-              <button
-                type="button"
-                className="deleteButton"
-                onClick={() => deleteAppt(appt.id)}
-              >
-                Delete
-              </button>
-            )}
           </div>
         );
       },

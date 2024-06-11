@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import "components/HomePage/SupportUs/supportus.css";
+import "components/HomePage/SupportUs/supportus.scss";
 
 const SupportUs = () => {
   return (
     <>
       <section className="extra w-100">
-        <div className="extra-bg"></div>
-        <div className="content-container">
-          <div className="extra-text">
+        <div className="extra__background"></div>
+        <div className="extra__info">
+          <div className="extra-text extra__text">
             <h4>
               Join us in making a difference at BaySide Hospital by lending your
               support today.
@@ -20,7 +20,7 @@ const SupportUs = () => {
               for everyone.
             </p>
           </div>
-          <div className="extra-btn">
+          <div className="extra__btn">
             <Link>Support us</Link>
           </div>
         </div>

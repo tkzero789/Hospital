@@ -9,7 +9,7 @@ import PatientFormDes from "components/SymptomChecker/SymptomCheckerParts/Patien
 import PatientFormResult from "components/SymptomChecker/SymptomCheckerParts/PatientFormResult";
 import SympCheckerModal from "components/SymptomChecker/SymptomCheckerParts/SympCheckerModal";
 import Footer from "components/HomePage/Footer/Footer";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 export default function SymptomChecker() {
   const [patientForm, setPatientForm] = useState({

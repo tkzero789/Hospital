@@ -8,7 +8,7 @@ import RightArrow from "assets/home/right-arrowSVG.svg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 const PatientFormResult = ({ patientResult }) => {
   const [article, setArticle] = useState([]);

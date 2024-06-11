@@ -13,7 +13,7 @@ import Lab1 from "assets/home/lab1.jpg";
 import Ents1 from "assets/home/ents1.jpg";
 import Neuron1 from "assets/home/neuron1.jpg";
 import Footer from "components/HomePage/Footer/Footer";
-import "components/HomePage/Specialty/specialty.css";
+import "components/HomePage/Specialty/specialty.scss";
 
 const SpecialtyDetail = () => {
   const { specialtyId } = useParams();
@@ -425,15 +425,15 @@ const SpecialtyDetail = () => {
         </Breadcrumbs>
       </div>
       <div className="content-container">
-        <div className="c-9">
-          <h1 className="specialty-detail-header">{specialty.name}</h1>
-          <div className="specialty-detail-wrapper">
-            <div className="specialty-detail-intro">{infoSplit}</div>
-            <div className="specialty-detail-img">
+        <div className="c-9 md-12">
+          <h1 className="specialty__detail-header">{specialty.name}</h1>
+          <div className="specialty__detail">
+            <div className="specialty__detail-intro">{infoSplit}</div>
+            <div className="specialty__detail-img">
               <img src={specialty.img} alt="Cardiology" />
             </div>
           </div>
-          <div className="specilty-detail-info">
+          <div className="specialty__detail-info">
             {/* Symptoms */}
             <h3>{specialty.sign.header}</h3>
             <p>{specialty.sign.sub.sub1}</p>
@@ -464,7 +464,7 @@ const SpecialtyDetail = () => {
                 <li key={index}>{item}</li>
               ))}
             </ul>
-            <div className="specialty-detail-summary">
+            <div className="specialty__detail-summary">
               <span>{specialty.summary}</span>
             </div>
           </div>

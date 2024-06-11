@@ -4,7 +4,7 @@ import { Toaster, toast } from "sonner";
 import axios from "axios";
 import ArticleForm from "components/Article/ArticleForm";
 import ArticlePatView from "components/Article/ArticlePatView";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function ViewArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

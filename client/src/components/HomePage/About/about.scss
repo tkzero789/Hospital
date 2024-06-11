@@ -1,7 +1,7 @@
 @use "scss/mixins";
 
 .about {
-  margin-top: 80px;
+  padding-top: 80px;
 
   &__wrapper {
     display: flex;
@@ -23,8 +23,8 @@
     }
 
     &-btn {
-      text-align: end;
-      padding-right: 12px;
+      text-align: start;
+      padding-top: 8px;
 
       a {
         @include mixins.btn;
@@ -54,20 +54,24 @@
       flex-direction: column;
     }
     &__section {
-      text-align: center;
+      text-align: unset;
+      padding: 0 0 0 16px;
 
       &-body {
-        padding: 32px 8px 0 8px;
+        padding: 32px 0 0 0;
         font-size: 16px;
       }
 
       &-btn {
-        text-align: center;
-        padding: 20px 0 0;
+        text-align: start;
+        padding: 26px 0 0 16px;
+        a {
+          width: 50%;
+        }
       }
     }
     &__img {
-      padding-top: 40px;
+      padding: 40px 16px 0;
       width: 100%;
       box-shadow: none;
     }

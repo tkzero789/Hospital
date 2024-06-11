@@ -1,5 +1,5 @@
 import React from "react";
-import "components/SymptomChecker/test.css";
+import "components/SymptomChecker/symptomchecker.css";
 
 const MobileSelectedSympBox = ({ patientForm, dbSymps, handleDelete }) => {
   return (

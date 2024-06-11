@@ -1,17 +1,23 @@
 // Button
-@mixin btn($padding: 8px 12px, $width: auto) {
+@mixin btn(
+  $padding: 8px 12px,
+  $width: auto,
+  $bgColor: var(--btn-blue-1),
+  $borderRadius: var(--border-radius-1),
+  $hoverBgColor: var(--btn-blue-hover-1)
+) {
   width: $width;
   padding: $padding;
+  background-color: $bgColor;
+  border-radius: $borderRadius;
   border: none;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  border-radius: var(--border-radius-1);
   color: var(--text-white-1);
-  background-color: var(--btn-blue-1);
   font-weight: var(--roboto-regular-weight);
 
   &:hover {
-    background-color: var(--btn-blue-hover-1);
+    background-color: $hoverBgColor;
   }
 }

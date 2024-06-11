@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import SymptomForm from "components/SymptomChecker/SymptomForm/SymptomForm";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function CreateSymptom({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

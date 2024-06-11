@@ -13,11 +13,14 @@ function ConfirmModal({ title, body, show, hide, action, isClicked }) {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton={!isClicked} style={{ borderBottom: "none" }}>
+        <Modal.Header
+          closeButton={!isClicked}
+          className="border border-bottom-0"
+        >
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{body}</Modal.Body>
-        <Modal.Footer closeButton={!isClicked} style={{ borderTop: "none" }}>
+        <Modal.Footer closeButton={!isClicked} className="bg-light">
           <Button
             variant="outline-secondary"
             onClick={hide}

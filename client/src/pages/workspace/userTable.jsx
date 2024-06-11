@@ -20,7 +20,7 @@ export default function UserTable({ userRole, userInfos }) {
         setUsers(usersWithIds);
       })
       .catch((err) => {
-        const message = `Có lỗi xảy ra: ${err}`;
+        const message = `Error: ${err}`;
         window.alert(message);
       });
   }, []);

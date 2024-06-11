@@ -3,7 +3,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import HeroSection from "components/HomePage/HeroSection/HeroSection";
 import Options from "components/HomePage/ConvenienceCenter/ConvenienceCenter";
 import About from "components/HomePage/About/About";
-import BKCSystem from "components/HomePage/BaySideSystem/BaySideSystem";
+import BaySideSystem from "components/HomePage/BaySideSystem/BaySideSystem";
 import Specialty from "components/HomePage/Specialty/Specialty";
 import Footer from "components/HomePage/Footer/Footer";
 import SwipeNews from "components/HomePage/SwipeNews/SwipeNews";
@@ -31,7 +31,7 @@ export default function Home(userRole) {
       >
         <HeroSection />
         <Options />
-        <BKCSystem />
+        <BaySideSystem />
         <About />
         <SwipeNews />
         <Specialty />

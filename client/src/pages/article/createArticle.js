@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Toaster, toast } from "sonner";
 import ArticleForm from "components/Article/ArticleForm";
 import ArticlePatView from "components/Article/ArticlePatView";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function CreateArticle({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

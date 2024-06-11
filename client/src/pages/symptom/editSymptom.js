@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 import SymptomForm from "components/SymptomChecker/SymptomForm/SymptomForm";
 
 export default function EditSymptom({ userRole, userInfos }) {

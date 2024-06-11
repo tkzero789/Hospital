@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import SymptomForm from "components/SymptomChecker/SymptomForm/SymptomForm";
-import ConfirmModal from "components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function ApproveSymptom({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");

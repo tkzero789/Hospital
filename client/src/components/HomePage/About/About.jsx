@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HospitalImg from "assets/home/hospitalBuilding.jpg";
-import "components/HomePage/About/testabout.scss";
+import "components/HomePage/About/about.scss";
 
 export default function About() {
   return (
@@ -37,7 +37,7 @@ export default function About() {
               </div>
             </div>
             <div className="c-6 md-12">
-              <div className="about-img about__img">
+              <div className="about__img">
                 <img src={HospitalImg} alt="Hospital Building About Section" />
               </div>
             </div>

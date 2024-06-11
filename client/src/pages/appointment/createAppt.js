@@ -24,7 +24,7 @@ export default function CreateAppt() {
     date: "",
     reason: "",
     createdAt: null,
-    status: "Pending",
+    status: "Reviewing",
   });
   const [otp, setOtp] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +33,6 @@ export default function CreateAppt() {
     e.preventDefault();
     // Mock sending OTP
     console.log("OTP sent");
-    window.alert("Đã gửi mã xác thực, vui lòng kiểm tra tin nhắn");
   }
 
   // Add the appointment

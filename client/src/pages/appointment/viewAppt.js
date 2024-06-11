@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 
 export default function ViewAppt() {
   const userToken = localStorage.getItem("userToken");
@@ -11,9 +12,55 @@ export default function ViewAppt() {
     headers: { Authorization: `Bearer ${userToken}` },
   };
   const { apptId } = useParams();
+
+  const navigate = useNavigate();
   // Edit
   const [isEditable, setIsEditable] = useState(false);
   const [disableEdit, setDisableEdit] = useState(false);
+
+  // State for pop-up modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", body: "" });
+  const [actionType, setActionType] = useState(null);
+  const [statusType, setStatusType] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
+
+  // Show modal
+  const handleShowModal = (event, actionType, statusType, title, body) => {
+    event.preventDefault();
+    setActionType(actionType);
+    setStatusType(statusType);
+    setModalContent({ title, body });
+    setShowModal(true);
+  };
+
+  // Hide modal
+  const handleHideModal = () => {
+    setActionType(null);
+    setModalContent({ title: "", body: "" });
+    setShowModal(false);
+  };
+
+  let action;
+  switch (actionType) {
+    case "delete":
+      action = deleteAppt;
+      break;
+    case "accept":
+      action = () => updateStatus(statusType);
+      break;
+    case "spam":
+      action = () => updateStatus(statusType);
+      break;
+    case "decline":
+      action = () => updateStatus(statusType);
+      break;
+    default:
+      action = null;
+  }
+
+  // Text color based on status
+  const [statusText, setStatusText] = useState(null);
 
   // Form
   const [formInputs, setFormInputs] = useState({
@@ -35,13 +82,24 @@ export default function ViewAppt() {
     axios
       .get(`http://localhost:5000/appointment/${apptId}`)
       .then((res) => {
-        setFormInputs(res.data);
+        const formData = res.data;
+        setFormInputs(formData);
+        if (formData.status === "Accepted") {
+          setStatusText("text-success");
+        } else if (formData.status === "Reviewing") {
+          setStatusText("text-primary");
+        } else if (
+          formData.status === "Declined" ||
+          formData.status === "Spam"
+        ) {
+          setStatusText("text-danger");
+        }
       })
       .catch((err) => {
         const message = `Error: ${err}`;
         window.alert(message);
       });
-  }, [apptId]);
+  }, [apptId, formInputs.status]);
 
   // Handle input change
   const handleInputChange = (event) => {
@@ -64,19 +122,25 @@ export default function ViewAppt() {
         apiConfig
       )
       .then(() => {
-        if (newStatus === "Accepted") {
-          toast.success("Accepted!");
-        } else if (newStatus === "Spam") {
-          toast.error("Mark as spam");
-        } else {
-          toast.error("Declined!");
-        }
+        setIsClicked(true);
       })
       .catch((err) => {
         const message = `Error: ${err}`;
         window.alert(message);
       });
     setFormInputs({ ...formInputs, status: newStatus });
+    setTimeout(() => {
+      if (newStatus === "Accepted") {
+        toast.success("Accepted appointment!");
+      } else if (newStatus === "Spam") {
+        toast.error("Mark as Spam");
+      } else {
+        toast.error("Declined!");
+      }
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }, 500);
   }
 
   // Edit appointment info
@@ -130,8 +194,33 @@ export default function ViewAppt() {
     }
   }
 
+  // Delete Appointment
+  async function deleteAppt() {
+    axios
+      .delete(`http://localhost:5000/appointment/${apptId}`, apiConfig)
+      .then(() => {
+        setIsClicked(true);
+      })
+      .catch((err) => {
+        const message = `Error: ${err}`;
+        window.alert(message);
+      });
+    setTimeout(() => {
+      toast.success("Deleted successfully!");
+      setTimeout(() => {
+        navigate("/appointment-table");
+      }, 1200);
+    }, 500);
+  }
+
   return (
     <div>
+      <h3 className="container text-center text-dark-header pt-5">
+        Appointment Detail
+      </h3>
+      <div className="container text-center pt-2">
+        Status: <span className={`${statusText}`}>{formInputs.status}</span>
+      </div>
       <div className="container p-5">
         <div className="card border-primary-subtle p-5">
           <form>
@@ -246,19 +335,67 @@ export default function ViewAppt() {
               </div>
             </div>
             <div className="row py-3 justify-content-end">
-              <div className="c-2 d-grid gap-2">
-                <Link
-                  className="btn btn-outline-secondary"
-                  to={`/appointment-table`}
+              <div className="c-1 d-grid gap-2">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  disabled={formInputs.status === "Declined"}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "decline",
+                      "Declined",
+                      "Confirm action",
+                      "Are you sure you want to decline this appointment?"
+                    )
+                  }
                 >
-                  Back
-                </Link>
+                  Decline
+                </button>
               </div>
-              <div className="c-2 d-grid gap-2">
+              <div className="c-1 d-grid gap-2 me-auto">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  disabled={formInputs.status === "Spam"}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "spam",
+                      "Spam",
+                      "Confirm action",
+                      "Are you sure you want to mark this appointment as SPAM?"
+                    )
+                  }
+                >
+                  Spam
+                </button>
+              </div>
+              {(formInputs.status === "Spam" ||
+                formInputs.status === "Declined") && (
+                <div className="c-2 d-grid gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={(event) =>
+                      handleShowModal(
+                        event,
+                        "delete",
+                        null,
+                        "Confirm delete",
+                        "Are you sure you want to delete this appointment?"
+                      )
+                    }
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+              <div className="c-1 d-grid gap-2">
                 <button
                   type="button"
                   className={`btn ${
-                    isEditable ? "btn-outline-warning" : "btn-warning"
+                    isEditable ? "btn-outline-secondary" : "btn-warning"
                   }`}
                   disabled={isEditable || disableEdit}
                   onClick={(e) => {
@@ -273,7 +410,7 @@ export default function ViewAppt() {
                 <button
                   type="button"
                   className={`btn ${
-                    !isEditable ? "btn-outline-warning" : "btn-warning"
+                    !isEditable ? "btn-outline-secondary" : "btn-warning"
                   }`}
                   disabled={!isEditable || disableEdit}
                   onClick={(event) => updateApptInfo(event)}
@@ -296,31 +433,17 @@ export default function ViewAppt() {
                       : ""
                   }`}
                   disabled={disableEdit}
-                  onClick={() => updateStatus("Accepted")}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "accept",
+                      "Accepted",
+                      "Confirm acceptance",
+                      "Are you sure you want to accept this appointment?"
+                    )
+                  }
                 >
                   Accept
-                </button>
-              </div>
-            </div>
-            <div className="row py-3">
-              <div className="c-2 d-grid gap-2">
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  disabled={formInputs.status === "Declined"}
-                  onClick={() => updateStatus("Declined")}
-                >
-                  Decline
-                </button>
-              </div>
-              <div className="c-2 d-grid gap-2">
-                <button
-                  type="button"
-                  className="btn btn-outline-danger"
-                  disabled={formInputs.status === "Spam"}
-                  onClick={() => updateStatus("Spam")}
-                >
-                  Mark as spam
                 </button>
               </div>
             </div>
@@ -331,6 +454,14 @@ export default function ViewAppt() {
             }}
             position="top-right"
             richColors
+          />
+          <ConfirmModal
+            title={modalContent.title}
+            body={modalContent.body}
+            show={showModal}
+            hide={handleHideModal}
+            action={action}
+            isClicked={isClicked}
           />
         </div>
       </div>
