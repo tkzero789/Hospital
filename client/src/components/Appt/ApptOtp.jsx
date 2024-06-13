@@ -43,7 +43,7 @@ const ApptOtp = ({
         backdrop="static"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="border border-bottom-0">
           <Modal.Title>Enter your One-time password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -54,7 +54,7 @@ const ApptOtp = ({
             placeholder="Enter"
           />
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="bg-light">
           <Button
             variant="outline-secondary"
             onClick={handleClose}

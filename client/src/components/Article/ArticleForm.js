@@ -85,7 +85,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         <h4 className="text-dark-1 col-3">Disease</h4>
         <input
           type="text"
-          className="form-control border-primary-subtle col"
+          className="form-control border-secondary-subtle col"
           name="diseaseName"
           value={article.diseaseName}
           readOnly={true}
@@ -95,7 +95,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         <h4 className="text-dark-1 col-3">Article title</h4>
         <input
           type="text"
-          className="form-control border-primary-subtle col"
+          className="form-control border-secondary-subtle col"
           name="title"
           placeholder="Enter title for article"
           value={article.title}
@@ -117,7 +117,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="overview"
                   value={info.overview}
                   readOnly={mode === "view"}
-                  className="form-control border-primary-subtle col-9 mb-2"
+                  className="form-control border-secondary-subtle col-9 mb-2"
                   placeholder="Overview"
                   rows="5"
                   onChange={(e) => updateOverviewField(e, "overview")}
@@ -126,7 +126,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                 <input
                   type="file"
                   name="image"
-                  className="form-control border-primary-subtle col-9 mb-2"
+                  className="form-control border-secondary-subtle col-9 mb-2"
                   disabled={mode === "view"}
                   placeholder="Upload image"
                   onChange={(e) => uploadOverviewImage(e, 0)}
@@ -143,7 +143,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="detail"
                   value={info.detail}
                   readOnly={mode === "view"}
-                  className="form-control border-primary-subtle col-9"
+                  className="form-control border-secondary-subtle col-9"
                   placeholder="Details"
                   rows="10"
                   onChange={(e) => updateOverviewField(e, "detail")}
@@ -167,7 +167,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="overview"
                   value={treatment.overview}
                   readOnly={mode === "view"}
-                  className="form-control border-primary-subtle col-9 mb-2"
+                  className="form-control border-secondary-subtle col-9 mb-2"
                   placeholder="Overview"
                   rows="5"
                   onChange={(e) => updateTreatmentField(e, "overview")}
@@ -176,7 +176,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                 <input
                   type="file"
                   name="image"
-                  className="form-control border-primary-subtle col-9 mb-2"
+                  className="form-control border-secondary-subtle col-9 mb-2"
                   disabled={mode === "view"}
                   placeholder="Upload image"
                   onChange={(e) => uploadTreatmentImage(e, 0)}
@@ -193,7 +193,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="detail"
                   value={treatment.detail}
                   readOnly={mode === "view"}
-                  className="form-control border-primary-subtle col-9"
+                  className="form-control border-secondary-subtle col-9"
                   placeholder="Details"
                   rows="10"
                   onChange={(e) => updateTreatmentField(e, "detail")}

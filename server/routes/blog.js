@@ -91,6 +91,7 @@ blogRoutes
       const db_connect = await dbo.getDb("hospital");
       const myobj = {
         id: req.body.id,
+        tag: req.body.tag,
         title: req.body.title,
         intro: req.body.intro,
         image: req.body.image,

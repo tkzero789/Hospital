@@ -28,9 +28,7 @@ const ApptSuccessMsg = () => {
                 <Link to="/view-blog-list">
                   Read latest news about health and hospital's activities
                 </Link>
-                <Link to="/symptom-checker">
-                  Give it a try - Online health check
-                </Link>
+                <Link to="/symptom-checker">Give it a try - Health check</Link>
                 <Link to="/appt-detail-guest">
                   Check your appointment status
                 </Link>

@@ -25,9 +25,15 @@
 }
 
 /* SYMPTOM CHECKER PAGE */
+/* Step 1 */
+.symp-checker {
+  background-color: whitesmoke;
+  padding-bottom: 40px;
+}
+
 .symp-checker h3 {
-  margin-top: 40px;
-  color: var(--text-blue-2);
+  padding-top: 40px;
+  color: var(--text-blue-3);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -38,7 +44,7 @@
 .symp-checker-steps h2 {
   padding: 16px 0 8px 0;
   font-size: 24px;
-  color: var(--text-blue-2);
+  color: var(--text-dark-sub-header);
   font-weight: var(--roboto-medium-weight);
 }
 
@@ -63,8 +69,8 @@
 }
 
 .symp-checker-board .card {
-  border: 1px solid var(--text-blue-2);
   padding: 36px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .steps-info-section h5 {
@@ -78,7 +84,8 @@
 }
 
 .select-age input {
-  width: 40%;
+  text-align: center;
+  width: 20%;
   margin: 0 auto;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -90,7 +97,7 @@
 }
 
 .select-gender select {
-  width: 40%;
+  width: 20%;
   margin: 0 auto;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -110,6 +117,26 @@
 
 .steps-back-button button {
   width: 200px;
+  color: var(--text-dark-1);
+  border: 1px solid #c4c4c4;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+}
+
+.steps-back-button button:hover {
+  background-color: #b8b8b8;
+}
+
+.steps-back-button button:disabled {
+  background-color: #ffffff;
+  pointer-events: none;
+}
+
+.steps-next-button button:disabled {
+  border: 1px solid #c4c4c4 !important;
+  background-color: #ffffff !important;
+  color: var(--text-dark-1) !important;
 }
 
 .steps-next-button {
@@ -118,8 +145,19 @@
 
 .steps-next-button button {
   width: 200px;
+  color: var(--text-white-1);
+  background-color: var(--btn-blue-1);
+  border: 1px solid #c4c4c4;
+  border-radius: var(--border-radius-1);
+  padding: 8px 12px;
 }
 
+.steps-next-button button:hover {
+  background-color: var(--btn-blue-hover-1);
+  color: var(--text-white-1);
+}
+
+/* Step 2 */
 .symp-big-box {
   width: 100%;
   height: 580px;
@@ -678,6 +716,21 @@
   font-weight: var(--roboto-regular-weight);
 }
 
+/* Step 3 */
+.symp-checkbox {
+  width: fit-content;
+  /* box-shadow: var(--box-shadow-4); */
+  box-shadow: rgba(67, 71, 85, 0.5) 0px 0px 0.1em,
+    rgba(90, 125, 188, 0.05) 0px 0.1em 1em;
+  border-radius: 100px;
+  padding: 8px;
+  margin-right: 16px;
+}
+
+.symp-checkbox.checked {
+  background-color: #f0f0f0;
+}
+
 /* Final results - Step 4 */
 .symp-step-4 {
   display: flex;
@@ -700,12 +753,25 @@
 
 .disease-list .disease-list-item {
   position: relative;
+  cursor: pointer;
   width: 95%;
   padding: 8px;
   background-color: #ecf5ff;
   border: 1px solid var(--border-gray-1);
   border-radius: var(--border-radius-1);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.disease-list .disease-list-item p:first-child {
+  font-weight: var(--roboto-medium-weight);
+}
+
+.disease-list .disease-list-item p:nth-child(2) {
+  color: var(--text-dark-body);
+}
+
+.disease-list .disease-list-item p:nth-child(3) {
+  color: var(--text-dark-body);
 }
 
 .disease-list .disease-list-item img {
@@ -762,11 +828,10 @@
 .main-article-wrapper .main-article-overview,
 .main-article-wrapper .main-article-treatment {
   color: var(--text-dark-sub-header);
-  padding-bottom: 8px;
 }
 
 .main-article-wrapper .main-article-treatment {
-  padding-top: 16px;
+  padding-top: 24px;
 }
 
 .main-article-detail {
@@ -779,15 +844,20 @@
   font-weight: var(--roboto-regular-weight);
 }
 
+.m-disease-list {
+  display: none;
+}
+
+.m-back-list {
+  display: none;
+}
+
 /* MOBILE RESPONSIVE */
 @media only screen and (max-width: 767px) {
   /* Symptom Checker */
+  /* Step 2 */
   .m-symp-name {
     display: block;
-  }
-
-  h5 {
-    text-align: center;
   }
 
   .active-switch-button {
@@ -945,8 +1015,18 @@
 
   /* Symptom Checker */
   /* Step 1 */
+  .symp-checker {
+    background-color: transparent;
+    padding-bottom: 80px;
+  }
+
   .symp-checker h3 {
-    margin-top: 80px;
+    padding-top: 80px;
+  }
+
+  .symp-checker h4 {
+    font-size: 18px;
+    font-weight: var(--roboto-regular-weight);
   }
 
   .symp-checker-board {
@@ -958,6 +1038,8 @@
   }
 
   .steps-info-section h5 {
+    font-size: 16px;
+    font-weight: var(--roboto-regular-weight);
     padding: 0;
   }
 
@@ -1008,13 +1090,12 @@
   }
 
   .steps-button-wrapper {
-    flex-direction: column;
-    justify-content: center;
-    padding: 8px 16px 36px;
+    justify-content: space-between;
+    padding: 8px 16px;
   }
 
   .steps-back-button {
-    padding-bottom: 16px;
+    width: 45%;
   }
 
   .steps-back-button button {
@@ -1022,7 +1103,8 @@
   }
 
   .steps-next-button {
-    padding: 0;
+    padding-left: 0;
+    width: 45%;
   }
 
   .steps-next-button button {
@@ -1033,6 +1115,7 @@
   .symp-checker-board .card {
     padding: 4px;
     border: none;
+    box-shadow: none;
   }
 
   .symp-big-box {
@@ -1050,5 +1133,111 @@
 
   .symp-right-box {
     display: none;
+  }
+
+  /* Step 3 */
+  .symp-checkbox {
+    padding: 12px 16px;
+    margin: 0 0 8px;
+  }
+
+  /* Step 4 */
+  .symp-step-4 {
+    flex-direction: column;
+  }
+
+  .symp-step-4 .disease-list {
+    display: none;
+  }
+
+  .symp-step-4 .main-article-wrapper {
+    padding: 16px 0 28px;
+  }
+
+  .m-disease-list {
+    position: fixed;
+    margin-top: 58px;
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 58px);
+    z-index: 10;
+    display: block;
+    visibility: visible;
+    transition: top 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  .m-disease-list.hide {
+    top: 80%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .m-disease-list h6 {
+    text-align: center;
+    padding: 16px 0;
+    font-size: 18px;
+    color: var(--text-white-1);
+    font-weight: var(--roboto-regular-weight);
+    background-color: var(--bg-blue-2);
+  }
+
+  .m-disease-list .m-disease-list-item {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    margin: 4px;
+    background-color: #ecf5ff;
+    border: 1px solid var(--border-gray-1);
+    box-shadow: var(--box-shadow-1);
+  }
+
+  .m-disease-list .m-disease-list-item p:first-child {
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .m-disease-list .m-disease-list-item p:nth-child(2) {
+    color: var(--text-dark-body);
+  }
+
+  .m-disease-list .m-disease-list-item p:nth-child(3) {
+    color: var(--text-dark-body);
+  }
+
+  .m-disease-list .m-disease-list-item img {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    width: 30px;
+    transform: translateY(-50%);
+  }
+
+  .m-back-list {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: var(--text-white-1);
+    background-color: var(--bg-blue-2);
+    z-index: 10;
+    border: none;
+  }
+
+  .m-back-list div {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4px;
+  }
+
+  .m-disease-close {
+    position: absolute;
+    color: var(--text-white-1);
+    background-color: var(--bg-blue-2);
+    bottom: 0;
+    width: 100%;
+    padding: 8px 0;
+    border: none;
   }
 }

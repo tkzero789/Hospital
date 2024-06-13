@@ -110,3 +110,10 @@
 .news-btn-link:hover {
   background-color: var(--btn-blue-hover-1);
 }
+
+/* Mobile phones */
+@media only screen and (max-width: 767px) {
+  .news-btn-link {
+    width: 50%;
+  }
+}

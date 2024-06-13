@@ -18,11 +18,7 @@ export default function SymptomChecker() {
     chosenSymps: [],
     chosenDescs: [],
   });
-  const [feedback, setFeedback] = useState({
-    stars: 0,
-    comment: "",
-    isSent: false,
-  });
+
   // get all symptoms from DB
   const [dbSymps, setDbSymps] = useState([]);
   // filter symptoms chosen in process from dbSymps
@@ -100,20 +96,23 @@ export default function SymptomChecker() {
         />
       );
     } else {
-      return (
-        <PatientFormResult
-          patientResult={patientResult}
-          feedback={feedback}
-          setFeedback={setFeedback}
-        />
-      );
+      return <PatientFormResult patientResult={patientResult} />;
     }
   };
 
   const handleNext = () => {
     setPrevStep(step);
     setStep((step) => step + 1);
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    let scrollPosition = 0;
+
+    // adjust scroll position based on viewport width
+    if (window.innerWidth <= 767) {
+      scrollPosition = 0;
+    } else {
+      scrollPosition = 130;
+    }
+
+    window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
   };
 
   const checkHandleNext = () => {
@@ -212,7 +211,16 @@ export default function SymptomChecker() {
   const handlePrev = () => {
     setPrevStep(step);
     setStep((step) => step - 1);
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    let scrollPosition = 0;
+
+    // adjust scroll position based on viewport width
+    if (window.innerWidth <= 767) {
+      scrollPosition = 0;
+    } else {
+      scrollPosition = 130;
+    }
+
+    window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
   };
 
   const StepName = (props) => {
@@ -259,13 +267,13 @@ export default function SymptomChecker() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Online health check</title>
+          <title>Health check</title>
         </Helmet>
       </HelmetProvider>
       {step === 1 && <SympCheckerModal />}
       <div className="symp-checker w-100">
         <div className="content-container">
-          <h3 className="text-center">Online health check</h3>
+          <h3 className="text-center">Health check</h3>
           <div className="symp-checker-board">
             <div className="card">
               <div className="progress-bar-step border rounded">
@@ -278,7 +286,6 @@ export default function SymptomChecker() {
                   <div className="steps-back-button">
                     <button
                       type="button"
-                      className="btn btn-outline-secondary"
                       disabled={step === 1}
                       onClick={() => {
                         if (step === 2) {
@@ -293,13 +300,12 @@ export default function SymptomChecker() {
                   </div>
                   <div className="steps-next-button">
                     {step === finalStep ? (
-                      <Link
+                      <button
                         type="button"
-                        className="btn btn-primary"
-                        to={`/appt-request`}
+                        onClick={() => window.location.reload()}
                       >
-                        Schedule an appointment
-                      </Link>
+                        Start over
+                      </button>
                     ) : (
                       <>
                         <Toaster
@@ -311,7 +317,7 @@ export default function SymptomChecker() {
                         />
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn"
                           disabled={
                             (step === 1 &&
                               (!patientForm.age || !patientForm.gender)) ||
@@ -323,7 +329,7 @@ export default function SymptomChecker() {
                           }
                           onClick={checkHandleNext}
                         >
-                          {step === finalStep - 1 ? "See results" : "Next"}
+                          Next
                         </button>
                       </>
                     )}

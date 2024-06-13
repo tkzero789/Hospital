@@ -34,7 +34,7 @@ export default function BlogTable({ userRole, userInfos }) {
         return 1;
       case "Pending Create":
         return 2;
-      case "Accepted":
+      case "Pending Update":
         return 3;
       default:
         return 4;
@@ -75,15 +75,16 @@ export default function BlogTable({ userRole, userInfos }) {
   ];
 
   const columns = [
+    { field: "number", headerName: "No.", width: 50 },
     {
       field: "title",
       headerName: "Title",
       width: 400,
     },
+    { field: "tag", headerName: "Category", width: 180 },
     { field: "author", headerName: "Author", width: 200 },
     { field: "doctorID", headerName: "Doctor ID", width: 120 },
     { field: "createdAt", headerName: "Created on", width: 150 },
-
     {
       field: "status",
       headerName: "Status",

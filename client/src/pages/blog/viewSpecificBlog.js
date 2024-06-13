@@ -61,11 +61,11 @@ const ViewSpecificBlog = () => {
           <div className="content-container individual-blog">
             <div key={blog.id}>
               <h2>{blog.title}</h2>
+              <Link className="blog-tag">{blog.tag}</Link>
               <div className="blog-author-info">
                 <div className="d-flex flex-column">
                   <div className="text-secondary-1">
-                    Author:{" "}
-                    <span className="text-blue-1 fw-bold">{blog.author}</span>
+                    By: <span className="text-blue-3">{blog.author}</span>
                   </div>
                   <span className="text-secondary-1">
                     Last updated: {blog.createdAt}
@@ -81,12 +81,6 @@ const ViewSpecificBlog = () => {
                     rel="noopener noreferrer"
                   >
                     <i className="bi bi-facebook"></i>
-                  </Link>
-                  <Link
-                    className="text-decoration-none text-danger fs-3 me-2"
-                    to="#"
-                  >
-                    <i className="bi bi-envelope-fill"></i>
                   </Link>
                   <Link
                     className="text-decoration-none text-black fs-3 me-2"
@@ -192,14 +186,7 @@ const ViewSpecificBlog = () => {
                       })}
                     </ol>
                   );
-                } else if (item.type === "image") {
-                  const imgKey = `${keyPrefix}-img`;
-                  return (
-                    <div className="blog-img" key={imgKey}>
-                      <img src={item.attrs.src} alt={item.attrs.alt || ""} />
-                    </div>
-                  );
-                } else if (item.type === "heading" && item.attrs.level === 4) {
+                } else if (item.type === "heading" && item.attrs.level === 3) {
                   return (
                     <h4 key={keyPrefix}>
                       {item.content?.map((textObj, textObjIndex) => {
@@ -207,6 +194,13 @@ const ViewSpecificBlog = () => {
                         return <span key={key}>{textObj.text}</span>;
                       })}
                     </h4>
+                  );
+                } else if (item.type === "image") {
+                  const imgKey = `${keyPrefix}-img`;
+                  return (
+                    <div className="blog-img" key={imgKey}>
+                      <img src={item.attrs.src} alt={item.attrs.alt || ""} />
+                    </div>
                   );
                 }
                 return null;

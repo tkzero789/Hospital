@@ -215,7 +215,7 @@ export default function SymptomForm({
               <select
                 name="categoryName"
                 value={cat.categoryName}
-                className="form-select border-secondary col"
+                className="form-select border-secondary-subtle col"
                 disabled={
                   mode === "view" ||
                   (mode === "doctor edit" && origCats.includes(cat.id))

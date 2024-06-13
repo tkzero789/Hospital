@@ -68,7 +68,7 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
           <h5 className="col-2 text-dark-1 fw-reg">Age</h5>
           <div className="col-3">
             <Dropdown className="col-12" autoClose="outside">
-              <Dropdown.Toggle className="form-select border border-black c-12 fw-reg btn-light">
+              <Dropdown.Toggle className="form-select border border-black c-12 fw-reg btn-light bg-white">
                 Select age
               </Dropdown.Toggle>
               <Dropdown.Menu className="w-100">
@@ -102,7 +102,7 @@ const DiseaseAgeGen = ({ disease, setDisease }) => {
           <h5 className="col-2 text-dark-1 fw-reg">Gender</h5>
           <div className="col-3">
             <Dropdown className=" col-12" autoClose="outside">
-              <Dropdown.Toggle className="form-select border border-black c-12 fw-reg btn-light">
+              <Dropdown.Toggle className="form-select border border-black c-12 fw-reg btn-light bg-white">
                 Select gender
               </Dropdown.Toggle>
               <Dropdown.Menu className="w-100">

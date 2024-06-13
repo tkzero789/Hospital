@@ -9,11 +9,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "components/SymptomChecker/symptomchecker.css";
+import MobileDiseaseList from "../MobileDiseaseList/MobileDiseaseList";
 
 const PatientFormResult = ({ patientResult }) => {
   const [article, setArticle] = useState([]);
   const [otherArticles, setOtherArticles] = useState([]);
   const [selectedDiseaseIndex, setSelectedDiseaseIndex] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
   // Fetch articles
@@ -59,17 +61,52 @@ const PatientFormResult = ({ patientResult }) => {
   // Switch index
   async function handleDiseaseClick(index) {
     setSelectedDiseaseIndex(index);
+    setIsClicked(true);
+    let scrollPosition = 0;
+
+    // adjust scroll position based on viewport width
+    if (window.innerWidth <= 767) {
+      scrollPosition = 0;
+    } else {
+      scrollPosition = 130;
+    }
+
+    window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
   }
 
   return (
     <div>
       <div className="pb-5">
         <div className="text-center">
-          <h4 className="text-blue-2">Results based on your provided info</h4>
+          <h4 className="text-dark-sub-header">
+            Results based on your provided info
+          </h4>
         </div>
+        <button
+          className="m-back-list"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsClicked(false);
+          }}
+        >
+          <div>
+            <span>
+              <i className="bi bi-caret-up-fill"></i>
+            </span>
+            <span>Choose different conditions</span>
+          </div>
+        </button>
+        <MobileDiseaseList
+          patientResult={patientResult}
+          selectedDiseaseIndex={selectedDiseaseIndex}
+          handleDiseaseClick={handleDiseaseClick}
+          RightArrow={RightArrow}
+          isClicked={isClicked}
+          setIsClicked={setIsClicked}
+        />
         <div className="symp-step-4">
           {/* Diseases list */}
-          <div className="c-4 disease-list">
+          <div className="c-4 md-12 disease-list">
             <h6>Conditions that match your symptoms</h6>
             {patientResult
               .filter((i) => i.status === "Approved")
@@ -82,8 +119,8 @@ const PatientFormResult = ({ patientResult }) => {
                   onClick={() => handleDiseaseClick(index)}
                 >
                   <p>{i.name}</p>
-                  <p>{i.medSpecialty}</p>
-                  <p>{String(i.matchedScore)}</p>
+                  <p>Specialty: {i.medSpecialty}</p>
+                  <p>Matched points: {String(i.matchedScore)}</p>
                   {selectedDiseaseIndex === index ? (
                     <span>Selected</span>
                   ) : (
@@ -93,7 +130,7 @@ const PatientFormResult = ({ patientResult }) => {
               ))}
           </div>
           {/* Main article */}
-          <div className="main-article c-8 d-flex flex-column">
+          <div className="main-article c-8 md-12 d-flex flex-column">
             <div className="main-article-wrapper">
               {loading
                 ? Array(10)
@@ -109,9 +146,9 @@ const PatientFormResult = ({ patientResult }) => {
                     ))
                 : article
                     .filter((a) => a.isDisplay === true)
-                    .map((i) =>
+                    .map((i, index) =>
                       i.status === "Approved" ? (
-                        <>
+                        <React.Fragment key={index}>
                           <div className="main-article-title">
                             <h5>{i.title}</h5>
                           </div>
@@ -130,7 +167,7 @@ const PatientFormResult = ({ patientResult }) => {
                           <p className="main-article-detail">
                             {i.treatments[0].detail}
                           </p>
-                        </>
+                        </React.Fragment>
                       ) : (
                         <div className="position-absolute top-50 start-50 translate-middle">
                           Sorry, but it appears that the information regarding

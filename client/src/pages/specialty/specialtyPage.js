@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { Breadcrumbs, Typography } from "@mui/material";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import HeartSVG from "assets/home/heartSVG.svg";
 import BoneSVG from "assets/home/boneSVG.svg";
 import MedicationSVG from "assets/home/medicationSVG.svg";
@@ -21,18 +19,6 @@ const SpecialtyPage = () => {
           <title>Specialty</title>
         </Helmet>
       </HelmetProvider>
-      <div className="content-container">
-        <Breadcrumbs
-          className="breadcrumbs"
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link className="text-secondary" to="/home">
-            Home
-          </Link>
-          ,<Typography className="text-dark">Specialty</Typography>,
-        </Breadcrumbs>
-      </div>
       <div className="specialty-list w-100">
         <div className="content-container">
           <h1>Specialty</h1>

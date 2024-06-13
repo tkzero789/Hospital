@@ -166,7 +166,7 @@ export default function CreateArticle({ userRole, userInfos }) {
             Create new article
           </h3>
           <div className="container p-5">
-            <div className="card border-primary-subtle p-5">
+            <div className="card bg-light p-5">
               <form>
                 <div>
                   {

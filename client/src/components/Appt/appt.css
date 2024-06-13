@@ -199,7 +199,7 @@
 .appt-modal-data span {
   color: #2054a1;
   font-weight: var(--roboto-medium-weight);
-  width: 220px;
+  width: 280px;
 }
 
 .appt-modal-data p {
@@ -207,7 +207,7 @@
   font-weight: var(--roboto-regular-weight);
   white-space: normal;
   overflow-wrap: break-word;
-  width: calc(100% - 220px);
+  width: calc(100% - 280px);
 }
 
 .appt-modal-btn {
@@ -222,7 +222,6 @@
   border-radius: var(--border-radius-1);
   padding: 8px 12px;
   width: 150px;
-
   font-weight: var(--roboto-regular-weight);
 }
 
@@ -449,6 +448,7 @@
 .appt-detail-item {
   margin-bottom: 16px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: var(--border-radius-1);
 }
 
 .appt-detail-item-wrapper {
@@ -476,7 +476,7 @@
   width: 20%;
 }
 
-.appt-status-pending {
+.appt-status-reviewing {
   color: goldenrod;
   background-color: rgba(219, 211, 154, 0.5);
   padding: 0 4px;
@@ -597,6 +597,7 @@
 
   .appt-modal-data span {
     display: block;
+    width: 100%;
     font-size: 20px;
   }
 
@@ -630,7 +631,23 @@
     margin: 0;
   }
 
+  .appt-success {
+    box-shadow: none;
+  }
+
+  .appt-success-wrapper {
+    padding: 8px 8px;
+  }
+
   /* CHECKING APPOINTMENT INFO BY PHONE NUMBER (GUEST) */
+  .appt-detail {
+    box-shadow: none;
+  }
+
+  .appt-detail-wrapper {
+    padding: 8px 8px;
+  }
+
   .appt-detail-item {
     margin-bottom: 20px;
   }

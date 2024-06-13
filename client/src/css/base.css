@@ -30,6 +30,7 @@
   --bg-blue-1: #006da8;
   --bg-blue-2: #003755;
   --bg-blue-3: #ecf5ff;
+  --bg-blue-4: #0044ff;
 
   /* Button */
   --btn-blue-1: #3498db;
@@ -54,6 +55,8 @@
   --box-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   --box-shadow-2: 2px 4px 12px #00000014;
   --box-shadow-3: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --box-shadow-4: rgba(0, 0, 0, 0.07) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 * {

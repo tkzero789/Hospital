@@ -161,7 +161,7 @@ export default function ViewDisease({ userRole, userInfos }) {
   return (
     <div>
       <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
+        <div className="card p-5 bg-light">
           <form>
             <div>
               {
@@ -205,7 +205,7 @@ export default function ViewDisease({ userRole, userInfos }) {
               </div>
               <div className="c-2 d-grid gap-2">
                 <NavLink
-                  className="btn btn-outline-primary"
+                  className="btn btn-primary"
                   to={`/disease/${diseaseId}/article-table`}
                 >
                   Articles

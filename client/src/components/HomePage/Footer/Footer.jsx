@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import BaySideLogo from "assets/logo/BaySide-logo-2.svg";
 import "components/HomePage/Footer/footer.scss";
 
@@ -34,8 +34,15 @@ const footerLinks3 = [
 ];
 
 export default function Footer() {
+  const location = useLocation();
+  const check = location.pathname === "/symptom-checker";
+
   return (
-    <footer className="footer w-100 footer-bg footer__background">
+    <footer
+      className={`footer w-100 footer-bg footer__background ${
+        check ? "footer__padding-0" : ""
+      }`}
+    >
       <div className="content-container">
         <div className="footer__wrapper">
           <div className="c-3 md-12">

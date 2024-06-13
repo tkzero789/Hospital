@@ -190,7 +190,7 @@ export default function EditArticle({ userRole, userInfos }) {
     <div>
       <h3 className="container text-center text-body pt-5">Edit article</h3>
       <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
+        <div className="card p-5 bg-light">
           <form>
             <div>
               {

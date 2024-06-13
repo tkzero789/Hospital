@@ -128,7 +128,7 @@ export default function EditSymptom({ userRole, userInfos }) {
     <div>
       <h3 className="container text-center text-body pt-5">Edit symptom</h3>
       <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
+        <div className="card p-5 bg-light">
           <form>
             <div>
               <SymptomForm

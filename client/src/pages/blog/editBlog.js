@@ -10,68 +10,7 @@ import axios from "axios";
 import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
 import "pages/blog/texteditor.scss";
 import "pages/blog/blog.css";
-
-// Menu bar
-const MenuBar = ({ editor }) => {
-  if (!editor) {
-    return null;
-  }
-
-  return (
-    <>
-      <div className="menu-bar">
-        <button
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          disabled={!editor.can().chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "is-active" : ""}
-        >
-          <i className="bi bi-type-bold"></i>
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          disabled={!editor.can().chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "is-active" : ""}
-        >
-          <i className="bi bi-type-italic"></i>
-        </button>
-        <button
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 4 }).run()
-          }
-          className={
-            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
-          }
-        >
-          H4
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "is-active" : ""}
-        >
-          <i className="bi bi-list-ul"></i>
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive("orderedList") ? "is-active" : ""}
-        >
-          <i className="bi bi-list-ol"></i>
-        </button>
-        <button
-          onClick={() => editor.chain().focus().undo().run()}
-          disabled={!editor.can().chain().focus().undo().run()}
-        >
-          <i className="bi bi-arrow-counterclockwise"></i>
-        </button>
-        <button
-          onClick={() => editor.chain().focus().redo().run()}
-          disabled={!editor.can().chain().focus().redo().run()}
-        >
-          <i className="bi bi-arrow-clockwise"></i>
-        </button>
-      </div>
-    </>
-  );
-};
+import MenuBar from "components/Blog/MenuBar";
 
 const EditBlog = ({ userInfos }) => {
   const userToken = localStorage.getItem("userToken");
@@ -161,7 +100,7 @@ const EditBlog = ({ userInfos }) => {
     ).padStart(2, "0")}/${now.getFullYear()}`;
     const updatedBlog = {
       ...blog,
-      status: "Pending Create",
+      status: "Pending Update",
       createdAt: formattedTime,
     };
 
@@ -188,6 +127,11 @@ const EditBlog = ({ userInfos }) => {
   // Value from title input
   const onChangeTitle = (e) => {
     setBlog({ ...blog, title: e.target.value });
+  };
+
+  // Value from tag select
+  const onChangeTag = (e) => {
+    setBlog({ ...blog, tag: e.target.value });
   };
 
   // Value from intro input
@@ -252,6 +196,24 @@ const EditBlog = ({ userInfos }) => {
         <div className="text-editor-title">
           <label htmlFor="title">Title:</label>
           <textarea value={blog.title} onChange={onChangeTitle} />
+        </div>
+        <div className="text-editor-tag">
+          <label htmlFor="category">Category:</label>
+          <select value={blog.tag} onChange={onChangeTag}>
+            <option value="">Select category</option>
+            <option value="Children's Health">Children's Health</option>
+            <option value="Diet & Food">Diet & Food</option>
+            <option value="Exercise & Fitness">Exercise & Fitness</option>
+            <option value="Mental Health">Mental Health</option>
+            <option value="Parenting">Parenting</option>
+            <option value="Pregnancy & Childbirth">
+              Pregnacy & Childbirth
+            </option>
+            <option value="Primary Care">Primary Care</option>
+            <option value="Sex & Relationship">Sex & Relationship</option>
+            <option value="Wellness">Wellness</option>
+            <option value="Women's Care">Women's Care</option>
+          </select>
         </div>
         <div className="text-editor-intro">
           <label htmlFor="intro">Introduction:</label>

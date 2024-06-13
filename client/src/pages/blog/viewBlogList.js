@@ -134,10 +134,15 @@ const ViewBlogList = () => {
                         </div>
                         <div className="c-9 md-8">
                           <div className="blog-link-and-intro">
-                            <Link to={`/view-blog-list/${blog.id}`}>
-                              {blog.title
-                                ? blog.title
-                                : "Does not have a title"}
+                            <div className="d-block">
+                              <Link to={`/view-blog-list/${blog.id}`}>
+                                {blog.title
+                                  ? blog.title
+                                  : "Does not have a title"}
+                              </Link>
+                            </div>
+                            <Link>
+                              {blog.tag ? blog.tag : "Does not have a tag"}
                             </Link>
                             <span>
                               {blog.intro

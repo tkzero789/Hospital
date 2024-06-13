@@ -195,7 +195,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
             Article
           </h3>
           <div className="container p-5">
-            <div className="card border-primary-subtle p-5">
+            <div className="card p-5 bg-light">
               <form>
                 <div>
                   {

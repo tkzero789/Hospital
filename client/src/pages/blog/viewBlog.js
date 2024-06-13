@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import ConfirmModal from "components/UI/ConfirmModal/ConfirmModal";
@@ -145,10 +145,11 @@ export default function ViewBlog({ userRole, userInfos }) {
       <div className="content-container individual-blog">
         <div key={blog.id}>
           <h2>{blog.title}</h2>
+          <Link className="blog-tag pe-none">{blog.tag}</Link>
           <div className="blog-author-info">
             <div className="d-flex flex-column">
               <div className="text-secondary-1">
-                By: <span className="text-blue-1 fw-bold">{blog.author}</span>
+                By: <span className="text-blue-3">{blog.author}</span>
               </div>
               <span className="text-secondary-1">
                 Last updated: {blog.createdAt}
@@ -227,7 +228,7 @@ export default function ViewBlog({ userRole, userInfos }) {
                   ))}
                 </ol>
               );
-            } else if (item.type === "heading" && item.attrs.level === 4) {
+            } else if (item.type === "heading" && item.attrs.level === 3) {
               return (
                 <h4 key={`heading-${index}`}>
                   {item.content?.map((textObj, textObjIndex) => (

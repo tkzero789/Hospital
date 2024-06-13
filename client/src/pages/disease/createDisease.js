@@ -220,12 +220,12 @@ export default function CreateDisease({ userRole, userInfos }) {
         Create disease
       </h3>
       <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
+        <div className="card bg-light p-5">
           <form>
             <div>{StepDisplay()}</div>
 
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 {step === 1 ? (
                   <button
                     type="button"
@@ -244,7 +244,7 @@ export default function CreateDisease({ userRole, userInfos }) {
                   </button>
                 )}
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-primary"

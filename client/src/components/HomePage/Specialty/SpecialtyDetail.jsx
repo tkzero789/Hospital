@@ -414,14 +414,13 @@ const SpecialtyDetail = () => {
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
         >
-          <Link className="text-secondary" to="/home">
+          <Link className="text-blue-2" to="/home">
             Home
           </Link>
           ,
-          <Link className="text-secondary" to="/specialty-page">
+          <Link className="text-blue-2" to="/specialty-page">
             Specialty
           </Link>
-          ,<Typography className="text-dark">{specialty.name}</Typography>,
         </Breadcrumbs>
       </div>
       <div className="content-container">

@@ -29,8 +29,6 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
     fetchData();
   }, [diseaseId]);
 
-  console.log(articles);
-
   const actionColumn = [
     {
       field: "action",
@@ -48,16 +46,6 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
                 <div className="viewButton">View</div>
               </NavLink>
             )}
-
-            {article.status === "Approved" &&
-              userInfos.doctorID === params.row.createInfos.doctorID && (
-                <NavLink
-                  className="viewLink"
-                  to={`/disease/${article.diseaseId}/article/${article.id}/edit`}
-                >
-                  <div className="viewButton">Edit</div>
-                </NavLink>
-              )}
             {article.status !== "Approved" && (
               <NavLink
                 className="viewLink"

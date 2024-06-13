@@ -359,9 +359,9 @@ export default function PatientFormSymptoms({
   return (
     <div>
       <div className="pb-2 pb-md-5 text-center">
-        <h4 className="text-blue-1 fw-med">Select symptoms</h4>
+        <h4 className="text-dark-header fw-med pb-4">Select symptoms</h4>
       </div>
-      <h5 className="card-title text-blue-1 fw-med text-blue-2">
+      <h5 className="card-title text-blue-3 fw-med d-none d-md-block">
         Search symptoms
       </h5>
       <div className="switch-button">

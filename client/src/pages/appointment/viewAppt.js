@@ -219,17 +219,18 @@ export default function ViewAppt() {
         Appointment Detail
       </h3>
       <div className="container text-center pt-2">
-        Status: <span className={`${statusText}`}>{formInputs.status}</span>
+        Status:{" "}
+        <span className={`${statusText} fw-bold`}>{formInputs.status}</span>
       </div>
       <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
+        <div className="card p-5 bg-light">
           <form>
             <div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Name</h5>
+                <h5 className="text-dark-header col-3">Name</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="fullName"
                   value={formInputs.fullName}
                   onChange={handleInputChange}
@@ -238,10 +239,10 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Phone number</h5>
+                <h5 className="text-dark-header col-3">Phone number</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="phoneNumber"
                   value={formInputs.phoneNumber}
                   onChange={handleInputChange}
@@ -250,10 +251,10 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Email</h5>
+                <h5 className="text-dark-header col-3">Email</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="email"
                   value={formInputs.email}
                   onChange={handleInputChange}
@@ -262,10 +263,10 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Date of birth</h5>
+                <h5 className="text-dark-header col-3">Date of birth</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="dob"
                   value={formatDate(formInputs.dob)}
                   onChange={handleInputChange}
@@ -274,10 +275,10 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Gender</h5>
+                <h5 className="text-dark-header col-3">Gender</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="gender"
                   value={formInputs.gender}
                   onChange={handleInputChange}
@@ -286,9 +287,9 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Service</h5>
+                <h5 className="text-dark-header col-3">Service</h5>
                 <select
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="need"
                   value={formInputs.need}
                   onChange={handleInputChange}
@@ -300,10 +301,10 @@ export default function ViewAppt() {
                 </select>
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Appointment date</h5>
+                <h5 className="text-dark-header col-3">Appointment date</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="date"
                   value={formInputs.date}
                   onChange={handleInputChange}
@@ -312,19 +313,22 @@ export default function ViewAppt() {
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Requested on</h5>
+                <h5 className="text-dark-header col-3">Requested on</h5>
                 <input
                   type="text"
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   name="createdAt"
                   value={formInputs.createdAt}
-                  readOnly
+                  disabled={!isEditable}
+                  readOnly={!isEditable}
                 />
               </div>
               <div className="form-group row pb-5">
-                <h5 className="text-blue-2 col-3">Health issue description</h5>
+                <h5 className="text-dark-header col-3">
+                  Health issue description
+                </h5>
                 <textarea
-                  className="form-control border-primary-subtle col"
+                  className="form-control border-secondary-subtle col"
                   rows={5}
                   name="reason"
                   value={formInputs.reason}

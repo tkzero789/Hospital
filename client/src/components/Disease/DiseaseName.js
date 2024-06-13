@@ -33,10 +33,8 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
 
   const Symptom = ({ symptom, key }) => {
     return (
-      <div key={key} className="col-4 p-2">
-        <div className="border border-primary-subtle p-2 text-center">
-          <p className="m-0">{symptom.name}</p>
-        </div>
+      <div key={key} className="border border-secondary rounded">
+        <p className="py-1 px-3">{symptom.name}</p>
       </div>
     );
   };
@@ -47,7 +45,7 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       .map((desc) => desc.descriptionDetail);
     return (
       <div key={key} className="p-2">
-        <p className="m-0">
+        <p>
           - {symptom.name}: {descDetails.join(", ")}
         </p>
       </div>
@@ -57,10 +55,10 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
   return (
     <div>
       <div className="form-group row pb-5">
-        <h5 className="text-dark-1 fw-reg col-3">Disease name</h5>
+        <h5 className="text-dark-1 fw-md col-3">Disease name</h5>
         <input
           type="text"
-          className="form-control border-primary-subtle col"
+          className="form-control border-secondary-subtle bg-secondary-subtle col"
           name="name"
           value={disease.name}
           readOnly={mode === "view"}
@@ -69,8 +67,8 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h5 className="text-dark-1 fw-reg col-3">Ages</h5>
-        <div className="border border-primary-subtle rounded col-9">
+        <h5 className="text-dark-1 fw-md col-3">Ages</h5>
+        <div className="border border-secondary-subtle bg-secondary-subtle rounded col-9">
           <p className="m-1">
             {disease.ageRanges?.map((ageRange, index) => (
               <span key={index}>
@@ -82,8 +80,8 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h5 className="text-dark-1 fw-reg col-3">Gender</h5>
-        <div className="border border-primary-subtle rounded col-9">
+        <h5 className="text-dark-1 fw-md col-3">Gender</h5>
+        <div className="border border-secondary-subtle bg-secondary-subtle rounded col-9">
           <p className="m-1">
             {disease.genders?.map((gender, index) => (
               <span key={index}>
@@ -95,9 +93,9 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h5 className="text-dark-1 fw-reg col-3">Symptom(s)</h5>
-        <div className="border border-primary-subtle rounded col-9">
-          <div className="row">
+        <h5 className="text-dark-1 fw-md col-3">Symptom(s)</h5>
+        <div className="border border-secondary-subtle bg-secondary-subtle rounded col-9">
+          <div className="d-flex p-2">
             {chosenSymps?.map((symptom) => {
               return <Symptom symptom={symptom} key={symptom.name} />;
             })}
@@ -106,8 +104,8 @@ export default function DiseaseName({ disease, setDisease, dbSymps, mode }) {
       </div>
 
       <div className="form-group row pb-5">
-        <h5 className="text-dark-1 fw-reg col-3">Description</h5>
-        <div className="border border-primary-subtle rounded col">
+        <h5 className="text-dark-1 fw-md col-3">Description</h5>
+        <div className="border border-secondary-subtle bg-secondary-subtle rounded col">
           {chosenSymps?.map((symptom) => {
             return <Details symptom={symptom} key={symptom.name} />;
           })}

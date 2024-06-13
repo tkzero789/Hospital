@@ -15,9 +15,15 @@
 
   label {
     display: block;
-    padding: 16px 0 8px 0;
+    padding: 20px 0 8px 0;
     font-size: 18px;
     font-weight: var(--roboto-medium-weight);
+  }
+
+  select {
+    padding: 8px;
+    border: 1px solid #9e9e9e;
+    border-radius: var(--border-radius-1);
   }
 
   textarea {
@@ -76,7 +82,7 @@
 
   ul,
   ol {
-    padding: 0 1rem;
+    padding: 0 2rem;
   }
 
   h1,

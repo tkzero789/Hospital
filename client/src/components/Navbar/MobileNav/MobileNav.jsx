@@ -93,7 +93,7 @@ export default function MobileNav() {
                     data-to="/symptom-checker"
                     onClick={handleLinkClick}
                   >
-                    Online health check
+                    Health check
                   </NavLink>
                 </li>
                 <li>

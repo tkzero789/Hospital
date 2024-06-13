@@ -44,7 +44,7 @@ const SearchBarSymp = ({
               setSearchTerm("");
             }}
           >
-            <i className="bi bi-x-lg"></i>
+            {searchTerm && <i className="bi bi-x-lg"></i>}
           </button>
         </div>
       </div>

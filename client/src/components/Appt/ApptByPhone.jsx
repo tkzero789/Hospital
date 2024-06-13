@@ -174,8 +174,8 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                                   <p>Status</p>
                                   <p
                                     className={`${
-                                      appointment.status === "Pending"
-                                        ? "appt-status-pending"
+                                      appointment.status === "Reviewing"
+                                        ? "appt-status-reviewing"
                                         : "appt-status-accepted"
                                     }`}
                                   >

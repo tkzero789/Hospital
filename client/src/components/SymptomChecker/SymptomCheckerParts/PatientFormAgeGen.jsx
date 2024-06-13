@@ -12,12 +12,12 @@ export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
   return (
     <div>
       <div className="text-center">
-        <h4 className="text-blue-1 fw-med">Please enter your info</h4>
+        <h4 className="text-dark-header fw-med pb-1">Please enter your info</h4>
         <p className="fw-light">This tool does not provide medical advice</p>
       </div>
       <div className="steps-info-section">
         <div className="form-group pb-5">
-          <h5 className="fw-med text-blue-2">Age</h5>
+          <h5 className="fw-med text-dark-1">Age</h5>
           <div className="select-age">
             <input
               type="number"
@@ -30,7 +30,7 @@ export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
           </div>
         </div>
         <div className="form-group pb-5">
-          <h5 className="fw-med text-blue-2">Gender</h5>
+          <h5 className="fw-med text-dark-1">Gender</h5>
           <div className="select-gender">
             <select
               name="gender"

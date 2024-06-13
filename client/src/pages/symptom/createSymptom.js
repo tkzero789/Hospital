@@ -129,7 +129,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
         Create symptom
       </h3>
       <div className="container p-5">
-        <div className="card border-primary-subtle p-5">
+        <div className="card bg-light p-5">
           <form>
             <div>
               <SymptomForm
@@ -141,7 +141,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
               />
             </div>
             <div className="row pt-3 pb-3 justify-content-end">
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
@@ -152,10 +152,10 @@ export default function CreateSymptom({ userRole, userInfos }) {
                   Cancel
                 </button>
               </div>
-              <div className="col-3 d-grid gap-2">
+              <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-primary"
                   onClick={(event) =>
                     handleShowModal(
                       event,

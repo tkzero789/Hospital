@@ -96,7 +96,7 @@ export default function ViewArticle({ userRole, userInfos }) {
           apiConfig
         )
         .then((res) => {
-          window.alert("Default article");
+          window.alert("Set main article successfully");
           console.log(res);
           setArticle({
             ...article,
@@ -158,7 +158,7 @@ export default function ViewArticle({ userRole, userInfos }) {
         <div>
           <h3 className="container text-center text-body pt-5">View article</h3>
           <div className="container p-5">
-            <div className="card border-primary-subtle p-5">
+            <div className="card p-5 bg-light">
               <form>
                 <div>
                   {
@@ -178,8 +178,8 @@ export default function ViewArticle({ userRole, userInfos }) {
                       onClick={() => setDisplay()}
                     >
                       {article.isDisplay === true
-                        ? "Default article"
-                        : "Set default article"}
+                        ? "Already the main article"
+                        : "Set as main article"}
                     </button>
                   </div>
                 )}
