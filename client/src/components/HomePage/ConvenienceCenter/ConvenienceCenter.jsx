@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "components/HomePage/ConvenienceCenter/Convcenter.scss";
+import "components/HomePage/ConvenienceCenter/ConvCenter.scss";
 
 export default function ConvenienceCenter() {
   return (
