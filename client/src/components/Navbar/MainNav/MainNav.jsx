@@ -6,7 +6,7 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import BaySideLogo from "assets/icons/BaySide-logo-1.svg";
-import "components/Navbar/MainNav/Mainnav.css";
+import "components/Navbar/MainNav/MainNav.css";
 
 const navLinks = [
   { link: "/home", text: "" },
