@@ -13,7 +13,7 @@ import WholeHeadSymp from "components/SymptomChecker/WholeHeadSymp/WholeHeadSymp
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
 import { MobileSympBtn } from "components/SymptomChecker/MobileSympBtn/MobileSympBtn";
 import { ExtraMobileSympBtn } from "components/SymptomChecker/MobileSympBtn/ExtraMobileSympBtn";
-import "components/SymptomChecker/Symptomchecker.css";
+import "components/SymptomChecker/SymptomChecker.css";
 import CloseIcon from "components/UI/CloseIcon";
 import { Alert, Snackbar } from "@mui/material";
 import NoSymptom from "../Symptom/NoSymptom";

@@ -1,5 +1,5 @@
 import React from "react";
-import "components/SymptomChecker/Symptomchecker.css";
+import "components/SymptomChecker/SymptomChecker.css";
 
 const Symptom = ({ symptom, onCheck, handleSnackBarPosition }) => {
   return (
