@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "components/HomePage/SupportUs/Supportus.scss";
+import "components/HomePage/SupportUs/SupportUs.scss";
 
 const SupportUs = () => {
   return (
