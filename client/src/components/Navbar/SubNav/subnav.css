@@ -58,8 +58,8 @@
   content: "";
   position: absolute;
   top: 68%;
-  left: 0;
-  width: 145px;
+  left: -40%;
+  width: 140%;
   height: 15px;
 }
 
@@ -76,18 +76,20 @@
   display: none;
   z-index: 10;
   top: 47px;
+  right: -50%;
   min-width: 220px;
-  border-radius: 4px;
+  border-radius: var(--border-radius-1);
   position: absolute;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .dropdown-content a {
-  color: #1f2532;
+  color: var(--text-dark-1);
   text-decoration: none;
   display: block;
   padding: 8px 15px;
+  transition: background-color 0.05s ease-in;
 }
 
 .dropdown-content a:first-child {

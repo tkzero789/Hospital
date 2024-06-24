@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import BaySideLogo from "assets/logo/BaySide-logo-1.svg";
-import "components/Navbar/MobileNav/mobilenav.css";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import BaySideLogo from "assets/icons/BaySide-logo-1.svg";
+import "components/Navbar/MobileNav/Mobilenav.css";
 
 export default function MobileNav() {
   const location = useLocation();
 
+  // link
   const handleLinkClick = (event) => {
     event.preventDefault();
     const { to } = event.currentTarget.dataset;
@@ -26,10 +27,13 @@ export default function MobileNav() {
   const menuBtn = useRef(null);
   const navSlider = useRef(null);
 
+  // open and close slider
   useEffect(() => {
     const handleClick = () => {
       menuBtn.current.classList.toggle("open");
       navSlider.current.classList.toggle("open");
+      setOpenAppt(false);
+      setOpenServices(false);
     };
     const menuBtnElement = menuBtn.current;
     menuBtnElement.addEventListener("click", handleClick);
@@ -39,6 +43,10 @@ export default function MobileNav() {
     };
   }, []);
 
+  // toggle open child link
+  const [openAppt, setOpenAppt] = useState(false);
+  const [openServices, setOpenServices] = useState(false);
+
   return (
     <>
       <div className="mobile-nav">
@@ -47,74 +55,114 @@ export default function MobileNav() {
             <div className="slider-wrapper">
               <ul>
                 <li>
-                  <NavLink
+                  <Link
                     className="mobile-nav-link"
                     to="/home"
                     data-to="/home"
                     onClick={handleLinkClick}
                   >
                     Home
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
-                  <NavLink
+                  <Link className="mobile-nav-link" onClick={handleLinkClick}>
+                    Find a doctor
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="mobile-nav-link"
+                    to="/symptom-checker"
+                    data-to="/symptom-checker"
+                    onClick={handleLinkClick}
+                  >
+                    Health checker
+                  </Link>
+                </li>
+                <li>
+                  <div
+                    className="mobile-nav-link"
+                    onClick={() => {
+                      setOpenAppt(!openAppt);
+                    }}
+                  >
+                    <div className="dropdown-link-wrapper">
+                      <span className="me-auto">Appointment</span>
+                      <i
+                        className={`bi ${
+                          openAppt ? "bi-chevron-up" : "bi-chevron-down"
+                        }`}
+                      ></i>
+                    </div>
+                  </div>
+                </li>
+                {openAppt && (
+                  <div className="mobile-child-links">
+                    <Link
+                      to="/appt-request"
+                      data-to="/appt-request"
+                      onClick={handleLinkClick}
+                    >
+                      Request appointment
+                    </Link>
+                    <Link>Returning patients</Link>
+                    <Link
+                      to="/appt-detail-guest"
+                      data-to="/appt-detail-guest"
+                      onClick={handleLinkClick}
+                    >
+                      Appointment status
+                    </Link>
+                    <Link>Reffering physicians</Link>
+                  </div>
+                )}
+                <li>
+                  <div
+                    className="mobile-nav-link"
+                    onClick={() => {
+                      setOpenServices(!openServices);
+                    }}
+                  >
+                    <div className="dropdown-link-wrapper">
+                      <span className="me-auto">Our services</span>
+                      <i
+                        className={`bi ${
+                          openServices ? "bi-chevron-up" : "bi-chevron-down"
+                        }`}
+                      ></i>
+                    </div>
+                  </div>
+                </li>
+                {openServices && (
+                  <div className="mobile-child-links">
+                    <Link>Lab</Link>
+                    <Link>Returning patients</Link>
+                    <Link>Primary care</Link>
+                    <Link>Home care</Link>
+                    <Link>Imagine</Link>
+                    <Link>Insurance</Link>
+                    <Link>Health and wellness</Link>
+                  </div>
+                )}
+                <li>
+                  <Link
                     className="mobile-nav-link"
                     to="/specialty-page"
                     data-to="/specialty-page"
                     onClick={handleLinkClick}
                   >
                     Specialty
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
-                  <NavLink
-                    className="mobile-nav-link"
-                    to="/appt-request"
-                    data-to="/appt-request"
-                    onClick={handleLinkClick}
-                  >
-                    Schedule an appointment
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="mobile-nav-link"
-                    to="/appt-detail-guest"
-                    data-to="/appt-detail-guest"
-                    onClick={handleLinkClick}
-                  >
-                    Appointment status
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="mobile-nav-link"
-                    to="/symptom-checker"
-                    data-to="/symptom-checker"
-                    onClick={handleLinkClick}
-                  >
-                    Health check
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
+                  <Link
                     className="mobile-nav-link"
                     to="/view-blog-list"
                     data-to="/view-blog-list"
                     onClick={handleLinkClick}
                   >
-                    News
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="mobile-nav-link"
-                    to="/work-schedule"
-                    data-to="/work-schedule"
-                    onClick={handleLinkClick}
-                  >
-                    Business hours
-                  </NavLink>
+                    News & Insights
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -122,7 +170,7 @@ export default function MobileNav() {
         </div>
         <div className="mobile-nav-container">
           <div className="mobile-nav-wrapper">
-            <NavLink
+            <Link
               className="mobile-logo-link"
               to="/home"
               data-to="/home"
@@ -131,7 +179,7 @@ export default function MobileNav() {
               <div className="mobile-nav-logo">
                 <img src={BaySideLogo} alt="hospital logo" />
               </div>
-            </NavLink>
+            </Link>
             <div className="menu-btn" ref={menuBtn}>
               <div className="menu-toggler">
                 <div className="menu-icon"></div>

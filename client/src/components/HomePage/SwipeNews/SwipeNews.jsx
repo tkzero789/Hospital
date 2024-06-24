@@ -6,7 +6,7 @@ import axios from "axios";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "components/HomePage/SwipeNews/swipenews.css";
+import "components/HomePage/SwipeNews/SwipeNews.scss";
 
 export default function SwipeNews() {
   const [blogs, setBlogs] = useState([]);
@@ -28,9 +28,9 @@ export default function SwipeNews() {
     <>
       <section className="news w-100">
         <div className="content-container">
-          <div className="news-wrapper">
-            <div className="news-header">Latest News</div>
-            <div className="news-section">
+          <div className="news__wrapper">
+            <div className="news__wrapper-header">Latest News</div>
+            <div className="news__section">
               <Swiper
                 breakpoints={{
                   // when window width is >= 768px
@@ -51,20 +51,20 @@ export default function SwipeNews() {
                   .filter((b) => b.status === "Approved")
                   .map((blog) => (
                     <SwiperSlide key={blog.id}>
-                      <div className="swipe-news">
+                      <div className="swipe__news">
                         <Link
-                          className="swipe-news-wrapper"
+                          className="swipe__news-wrapper"
                           to={`/view-blog-list/${blog.id}`}
                         >
                           <div>
-                            <div className="swipe-news-img">
+                            <div className="swipe__news-img">
                               <img src={blog.image} alt={blog.title} />
                             </div>
-                            <div className="swipe-news-text">
-                              <div className="swipe-news-title">
+                            <div className="swipe__news-text">
+                              <div className="swipe__news-title">
                                 <h5>{blog.title}</h5>
                               </div>
-                              <div className="swipe-news-sub">
+                              <div className="swipe__news-sub">
                                 <p>{blog.intro}</p>
                               </div>
                             </div>
@@ -75,10 +75,8 @@ export default function SwipeNews() {
                   ))}
               </Swiper>
             </div>
-            <div className="news-btn-wrapper">
-              <Link className="news-btn-link" to="/view-blog-list">
-                View all news
-              </Link>
+            <div className="news__btn">
+              <Link to="/view-blog-list">View all news</Link>
             </div>
           </div>
         </div>

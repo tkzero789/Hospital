@@ -1,5 +1,5 @@
 import React from "react";
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
 export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
   function updateField(event) {
@@ -16,7 +16,7 @@ export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
         <p className="fw-light">This tool does not provide medical advice</p>
       </div>
       <div className="steps-info-section">
-        <div className="form-group pb-5">
+        <div className="form-group pb-4 pb-md-2">
           <h5 className="fw-med text-dark-1">Age</h5>
           <div className="select-age">
             <input
@@ -29,7 +29,7 @@ export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
             />
           </div>
         </div>
-        <div className="form-group pb-5">
+        <div className="form-group pb-2">
           <h5 className="fw-med text-dark-1">Gender</h5>
           <div className="select-gender">
             <select

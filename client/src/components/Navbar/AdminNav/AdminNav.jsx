@@ -1,6 +1,6 @@
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import "components/Navbar/AdminNav/adminnav.scss";
-import { useAuth } from "AuthContext";
+import "components/Navbar/AdminNav/Adminnav.scss";
+import { useAuth } from "auth/AuthContext";
 
 const AdminNav = () => {
   const { getUserInfos } = useAuth();

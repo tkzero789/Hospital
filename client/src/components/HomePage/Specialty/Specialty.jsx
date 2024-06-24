@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HeartSVG from "assets/home/heartSVG.svg";
-import BoneSVG from "assets/home/boneSVG.svg";
-import MedicationSVG from "assets/home/medicationSVG.svg";
-import FileSVG from "assets/home/fileSVG.svg";
-import HandSVG from "assets/home/handSVG.svg";
-import RibbonSVG from "assets/home/ribbonSVG.svg";
-import ProtectionSVG from "assets/home/protectionSVG.svg";
-import DnaSVG from "assets/home/dnaSVG.svg";
-import "components/HomePage/Specialty/specialty.scss";
+import HeartSVG from "assets/icons/heart-icon.svg";
+import BoneSVG from "assets/icons/bone-icon.svg";
+import MedicationSVG from "assets/icons/medication-icon.svg";
+import FileSVG from "assets/icons/file-icon.svg";
+import HandSVG from "assets/icons/hand-icon.svg";
+import RibbonSVG from "assets/icons/ribbon-icon.svg";
+import ProtectionSVG from "assets/icons/protection-icon.svg";
+import DnaSVG from "assets/icons/dna-icon.svg";
+import "components/HomePage/Specialty/Specialty.scss";
 
 export default function Specialty() {
   return (

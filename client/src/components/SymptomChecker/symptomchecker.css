@@ -27,7 +27,6 @@
 /* SYMPTOM CHECKER PAGE */
 /* Step 1 */
 .symp-checker {
-  background-color: whitesmoke;
   padding-bottom: 40px;
 }
 
@@ -116,11 +115,11 @@
 }
 
 .steps-back-button button {
-  width: 200px;
+  width: 160px;
   color: var(--text-dark-1);
   border: 1px solid #c4c4c4;
   border-radius: var(--border-radius-1);
-  padding: 8px 12px;
+  padding: 8px 0;
   background-color: #f0f0f0;
 }
 
@@ -144,12 +143,12 @@
 }
 
 .steps-next-button button {
-  width: 200px;
+  width: 160px;
   color: var(--text-white-1);
   background-color: var(--btn-blue-1);
   border: 1px solid #c4c4c4;
   border-radius: var(--border-radius-1);
-  padding: 8px 12px;
+  padding: 8px 0;
 }
 
 .steps-next-button button:hover {
@@ -160,7 +159,6 @@
 /* Step 2 */
 .symp-big-box {
   width: 100%;
-  height: 580px;
 }
 
 .big-box-wrapper {
@@ -175,7 +173,6 @@
 /* Left box for search bar */
 .symp-left-box {
   width: 40%;
-  height: 100%;
 }
 
 .left-box-wrapper {
@@ -233,38 +230,35 @@
   position: relative;
   max-height: 220px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   overflow-y: auto;
-  z-index: 5;
-  position: relative;
+  z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-1);
 }
 
-.search-symp-display::-webkit-scrollbar {
-  width: 4px; /* Width of the scrollbar */
-}
-
+/* Search symptoms scroll bar */
 .search-symp-display::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the track */
+  background: #f1f1f1;
 }
 
 .search-symp-display::-webkit-scrollbar-thumb {
-  background: #acacac; /* Color of the scroll thumb */
+  background: #acacac;
 }
 
 .search-symp-display::-webkit-scrollbar-thumb:hover {
-  background: #7e7e7e; /* Color of the scroll thumb on hover */
+  background: #7e7e7e;
 }
 
 .symptom-button {
   display: block;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   border: none;
   border-bottom: 1px solid #dbdbdb;
   text-align: start;
   padding: 6px 16px;
+  transition: background-color 0.05s ease-in-out;
 }
 
 .symptom-button:hover {
@@ -272,46 +266,44 @@
 }
 
 .symptom-button span {
-  font-size: 18px;
-  font-weight: var(--roboto-medium-weight);
+  font-size: 16px;
+  font-weight: var(--roboto-regular-weight);
 }
 
 /* Display selected symptoms box */
 .selected-symp-box {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
-  height: 300px;
+  margin-top: auto;
   padding-bottom: 12px;
-  border-radius: 8px;
-  background-color: #f7f7f7;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: var(--border-radius-1);
+  background-color: var(--bg-blue-3);
+  box-shadow: var(--box-shadow-1);
 }
 
 .selected-symp-header {
   width: 100%;
   padding: 8px;
   text-align: center;
-  background-color: var(--btn-blue-1);
+  background-color: var(--bg-blue-3);
   border-radius: 8px 8px 2px 2px;
 }
 
 .selected-symp-header span {
   font-size: 18px;
-  color: var(--text-white-1);
+  color: var(--text-dark-1);
   font-weight: var(--roboto-medium-weight);
 }
 
 .selected-symp-box-wrapper {
+  max-height: 300px;
   overflow-y: auto;
-  height: calc(100% - 43px);
   padding-top: 6px;
 }
 
-.selected-symp-box-wrapper::-webkit-scrollbar {
-  width: 4px;
-}
-
+/* Select symp box scrollbar */
 .selected-symp-box-wrapper::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
@@ -326,33 +318,41 @@
 
 .selected-symp-item {
   display: flex;
-  background-color: #e9e9e9;
+  background-color: var(--bg-blue-1);
   padding: 4px 8px 4px 20px;
   border-radius: 8px;
   margin: 0 12px 4px 12px;
   height: fit-content;
+  animation: appear 0.7s;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .selected-symp-name {
   margin-right: auto;
-  color: #838383;
+  color: var(--text-white-1);
   word-wrap: normal;
   word-break: break-word;
 }
 
 .selected-symp-item button {
   border: none;
-  background-color: #e9e9e9;
-  color: var(--text-white-1);
-  border-radius: 6px;
+  background-color: transparent;
 }
 
 .selected-symp-item button i {
-  color: #b1b1b1;
+  color: var(--bg-white);
 }
 
 .selected-symp-item button i:hover {
-  color: #838383;
+  color: var(--bg-gray-3);
 }
 
 /* Right box for human figure */
@@ -362,12 +362,13 @@
 
 .right-box-wrapper {
   height: 100%;
+  position: relative;
 }
 
 .human-figure {
   height: 100%;
-  width: 100%;
-  position: relative;
+  width: 50%;
+  margin-left: 20%;
 }
 
 .sc-body-model-svg {
@@ -403,180 +404,372 @@
   background-color: #d3e6fc;
 }
 
+/* Symptom box scrollbar */
+.scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #acacac;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7e7e7e;
+}
+
+/* Symptom list box header */
+.symptom-list-box-header {
+  display: flex;
+  padding: 8px 12px 8px 16px;
+  font-size: 16px;
+  color: var(--text-dark-header);
+  font-weight: var(--roboto-medium-weight);
+  background-color: var(--bg-blue-8);
+  border-top-right-radius: var(--border-radius-1);
+  border-top-left-radius: var(--border-radius-1);
+}
+
+.symptom-list-box-header > span {
+  flex-grow: 1;
+}
+
+.symptom-list-box-header > button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.symptom-list-box-header > button .close-icon {
+  width: 24px;
+  fill: var(--text-dark-body);
+}
+
+.symptom-list-box-header > button:hover .close-icon {
+  fill: var(--text-dark-1);
+}
+
+.symptom-list-no-symptoms {
+  padding: 12px 16px;
+}
+
+.symptom-list-no-symptoms > div {
+  display: flex;
+  background-color: var(--bg-blue-3);
+  border: 1px solid var(--bg-blue-1);
+  border-radius: var(--border-radius-1);
+  padding: 8px 16px;
+}
+
+.symptom-list-no-symptoms > div > i {
+  color: var(--bg-blue-1);
+}
+
+.symptom-list-no-symptoms span {
+  padding-left: 8px;
+}
+
 /* 1. Head */
-.head-symptoms-list {
+.head-symptoms-list-box {
   position: absolute;
   top: 0;
-  left: 10px;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.head-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 2. Eyes */
-.eyes-symptoms-list {
+.eyes-symptoms-list-box {
   position: absolute;
   top: 20px;
-  left: 30px;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.eyes-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 3. Ears */
-.ears-symptoms-list {
+.ears-symptoms-list-box {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  top: 30px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.ears-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 4. Nose */
-.nose-symptoms-list {
+.nose-symptoms-list-box {
   position: absolute;
   top: 30px;
-  left: 40px;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.nose-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 5. Mouth */
-.mouth-symptoms-list {
+.mouth-symptoms-list-box {
   position: absolute;
   top: 35px;
-  left: 30px;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.mouth-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 6. Neck */
-.neck-symptoms-list {
+.neck-symptoms-list-box {
   position: absolute;
   top: 60px;
-  left: 30px;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.neck-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 7. Chest */
-.chest-symptoms-list {
+.chest-symptoms-list-box {
   position: absolute;
   top: 70px;
-  left: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  right: 0;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.chest-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 8. UpperArm */
-.upperArm-symptoms-list {
+.upperArm-symptoms-list-box {
   position: absolute;
   top: 90px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.upperArm-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 9. ForeArm */
-.foreArm-symptoms-list {
+.foreArm-symptoms-list-box {
   position: absolute;
   top: 140px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.foreArm-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 10. MidAb */
-.midAb-symptoms-list {
+.midAb-symptoms-list-box {
   position: absolute;
   top: 200px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.midAb-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 11. LowerAbPrivate */
-.lowerAbPrivate-symptoms-list {
+.lowerAbPrivate-symptoms-list-box {
   position: absolute;
   top: 240px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.lowerAbPrivate-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 12. Hand */
-.hand-symptoms-list {
+.hand-symptoms-list-box {
   position: absolute;
-  top: 240px;
+  top: 260px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.hand-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 13. Thigh */
-.thigh-symptoms-list {
+.thigh-symptoms-list-box {
   position: absolute;
   top: 280px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.thigh-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 14. Knee */
-.knee-symptoms-list {
+.knee-symptoms-list-box {
   position: absolute;
-  top: 340px;
+  top: 290px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.knee-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 15. LowerLeg */
-.lowerLeg-symptoms-list {
+.lowerLeg-symptoms-list-box {
   position: absolute;
-  top: 350px;
+  top: 300px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.lowerLeg-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* 16. Foot */
-.foot-symptoms-list {
+.foot-symptoms-list-box {
   position: absolute;
-  top: 400px;
+  top: 310px;
   right: 0;
-  background-color: #ffffff;
-  width: 220px;
-  border-radius: 6px;
+  width: 300px;
+  border-radius: var(--border-radius-1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--bg-white);
+}
+
+.foot-symptoms-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border-bottom-left-radius: var(--border-radius-1);
+  border-bottom-right-radius: var(--border-radius-1);
+  background-color: var(--bg-white);
 }
 
 /* Mobile right box */
@@ -589,12 +782,11 @@
 .mobile-selected-symp-box {
   display: none;
   width: 100%;
-  height: 300px;
+  height: auto;
   padding-bottom: 12px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  overflow-y: auto;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: var(--border-radius-1);
+  background-color: var(--bg-blue-3);
+  box-shadow: var(--box-shadow-1);
 }
 
 .mobile-symp-background {
@@ -606,6 +798,7 @@
   background-color: white;
   touch-action: none;
   animation: slideleft 0.5s;
+  z-index: 1200;
 }
 
 .mobile-symp-background-extra {
@@ -619,13 +812,26 @@
   animation: slideright 0.5s;
 }
 
+.mobile-symptoms-list-header {
+  text-align: center;
+  background-color: var(--bg-blue-6);
+}
+
+.mobile-symptoms-list-header span {
+  display: block;
+  padding: 8px 0;
+  font-size: 20px;
+  color: var(--text-white-1);
+  font-weight: var(--roboto-medium-weight);
+}
+
 /***** Mobile symptoms list *****/
 .mobile-symptoms-list {
   position: fixed;
   bottom: 0;
   background-color: #ffffff;
   width: 100%;
-  height: calc(100% - 58px);
+  height: calc(100% - 46px);
   border-radius: 6px;
   overflow-y: auto;
   animation: slideleft 0.4s;
@@ -636,7 +842,7 @@
   bottom: 0;
   background-color: #ffffff;
   width: 100%;
-  height: calc(100% - 58px);
+  height: calc(100% - 46px);
   border-radius: 6px;
   overflow-y: auto;
   animation: slideright 0.4s;
@@ -719,15 +925,22 @@
 /* Step 3 */
 .symp-checkbox {
   width: fit-content;
-  /* box-shadow: var(--box-shadow-4); */
   box-shadow: rgba(67, 71, 85, 0.5) 0px 0px 0.1em,
     rgba(90, 125, 188, 0.05) 0px 0.1em 1em;
+  margin-right: 20px;
+  margin-bottom: 16px;
+  padding: 0;
   border-radius: 100px;
+}
+
+.symp-checkbox .symp-checkbox-label {
+  display: flex;
   padding: 8px;
-  margin-right: 16px;
+  user-select: none;
 }
 
 .symp-checkbox.checked {
+  outline: 1px solid var(--border-gray-2);
   background-color: #f0f0f0;
 }
 
@@ -762,6 +975,11 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
+.disease-list .disease-list-item .progress {
+  height: 0.6rem;
+  background-color: var(--bg-white);
+}
+
 .disease-list .disease-list-item p:first-child {
   font-weight: var(--roboto-medium-weight);
 }
@@ -791,7 +1009,7 @@
   outline: 1px solid var(--border-gray-2);
 }
 
-.disease-list .disease-list-item.active span {
+.disease-list .disease-list-item.active .selected-disease {
   position: absolute;
   top: 50%;
   right: 24px;
@@ -852,10 +1070,46 @@
   display: none;
 }
 
-/* MOBILE RESPONSIVE */
-@media only screen and (max-width: 767px) {
-  /* Symptom Checker */
+/* Standard tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
   /* Step 2 */
+  .symp-checker h3 {
+    padding-top: 80px;
+  }
+
+  .symp-checker-board {
+    padding: 8px;
+  }
+
+  .symp-checker-board .card {
+    padding: 4px;
+    border: none;
+    box-shadow: none;
+  }
+
+  .symp-big-box {
+    display: none;
+  }
+
+  .symp-left-box {
+    width: 100% !important;
+    display: none;
+  }
+
+  .search-symp-display {
+    max-height: calc(100% - 180px) !important;
+  }
+
+  .symp-right-box {
+    display: none;
+  }
+
+  .human-figure {
+    height: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
+
   .m-symp-name {
     display: block;
   }
@@ -996,7 +1250,7 @@
   }
 
   .selected-symp-item {
-    padding: 12px 4px 12px 24px;
+    padding: 6px 4px 6px 24px;
   }
 
   .selected-symp-item .selected-symp-name {
@@ -1013,6 +1267,124 @@
     display: block;
   }
 
+  .selected-symp-box-wrapper {
+    max-height: none;
+    overflow-y: unset;
+  }
+
+  /* Step 4 */
+  .main-article {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .symp-step-4 {
+    flex-direction: column;
+  }
+
+  .symp-step-4 .disease-list {
+    display: none;
+  }
+
+  .symp-step-4 .main-article-wrapper {
+    padding: 16px 0 28px;
+  }
+
+  .m-disease-list {
+    position: fixed;
+    margin-top: 58px;
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 58px);
+    z-index: 10;
+    display: block;
+    visibility: visible;
+    transition: top 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  .m-disease-list.hide {
+    top: 80%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .m-disease-list h6 {
+    text-align: center;
+    padding: 16px 0;
+    font-size: 18px;
+    color: var(--text-white-1);
+    font-weight: var(--roboto-regular-weight);
+    background-color: var(--bg-blue-2);
+  }
+
+  .m-disease-list .m-disease-list-item {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    margin: 4px;
+    background-color: #ecf5ff;
+    border: 1px solid var(--border-gray-1);
+    box-shadow: var(--box-shadow-1);
+  }
+
+  .m-disease-list .m-disease-list-item p:first-child {
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .m-disease-list .m-disease-list-item p:nth-child(2) {
+    color: var(--text-dark-body);
+  }
+
+  .m-disease-list .m-disease-list-item p:nth-child(3) {
+    color: var(--text-dark-body);
+  }
+
+  .m-disease-list .m-disease-list-item img {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    width: 30px;
+    transform: translateY(-50%);
+  }
+
+  .m-back-list {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: var(--text-white-1);
+    background-color: var(--bg-blue-2);
+    z-index: 10;
+    border: none;
+  }
+
+  .m-back-list div {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4px;
+  }
+
+  .m-disease-close {
+    position: absolute;
+    color: var(--text-white-1);
+    background-color: var(--bg-blue-2);
+    bottom: 0;
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+  }
+
+  .m-disease-list .m-disease-list-item .progress {
+    height: 0.6rem;
+    background-color: var(--bg-white);
+  }
+}
+
+/* Mobile responsive */
+@media only screen and (max-width: 767px) {
   /* Symptom Checker */
   /* Step 1 */
   .symp-checker {
@@ -1025,7 +1397,7 @@
   }
 
   .symp-checker h4 {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: var(--roboto-regular-weight);
   }
 
@@ -1039,7 +1411,7 @@
 
   .steps-info-section h5 {
     font-size: 16px;
-    font-weight: var(--roboto-regular-weight);
+    font-weight: var(--roboto-medium-weight);
     padding: 0;
   }
 
@@ -1112,6 +1484,174 @@
   }
 
   /* Step 2 */
+  .human-figure {
+    height: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .m-symp-name {
+    display: block;
+  }
+
+  .active-switch-button {
+    color: var(--text-white-1);
+    background-color: var(--btn-blue-1);
+  }
+
+  .switch-button {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  .switch-button button {
+    width: 50%;
+    height: 100%;
+    border: none;
+  }
+
+  .switch-button button:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .switch-button button:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .left-box-wrapper {
+    height: 50%;
+  }
+
+  .mobile-search-background {
+    width: 100%;
+    height: calc(100% - 58px);
+    background-color: #ffffff;
+    position: fixed;
+    top: 58px;
+    left: 0;
+    z-index: 10;
+    animation: slideleft 0.5s;
+  }
+
+  .mobile-add-symp-wrapper {
+    display: block;
+  }
+
+  .add-symp-btn {
+    display: flex;
+    justify-content: center;
+  }
+
+  .add-symp-btn > button {
+    color: var(--text-white-1);
+    background-color: #004ad3;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .add-symp-btn button span {
+    padding-right: 8px;
+  }
+
+  .mobile-add-symp-wrapper .selected-symp-box {
+    position: relative !important;
+  }
+
+  .search-symp-input {
+    display: none;
+  }
+
+  .mobile-search-symp-input {
+    display: block;
+    position: relative;
+    padding: 16px 12px 4px 16px;
+  }
+
+  .mobile-search-symp-input input {
+    width: 100%;
+    height: 50px;
+    padding-left: 20px;
+    border-radius: 4px;
+    border: 1px solid #5ca8ff;
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-search-symp-input .search-symp-button {
+    padding: 26px 20px 0 0;
+  }
+
+  .mobile-search-symp-btn {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 76px;
+    display: flex;
+    background-color: #ffffff;
+  }
+
+  .mobile-search-symp-btn button {
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 16px;
+  }
+
+  .mobile-search-symp-btn button:first-child {
+    color: var(--text-dark-1);
+    border: none;
+    background-color: #ebebeb;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .mobile-search-symp-btn button:last-child:disabled {
+    color: #d1d1d1;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .mobile-search-symp-btn button:last-child {
+    color: var(--text-white-1);
+    background-color: var(--btn-blue-1);
+    border: none;
+    padding: 8px 12px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .symptom-button {
+    padding: 12px 16px;
+  }
+
+  .selected-symp-item {
+    padding: 6px 4px 6px 24px;
+  }
+
+  .selected-symp-item .selected-symp-name {
+    font-size: 18px;
+  }
+
+  .selected-symp-item button {
+    width: 40px;
+    height: 100%;
+  }
+
+  .mobile-selected-symp-box {
+    margin-top: 24px;
+    display: block;
+  }
+
+  .selected-symp-box-wrapper {
+    max-height: none;
+    overflow-y: unset;
+  }
+
   .symp-checker-board .card {
     padding: 4px;
     border: none;
@@ -1137,7 +1677,7 @@
 
   /* Step 3 */
   .symp-checkbox {
-    padding: 12px 16px;
+    padding: 6px 12px;
     margin: 0 0 8px;
   }
 
@@ -1239,5 +1779,10 @@
     width: 100%;
     padding: 8px 0;
     border: none;
+  }
+
+  .m-disease-list .m-disease-list-item .progress {
+    height: 0.6rem;
+    background-color: var(--bg-white);
   }
 }

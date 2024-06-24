@@ -5,16 +5,16 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "css/index.css";
 import "css/base.css";
-import { useAuth } from "AuthContext";
-import RequireAuth from "RequireAuth";
+import { useAuth } from "auth/AuthContext";
+import RequireAuth from "auth/RequireAuth";
 import ScrollToTop from "utilities/ScrollToTop";
 // auth pages
-import SignupDoctor from "pages/account/signupStaff";
-import SigninStaff from "pages/account/signinStaff";
+import SignupDoctor from "pages/User/SignupStaff";
+import SigninStaff from "pages/User/SigninStaff";
 
 // routes
-import Layouts from "Layouts";
-import StaffHome from "pages/homepage/staffHome";
+import Layouts from "layout/Layouts";
+import StaffHome from "pages/HomePage/StaffHome";
 
 const App = () => {
   const { getUserRole, getUserInfos } = useAuth();

@@ -1,4 +1,4 @@
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
 export const MobileSympBtn = ({ toggleFunction }) => {
   return (

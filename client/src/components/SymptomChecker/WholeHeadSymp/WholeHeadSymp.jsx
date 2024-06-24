@@ -1,5 +1,5 @@
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
 const WholeHeadSymp = ({
   dbSymps,
@@ -7,10 +7,14 @@ const WholeHeadSymp = ({
   position,
   chosenSymps,
   toggleFunction,
+  handleSnackBarPosition,
 }) => {
   return (
     <>
       <div className="mobile-symp-background-extra">
+        <div className="mobile-symptoms-list-header">
+          <span>{position}</span>
+        </div>
         <div className="mobile-symptoms-list-extra">
           {dbSymps
             .filter(
@@ -25,6 +29,7 @@ const WholeHeadSymp = ({
                 onCheck={onCheck}
                 key={symptom.id}
                 toggleFunction={toggleFunction}
+                handleSnackBarPosition={handleSnackBarPosition}
               />
             ))}
         </div>

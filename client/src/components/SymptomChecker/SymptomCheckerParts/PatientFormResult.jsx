@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import { Skeleton } from "@mui/material";
-import RightArrow from "assets/home/right-arrowSVG.svg";
+import RightArrow from "assets/icons/right-arrow-icon.svg";
+import ResultBar from "components/UI/ProgressBar";
+import MobileDiseaseList from "../MobileDiseaseList/MobileDiseaseList";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "components/SymptomChecker/symptomchecker.css";
-import MobileDiseaseList from "../MobileDiseaseList/MobileDiseaseList";
+import "components/SymptomChecker/Symptomchecker.css";
 
 const PatientFormResult = ({ patientResult }) => {
   const [article, setArticle] = useState([]);
@@ -67,11 +68,54 @@ const PatientFormResult = ({ patientResult }) => {
     // adjust scroll position based on viewport width
     if (window.innerWidth <= 767) {
       scrollPosition = 0;
+    } else if (window.innerWidth >= 768 && window.innerWidth <= 991) {
+      scrollPosition = 0;
     } else {
-      scrollPosition = 130;
+      scrollPosition = 220;
     }
 
     window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
+  }
+
+  // Format detail text
+  function processDetailText(detailText) {
+    return detailText.split("\n").map((line, index) => {
+      const isLineWithBulletPoint = line.startsWith("   •");
+      const isEmptyLine = line.trim() === "";
+      let processedLine;
+      let className = "main-article-detail";
+
+      if (isLineWithBulletPoint) {
+        className += " ps-4 d-block";
+        const splitIndex = line.indexOf(":");
+        if (splitIndex !== -1) {
+          processedLine = (
+            <>
+              <span className="fw-med">{line.slice(1, splitIndex + 1)}</span>
+              {line.slice(splitIndex + 1)}
+            </>
+          );
+        } else {
+          processedLine = (
+            <>
+              <span className="fw-med">{line.slice(1)}</span>
+            </>
+          );
+        }
+      } else {
+        processedLine = line;
+      }
+
+      if (isEmptyLine) {
+        className += " pt-0";
+      }
+
+      return (
+        <span key={index} className={className}>
+          {processedLine}
+        </span>
+      );
+    });
   }
 
   return (
@@ -110,24 +154,45 @@ const PatientFormResult = ({ patientResult }) => {
             <h6>Conditions that match your symptoms</h6>
             {patientResult
               .filter((i) => i.status === "Approved")
-              .map((i, index) => (
-                <div
-                  key={index}
-                  className={`disease-list-item ${
-                    selectedDiseaseIndex === index ? "active" : ""
-                  }`}
-                  onClick={() => handleDiseaseClick(index)}
-                >
-                  <p>{i.name}</p>
-                  <p>Specialty: {i.medSpecialty}</p>
-                  <p>Matched points: {String(i.matchedScore)}</p>
-                  {selectedDiseaseIndex === index ? (
-                    <span>Selected</span>
-                  ) : (
-                    <img src={RightArrow} alt="icon" />
-                  )}
-                </div>
-              ))}
+              .map((i, index) => {
+                const matchedScore = parseInt(i.matchedScore, 10);
+                let strengthLevel;
+
+                if (matchedScore <= 5) {
+                  strengthLevel = "Weak";
+                } else if (matchedScore > 5 && matchedScore <= 14) {
+                  strengthLevel = "Fair";
+                } else if (matchedScore > 14 && matchedScore <= 28) {
+                  strengthLevel = "High";
+                } else {
+                  strengthLevel = "Significant";
+                }
+                return (
+                  <div
+                    key={index}
+                    className={`disease-list-item ${
+                      selectedDiseaseIndex === index ? "active" : ""
+                    }`}
+                    onClick={() => handleDiseaseClick(index)}
+                  >
+                    <p>{i.name}</p>
+                    <p>Specialty: {i.medSpecialty}</p>
+                    <p>
+                      Result strength:{" "}
+                      <span className="fw-med">{strengthLevel}</span>
+                      <span>{i.matchedScore}</span>
+                    </p>
+                    <div className="pt-1">
+                      <ResultBar score={String(i.matchedScore)} />
+                    </div>
+                    {selectedDiseaseIndex === index ? (
+                      <span className="selected-disease">Selected</span>
+                    ) : (
+                      <img src={RightArrow} alt="icon" />
+                    )}
+                  </div>
+                );
+              })}
           </div>
           {/* Main article */}
           <div className="main-article c-8 md-12 d-flex flex-column">
@@ -158,14 +223,14 @@ const PatientFormResult = ({ patientResult }) => {
                             {i.infos[0].overview}
                           </p>
                           <p className="main-article-detail">
-                            {i.infos[0].detail}
+                            {processDetailText(i.infos[0].detail)}
                           </p>
                           <h5 className="main-article-treatment">Treatments</h5>
                           <p className="main-article-detail">
                             {i.treatments[0].overview}
                           </p>
                           <p className="main-article-detail">
-                            {i.treatments[0].detail}
+                            {processDetailText(i.treatments[0].detail)}
                           </p>
                         </React.Fragment>
                       ) : (

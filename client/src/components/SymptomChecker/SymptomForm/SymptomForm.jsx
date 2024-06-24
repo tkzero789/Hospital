@@ -8,40 +8,20 @@ export default function SymptomForm({
   origCats,
   origDescs,
 }) {
-  const categoryOptions = [
-    { value: "Pain location", label: "Pain location" },
-    { value: "Pain level", label: "Pain level" },
-    { value: "Types of pain", label: "Types of pain" },
-    {
-      value: "Pain frequency",
-      label: "Pain frequency",
-    },
-    {
-      value: "Leading cause",
-      label: "Leading cause",
-    },
-    {
-      value: "The pain is getting worse when",
-      label: "The pain is getting worse when",
-    },
-    { value: "Find relief by", label: "Find relief by" },
-    { value: "Symptom(s)", label: "Symptom(s)" },
-  ];
-
   const positionOptions = [
     { value: "Head", label: "Head" },
     { value: "Eyes", label: "Eyes" },
     { value: "Ears", label: "Ears" },
     { value: "Nose", label: "Nose" },
-    { value: "Mouth", label: "Mouth" },
+    { value: "Mouth", label: "Oral Cavity" },
     { value: "Neck", label: "Neck" },
-    { value: "Shoulder", label: "Shoulder" },
-    { value: "Chest", label: "Chest" },
-    { value: "Middle abdomen", label: "Middle abdomen" },
-    { value: "Pelvis, gluteal and thigh", label: "Pelvis, gluteal and thigh" },
+    { value: "Shoulder", label: "Shoulder & Upper arm" },
     { value: "Forearm", label: "Forearm" },
     { value: "Hand", label: "Hand" },
-    { value: "Lower abdomen", label: "Lower abdomen" },
+    { value: "Chest", label: "Chest & Upper abdomen" },
+    { value: "Middle abdomen", label: "Middle abdomen" },
+    { value: "Lower abdomen", label: "Lower abdomen & Sexual organs" },
+    { value: "Pelvis, gluteal and thigh", label: "Pelvis, Gluteal & Thigh" },
     { value: "Knee", label: "Knee" },
     { value: "Shin", label: "Shin" },
     { value: "Foot", label: "Foot" },
@@ -54,7 +34,7 @@ export default function SymptomForm({
   function addCatField() {
     const newCat = {
       id: uuidv4(),
-      categoryName: "Position",
+      categoryName: "",
       descriptions: [
         {
           id: uuidv4(),
@@ -172,7 +152,7 @@ export default function SymptomForm({
         <h4 className="card-title text-dark-1 col-3">Symptom:</h4>
         <input
           type="text"
-          className="form-control border-primary col border-dark-subtle shadow-sm"
+          className="form-control col border-dark-subtle shadow-sm"
           name="name"
           value={symptom.name}
           placeholder="Enter symptom name"
@@ -185,7 +165,7 @@ export default function SymptomForm({
         <select
           name="position"
           value={symptom.position}
-          className="form-select border-primary col border-dark-subtle shadow-sm"
+          className="form-select col border-dark-subtle shadow-sm"
           disabled={mode === "view" || mode === "doctor edit"}
           onChange={(e) => updateField(e)}
         >
@@ -212,26 +192,21 @@ export default function SymptomForm({
                 )}
                 <h5 className="text-dark-1 pe-2">Properties:</h5>
               </div>
-              <select
+              <input
                 name="categoryName"
                 value={cat.categoryName}
-                className="form-select border-secondary-subtle col"
+                className="form-control border-secondary-subtle col fw-med"
                 disabled={
                   mode === "view" ||
                   (mode === "doctor edit" && origCats.includes(cat.id))
                 }
+                placeholder="Enter property"
                 onChange={(e) => updateCatField(cat.id, e)}
-              >
-                {categoryOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+              ></input>
             </div>
 
             {cat.descriptions?.map((desc) => (
-              <div key={desc.id} className="form d-flex pb-3">
+              <div key={desc.id} className="d-flex flex-nowrap form pb-3">
                 {(mode === "create" ||
                   (mode === "doctor edit" && !origDescs.includes(desc.id))) && (
                   <i
@@ -267,11 +242,9 @@ export default function SymptomForm({
         );
       })}
       {(mode === "create" || mode === "doctor edit") && (
-        <div
-          onClick={addCatField}
-          className="btn btn-secondary bg-gradient mt-5"
-        >
-          Add a property
+        <div onClick={addCatField} className="btn btn-primary bg-gradient mt-5">
+          <i className="bi bi-plus-lg"></i>
+          <span className="ps-1">Add a property</span>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import BaySideLogo from "assets/logo/BaySide-logo-2.svg";
-import "components/HomePage/Footer/footer.scss";
+import BaySideLogo from "assets/icons/BaySide-logo-2.svg";
+import "components/HomePage/Footer/Footer.scss";
 
 const footerLinks1 = [
   { name: "Appointments", link: "/" },

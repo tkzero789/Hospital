@@ -27,10 +27,19 @@
   --footer-bg: #006298;
   --copyright-bg: #006298;
   --bg-white: #ffffff;
+  --bg-white-1: #f5f5f5;
   --bg-blue-1: #006da8;
   --bg-blue-2: #003755;
   --bg-blue-3: #ecf5ff;
   --bg-blue-4: #0044ff;
+  --bg-blue-5: #e1f2fd86;
+  --bg-blue-6: #002c77;
+  --bg-blue-7: #ecf5ff;
+  --bg-blue-8: #dbe4ee;
+  --bg-gray-1: #f7f7f7;
+  --bg-gray-2: #e9ecef;
+  --bg-gray-3: #dcdfe2;
+  --bg-gray-4: #fafafa;
 
   /* Button */
   --btn-blue-1: #3498db;
@@ -48,6 +57,7 @@
 
   /* Hover */
   --btn-light-hover-1: #dde2e9;
+  --btn-light-hover-2: #f7f7f7;
   --btn-blue-hover-1: #297fb8;
   --btn-blue-hover-2: #004e83;
 
@@ -57,6 +67,9 @@
   --box-shadow-3: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   --box-shadow-4: rgba(0, 0, 0, 0.07) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  --box-shadow-5: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --box-shadow-6: rgba(0, 0, 0, 0.08) 0px 3px 3px 0px,
+    rgba(0, 0, 0, 0.15) 0px 0px 0px 1px;
 }
 
 * {
@@ -111,6 +124,10 @@
   font-size: 14px;
 }
 
+.fs-16 {
+  font-size: 16px;
+}
+
 .fs-18 {
   font-size: 18px;
 }
@@ -128,6 +145,10 @@
   background-color: var(--footer-bg);
 }
 
+.bg-white-1 {
+  background-color: var(--bg-white-1);
+}
+
 .bg-blue-1 {
   background-color: var(--bg-blue-1);
 }
@@ -140,6 +161,34 @@
   background-color: var(--bg-blue-3);
 }
 
+.bg-blue-4 {
+  background-color: var(--bg-blue-4);
+}
+
+.bg-blue-5 {
+  background-color: var(--bg-blue-5);
+}
+
+.bg-blue-6 {
+  background-color: var(--bg-blue-6);
+}
+
+.bg-gray-1 {
+  background-color: var(--bg-gray-1);
+}
+
+.bg-gray-2 {
+  background-color: var(--bg-gray-2);
+}
+
+.bg-gray-3 {
+  background-color: var(--bg-gray-3);
+}
+
+.bg-gray-4 {
+  background-color: var(--bg-gray-4);
+}
+
 /* Border */
 .border-radius-1 {
   border-radius: 6px;
@@ -147,6 +196,31 @@
 
 .border-radius-2 {
   border-radius: 12px;
+}
+
+/* Box shadow */
+.box-shadow-1 {
+  box-shadow: var(--box-shadow-1);
+}
+
+.box-shadow-2 {
+  box-shadow: var(--box-shadow-2);
+}
+
+.box-shadow-3 {
+  box-shadow: var(--box-shadow-3);
+}
+
+.box-shadow-4 {
+  box-shadow: var(--box-shadow-4);
+}
+
+.box-shadow-5 {
+  box-shadow: var(--box-shadow-5);
+}
+
+.box-shadow-6 {
+  box-shadow: var(--box-shadow-6);
 }
 
 /* Hidden */

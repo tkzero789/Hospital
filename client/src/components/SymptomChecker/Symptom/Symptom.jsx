@@ -1,17 +1,22 @@
 import React from "react";
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
-const Symptom = ({ symptom, onCheck }) => {
+const Symptom = ({ symptom, onCheck, handleSnackBarPosition }) => {
   return (
-    <button
-      className="symptom-button"
-      onClick={(e) => {
-        e.preventDefault();
-        onCheck(symptom.id);
-      }}
-    >
-      <span>{symptom.name}</span>
-    </button>
+    <>
+      <button
+        key={symptom.id}
+        className="symptom-button"
+        onClick={(e) => {
+          e.preventDefault();
+          onCheck(symptom.id);
+          console.log(symptom.id);
+          handleSnackBarPosition({ vertical: "bottom", horizontal: "center" });
+        }}
+      >
+        <span>{symptom.name}</span>
+      </button>
+    </>
   );
 };
 

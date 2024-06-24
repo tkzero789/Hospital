@@ -1,5 +1,5 @@
-import ApptIMG from "assets/img/apptReq.jpg";
-import "components/Appt/appt.css";
+import ApptIMG from "assets/img/appt-request.jpg";
+import "components/Appt/Appt.css";
 
 const ApptByPhoneDetail = ({
   setIsClicked,

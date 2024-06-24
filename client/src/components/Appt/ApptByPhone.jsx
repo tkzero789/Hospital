@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import ApptIMG from "assets/img/apptReq.jpg";
+import ApptIMG from "assets/img/appt-request.jpg";
 import ApptByPhoneDetail from "components/Appt/ApptByPhoneDetail";
 import ApptFilter from "components/Appt//ApptFilter";
 import { Skeleton } from "@mui/material";
-import "components/Appt/appt.css";
+import "components/Appt/Appt.css";
 
 const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
   const [isClicked, setIsClicked] = useState(false);

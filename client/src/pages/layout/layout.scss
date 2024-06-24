@@ -2,6 +2,10 @@
   display: flex;
   width: 100%;
   .listContainer {
-    flex: 6;
+    width: calc(100% - 180px);
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-height: 100vh;
   }
 }

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import removeAccents from "remove-accents";
 import Symptom from "components/SymptomChecker/Symptom/Symptom";
 import MaleFigure from "components/HumanFigures/MaleFigure/MaleFigure";
@@ -13,7 +13,10 @@ import WholeHeadSymp from "components/SymptomChecker/WholeHeadSymp/WholeHeadSymp
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
 import { MobileSympBtn } from "components/SymptomChecker/MobileSympBtn/MobileSympBtn";
 import { ExtraMobileSympBtn } from "components/SymptomChecker/MobileSympBtn/ExtraMobileSympBtn";
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
+import CloseIcon from "components/UI/CloseIcon";
+import { Alert, Snackbar } from "@mui/material";
+import NoSymptom from "../Symptom/NoSymptom";
 
 export default function PatientFormSymptoms({
   dbSymps,
@@ -355,10 +358,26 @@ export default function PatientFormSymptoms({
     setIsSwitch(false);
   };
 
+  // Handle snackbar
+  const [snackBar, setSnackBar] = useState({
+    openSnackBar: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { openSnackBar, vertical, horizontal } = snackBar;
+
+  const handleSnackBarPosition = (newSnackBar) => {
+    setSnackBar({ ...newSnackBar, openSnackBar: true });
+  };
+
+  const handleCloseSnackBar = () => {
+    setSnackBar({ ...snackBar, openSnackBar: false });
+  };
+
   // The UI
   return (
     <div>
-      <div className="pb-2 pb-md-5 text-center">
+      <div className="text-center">
         <h4 className="text-dark-header fw-med pb-4">Select symptoms</h4>
       </div>
       <h5 className="card-title text-blue-3 fw-med d-none d-md-block">
@@ -394,7 +413,9 @@ export default function PatientFormSymptoms({
                 filteredSymps={filteredSymps}
                 onCheck={onCheck}
                 chosenSymps={patientForm.chosenSymps}
+                handleSnackBarPosition={handleSnackBarPosition}
               />
+              <div className="flex-grow-1"></div>
               {/* Display selected symptoms */}
               <SelectedSympBox
                 patientForm={patientForm}
@@ -449,309 +470,469 @@ export default function PatientFormSymptoms({
                 )}
                 {/* 1. Head */}
                 {showHeadSymptoms && (
-                  <div ref={headRef} className="head-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Head" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={headRef} className="head-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Head</span>
+                      <button onClick={toggleHeadSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="head-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Head" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 2. Eyes */}
                 {showEyesSymptoms && (
-                  <div ref={eyesRef} className="eyes-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Eyes" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={eyesRef} className="eyes-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Eyes</span>
+                      <button onClick={toggleEyesSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="eyes-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Eyes" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 3. Ears */}
                 {showEarsSymptoms && (
-                  <div ref={earsRef} className="ears-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Ears" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={earsRef} className="ears-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Ears</span>
+                      <button onClick={toggleEarsSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="ears-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Ears" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 4. Nose */}
                 {showNoseSymptoms && (
-                  <div ref={noseRef} className="nose-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Nose" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={noseRef} className="nose-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Nose</span>
+                      <button onClick={toggleNoseSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="nose-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Nose" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 5. Mouth */}
                 {showMouthSymptoms && (
-                  <div ref={mouthRef} className="mouth-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Mouth" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={mouthRef} className="mouth-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Oral Cavity</span>
+                      <button onClick={toggleMouthSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="mouth-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Mouth" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 6. Neck */}
                 {showNeckSymptoms && (
-                  <div ref={neckRef} className="neck-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Neck" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={neckRef} className="neck-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Neck</span>
+                      <button onClick={toggleNeckSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="neck-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Neck" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 7. Chest */}
                 {showChestSymptoms && (
-                  <div ref={chestRef} className="chest-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Chest" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={chestRef} className="chest-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Chest & Upper abdomen</span>
+                      <button onClick={toggleChestSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="chest-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Chest" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 8. UpperArm */}
                 {showUpperArmSymptoms && (
-                  <div ref={upperArmRef} className="upperArm-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Shoulder" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={upperArmRef} className="upperArm-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Upper arm</span>
+                      <button onClick={toggleUpperArmSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="upperArm-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Shoulder" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 9. ForeArm */}
                 {showForeArmSymptoms && (
-                  <div ref={foreArmRef} className="foreArm-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Forearm" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={foreArmRef} className="foreArm-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Forearm</span>
+                      <button onClick={toggleForeArmSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="foreArm-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Forearm" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 10. MidAb */}
                 {showMidAbSymptoms && (
-                  <div ref={midAbRef} className="midAb-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Middle abdomen" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={midAbRef} className="midAb-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Middle abdomen</span>
+                      <button onClick={toggleMidAbSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="midAb-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Middle abdomen" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 11. LowerAbPrivate */}
                 {showLowerAbSymptoms && (
                   <div
                     ref={lowerAbRef}
-                    className="lowerAbPrivate-symptoms-list"
+                    className="lowerAbPrivate-symptoms-list-box"
                   >
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Lower abdomen" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                    <div className="symptom-list-box-header">
+                      <span>Lower abdomen & Sexual Organs</span>
+                      <button onClick={toggleLowerAbSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="lowerAbPrivate-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Lower abdomen" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 12. Hand */}
                 {showHandSymptoms && (
-                  <div ref={handRef} className="hand-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Hand" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={handRef} className="hand-symptoms-list-box ">
+                    <div className="symptom-list-box-header">
+                      <span>Hand</span>
+                      <button onClick={toggleHandSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="hand-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Hand" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 13. Thigh */}
                 {showThighSymptoms && (
-                  <div ref={thighRef} className="thigh-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Pelvis, gluteal and thigh" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={thighRef} className="thigh-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Thigh</span>
+                      <button onClick={toggleThighSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="thigh-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Pelvis, gluteal and thigh" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 14. Knee */}
                 {showKneeSymptoms && (
-                  <div ref={kneeRef} className="knee-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Knee" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={kneeRef} className="knee-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Knee</span>
+                      <button onClick={toggleKneeSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="knee-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Knee" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 15. LowerLeg */}
                 {showLowerLegSymptoms && (
-                  <div ref={lowerLegRef} className="lowerLeg-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Shin" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={lowerLegRef} className="lowerLeg-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Shin</span>
+                      <button onClick={toggleLowerLegSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="lowerLeg-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Shin" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
                 {/* 16. Foot */}
                 {showFootSymptoms && (
-                  <div ref={footRef} className="foot-symptoms-list">
-                    {dbSymps
-                      .filter(
-                        (symptom) =>
-                          symptom.position === "Foot" &&
-                          symptom.status === "Approved" &&
-                          !patientForm.chosenSymps.includes(symptom.id)
-                      )
-                      .map((symptom) => (
-                        <Symptom
-                          symptom={symptom}
-                          onCheck={onCheck}
-                          key={symptom.id}
-                        />
-                      ))}
+                  <div ref={footRef} className="foot-symptoms-list-box">
+                    <div className="symptom-list-box-header">
+                      <span>Foot</span>
+                      <button onClick={toggleFootSymptoms}>
+                        <CloseIcon />
+                      </button>
+                    </div>
+                    <div className="foot-symptoms-list scrollbar">
+                      {dbSymps
+                        .filter(
+                          (symptom) =>
+                            symptom.position === "Foot" &&
+                            symptom.status === "Approved" &&
+                            !patientForm.chosenSymps.includes(symptom.id)
+                        )
+                        .map((symptom) => (
+                          <Symptom
+                            symptom={symptom}
+                            onCheck={onCheck}
+                            key={symptom.id}
+                            handleSnackBarPosition={handleSnackBarPosition}
+                          />
+                        ))}
+                    </div>
+                    <NoSymptom />
                   </div>
                 )}
               </div>
@@ -791,6 +972,7 @@ export default function PatientFormSymptoms({
               toggleFunction={toggleIsAddClick}
               dbSymps={dbSymps}
               chosenSymps={patientForm.chosenSymps}
+              handleSnackBarPosition={handleSnackBarPosition}
             />
           )}
         </div>
@@ -837,6 +1019,9 @@ export default function PatientFormSymptoms({
             {/* 1-5. WholeHead */}
             {wholeHeadM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Positions</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {/* Head */}
                   <button
@@ -855,6 +1040,7 @@ export default function PatientFormSymptoms({
                       position={"Head"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
                   {/* Eyes */}
@@ -874,6 +1060,7 @@ export default function PatientFormSymptoms({
                       position={"Eyes"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
                   {/* Ears */}
@@ -893,6 +1080,7 @@ export default function PatientFormSymptoms({
                       position={"Ears"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
                   {/* Nose */}
@@ -912,6 +1100,7 @@ export default function PatientFormSymptoms({
                       position={"Nose"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
                   {/* Mouth */}
@@ -931,6 +1120,7 @@ export default function PatientFormSymptoms({
                       position={"Mouth"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
 
@@ -946,6 +1136,9 @@ export default function PatientFormSymptoms({
             {/* 6. Neck */}
             {neckM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Neck</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -960,6 +1153,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleNeckM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleNeckM} />
@@ -969,6 +1163,9 @@ export default function PatientFormSymptoms({
             {/* 7. Chest */}
             {chestM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Chest & Upper abdomen</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -983,6 +1180,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleChestM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleChestM} />
@@ -992,6 +1190,9 @@ export default function PatientFormSymptoms({
             {/* 8. UpperArm */}
             {upperArmM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Shoulder & Upper arm</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1006,6 +1207,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleUpperArmM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleUpperArmM} />
@@ -1015,6 +1217,9 @@ export default function PatientFormSymptoms({
             {/* 9. ForeArm */}
             {foreArmM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Forearm</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1029,6 +1234,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleForeArmM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleForeArmM} />
@@ -1038,6 +1244,9 @@ export default function PatientFormSymptoms({
             {/* 10. MidAb */}
             {midAbM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Middle abdomen</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1052,6 +1261,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleMidAbM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleMidAbM} />
@@ -1061,6 +1271,9 @@ export default function PatientFormSymptoms({
             {/* 11. LowerAb */}
             {lowerAbM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Lower abdomen & Sexual organs</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1075,6 +1288,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleLowerAbM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleLowerAbM} />
@@ -1084,6 +1298,9 @@ export default function PatientFormSymptoms({
             {/* 12. Hand */}
             {handM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Hand</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1098,6 +1315,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleHandM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleHandM} />
@@ -1107,6 +1325,9 @@ export default function PatientFormSymptoms({
             {/* 13. Thigh */}
             {thighM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Pelvis, Gluteal & Thigh</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1121,6 +1342,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleThighM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleThighM} />
@@ -1130,6 +1352,9 @@ export default function PatientFormSymptoms({
             {/* 14. Knee */}
             {kneeM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Knee</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1144,6 +1369,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleKneeM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleKneeM} />
@@ -1153,6 +1379,9 @@ export default function PatientFormSymptoms({
             {/* 15. LowerLeg */}
             {lowerLegM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Shin</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1167,6 +1396,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleLowerLegM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleLowerLegM} />
@@ -1176,6 +1406,9 @@ export default function PatientFormSymptoms({
             {/* 16. Foot */}
             {footM && (
               <div className="mobile-symp-background">
+                <div className="mobile-symptoms-list-header">
+                  <span>Foot</span>
+                </div>
                 <div className="mobile-symptoms-list">
                   {dbSymps
                     .filter(
@@ -1190,6 +1423,7 @@ export default function PatientFormSymptoms({
                         onCheck={onCheck}
                         key={symptom.id}
                         toggleFunction={toggleFootM}
+                        handleSnackBarPosition={handleSnackBarPosition}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleFootM} />
@@ -1205,7 +1439,17 @@ export default function PatientFormSymptoms({
         dbSymps={dbSymps}
         handleDelete={handleDelete}
       />
-      <div className="row pt-3 pb-3"></div>
+      <div className="py-3"></div>
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={1000}
+        onClose={handleCloseSnackBar}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
+          Added symptom
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

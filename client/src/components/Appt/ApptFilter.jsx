@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "components/Appt/appt.css";
+import "components/Appt/Appt.css";
 
 const ApptFilter = ({ options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);

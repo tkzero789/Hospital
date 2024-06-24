@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import "components/SymptomChecker/symptomchecker.css";
+import React from "react";
+import "components/SymptomChecker/Symptomchecker.css";
 
 export default function PatientFormDes({
   chosenSymp,
   patientForm,
   setPatientForm,
+  checkedItem,
+  setCheckedItem,
 }) {
-  const [checkedItem, setCheckedItem] = useState({});
-
   const onCheck = (symptomId, descriptionId) => {
     if (
       patientForm.chosenDescs.some(
@@ -30,22 +30,22 @@ export default function PatientFormDes({
     }
   };
 
+  console.log(chosenSymp);
+
   return (
     <div>
       <div className="form-group row pb-4">
-        <h4 className="text-dark-sub-header fw-med text-center text-underline m-symp-name">
-          Select your symptoms relating to {chosenSymp.name}
+        <h4 className="text-dark-sub-header fw-med text-center text-underline m-symp-name pt-2 pt-md-0">
+          <span className="fw-med">{chosenSymp.name}</span>
         </h4>
       </div>
       {chosenSymp.categories.map((category) => {
         return (
           <div key={category.id}>
-            <div className="form row pt-3 pb-3">
-              <h5 className="card-title text-blue-3 col-12 fw-med">
-                {category.categoryName}
-              </h5>
+            <div className="form row pt-4 pt-md-3 pb-3 pb-md-3">
+              <h5 className="text-blue-3 col-12">{category.categoryName}:</h5>
             </div>
-            <div className="row">
+            <div className="row ps-0 ps-md-2">
               {category.descriptions.map((description) => (
                 <div
                   key={description.id}
@@ -53,7 +53,7 @@ export default function PatientFormDes({
                     checkedItem[description.id] ? "checked" : ""
                   }`}
                 >
-                  <label className="d-flex">
+                  <label className="symp-checkbox-label">
                     <input
                       type="checkbox"
                       checked={patientForm.chosenDescs.some(
@@ -63,7 +63,7 @@ export default function PatientFormDes({
                       className="me-2"
                       onChange={() => onCheck(chosenSymp.id, description.id)}
                     />
-                    <h5 className="fw-reg fs-18">
+                    <h5 className="fw-reg fs-16">
                       {description.descriptionDetail}
                     </h5>
                   </label>

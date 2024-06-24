@@ -98,7 +98,7 @@ export default function UserForm({ user, setUser, editMode }) {
       {(user.role === "head-doctor" || user.role === "doctor") && (
         <div>
           <div className="form-group row pb-5">
-            <h4 className="text-dark-1 col-3">Doctor ID:</h4>
+            <h5 className="text-dark-1 col-3">Doctor ID:</h5>
             <input
               type="text"
               className="form-control border-secondary-subtle col"
@@ -106,6 +106,8 @@ export default function UserForm({ user, setUser, editMode }) {
               value={user.userInfos.doctorID}
               disabled={!editMode}
               readOnly={!editMode}
+              required
+              onChange={(e) => updateInfoField(e)}
             />
           </div>
           <div className="form-group row pb-5">
@@ -117,6 +119,8 @@ export default function UserForm({ user, setUser, editMode }) {
               value={user.userInfos.medSpecialty}
               disabled={!editMode}
               readOnly={!editMode}
+              required
+              onChange={(e) => updateInfoField(e)}
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
 export const ExtraMobileSympBtn = ({ toggleExtraM }) => {
   return (

@@ -3,7 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { Toaster, toast } from "sonner";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import "components/Appt/appt.css";
+import "components/Appt/Appt.css";
 
 const ApptOtp = ({
   setIsOtpConfirmed,

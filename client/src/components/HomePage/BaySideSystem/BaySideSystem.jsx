@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AmbulanceSVG from "assets/home/ambulanceSVG.svg";
-import ClipboardSVG from "assets/home/clipboardSVG.svg";
-import HospitalSVG from "assets/home/hospitalSVG.svg";
-import "components/HomePage/BaySideSystem/baysidesystem.scss";
+import AmbulanceSVG from "assets/icons/ambulance-icon.svg";
+import ClipboardSVG from "assets/icons/clipboard-icon.svg";
+import HospitalSVG from "assets/icons/hospital-icon.svg";
+import "components/HomePage/BaySideSystem/Baysidesystem.scss";
 
 export default function BaySideSystem() {
   return (

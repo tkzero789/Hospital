@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
 const MobileSearchBarSymp = ({
   inputRef,
@@ -16,6 +16,7 @@ const MobileSearchBarSymp = ({
   toggleFunction,
   dbSymps,
   chosenSymps,
+  handleSnackBarPosition,
 }) => {
   // Delay 1s on rendering symptom
   const [delay, setDelay] = useState(false);
@@ -36,7 +37,7 @@ const MobileSearchBarSymp = ({
           <input
             ref={inputRef}
             type="text"
-            placeholder="Enter your symptom here..."
+            placeholder="Search symptom"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -69,6 +70,7 @@ const MobileSearchBarSymp = ({
                       onCheck={onCheck}
                       key={symptom.id}
                       toggleFunction={toggleFunction}
+                      handleSnackBarPosition={handleSnackBarPosition}
                     />
                   ))
               : Array(10)

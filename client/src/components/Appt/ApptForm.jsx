@@ -3,10 +3,10 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import Calendar from "react-calendar";
 import { Toaster, toast } from "sonner";
 import { Link } from "react-router-dom";
-import ApptIMG from "assets/img/apptReq.jpg";
+import ApptIMG from "assets/img/appt-request.jpg";
 import "react-calendar/dist/Calendar.css";
-import "components/Appt/calendar.css";
-import "components/Appt/appt.css";
+import "components/Appt/Calendar.css";
+import "components/Appt/Appt.css";
 
 export default function ApptForm({
   appt,
@@ -163,7 +163,7 @@ export default function ApptForm({
     const inputPhoneNumber = document.getElementById("inputPhoneNumber");
     const inputEmail = document.getElementById("inputEmail");
     if (!inputFullName.checkValidity()) {
-      toast.error("Please enter name");
+      toast.error("Please enter your name");
     } else if (!inputPhoneNumber.checkValidity()) {
       toast.error("Invalid phone number");
     } else if (!inputEmail.checkValidity()) {

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "AuthContext";
+import { useAuth } from "auth/AuthContext";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import BaySideLogo from "assets/logo/BaySide-logo-1.svg";
-import "components/Navbar/MainNav/mainnav.css";
+import BaySideLogo from "assets/icons/BaySide-logo-1.svg";
+import "components/Navbar/MainNav/Mainnav.css";
 
 const navLinks = [
   { link: "/home", text: "" },

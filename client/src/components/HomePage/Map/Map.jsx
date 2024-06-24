@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { MapConfig } from "./MapConfig";
-import LocationIcon1 from "assets/home/location-icon9.png";
-import LocationIcon3 from "assets/home/location-icon8-1.png";
-import "components/HomePage/Map/map.scss";
+import LocationIcon1 from "assets/icons/location-small-icon.png";
+import LocationIcon3 from "assets/icons/location-big-icon.png";
+import "components/HomePage/Map/Map.scss";
 
 const Map = () => {
   const [radius1, setRadius1] = useState("6px");

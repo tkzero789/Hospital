@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HospitalImg from "assets/home/hospitalBuilding.jpg";
-import "components/HomePage/About/about.scss";
+import HospitalImg from "assets/img/hospital-building.jpg";
+import "components/HomePage/About/About.scss";
 
 export default function About() {
   return (

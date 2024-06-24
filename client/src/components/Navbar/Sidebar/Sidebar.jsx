@@ -8,9 +8,9 @@ import PeopleIcon from "@mui/icons-material/People";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import BaySideLogo from "assets/logo/BaySide-logo-2.svg";
-import { useAuth } from "AuthContext";
-import "components/Navbar/Sidebar/sidebar.scss";
+import { useAuth } from "auth/AuthContext";
+import BaySideLogo from "assets/icons/BaySide-logo-2.svg";
+import "components/Navbar/Sidebar/Sidebar.scss";
 
 export default function Sidebar() {
   const { logout, getUserRole } = useAuth();
@@ -58,58 +58,59 @@ export default function Sidebar() {
 
       <div className="center">
         <ul>
-          <NavLink to="/symptom-table" activeclassname="active">
-            <li>
+          <li>
+            <NavLink to="/symptom-table" activeclassname="active">
               <MonitorHeartIcon className="icon" />
               <span>Symptoms</span>
-            </li>
-          </NavLink>
-          <NavLink to="/disease-table" activeclassname="active">
-            <li>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/disease-table" activeclassname="active">
               <MedicalServicesIcon className="icon" />
               <span>Diseases</span>
-            </li>
-          </NavLink>
-          <NavLink to="/article-table" activeclassname="active">
-            <li>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/article-table" activeclassname="active">
               <FeedIcon className="icon" />
               <span>Articles</span>
-            </li>
-          </NavLink>
+            </NavLink>
+          </li>
           {userRole === "admin" && (
-            <NavLink to="/appointment-table" activeclassname="active">
-              <li>
+            <li>
+              <NavLink to="/appointment-table" activeclassname="active">
                 <TodayIcon className="icon" />
                 <span>Appointments</span>
-              </li>
-            </NavLink>
+              </NavLink>
+            </li>
           )}
-          {userRole === "admin" && (
-            <NavLink to="/user-table" activeclassname="active">
-              <li>
-                <PeopleIcon className="icon" />
-                <span>Accounts</span>
-              </li>
-            </NavLink>
-          )}
-          <NavLink to="/blog-table" activeclassname="active">
-            <li>
+          <li>
+            <NavLink to="/blog-table" activeclassname="active">
               <NewspaperIcon className="icon" />
               <span>Blogs</span>
-            </li>
-          </NavLink>
-          <NavLink to="">
+            </NavLink>
+          </li>
+          {userRole === "admin" && (
             <li>
+              <NavLink to="/user-table" activeclassname="active">
+                <PeopleIcon className="icon" />
+                <span>Accounts</span>
+              </NavLink>
+            </li>
+          )}
+          <hr />
+          <li className="mt-auto">
+            <NavLink to="">
               <SettingsApplicationsIcon className="icon" />
               <span>Setting</span>
-            </li>
-          </NavLink>
-          <NavLink to="" onClick={handleSignOut}>
-            <li>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="" onClick={handleSignOut}>
               <ExitToAppIcon className="icon" />
               <span>Logout</span>
-            </li>
-          </NavLink>
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>

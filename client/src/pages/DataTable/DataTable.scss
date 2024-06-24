@@ -1,0 +1,188 @@
+.datatable {
+  height: 80vh;
+  padding: 20px;
+
+  .datatableTitle {
+    width: 100%;
+    font-size: 24px;
+    color: var(--text-blue-3);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    button {
+      margin-left: auto;
+      margin-right: 16px;
+      text-decoration: none;
+      color: var(--text-dark-1);
+      font-size: 16px;
+      font-weight: 400;
+      padding: 6px 8px;
+      background-color: var(--bg-white);
+      border-radius: var(--border-radius-1);
+      border: none;
+      cursor: pointer;
+      outline: 1px solid var(--border-blue-3);
+    }
+
+    button:hover {
+      background-color: var(--btn-light-hover-2);
+    }
+
+    .add-link {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 400;
+      background-color: var(--bg-blue-6);
+      padding: 6px 8px;
+      border-radius: var(--border-radius-1);
+      cursor: pointer;
+    }
+
+    .add-link:hover {
+      background-color: darken(#002c77, 5%);
+    }
+  }
+
+  .header-style {
+    background-color: var(--bg-gray-2);
+  }
+
+  .cellWithImg {
+    display: flex;
+    align-items: center;
+
+    .cellImg {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+  }
+
+  .cellWithStatus {
+    padding: 5px;
+    border-radius: 5px;
+
+    &.Accepted {
+      background-color: rgba(148, 230, 148, 0.5);
+      color: green;
+    }
+    &.Approved {
+      background-color: rgba(148, 230, 148, 0.5);
+      color: green;
+    }
+    &.Reviewing {
+      background-color: rgba(219, 211, 154, 0.5);
+      color: goldenrod;
+    }
+    &.Pending-Create {
+      background-color: rgba(219, 211, 154, 0.5);
+      color: goldenrod;
+    }
+    &.Pending-Update {
+      background-color: rgba(219, 211, 154, 0.5);
+      color: goldenrod;
+    }
+    &.Request-Edit {
+      background-color: rgba(231, 110, 193, 0.5);
+      color: rgb(223, 71, 174);
+    }
+    &.Declined {
+      background-color: rgba(204, 0, 0, 0.3);
+      color: rgb(204, 0, 0);
+    }
+    &.Spam {
+      background-color: rgba(204, 0, 0, 0.3);
+      color: rgb(204, 0, 0);
+    }
+  }
+
+  .rowWithStatus {
+    &.Pending {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
+    &.Pending-Create {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
+    &.Pending-Update {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
+    &.Request-Edit {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
+  }
+
+  .cellAction {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 0 20px;
+
+    .viewLink {
+      text-decoration: none;
+    }
+
+    .viewButton {
+      padding: 4px 10px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #008dda;
+      border: 1px solid #008dda;
+      font-weight: var(--roboto-medium-weight);
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken(#008dda, 10%);
+      }
+    }
+
+    .deleteButton {
+      padding: 4px 10px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #ff0000;
+      border: 1px solid #ff0000;
+      font-weight: var(--roboto-medium-weight);
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken(#ff0000, 10%);
+      }
+    }
+
+    .checkButton {
+      padding: 4px 10px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #008b46;
+      border: 1px solid #008b46;
+      font-weight: var(--roboto-medium-weight);
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken(#008b46, 10%);
+      }
+    }
+
+    .editButton {
+      padding: 4px 10px;
+      border-radius: 5px;
+      color: #ffffff;
+      background-color: #e459b8;
+      border: 1px solid #e459b8;
+      font-weight: var(--roboto-medium-weight);
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken(#e459b8, 10%);
+      }
+    }
+  }
+}

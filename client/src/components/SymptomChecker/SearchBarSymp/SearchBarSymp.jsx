@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Symptom from "components/SymptomChecker/Symptom/Symptom";
 import { Skeleton } from "@mui/material";
-import "components/SymptomChecker/symptomchecker.css";
+import "components/SymptomChecker/Symptomchecker.css";
 
 const SearchBarSymp = ({
   inputRef,
@@ -13,6 +13,7 @@ const SearchBarSymp = ({
   filteredSymps,
   onCheck,
   chosenSymps,
+  handleSnackBarPosition,
 }) => {
   // Delay 0.5s on rendering symptom
   const [delay, setDelay] = useState(false);
@@ -32,7 +33,7 @@ const SearchBarSymp = ({
         <input
           ref={inputRef}
           type="text"
-          placeholder="Enter your symptom here..."
+          placeholder="Search symptom"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -63,17 +64,18 @@ const SearchBarSymp = ({
                     symptom={symptom}
                     onCheck={onCheck}
                     key={symptom.id}
+                    handleSnackBarPosition={handleSnackBarPosition}
                   />
                 ))
-            : Array(7)
+            : Array(6)
                 .fill()
                 .map((_, index) => (
                   <Skeleton
                     key={index}
                     variant="text"
                     animation="wave"
-                    sx={{ fontSize: "1.2rem" }}
-                    style={{ margin: "0 10px" }}
+                    sx={{ fontSize: "1.5rem" }}
+                    style={{ margin: "0 10px", zIndex: "10" }}
                   />
                 ))}
         </div>

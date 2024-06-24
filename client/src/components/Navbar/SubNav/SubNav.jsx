@@ -1,36 +1,69 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import "components/Navbar/SubNav/subnav.css";
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, Link } from "react-router-dom";
+import "components/Navbar/SubNav/Subnav.css";
 
 export default function SubNav() {
   const navLinks = [
     { link: "/view-blog-list", text: "News & Insights" },
     { link: "/symptom-checker", text: "Health checker" },
-    { link: "/appt-detail-guest", text: "Appointments" },
     { link: "work-schedule", text: "Locations" },
     { link: "work-schedule", text: "813-784-4581" },
     { link: "work-schedule", text: "Search" },
   ];
 
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const hideDropdown = () => setDropdownVisible(false);
+
   return (
     <>
       {/* LOWER NAVBAR */}
-      <div className="w-100 sub-nav-bg border-top">
+      <div className="w-100 sub-nav-bg">
         <div className="nav-container">
           <nav className="sub-nav-bg py-0 d-none d-lg-block d-xl-block">
             <ul className="sub-nav-list">
               {/* DROPDOWN  */}
-              <li className="sub-nav-item dropdown-list-item">
+              <li
+                className="sub-nav-item dropdown-list-item"
+                onMouseEnter={() => setDropdownVisible(true)}
+                onMouseLeave={() => setDropdownVisible(false)}
+              >
                 <div className="dropdown-list-box">
-                  <div className="sub-nav-text">Our services</div>
-                  <div className="dropdown-content">
-                    <NavLink>Lab</NavLink>
-                    <NavLink>Primary care</NavLink>
-                    <NavLink>Home care</NavLink>
-                    <NavLink>Imaging</NavLink>
-                    <NavLink>Insurance</NavLink>
-                    <NavLink>Health and wellness</NavLink>
+                  <div className="sub-nav-text">
+                    <span>Our services</span>{" "}
+                    <i className="bi bi-caret-down-fill"></i>
                   </div>
+                  {dropdownVisible && (
+                    <div className="dropdown-content" onClick={hideDropdown}>
+                      <NavLink>Lab</NavLink>
+                      <NavLink>Primary care</NavLink>
+                      <NavLink>Home care</NavLink>
+                      <NavLink>Imaging</NavLink>
+                      <NavLink>Insurance</NavLink>
+                      <NavLink>Health and wellness</NavLink>
+                    </div>
+                  )}
+                </div>
+              </li>
+              <li
+                className="sub-nav-item dropdown-list-item"
+                onMouseEnter={() => setDropdownVisible(true)}
+                onMouseLeave={() => setDropdownVisible(false)}
+              >
+                <div className="dropdown-list-box">
+                  <div className="sub-nav-text">
+                    <span>Appointment</span>{" "}
+                    <i className="bi bi-caret-down-fill"></i>
+                  </div>
+                  {dropdownVisible && (
+                    <div className="dropdown-content" onClick={hideDropdown}>
+                      <Link to="/appt-request">Request appointment</Link>
+                      <NavLink to="/appt-request">Returning patients</NavLink>
+                      <NavLink to="/appt-detail-guest">
+                        Check appointment status
+                      </NavLink>
+                      <NavLink>Referring physicians</NavLink>
+                    </div>
+                  )}
                 </div>
               </li>
               {navLinks.map((link, index) => (
