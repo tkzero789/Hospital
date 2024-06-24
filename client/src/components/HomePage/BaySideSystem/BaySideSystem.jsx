@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AmbulanceSVG from "assets/icons/ambulance-icon.svg";
 import ClipboardSVG from "assets/icons/clipboard-icon.svg";
 import HospitalSVG from "assets/icons/hospital-icon.svg";
-import "components/HomePage/BaySideSystem/Baysidesystem.scss";
+import "components/HomePage/BaySideSystem/BaySideSystem.scss";
 
 export default function BaySideSystem() {
   return (
