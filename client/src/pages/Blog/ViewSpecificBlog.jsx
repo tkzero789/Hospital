@@ -9,7 +9,7 @@ import Footer from "components/HomePage/Footer/Footer";
 import "pages/Blog/Blog.css";
 
 const ViewSpecificBlog = () => {
-  const { id } = useParams();
+  const { blogSlug } = useParams();
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +28,35 @@ const ViewSpecificBlog = () => {
       });
   }, []);
 
-  const blog = blogs.find((blog) => blog.id === id);
+  const blog = blogs.find((blog) => blog.slug === blogSlug);
+
+  console.log(blogs);
+
+  // Function to map month numbers to month names
+  const getMonthName = (monthNumber) => {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    // Subtract 1 to get the correct index (0-based) from the month number (1-based)
+    return monthNames[parseInt(monthNumber, 10) - 1];
+  };
+
+  const formatDate = (dateString) => {
+    const parts = dateString.split("/");
+    const monthName = getMonthName(parts[0]);
+    return `${monthName} ${parts[1]}, ${parts[2]}`;
+  };
 
   return (
     <>
@@ -51,7 +79,7 @@ const ViewSpecificBlog = () => {
                 Home
               </Link>
               ,
-              <Link className="text-blue-2" to="/view-blog-list">
+              <Link className="text-blue-2" to="/news/page-1">
                 News & Insights
               </Link>
               ,
@@ -68,7 +96,7 @@ const ViewSpecificBlog = () => {
                     By: <span className="text-blue-3">{blog.author}</span>
                   </div>
                   <span className="text-secondary-1">
-                    Last updated: {blog.createdAt}
+                    Last updated: {formatDate(blog.createdAt.split(" ")[1])}
                   </span>
                 </div>
                 <div className="ms-auto">
@@ -186,7 +214,7 @@ const ViewSpecificBlog = () => {
                       })}
                     </ol>
                   );
-                } else if (item.type === "heading" && item.attrs.level === 3) {
+                } else if (item.type === "heading" && item.attrs.level === 4) {
                   return (
                     <h4 key={keyPrefix}>
                       {item.content?.map((textObj, textObjIndex) => {

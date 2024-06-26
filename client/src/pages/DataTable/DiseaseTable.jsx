@@ -90,7 +90,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
       field: "number",
       headerName: "No.",
       headerClassName: "header-style",
-      width: 50,
+      width: 80,
     },
     {
       field: "name",
@@ -108,7 +108,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
       field: "doctorCreated",
       headerName: "Created by",
       headerClassName: "header-style",
-      width: 180,
+      width: 200,
       valueGetter: (params) => params.row.createInfos.doctorCreated,
     },
     {
@@ -129,7 +129,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
       field: "status",
       headerName: "Status",
       headerClassName: "header-style",
-      width: 120,
+      width: 160,
       renderCell: (params) => {
         const status = params.row.status.replace(" ", "-");
         return (
@@ -149,7 +149,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
       <div className="datatable">
         <div className="datatableTitle">
           List of diseases
-          {(userRole === "head-doctor" || userRole === "doctor") && (
+          {userRole === "head-doctor" && (
             <>
               <button onClick={handleMyDiseaseClick}>
                 <i className="bi bi-filter"></i>

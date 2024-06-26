@@ -67,7 +67,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
       field: "number",
       headerName: "No.",
       headerClassName: "header-style",
-      width: 50,
+      width: 80,
     },
     {
       field: "title",
@@ -85,7 +85,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
       field: "doctorCreated",
       headerName: "Created by",
       headerClassName: "header-style",
-      width: 180,
+      width: 200,
       valueGetter: (params) => params.row.createInfos.doctorCreated,
     },
     {
@@ -99,14 +99,14 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
       field: "timeCreated",
       headerName: "Created on",
       headerClassName: "header-style",
-      width: 160,
+      width: 180,
       valueGetter: (params) => params.row.createInfos.timeCreated,
     },
     {
       field: "status",
       headerName: "Status",
       headerClassName: "header-style",
-      width: 120,
+      width: 160,
       renderCell: (params) => {
         const status = params.row.status.replace(" ", "-");
         return (

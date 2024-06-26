@@ -4,7 +4,7 @@ import "components/Navbar/SubNav/SubNav.css";
 
 export default function SubNav() {
   const navLinks = [
-    { link: "/view-blog-list", text: "News & Insights" },
+    { link: "/news/page-1", text: "News & Insights" },
     { link: "/symptom-checker", text: "Health checker" },
     { link: "work-schedule", text: "Locations" },
     { link: "work-schedule", text: "813-784-4581" },

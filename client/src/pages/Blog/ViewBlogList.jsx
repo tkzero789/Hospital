@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import Footer from "components/HomePage/Footer/Footer";
 import "pages/Blog/Blog.css";
 
 const ViewBlogList = () => {
+  const params = useParams();
+  const pageWithNumber = params.pageWithNumber;
+  const pageNumber = parseInt(pageWithNumber.split("-")[1], 10);
+  const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(parseInt(pageNumber, 10) || 1);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const blogsPerPage = 5;
@@ -58,7 +62,34 @@ const ViewBlogList = () => {
   // Pagination
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
+    navigate(`/news/page-${pageNumber}`);
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  };
+
+  // Function to map month numbers to month names
+  const getMonthName = (monthNumber) => {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    // Subtract 1 to get the correct index (0-based) from the month number (1-based)
+    return monthNames[parseInt(monthNumber, 10) - 1];
+  };
+
+  const formatDate = (dateString) => {
+    const parts = dateString.split("/");
+    const monthName = getMonthName(parts[0]);
+    return `${monthName} ${parts[1]}, ${parts[2]}`;
   };
 
   return (
@@ -87,7 +118,7 @@ const ViewBlogList = () => {
                       <div className="blog-list-item" key={blog.id}>
                         {/* Mobile blog link title */}
                         <div className="mobile-blog-link d-none">
-                          <Link to={`/view-blog-list/${blog.id}`}>
+                          <Link to={`/news/view/${blog.id}`}>
                             {blog.title ? blog.title : "Does not have a title"}
                           </Link>
                         </div>
@@ -96,7 +127,7 @@ const ViewBlogList = () => {
                           <div className="d-flex">
                             <Link
                               className="mobile-blog-thumbnail-img"
-                              to={`/view-blog-list/${blog.id}`}
+                              to={`/news/view/${blog.id}`}
                             >
                               {thumbnailImage && (
                                 <img
@@ -109,6 +140,13 @@ const ViewBlogList = () => {
                               )}
                             </Link>
                             <div className="mobile-blog-intro">
+                              <Link>
+                                {blog.tag ? blog.tag : "Does not have a tag"}
+                              </Link>
+                              <span className="d-inline fw-thin fs-14 text-secondary-1">
+                                {" "}
+                                - {formatDate(blog.createdAt.split(" ")[1])}
+                              </span>
                               <span>
                                 {blog.intro
                                   ? blog.intro
@@ -120,7 +158,7 @@ const ViewBlogList = () => {
                         <div className="c-3 md-4">
                           <Link
                             className="blog-thumbnail-img"
-                            to={`/view-blog-list/${blog.id}`}
+                            to={`/news/view/${blog.id}`}
                           >
                             {thumbnailImage && (
                               <img
@@ -135,15 +173,19 @@ const ViewBlogList = () => {
                         <div className="c-9 md-8">
                           <div className="blog-link-and-intro">
                             <div className="d-block">
-                              <Link to={`/view-blog-list/${blog.id}`}>
+                              <Link to={`/news/view/${blog.slug}`}>
                                 {blog.title
                                   ? blog.title
                                   : "Does not have a title"}
                               </Link>
                             </div>
                             <Link>
-                              {blog.tag ? blog.tag : "Does not have a tag"}
+                              {blog.tag ? blog.tag : "Does not have a tag"}{" "}
                             </Link>
+                            <span className="d-inline fw-thin fs-14 text-secondary-1">
+                              {" "}
+                              - {formatDate(blog.createdAt.split(" ")[1])}
+                            </span>
                             <span>
                               {blog.intro
                                 ? blog.intro
@@ -161,9 +203,10 @@ const ViewBlogList = () => {
                 <Pagination
                   count={totalPages}
                   page={currentPage}
+                  showFirstButton
+                  showLastButton
                   onChange={(event, page) => paginate(page)}
                   color="primary"
-                  shape="rounded"
                 />
               </div>
             </div>

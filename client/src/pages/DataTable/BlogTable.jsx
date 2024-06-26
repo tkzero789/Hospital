@@ -81,7 +81,7 @@ export default function BlogTable({ userRole, userInfos }) {
       field: "number",
       headerName: "No.",
       headerClassName: "header-style",
-      width: 50,
+      width: 80,
     },
     {
       field: "title",
@@ -111,13 +111,13 @@ export default function BlogTable({ userRole, userInfos }) {
       field: "createdAt",
       headerName: "Created on",
       headerClassName: "header-style",
-      width: 150,
+      width: 180,
     },
     {
       field: "status",
       headerName: "Status",
       headerClassName: "header-style",
-      width: 140,
+      width: 160,
       renderCell: (params) => {
         const status = params.row.status.replace(" ", "-");
         return (

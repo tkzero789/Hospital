@@ -228,7 +228,7 @@ export default function ViewBlog({ userRole, userInfos }) {
                   ))}
                 </ol>
               );
-            } else if (item.type === "heading" && item.attrs.level === 3) {
+            } else if (item.type === "heading" && item.attrs.level === 4) {
               return (
                 <h4 key={`heading-${index}`}>
                   {item.content?.map((textObj, textObjIndex) => (

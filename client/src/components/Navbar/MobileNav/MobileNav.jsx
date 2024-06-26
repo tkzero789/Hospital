@@ -157,8 +157,8 @@ export default function MobileNav() {
                 <li>
                   <Link
                     className="mobile-nav-link"
-                    to="/view-blog-list"
-                    data-to="/view-blog-list"
+                    to="/news/page-1"
+                    data-to="/news/page-1"
                     onClick={handleLinkClick}
                   >
                     News & Insights

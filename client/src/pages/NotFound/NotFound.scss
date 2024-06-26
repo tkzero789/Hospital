@@ -1,0 +1,23 @@
+@use "scss/mixins";
+
+.not-found__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 60%;
+  }
+
+  span {
+    font-size: 20px;
+    color: var(--text-dark-1);
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  a {
+    margin-top: 40px;
+    @include mixins.btn;
+  }
+}

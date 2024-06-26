@@ -89,7 +89,7 @@
 }
 
 .text-secondary-1 {
-  color: var(--text-dark-body);
+  color: var(--text-dark-body) !important;
 }
 
 .text-blue-1 {
@@ -109,6 +109,10 @@
 }
 
 /* Font (weight, size) */
+.fw-light {
+  font-weight: var(--roboto-light-weight);
+}
+
 .fw-reg {
   font-weight: var(--roboto-regular-weight);
 }

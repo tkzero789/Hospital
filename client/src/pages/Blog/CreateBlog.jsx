@@ -49,16 +49,19 @@ const CreateBlog = ({ userInfos }) => {
   }
 
   const navigate = useNavigate();
+
   // Create a ref for the file input
   const fileInputRef = useRef();
 
+  // Format date
   const now = new Date();
   const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
     now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getDate()).padStart(2, "0")}/${String(
-    now.getMonth() + 1
+  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
+    now.getDate()
   ).padStart(2, "0")}/${now.getFullYear()}`;
 
+  // Blog state
   const [blog, setBlog] = useState({
     id: null,
     title: "",
@@ -66,12 +69,14 @@ const CreateBlog = ({ userInfos }) => {
     intro: "",
     image: null,
     content: "",
+    slug: "",
     author: userInfos.fullName,
     doctorID: userInfos.doctorID,
     createAt: null,
     status: "Pending Create",
   });
 
+  // Text editor
   const editor = useEditor({
     extensions: [StarterKit, Italic, Image],
     content: "",
@@ -120,7 +125,20 @@ const CreateBlog = ({ userInfos }) => {
       setBlog(updatedBlog);
       isSuccessful = true;
     } catch (error) {
-      console.log(error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === "A blog with this title already exists."
+      ) {
+        // Handle the specific case of a duplicate blog title
+        alert(
+          "A blog with this title already exists. Please choose a different title."
+        );
+      } else {
+        // Handle other types of errors
+        console.log(error);
+        alert("An error occurred while creating the blog. Please try again.");
+      }
       return;
     }
 
@@ -135,9 +153,19 @@ const CreateBlog = ({ userInfos }) => {
     }
   }
 
+  // Slug generation function
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .replace(/[\s\W-]+/g, "-") // Replace spaces and non-word characters with hyphens
+      .replace(/^-+|-+$/g, ""); // Trim leading and trailing hyphens
+  };
+
   // Value from title input
   const onChangeTitle = (e) => {
-    setBlog({ ...blog, title: e.target.value });
+    const newTitle = e.target.value;
+    const newSlug = generateSlug(newTitle);
+    setBlog({ ...blog, title: newTitle, slug: newSlug });
   };
 
   // Value from tag select
@@ -199,8 +227,6 @@ const CreateBlog = ({ userInfos }) => {
       fileInputRef.current.value = "";
     }
   };
-
-  console.log(blog);
 
   return (
     <>

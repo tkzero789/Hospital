@@ -47,6 +47,7 @@ import SpecialtyPage from "pages/Specialty/SpecialtyPage";
 import SpecialtyDetail from "pages/Specialty/SpecialtyDetail";
 import ViewBlogList from "pages/Blog/ViewBlogList";
 import ViewSpecificBlog from "pages/Blog/ViewSpecificBlog";
+import NotFound from "pages/NotFound/NotFound";
 
 export default function Layouts({ userRole, userInfos }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -341,8 +342,9 @@ export default function Layouts({ userRole, userInfos }) {
               element={<SpecialtyDetail />}
             />
             <Route path="/work-schedule" element={<Work />} />
-            <Route path="/view-blog-list" element={<ViewBlogList />} />
-            <Route path="/view-blog-list/:id" element={<ViewSpecificBlog />} />
+            <Route path="/news/:pageWithNumber" element={<ViewBlogList />} />
+            <Route path="/news/view/:blogSlug" element={<ViewSpecificBlog />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </GuestLayout>
       )}

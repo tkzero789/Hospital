@@ -25,7 +25,7 @@ const ApptSuccessMsg = () => {
                   Thank you for choosing BaySide Hospital.
                 </p>
 
-                <Link to="/view-blog-list">
+                <Link to="/news/page-1">
                   Read latest news about health and hospital's activities
                 </Link>
                 <Link to="/symptom-checker">Give it a try - Health check</Link>

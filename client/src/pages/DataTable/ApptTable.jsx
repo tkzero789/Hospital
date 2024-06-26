@@ -70,13 +70,13 @@ export default function ApptTable() {
       field: "number",
       headerName: "No.",
       headerClassName: "header-style",
-      width: 50,
+      width: 80,
     },
     {
       field: "phoneNumber",
       headerName: "Phone number",
       headerClassName: "header-style",
-      width: 120,
+      width: 160,
     },
     {
       field: "fullName",
@@ -94,7 +94,7 @@ export default function ApptTable() {
       field: "need",
       headerName: "Service",
       headerClassName: "header-style",
-      width: 240,
+      width: 200,
     },
     {
       field: "email",

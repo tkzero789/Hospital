@@ -60,7 +60,7 @@
 .blog-link-and-intro span {
   display: block;
   padding-top: 8px;
-  color: var(--text-dark-body);
+  color: var(--text-dark-1);
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   display: -webkit-box;
@@ -192,10 +192,17 @@
     width: 60%;
   }
 
+  .mobile-blog-intro a {
+    display: inline-block;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: var(--roboto-medium-weight);
+  }
+
   .mobile-blog-intro span {
     font-size: 14px;
-    color: var(--text-dark-body);
-    -webkit-line-clamp: 5;
+    color: var(--text-dark-1);
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden;

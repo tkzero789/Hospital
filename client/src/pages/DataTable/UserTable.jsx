@@ -71,7 +71,7 @@ export default function UserTable({ userRole, userInfos }) {
       field: "phoneNumber",
       headerName: "Phone number",
       headerClassName: "header-style",
-      width: 140,
+      width: 160,
     },
     {
       field: "email",

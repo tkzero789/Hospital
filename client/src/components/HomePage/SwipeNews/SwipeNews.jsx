@@ -76,7 +76,7 @@ export default function SwipeNews() {
               </Swiper>
             </div>
             <div className="news__btn">
-              <Link to="/view-blog-list">View all news</Link>
+              <Link to="/view-blog-list/page-1">View all news</Link>
             </div>
           </div>
         </div>

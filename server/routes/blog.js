@@ -89,13 +89,23 @@ blogRoutes
   .post(verifyJWT, isDrOrHDr, async function (req, res) {
     try {
       const db_connect = await dbo.getDb("hospital");
+      const normalizedTitle = req.body.title.trim().replace(/\s+/g, " ");
+      const existingBlog = await db_connect
+        .collection("blogs")
+        .findOne({ title: normalizedTitle });
+      if (existingBlog) {
+        return res
+          .status(400)
+          .json({ message: "A blog with this title already exists." });
+      }
       const myobj = {
         id: req.body.id,
         tag: req.body.tag,
-        title: req.body.title,
+        title: normalizedTitle,
         intro: req.body.intro,
         image: req.body.image,
         content: req.body.content,
+        slug: req.body.slug,
         author: req.body.author,
         doctorID: req.body.doctorID,
         createdAt: req.body.createdAt,
