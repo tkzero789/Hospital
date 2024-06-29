@@ -14,8 +14,8 @@ export default function SwipeNews() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/blog");
-        setBlogs(res.data.reverse());
+        const res = await axios.get("http://localhost:5000/news/blogSwipe");
+        setBlogs(res.data);
       } catch (error) {
         console.error("Error fetching blogs", error);
       }
@@ -46,37 +46,34 @@ export default function SwipeNews() {
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
               >
-                {blogs
-                  .slice(0, 8)
-                  .filter((b) => b.status === "Approved")
-                  .map((blog) => (
-                    <SwiperSlide key={blog.id}>
-                      <div className="swipe__news">
-                        <Link
-                          className="swipe__news-wrapper"
-                          to={`/view-blog-list/${blog.id}`}
-                        >
-                          <div>
-                            <div className="swipe__news-img">
-                              <img src={blog.image} alt={blog.title} />
+                {blogs.map((blog) => (
+                  <SwiperSlide key={blog.id}>
+                    <div className="swipe__news">
+                      <Link
+                        className="swipe__news-wrapper"
+                        to={`/news/view/${blog.slug}`}
+                      >
+                        <div className="h-100">
+                          <div className="swipe__news-img">
+                            <img src={blog.image} alt={blog.title} />
+                          </div>
+                          <div className="swipe__news-text">
+                            <div className="swipe__news-title">
+                              <h5>{blog.title}</h5>
                             </div>
-                            <div className="swipe__news-text">
-                              <div className="swipe__news-title">
-                                <h5>{blog.title}</h5>
-                              </div>
-                              <div className="swipe__news-sub">
-                                <p>{blog.intro}</p>
-                              </div>
+                            <div className="swipe__news-sub">
+                              <p>{blog.intro}</p>
                             </div>
                           </div>
-                        </Link>
-                      </div>
-                    </SwiperSlide>
-                  ))}
+                        </div>
+                      </Link>
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
             <div className="news__btn">
-              <Link to="/view-blog-list/page-1">View all news</Link>
+              <Link to="/news/page-1">View all news</Link>
             </div>
           </div>
         </div>

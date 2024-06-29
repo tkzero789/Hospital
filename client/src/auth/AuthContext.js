@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
       setUserToken(_userToken);
       setLoggedIn(true);
     }
-  }, []);
+  }, [navigate]);
 
   const login = (newToken) => {
     setLoggedIn(true);

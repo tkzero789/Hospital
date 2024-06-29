@@ -93,7 +93,7 @@ export default function BlogTable({ userRole, userInfos }) {
       field: "tag",
       headerName: "Category",
       headerClassName: "header-style",
-      width: 180,
+      width: 200,
     },
     {
       field: "author",

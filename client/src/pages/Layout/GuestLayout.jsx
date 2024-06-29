@@ -16,7 +16,7 @@ export default function NavbarLayout({ title, children }) {
           <title>{title}</title>
         </Helmet>
       </HelmetProvider>
-      <div className="body-bg-2">
+      <div>
         <header className={navbarClass}>
           <SubNav />
           <MainNav />

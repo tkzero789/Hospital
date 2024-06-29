@@ -5,6 +5,8 @@ const session = require("cookie-session");
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 const app = express();
+const dbo = require("./db/conn");
+
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(cookieParser());
@@ -23,10 +25,30 @@ app.use(require("./routes/appointment"));
 app.use(require("./routes/disease"));
 app.use(require("./routes/notification"));
 app.use(require("./routes/blog"));
-const dbo = require("./db/conn");
+
+// Create blog indexes
+async function createBlogIndexes() {
+  try {
+    const db = await dbo.getDb("hospital");
+    const result = await db
+      .collection("blogs")
+      .createIndex({ slug: 1 }, { unique: true });
+    if (result === "slug_1") {
+      console.log("Blog slug index already exists");
+    } else {
+      console.log("Blog slug index created");
+    }
+  } catch (err) {
+    console.error("Error creating blog slug index:", err);
+  }
+}
+
 app.listen(port, async () => {
-  await dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-  });
-  console.log(`Server is running on port: ${port}`);
+  try {
+    await dbo.connectToServer();
+    await createBlogIndexes();
+    console.log(`Server is running on port: ${port}`);
+  } catch (err) {
+    console.error("Error starting server:", err);
+  }
 });

@@ -83,6 +83,98 @@ blogRoutes.route("/blog").get(async function (req, res) {
   }
 });
 
+// Fetch 8 blogs in for SwipeNews
+blogRoutes.route("/news/blogSwipe").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const result = await db_connect
+      .collection("blogs")
+      .find({ status: "Approved" })
+      .sort({ createdAt: -1 })
+      .limit(8)
+      .toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// Fetch 5 blogs per page (ViewBlogList)
+blogRoutes.route("/news/blog").get(async function (req, res) {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+
+    const db_connect = await dbo.getDb("hospital");
+    const collection = db_connect.collection("blogs");
+
+    const totalBlogs = await collection.countDocuments();
+    const totalPages = Math.ceil(totalBlogs / limit);
+
+    const query = { status: "Approved" };
+
+    const blogs = await collection
+      .find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+    res.json({
+      blogs,
+      currentPage: page,
+      totalPages,
+      totalBlogs,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Fetch and filter blog(s) by tag (ViewBlogList)
+blogRoutes.route("/news/blogByTags").get(async function (req, res) {
+  try {
+    const tags = req.query.tags ? req.query.tags.split(",") : [];
+
+    const db_connect = await dbo.getDb("hospital");
+    const collection = db_connect.collection("blogs");
+
+    const query =
+      tags.length > 0
+        ? { tag: { $in: tags }, status: "Approved" }
+        : { status: "Approved" };
+
+    const blogs = await collection
+      .find(query)
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    res.json(blogs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Fetch specific blog by slug (ViewSpecificBlog)
+blogRoutes.route("/news/blogBySlug").get(async function (req, res) {
+  try {
+    const slug = req.query.slug; // Assuming slug is passed as a query parameter
+    if (!slug) {
+      return res.status(400).json({ error: "Slug is required" });
+    }
+    const db_connect = await dbo.getDb("hospital");
+    const result = await db_connect.collection("blogs").findOne({ slug: slug });
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).json({ error: "Blog not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Add a blog into database
 blogRoutes
   .route("/blog/add")

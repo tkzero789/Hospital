@@ -55,11 +55,6 @@ const CreateBlog = ({ userInfos }) => {
 
   // Format date
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   // Blog state
   const [blog, setBlog] = useState({
@@ -113,7 +108,7 @@ const CreateBlog = ({ userInfos }) => {
     const updatedBlog = {
       ...blog,
       id: uuidv4(),
-      createdAt: formattedTime,
+      createdAt: now,
     };
 
     try {
@@ -245,16 +240,18 @@ const CreateBlog = ({ userInfos }) => {
             <option value="">Select category</option>
             <option value="Children's Health">Children's Health</option>
             <option value="Diet & Food">Diet & Food</option>
+            <option value="Emotional Wellbeing">Emotional Wellbeing</option>
             <option value="Exercise & Fitness">Exercise & Fitness</option>
-            <option value="Mental Health">Mental Health</option>
+            <option value="Men's Health">Men's Health</option>
             <option value="Parenting">Parenting</option>
             <option value="Pregnancy & Childbirth">
               Pregnacy & Childbirth
             </option>
             <option value="Primary Care">Primary Care</option>
+            <option value="Science & Research">Science & Research</option>
             <option value="Sex & Relationship">Sex & Relationship</option>
             <option value="Wellness">Wellness</option>
-            <option value="Women's Care">Women's Care</option>
+            <option value="Women's Health">Women's Health</option>
           </select>
         </div>
         <div className="text-editor-intro">

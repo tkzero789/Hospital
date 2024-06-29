@@ -39,8 +39,7 @@
 
 .swipe__news-wrapper {
   width: 100%;
-  height: auto;
-  padding: 0 0 6px;
+  height: 100%;
   display: inline-block;
   text-decoration: none;
 }
@@ -64,17 +63,24 @@
 }
 
 .swipe__news-title {
-  padding: 12px 0 16px 0;
+  padding: 12px 0 0 0;
+  height: 80px;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   h5 {
     font-size: 18px;
+    height: 100%;
     color: var(--text-dark-header);
     transition: color 0.2s;
   }
 }
 
 .swipe__news-wrapper:hover .swipe__news-title h5 {
-  color: var(--text-blue-2);
+  color: var(--text-blue-3);
   text-decoration: underline;
 }
 
@@ -84,9 +90,9 @@
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 12px;
 
   p {
+    padding-top: 16px;
     font-size: 16px;
     color: var(--text-dark-body);
   }

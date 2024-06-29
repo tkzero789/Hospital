@@ -50,6 +50,14 @@ header {
   min-width: 400px;
 }
 
+/* Spinner */
+.spinner {
+  height: calc(100vh - 130px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Content container */
 @media (min-width: 1200px) {
   .nav-container {
