@@ -30,7 +30,7 @@ export default function DiseaseSymps({
 
   const Symptom = ({ symptom, isChecked, onCheck }) => {
     return (
-      <div className="c-2 pb-3">
+      <div className="c-2 pb-3 px-1">
         <div className="form">
           <label className="d-flex align-items-center">
             <input

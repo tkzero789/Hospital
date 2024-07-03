@@ -46,30 +46,43 @@ export default function SwipeNews() {
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
               >
-                {blogs.map((blog) => (
-                  <SwiperSlide key={blog.id}>
-                    <div className="swipe__news">
-                      <Link
-                        className="swipe__news-wrapper"
-                        to={`/news/view/${blog.slug}`}
-                      >
-                        <div className="h-100">
-                          <div className="swipe__news-img">
-                            <img src={blog.image} alt={blog.title} />
-                          </div>
-                          <div className="swipe__news-text">
-                            <div className="swipe__news-title">
-                              <h5>{blog.title}</h5>
+                {blogs?.map((blog) => {
+                  const thumbnailImage = blog.content?.content.find(
+                    (item) => item.type === "image"
+                  );
+                  return (
+                    <SwiperSlide key={blog.id}>
+                      <div className="swipe__news">
+                        <Link
+                          className="swipe__news-wrapper"
+                          to={`/news/view/${blog.slug}`}
+                        >
+                          <div className="h-100">
+                            <div className="swipe__news-img">
+                              {thumbnailImage && (
+                                <img
+                                  src={thumbnailImage.attrs.src}
+                                  alt={
+                                    thumbnailImage.attrs.alt ||
+                                    "Thumbnail image"
+                                  }
+                                />
+                              )}
                             </div>
-                            <div className="swipe__news-sub">
-                              <p>{blog.intro}</p>
+                            <div className="swipe__news-text">
+                              <div className="swipe__news-title">
+                                <h5>{blog.title}</h5>
+                              </div>
+                              <div className="swipe__news-sub">
+                                <p>{blog.intro}</p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                        </Link>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </div>
             <div className="news__btn">

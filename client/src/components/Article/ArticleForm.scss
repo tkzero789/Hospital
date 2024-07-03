@@ -1,5 +1,9 @@
 .format-list-btn {
   padding: 4px 6px;
+  border: 1px solid #c4c8cb !important;
+  border-bottom: none !important;
+  border-top-right-radius: var(--border-radius-1);
+  border-top-left-radius: var(--border-radius-1);
 
   button {
     font-size: 16px;
@@ -11,6 +15,52 @@
     &:hover {
       background-color: #9b9b9b;
       color: var(--text-white-1);
+    }
+  }
+}
+
+.textarea-detail {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.article-img-upload {
+  display: flex;
+  border: 1px solid #9e9e9e;
+  border-radius: var(--border-radius-1);
+  padding: 0 !important;
+  margin-bottom: 16px;
+
+  button:first-child {
+    border: none;
+    border-right: 1px solid #9e9e9e;
+    background-color: transparent;
+    padding: 4px 8px;
+
+    i {
+      color: var(--text-blue-1);
+    }
+    span {
+      color: var(--text-blue-1);
+      padding-left: 8px;
+    }
+  }
+
+  input {
+    flex-grow: 1;
+    padding: 4px 8px;
+  }
+
+  button:last-child {
+    border: none;
+    border-radius: var(--border-radius-1);
+
+    i {
+      color: #6d6d6d;
+    }
+
+    &:hover i {
+      color: rgb(0, 0, 0);
     }
   }
 }

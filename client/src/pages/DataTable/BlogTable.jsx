@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import axios from "axios";
+import FormatDate from "utilities/FormatDate";
 import "pages/DataTable/DataTable.scss";
 
 export default function BlogTable({ userRole, userInfos }) {
@@ -31,11 +32,11 @@ export default function BlogTable({ userRole, userInfos }) {
   // Assign blog priority
   const getPriority = (status) => {
     switch (status) {
-      case "Request Edit":
+      case "Edit Requested":
         return 1;
-      case "Pending Create":
+      case "Awaiting Review":
         return 2;
-      case "Pending Update":
+      case "Updated Revision":
         return 3;
       default:
         return 4;
@@ -112,6 +113,9 @@ export default function BlogTable({ userRole, userInfos }) {
       headerName: "Created on",
       headerClassName: "header-style",
       width: 180,
+      renderCell: (params) => {
+        return <FormatDate date={params.row.createdAt} />;
+      },
     },
     {
       field: "status",

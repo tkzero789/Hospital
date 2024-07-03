@@ -30,11 +30,11 @@ export default function SymptomTable({ userRole, userInfos }) {
   // Assign symptom priority
   const getPriority = (status) => {
     switch (status) {
-      case "Request Edit":
+      case "Edit Requested":
         return 1;
-      case "Pending Create":
+      case "Awaiting Review":
         return 2;
-      case "Pending Update":
+      case "Updated Revision":
         return 3;
       default:
         return 4;
@@ -71,7 +71,7 @@ export default function SymptomTable({ userRole, userInfos }) {
             <NavLink className="viewLink" to={`/symptom/${symptom.id}/view`}>
               <div className="viewButton">View</div>
             </NavLink>
-            {symptom.status === "Request Edit" &&
+            {symptom.status === "Edit Requested" &&
               userRole === "head-doctor" && (
                 <NavLink
                   className="viewLink"
@@ -80,8 +80,8 @@ export default function SymptomTable({ userRole, userInfos }) {
                   <div className="editButton">Edit</div>
                 </NavLink>
               )}
-            {(symptom.status === "Pending Create" ||
-              symptom.status === "Pending Update") &&
+            {(symptom.status === "Awaiting Review" ||
+              symptom.status === "Updated Revision") &&
               userRole === "admin" && (
                 <NavLink
                   className="viewLink"

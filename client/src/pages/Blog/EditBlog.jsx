@@ -11,6 +11,7 @@ import ConfirmModal from "components/UI/ConfirmModal";
 import MenuBar from "components/Blog/MenuBar";
 import "pages/Blog/Texteditor.scss";
 import "pages/Blog/Blog.css";
+import Spinner from "components/UI/Spinner";
 
 const EditBlog = ({ userInfos }) => {
   const userToken = localStorage.getItem("userToken");
@@ -52,11 +53,6 @@ const EditBlog = ({ userInfos }) => {
   // Create a ref for the file input
   const fileInputRef = useRef();
 
-  const { blogId } = useParams();
-
-  const [blog, setBlog] = useState(null);
-  const [userUploadedImage, setUserUploadedImage] = useState(false);
-
   const editor = useEditor({
     extensions: [StarterKit, Italic, Image],
     content: "",
@@ -68,6 +64,10 @@ const EditBlog = ({ userInfos }) => {
       }));
     },
   });
+
+  const { blogId } = useParams();
+
+  const [blog, setBlog] = useState(null);
 
   // Fetch blog content based on id
   useEffect(() => {
@@ -85,9 +85,13 @@ const EditBlog = ({ userInfos }) => {
         window.alert(message);
       });
   }, [blogId, editor]);
-
+  // if node is undefined
   if (!blog) {
-    return <div>Loading...</div>;
+    return (
+      <div className="spinner">
+        <Spinner />
+      </div>
+    );
   }
 
   // Confirm edit button
@@ -103,18 +107,28 @@ const EditBlog = ({ userInfos }) => {
     } else if (blog.intro === "") {
       window.alert("Please enter the intro");
       return;
-    } else if (blog.image === null) {
-      window.alert("Please select image(s) for this blog");
+    } else if (blog.image.length === 0) {
+      window.alert("Please upload image(s) for this blog");
       return;
-    } else if (blog.content === "") {
-      window.alert("Please enter the content for this blog");
+    } else if (
+      blog.content === "" ||
+      blog.content.content.some(
+        (item) => item.type === "paragraph" && !item.content
+      )
+    ) {
+      window.alert("Please enter the text content for this blog");
+      return;
+    } else if (!blog.content.content.some((item) => item.type === "image")) {
+      window.alert("Please drag the uploaded image(s) into the text editor");
       return;
     }
 
     const now = new Date();
+    const newSlug = generateSlug(blog.title);
     const updatedBlog = {
       ...blog,
-      status: "Pending Update",
+      slug: newSlug,
+      status: "Updated Revision",
       createdAt: now,
     };
 
@@ -143,9 +157,19 @@ const EditBlog = ({ userInfos }) => {
     }
   }
 
+  // Slug generation function
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .replace(/[\s\W-]+/g, "-") // Replace spaces and non-word characters with hyphens
+      .replace(/^-+|-+$/g, ""); // Trim leading and trailing hyphens
+  };
+
   // Value from title input
   const onChangeTitle = (e) => {
-    setBlog({ ...blog, title: e.target.value });
+    const newTitle = e.target.value;
+    const newSlug = generateSlug(newTitle);
+    setBlog({ ...blog, title: newTitle, slug: newSlug });
   };
 
   // Value from tag select
@@ -159,51 +183,108 @@ const EditBlog = ({ userInfos }) => {
   };
 
   // Upload image
-  const updateInfoImage = async (event) => {
+  const uploadImage = async (event) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
-    const response = await axios.post(
-      `http://localhost:5000/blog/upload`,
-      formData,
-      {
-        ...apiConfig,
-        headers: {
-          ...apiConfig.headers,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    setBlog((prevBlog) => ({
-      ...prevBlog,
-      image: response.data.link,
-    }));
-    setUserUploadedImage(true);
-    fileInputRef.current = event.target;
-  };
-
-  // Remove image
-  const removeImage = async (e) => {
-    e.preventDefault();
     try {
-      // Extract the key from the image URL
-      const key = blog.image.split("/").pop();
-
-      await axios.post(`http://localhost:5000/blog/delete`, { key }, apiConfig);
-
-      // Remove the image from the blog state
+      const response = await axios.post(
+        `http://localhost:5000/blog/upload`,
+        formData,
+        {
+          ...apiConfig,
+          headers: {
+            ...apiConfig.headers,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
       setBlog((prevBlog) => ({
         ...prevBlog,
-        image: null,
+        image: [...prevBlog.image, response.data.link],
       }));
     } catch (error) {
       console.error(error);
     }
-    setUserUploadedImage(false);
-    // Clear the file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    fileInputRef.current = event.target;
+  };
+
+  // Remove uploaded image
+  const removeImage = async (index) => {
+    const imageToRemove = blog.image[index];
+    if (imageToRemove) {
+      try {
+        const key = imageToRemove.split("/").pop();
+        console.log("key url", imageToRemove);
+        await axios.post(
+          `http://localhost:5000/blog/deleteImg`,
+          { key },
+          apiConfig
+        );
+
+        // Clear the file input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+
+        // Check if the image to remove exists in the content array
+        const imageExistsInContent = blog.content.content.some(
+          (contentItem) =>
+            contentItem.type === "image" &&
+            contentItem.attrs.src.split("/").pop() === key
+        );
+
+        // Update the blog state to remove the image
+        setBlog((prevBlog) => ({
+          ...prevBlog,
+          image: prevBlog.image.filter((_, imgIndex) => imgIndex !== index),
+          content: imageExistsInContent
+            ? {
+                ...prevBlog.content,
+                content: prevBlog.content.content.filter(
+                  (contentItem) =>
+                    !(
+                      contentItem.type === "image" &&
+                      contentItem.attrs.src.split("/").pop() === key
+                    )
+                ),
+              }
+            : { ...prevBlog.content },
+        }));
+
+        // Remove image in the textarea
+        removeImageFromEditorContent(imageToRemove);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
+  // Remove image from EditorContent
+  const removeImageFromEditorContent = (imageUrl) => {
+    if (editor) {
+      const currentContent = editor.getJSON();
+      const removeImageNode = (nodes) =>
+        nodes.filter((node) => {
+          if (node.type === "image" && node.attrs.src === imageUrl) {
+            return false;
+          }
+          if (node.content) {
+            node.content = removeImageNode(node.content);
+          }
+          return true;
+        });
+
+      const updatedContent = {
+        ...currentContent,
+        content: removeImageNode(currentContent.content),
+      };
+
+      editor.commands.setContent(updatedContent);
+    }
+  };
+
+  console.log(blog);
 
   return (
     <>
@@ -242,25 +323,34 @@ const EditBlog = ({ userInfos }) => {
         </div>
         <div className="text-editor-img">
           <label htmlFor="image">Blog image:</label>
-          <input
-            type="file"
-            name="image"
-            className="form-control border-primary-subtle col-9 mb-2"
-            placeholder="Upload image(s)"
-            onChange={(e) => updateInfoImage(e)}
-            ref={fileInputRef}
-          />
-        </div>
-        {userUploadedImage ? (
-          <div className="text-editor-img">
-            <img src={blog.image} alt="Blog img" />
-            <button onClick={removeImage} className="border rounded">
-              <i className="bi bi-trash3-fill"></i>
+          <div>
+            <button onClick={() => fileInputRef.current.click()}>
+              <i className="bi bi-upload"></i>
+              <span>Upload image</span>
             </button>
+            <input
+              type="file"
+              name="image"
+              className="flex-grow-1 ps-3 py-1"
+              onChange={(e) => uploadImage(e)}
+              ref={fileInputRef}
+            />
           </div>
-        ) : (
-          <div className="pt-2">No image was uploaded</div>
-        )}
+        </div>
+        <div className="text-editor-uploaded-img">
+          {blog.image && blog.image.length > 0 ? (
+            blog.image.map((img, index) => (
+              <div key={index}>
+                <img src={img} alt="Blog img" />
+                <button onClick={() => removeImage(index)}>Remove image</button>
+              </div>
+            ))
+          ) : (
+            <div className="w-100">
+              Image area empty. Please upload an image.
+            </div>
+          )}
+        </div>
         <label htmlFor="info">Info</label>
         <div className="text-editor">
           <MenuBar editor={editor} />
@@ -280,8 +370,8 @@ const EditBlog = ({ userInfos }) => {
               handleShowModal(
                 event,
                 "edit",
-                "Confirm edit",
-                "Are you sure you want to confirm edit this blog?"
+                "Review and submit revisions",
+                "Once confirmed, your revisions will be submitted and will go through a review process. Would you like to proceed?"
               )
             }
           >

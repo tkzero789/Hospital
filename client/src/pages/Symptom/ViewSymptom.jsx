@@ -61,7 +61,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
     diseaseUsedIds: [],
     createInfos: {
       doctorCreated: "",
-      doctorId: "",
+      doctorID: "",
       timeCreated: "",
       timeEdited: "",
     },
@@ -98,7 +98,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
       axios.put(
         `http://localhost:5000/symptom/update/${symptomId}`,
         {
-          status: "Request Edit",
+          status: "Edit Requested",
         },
         apiConfig
       );
@@ -106,7 +106,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Request edit successfully");
+      toast.success("Requested content revisions successfully");
       setTimeout(() => {
         navigate("/symptom-table");
       }, 1200);
@@ -125,7 +125,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Delete successfully");
+      toast.success("Deleted symptom successfully");
       setTimeout(() => {
         navigate("/symptom-table");
       }, 1200);
@@ -156,8 +156,8 @@ export default function ViewSymptom({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "delete",
-                        "Confirm delete",
-                        "Are you sure you want to delete?"
+                        "Delete symptom",
+                        "This action will permanently delete the symptom from the database. Would you like to perform this action?"
                       )
                     }
                   >
@@ -184,17 +184,18 @@ export default function ViewSymptom({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "edit",
-                        "Confirmation",
-                        "Are you sure you want to request edit?"
+                        "Request changes",
+                        "Would you like to request content revisions for this symptom?"
                       )
                     }
                   >
-                    Request edit
+                    Request changes
                   </button>
                 </div>
               )}
               {userRole === "head-doctor" &&
-                symptom.status === "Request Edit" && (
+                userInfos.doctorID === symptom?.createInfos?.doctorID &&
+                symptom.status === "Edit Requested" && (
                   <div className="c-2 d-grid gap-2">
                     <NavLink
                       className="btn btn-warning"

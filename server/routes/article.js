@@ -4,7 +4,11 @@ const jwt = require("jsonwebtoken");
 const dbo = require("../db/conn");
 const multer = require("multer");
 const { Upload } = require("@aws-sdk/lib-storage");
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
 const stream = require("stream");
 require("dotenv").config({ path: "../.config.env" });
 
@@ -226,6 +230,31 @@ articleRoutes
 
       res.json({
         link: `https://${uploadParams.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`, // this is the S3 URL of the uploaded image
+      });
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+
+// Delete image from s3
+articleRoutes
+  .route("/article/deleteImg")
+  .post(verifyJWT, isDrOrHDr, async function (req, res) {
+    try {
+      const { key } = req.body; // the key of the image to delete
+      if (!key) {
+        throw new Error("No key provided");
+      }
+
+      const deleteParams = {
+        Bucket: "mybkcarebucket",
+        Key: key,
+      };
+
+      await s3.send(new DeleteObjectCommand(deleteParams));
+
+      res.json({
+        message: `Image with key ${key} deleted successfully`,
       });
     } catch (err) {
       res.status(500).send(err);

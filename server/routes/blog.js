@@ -76,7 +76,11 @@ const isAdmin = (req, res, next) => {
 blogRoutes.route("/blog").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("hospital");
-    const result = await db_connect.collection("blogs").find({}).toArray();
+    const result = await db_connect
+      .collection("blogs")
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
     res.json(result);
   } catch (err) {
     throw err;
@@ -109,10 +113,10 @@ blogRoutes.route("/news/blog").get(async function (req, res) {
     const db_connect = await dbo.getDb("hospital");
     const collection = db_connect.collection("blogs");
 
-    const totalBlogs = await collection.countDocuments();
-    const totalPages = Math.ceil(totalBlogs / limit);
-
     const query = { status: "Approved" };
+
+    const approvedBlogs = await collection.countDocuments(query);
+    const totalPages = Math.ceil(approvedBlogs / limit);
 
     const blogs = await collection
       .find(query)
@@ -125,7 +129,7 @@ blogRoutes.route("/news/blog").get(async function (req, res) {
       blogs,
       currentPage: page,
       totalPages,
-      totalBlogs,
+      approvedBlogs,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -249,7 +253,7 @@ blogRoutes
 
 // Delete image from s3
 blogRoutes
-  .route("/blog/delete")
+  .route("/blog/deleteImg")
   .post(verifyJWT, isDrOrHDr, async function (req, res) {
     try {
       const { key } = req.body; // the key of the image to delete
@@ -313,13 +317,15 @@ blogRoutes
   .post(verifyJWT, isDrOrHDr, async function (req, res) {
     try {
       const db_connect = await dbo.getDb("hospital");
+      const normalizedTitle = req.body.title.trim().replace(/\s+/g, " ");
       const myquery = { id: req.params.id };
       const newvalues = {
         $set: {
-          title: req.body.title,
+          title: normalizedTitle,
           intro: req.body.intro,
           image: req.body.image,
           content: req.body.content,
+          slug: req.body.slug,
           createdAt: req.body.createdAt,
           status: req.body.status,
         },

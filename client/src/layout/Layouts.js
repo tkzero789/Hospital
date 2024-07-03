@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-
 import RequireAuth from "auth/RequireAuth";
+import Spinner from "components/UI/Spinner";
 // staff pages
 import StaffLayout from "pages/Layout/StaffLayout";
 
@@ -60,7 +60,11 @@ export default function Layouts({ userRole, userInfos }) {
 
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="spinner">
+          <Spinner />
+        </div>
+      )}
       {!isLoading && userRole && (
         <StaffLayout>
           {/* dashboard */}

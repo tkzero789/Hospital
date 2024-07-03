@@ -98,7 +98,7 @@ export default function ViewArticle({ userRole, userInfos }) {
           apiConfig
         )
         .then((res) => {
-          window.alert("Set main article successfully");
+          window.alert("Set as main article successfully");
           console.log(res);
           setArticle({
             ...article,
@@ -123,7 +123,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Delete article successfully");
+      toast.success("Deleted article successfully");
       setTimeout(() => {
         navigate(`/disease/${diseaseId}/article-table`);
       }, 1200);
@@ -137,7 +137,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       axios.put(
         `http://localhost:5000/article/update/${articleId}`,
         {
-          status: "Request Edit",
+          status: "Edit Requested",
         },
         apiConfig
       );
@@ -145,7 +145,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Request edit successfully");
+      toast.success("Requested content revisions successfully");
       setTimeout(() => {
         navigate("/article-table");
       }, 1200);
@@ -195,8 +195,8 @@ export default function ViewArticle({ userRole, userInfos }) {
                           handleShowModal(
                             event,
                             "delete",
-                            "Confirm delete",
-                            "Are you sure you want to delete this article?"
+                            "Delete article",
+                            "This action will permanently delete the article from the database. Would you like to proceed?"
                           )
                         }
                       >
@@ -232,12 +232,12 @@ export default function ViewArticle({ userRole, userInfos }) {
                           handleShowModal(
                             event,
                             "edit",
-                            "Confirm request edit",
-                            "Are you sure you want to request edit this article?"
+                            "Request changes",
+                            "Would you like to request content revisions for this article?"
                           )
                         }
                       >
-                        Request edit
+                        Request changes
                       </button>
                     </div>
                   )}

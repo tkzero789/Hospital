@@ -38,16 +38,14 @@ export default function EditArticle({ userRole, userInfos }) {
     case "edit":
       action = confirmEdit;
       break;
+    case "cancel":
+      action = confirmCancel;
+      break;
     default:
       action = null;
   }
 
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [origTitle, setOrigTitle] = useState("");
   const { diseaseId, articleId } = useParams();
@@ -60,22 +58,16 @@ export default function EditArticle({ userRole, userInfos }) {
     diseaseName: "",
     infos: [
       {
-        id: uuidv4(),
-        number: 1,
-        about: "",
         overview: "",
         detail: "",
-        image: null,
+        image: "",
       },
     ],
     treatments: [
       {
-        id: uuidv4(),
-        number: 1,
-        about: "",
         overview: "",
         detail: "",
-        image: null,
+        image: "",
       },
     ],
     medSpecialty: "",
@@ -83,10 +75,11 @@ export default function EditArticle({ userRole, userInfos }) {
       doctorCreated: "",
       doctorId: "",
       timeCreated: "",
-      timeEdited: "",
+      timeEdited: now,
     },
     isDisplay: false,
     status: "",
+    doctorReqID: "",
   });
 
   // get article by articleId
@@ -110,9 +103,9 @@ export default function EditArticle({ userRole, userInfos }) {
           idTemp: uuidv4(),
           createInfos: {
             ...dbArticle.createInfos,
-            timeEdited: formattedTime,
+            timeEdited: now,
           },
-          status: "Pending Update",
+          status: "Updated Revision",
           doctorReqID: userInfos.doctorID,
         });
         setOrigTitle(dbArticle.title);
@@ -128,6 +121,7 @@ export default function EditArticle({ userRole, userInfos }) {
     navigate("/article-table");
   }
 
+  // Confirm edit
   async function confirmEdit() {
     // validation fields
     if (article.title === "") {
@@ -168,7 +162,7 @@ export default function EditArticle({ userRole, userInfos }) {
           )
           .then((res) => {
             if (res.data && res.data.message === "Article already exists") {
-              throw new Error("Thanks, wait for admin approval!");
+              throw new Error("Thanks, please wait for admin approval!");
             }
             setIsClicked(true);
             console.log("Article edited", res.data);
@@ -178,7 +172,7 @@ export default function EditArticle({ userRole, userInfos }) {
         window.alert(message);
       }
       setTimeout(() => {
-        toast.success("Edited article successfully");
+        toast.success("Submitted revisions successfully");
         setTimeout(() => {
           navigate(`/disease/${diseaseId}/article-table`);
         }, 1200);
@@ -206,7 +200,14 @@ export default function EditArticle({ userRole, userInfos }) {
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
-                  onClick={confirmCancel}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "cancel",
+                      "Cancel article editing",
+                      "Would you like to perform this action?"
+                    )
+                  }
                 >
                   Cancel
                 </button>
@@ -219,12 +220,12 @@ export default function EditArticle({ userRole, userInfos }) {
                     handleShowModal(
                       event,
                       "edit",
-                      "Confirm edit",
-                      "Are you sure you want to confirm edit this article?"
+                      "Review and submit revisions",
+                      "Once confirmed, your revisions will be submitted and will go through a review process. Would you like to proceed?"
                     )
                   }
                 >
-                  Confirm edit
+                  Submit revisions
                 </button>
               </div>
             </div>

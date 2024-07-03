@@ -39,16 +39,14 @@ export default function CreateArticle({ userRole, userInfos }) {
     case "create":
       action = confirmCreate;
       break;
+    case "cancel":
+      action = confirmCancel;
+      break;
     default:
       action = null;
   }
 
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [isPatView, setIsPatView] = useState(false);
   const [article, setArticle] = useState({
@@ -74,11 +72,11 @@ export default function CreateArticle({ userRole, userInfos }) {
     createInfos: {
       doctorCreated: userInfos.fullName,
       doctorID: userInfos.doctorID,
-      timeCreated: formattedTime,
+      timeCreated: now,
       timeEdited: null,
     },
     isDisplay: false,
-    status: "Pending Create",
+    status: "Awaiting Review",
     doctorReqID: userInfos.doctorID,
   });
 
@@ -146,7 +144,7 @@ export default function CreateArticle({ userRole, userInfos }) {
         window.alert(message);
       }
       setTimeout(() => {
-        toast.success("Created successfully!");
+        toast.success("Created article successfully");
         setTimeout(() => {
           navigate(`/disease/${diseaseId}/article-table`);
         }, 1200);
@@ -161,12 +159,12 @@ export default function CreateArticle({ userRole, userInfos }) {
       {isPatView ? (
         ArticlePatView({ article, setIsPatView })
       ) : (
-        <div>
+        <div className="bg-gray-1">
           <h3 className="container text-center text-dark-header pt-5">
             Create new article
           </h3>
           <div className="container p-5">
-            <div className="card   p-5">
+            <div className="card border-0 box-shadow-6 p-5">
               <form>
                 <div>
                   {
@@ -183,7 +181,14 @@ export default function CreateArticle({ userRole, userInfos }) {
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
-                      onClick={confirmCancel}
+                      onClick={(event) =>
+                        handleShowModal(
+                          event,
+                          "cancel",
+                          "Cancel article creation",
+                          "Would you like to perform this action?"
+                        )
+                      }
                     >
                       Cancel
                     </button>
@@ -205,8 +210,8 @@ export default function CreateArticle({ userRole, userInfos }) {
                         handleShowModal(
                           event,
                           "create",
-                          "Confirm create",
-                          "Are you sure you want to create this article with from selected disease?"
+                          "Create new article",
+                          "Once confirmed, your submission will go through a review process. Would you like to create this article with selected disease?"
                         )
                       }
                     >

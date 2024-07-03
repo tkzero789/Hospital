@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -424,7 +424,7 @@ export default function ViewAppt() {
                       <CircularProgress size={24} />
                     </Box>
                   ) : (
-                    "Confirm edit"
+                    "Save changes"
                   )}
                 </button>
               </div>

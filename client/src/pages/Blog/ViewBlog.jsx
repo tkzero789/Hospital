@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import ConfirmModal from "components/UI/ConfirmModal";
+import FormatDate from "utilities/FormatDate";
 import "pages/Blog/Blog.css";
 
 export default function ViewBlog({ userRole, userInfos }) {
@@ -97,7 +98,7 @@ export default function ViewBlog({ userRole, userInfos }) {
       .post(
         `http://localhost:5000/blog/update/${blogId}`,
         {
-          status: "Request Edit",
+          status: "Edit Requested",
         },
         apiConfig
       )
@@ -109,7 +110,7 @@ export default function ViewBlog({ userRole, userInfos }) {
         window.alert(message);
       });
     setTimeout(() => {
-      toast.success("Request edit successfully!");
+      toast.success("Requested content revisions successfully");
       setTimeout(() => {
         navigate("/blog-table");
       }, 1200);
@@ -128,7 +129,7 @@ export default function ViewBlog({ userRole, userInfos }) {
         window.alert(message);
       });
     setTimeout(() => {
-      toast.success("Deleted successfully!");
+      toast.success("Deleted blog successfully");
       setTimeout(() => {
         navigate("/blog-table");
       }, 1200);
@@ -142,8 +143,8 @@ export default function ViewBlog({ userRole, userInfos }) {
 
   return (
     <>
-      <div className="content-container individual-blog">
-        <div key={blog.id}>
+      <div className="content-container individual-blog justify-content-center">
+        <div key={blog.id} className="w-60">
           <h2>{blog.title}</h2>
           <Link className="blog-tag pe-none">{blog.tag}</Link>
           <div className="blog-author-info">
@@ -152,7 +153,7 @@ export default function ViewBlog({ userRole, userInfos }) {
                 By: <span className="text-blue-3">{blog.author}</span>
               </div>
               <span className="text-secondary-1">
-                Last updated: {blog.createdAt}
+                Last updated: <FormatDate date={blog.createdAt} />
               </span>
             </div>
           </div>
@@ -261,8 +262,8 @@ export default function ViewBlog({ userRole, userInfos }) {
                   handleShowModal(
                     event,
                     "delete",
-                    "Confirm delete",
-                    "Are you sure you want to delete this blog?"
+                    "Delete blog",
+                    "This action will permanently delete the blog from the database. Would you like to proceed?"
                   )
                 }
               >
@@ -280,27 +281,27 @@ export default function ViewBlog({ userRole, userInfos }) {
           </div>
           {userRole === "admin" && (
             <>
-              {blog.status !== "Request Edit" && (
+              {blog.status !== "Edit Requested" && (
                 <div className="c-2 px-2">
                   <button
                     type="button"
                     className="btn w-100 btn-warning"
-                    disabled={blog.status === "Request edit"}
+                    disabled={blog.status === "Edit Requested"}
                     onClick={(event) =>
                       handleShowModal(
                         event,
                         "request",
-                        "Confirm request edit",
-                        "Are you sure you want to request edit this blog?"
+                        "Request changes",
+                        "Would you like to request content revisions for this blog?"
                       )
                     }
                   >
-                    Request edit
+                    Request changes
                   </button>
                 </div>
               )}
-              {(blog.status === "Pending Create" ||
-                blog.status === "Pending Update") && (
+              {(blog.status === "Awaiting Review" ||
+                blog.status === "Updated Revision") && (
                 <div className="c-2 px-2">
                   <button
                     type="button"
@@ -309,8 +310,8 @@ export default function ViewBlog({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "approve",
-                        "Confirm approve",
-                        "Are you sure you want to approve this blog?"
+                        "Approval confirmation",
+                        "The approved blog will be added into the database. Would you like to perform this action?"
                       )
                     }
                   >
@@ -321,7 +322,7 @@ export default function ViewBlog({ userRole, userInfos }) {
             </>
           )}
           {(userRole === "head-doctor" || userRole === "doctor") &&
-            blog.status === "Request Edit" &&
+            blog.status === "Edit Requested" &&
             userInfos.doctorID === blog.doctorID && (
               <div className="c-2 px-2">
                 <button

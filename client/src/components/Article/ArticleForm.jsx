@@ -1,12 +1,20 @@
 import axios from "axios";
-import React from "react";
+import React, { useRef } from "react";
 import "components/Article/ArticleForm.scss";
 
 const ArticleForm = ({ article, setArticle, mode }) => {
+  const userToken = localStorage.getItem("userToken");
+  const apiConfig = {
+    headers: { Authorization: `Bearer ${userToken}` },
+  };
   // Article title
   const updateTitleField = (event) => {
     setArticle({ ...article, title: event.target.value });
   };
+
+  // Create a ref for the file input
+  const fileInputRef1 = useRef();
+  const fileInputRef2 = useRef();
 
   // Overview
   const updateOverviewField = (event, field) => {
@@ -17,6 +25,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
 
   // Upload
   const uploadOverviewImage = async (event, infoIndex) => {
+    event.preventDefault();
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
     const response = await axios.post(
@@ -42,6 +51,36 @@ const ArticleForm = ({ article, setArticle, mode }) => {
       ...article,
       infos: newInfos,
     });
+  };
+
+  // Remove uploaded Overview image
+  const removeOverviewImage = async (event) => {
+    event.preventDefault();
+    const imageToRemove = article.infos[0].image;
+    if (imageToRemove) {
+      try {
+        const key = imageToRemove.split("/").pop();
+        console.log("key url", imageToRemove);
+        await axios.post(
+          "http://localhost:5000/article/deleteImg",
+          { key },
+          apiConfig
+        );
+        // Clear the file input
+        if (fileInputRef1.current) {
+          fileInputRef1.current.value = "";
+        }
+        // Update the article state to set the infos.image to null
+        setArticle((prevArticle) => ({
+          ...prevArticle,
+          infos: prevArticle.infos.map((info, index) =>
+            index === 0 ? { ...info, image: null } : info
+          ),
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   // Treatment detail
@@ -78,6 +117,36 @@ const ArticleForm = ({ article, setArticle, mode }) => {
       ...article,
       treatments: newTreatments,
     });
+  };
+
+  // Remove uploaded Treatment image
+  const removeTreatmentImage = async (event) => {
+    event.preventDefault();
+    const imageToRemove = article.treatments[0].image;
+    if (imageToRemove) {
+      try {
+        const key = imageToRemove.split("/").pop();
+        console.log("key url", imageToRemove);
+        await axios.post(
+          "http://localhost:5000/article/deleteImg",
+          { key },
+          apiConfig
+        );
+        // Clear the file input
+        if (fileInputRef2.current) {
+          fileInputRef2.current.value = "";
+        }
+        // Update the article state to set the infos.image to null
+        setArticle((prevArticle) => ({
+          ...prevArticle,
+          treatments: prevArticle.treatments.map((treatment, index) =>
+            index === 0 ? { ...treatment, image: null } : treatment
+          ),
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   // Format overview list (detail)
@@ -162,10 +231,12 @@ const ArticleForm = ({ article, setArticle, mode }) => {
     setArticle({ ...article, treatments: newInfos });
   };
 
+  console.log(article);
+
   return (
     <div>
       <div className="form-group row pb-5">
-        <h4 className="text-dark-1 col-3">Disease</h4>
+        <h4 className="text-dark-1 col-3 p-0">Disease</h4>
         <input
           type="text"
           className="form-control border-secondary-subtle col"
@@ -175,12 +246,12 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         />
       </div>
       <div className="form-group row pb-5">
-        <h4 className="text-dark-1 col-3">Article title</h4>
+        <h4 className="text-dark-1 col-3 p-0">Article title</h4>
         <input
           type="text"
           className="form-control border-secondary-subtle col"
           name="title"
-          placeholder="Enter title for article"
+          placeholder="Enter the title for article"
           value={article.title}
           readOnly={mode === "view"}
           onChange={(e) => updateTitleField(e)}
@@ -192,7 +263,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
           return (
             <div key={index}>
               <div className="form row pb-3">
-                <div className="d-flex col-12">
+                <div className="d-flex col-12 p-0">
                   <h4 className="text-dark-1 pb-2">Overview</h4>
                 </div>
                 {/* Overview */}
@@ -200,20 +271,39 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="overview"
                   value={info.overview}
                   readOnly={mode === "view"}
-                  className="form-control border-secondary-subtle col-9 mb-2"
+                  className="form-control border-secondary-subtle col-9 mb-3"
                   placeholder="Intro paragraph"
                   rows="5"
                   onChange={(e) => updateOverviewField(e, "overview")}
                 />
                 {/* Upload image */}
-                <input
-                  type="file"
-                  name="image"
-                  className="form-control border-secondary-subtle col-9 mb-2"
-                  disabled={mode === "view"}
-                  placeholder="Upload image"
-                  onChange={(e) => uploadOverviewImage(e, 0)}
-                />
+                <div className="article-img-upload">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      fileInputRef1.current.click();
+                    }}
+                  >
+                    <i className="bi bi-upload"></i>
+                    <span>Upload image</span>
+                  </button>
+                  <input
+                    type="file"
+                    name="image"
+                    disabled={mode === "view"}
+                    placeholder="Upload image"
+                    onChange={(e) => uploadOverviewImage(e, 0)}
+                    ref={fileInputRef1}
+                  />
+                  {article.infos[0].image && (
+                    <button
+                      className={`${mode === "view" ? "d-none" : ""}`}
+                      onClick={(e) => removeOverviewImage(e)}
+                    >
+                      <i className="bi bi-trash3-fill"></i>
+                    </button>
+                  )}
+                </div>
                 {article.infos[0].image && (
                   <img
                     className="d-block w-50 mx-auto pt-2 pb-3"
@@ -235,7 +325,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="detail-1"
                   value={info.detail}
                   readOnly={mode === "view"}
-                  className="form-control border-secondary-subtle col-9"
+                  className="textarea-detail form-control border-secondary-subtle col-9"
                   placeholder="Detail paragraph(s)"
                   rows="10"
                   onChange={(e) => updateOverviewField(e, "detail")}
@@ -251,7 +341,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
           return (
             <div key={index}>
               <div className="form row pb-3">
-                <div className="d-flex col-12">
+                <div className="d-flex col-12 p-0">
                   <h4 className="text-dark-1 pb-2">Treatment</h4>
                 </div>
                 {/* Overview */}
@@ -259,20 +349,39 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="overview"
                   value={treatment.overview}
                   readOnly={mode === "view"}
-                  className="form-control border-secondary-subtle col-9 mb-2"
+                  className="form-control border-secondary-subtle col-9 mb-3"
                   placeholder="Intro paragraph"
                   rows="5"
                   onChange={(e) => updateTreatmentField(e, "overview")}
                 />
                 {/* Upload image */}
-                <input
-                  type="file"
-                  name="image"
-                  className="form-control border-secondary-subtle col-9 mb-2"
-                  disabled={mode === "view"}
-                  placeholder="Upload image"
-                  onChange={(e) => uploadTreatmentImage(e, 0)}
-                />
+                <div className="article-img-upload">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      fileInputRef2.current.click();
+                    }}
+                  >
+                    <i className="bi bi-upload"></i>
+                    <span>Upload image</span>
+                  </button>
+                  <input
+                    type="file"
+                    name="image"
+                    disabled={mode === "view"}
+                    placeholder="Upload image"
+                    onChange={(e) => uploadTreatmentImage(e, 0)}
+                    ref={fileInputRef2}
+                  />
+                  {article.treatments[0].image && (
+                    <button
+                      className={`${mode === "view" ? "d-none" : ""}`}
+                      onClick={(e) => removeTreatmentImage(e)}
+                    >
+                      <i className="bi bi-trash3-fill"></i>
+                    </button>
+                  )}
+                </div>
                 {article.treatments[0].image && (
                   <img
                     className="d-block w-50 mx-auto pt-2 pb-3"
@@ -294,7 +403,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
                   name="detail-2"
                   value={treatment.detail}
                   readOnly={mode === "view"}
-                  className="form-control border-secondary-subtle col-9"
+                  className="textarea-detail form-control border-secondary-subtle col-9"
                   placeholder="Detail paragraph(s)"
                   rows="10"
                   onChange={(e) => updateTreatmentField(e, "detail")}

@@ -41,6 +41,22 @@ appointmentRoutes.route("/appointment").get(async function (req, res) {
   }
 });
 
+// Get 3 most recent appointments
+appointmentRoutes.route("/appointmentNoti").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const result = await db_connect
+      .collection("appointments")
+      .find({})
+      .sort({ createdAt: -1 })
+      .limit(3)
+      .toArray();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Get appointment by ID
 appointmentRoutes.route("/appointment/:id").get(async function (req, res) {
   try {
@@ -84,7 +100,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
     if (existAppts.find((appt) => appt.status === "Spam")) {
       return res.json({ message: "Phone number spamming" });
     }
-    if (existAppts.find((appt) => appt.status === "Pending")) {
+    if (existAppts.find((appt) => appt.status === "Reviewing")) {
       return res.json({ message: "Phone number pending" });
     }
     const myobj = {
@@ -101,6 +117,7 @@ appointmentRoutes.route("/appointment/add").post(async function (req, res) {
       status: req.body.status,
     };
     const result = await db_connect.collection("appointments").insertOne(myobj);
+
     res.json(result);
   } catch (err) {
     throw err;
@@ -119,7 +136,7 @@ appointmentRoutes.route("/check-phone-number").post(async function (req, res) {
     if (existAppts.find((appt) => appt.status === "Spam")) {
       return res.json({ exists: true, message: "Phone number spamming" });
     }
-    if (existAppts.find((appt) => appt.status === "Pending")) {
+    if (existAppts.find((appt) => appt.status === "Reviewing")) {
       return res.json({ exists: true, message: "Phone number pending" });
     }
     return res.json({ exists: false });

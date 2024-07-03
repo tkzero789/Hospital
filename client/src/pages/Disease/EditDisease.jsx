@@ -56,16 +56,14 @@ export default function EditDisease({ userRole, userInfos }) {
     case "edit":
       action = confirmEdit;
       break;
+    case "cancel":
+      action = confirmCancel;
+      break;
     default:
       action = null;
   }
 
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [disease, setDisease] = useState({
     id: "",
@@ -80,7 +78,7 @@ export default function EditDisease({ userRole, userInfos }) {
       doctorCreated: "",
       doctorId: "",
       timeCreated: "",
-      timeEdited: formattedTime,
+      timeEdited: now,
     },
     status: "",
   });
@@ -114,9 +112,9 @@ export default function EditDisease({ userRole, userInfos }) {
           ...dbDisease,
           createInfos: {
             ...dbDisease.createInfos,
-            timeEdited: formattedTime,
+            timeEdited: now,
           },
-          status: "Pending Update",
+          status: "Updated Revision",
           doctorReqID: userInfos.doctorID,
         });
         setOrigName(dbDisease.name);
@@ -128,7 +126,7 @@ export default function EditDisease({ userRole, userInfos }) {
       });
   }, [diseaseId, navigate]);
 
-  // Fetch data
+  // Fetch symptom data
   useEffect(() => {
     axios
       .get("http://localhost:5000/symptom")
@@ -285,7 +283,7 @@ export default function EditDisease({ userRole, userInfos }) {
     if (isSuccessful) {
       setIsClicked(true);
       setTimeout(() => {
-        toast.success("Edited successfully!");
+        toast.success("Submitted revisions successfully!");
         setTimeout(() => {
           navigate("/disease-table");
         }, 1200);
@@ -306,7 +304,14 @@ export default function EditDisease({ userRole, userInfos }) {
                   <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={confirmCancel}
+                    onClick={(event) =>
+                      handleShowModal(
+                        event,
+                        "cancel",
+                        "Cancel disease editing",
+                        "Would you like to perform this action?"
+                      )
+                    }
                   >
                     Cancel
                   </button>
@@ -329,15 +334,15 @@ export default function EditDisease({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "edit",
-                        "Confirm edit",
-                        "Are you sure you want to edit this disease?"
+                        "Review and submit revisions",
+                        "Once confirmed, your revisions will be submitted and will go through a review process. Would you like to proceed?"
                       );
                     } else {
                       checkStep(step);
                     }
                   }}
                 >
-                  {step === finalStep ? "Confirm edit" : "Next"}
+                  {step === finalStep ? "Submit revisions" : "Next"}
                 </button>
               </div>
             </div>

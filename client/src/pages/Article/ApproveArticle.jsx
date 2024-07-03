@@ -48,26 +48,15 @@ export default function ApproveArticle({ userRole, userInfos }) {
       action = null;
   }
 
-  const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
-
   const [isPatView, setIsPatView] = useState(false);
   const { articleId } = useParams();
   const [article, setArticle] = useState({
     id: "",
-    idTemp: "",
     title: "",
     diseaseId: "",
     diseaseName: "",
     infos: [
       {
-        id: "",
-        number: 1,
-        about: "",
         overview: "",
         detail: "",
         image: null,
@@ -75,9 +64,6 @@ export default function ApproveArticle({ userRole, userInfos }) {
     ],
     treatments: [
       {
-        id: "",
-        number: 1,
-        about: "",
         overview: "",
         detail: "",
         image: null,
@@ -86,9 +72,9 @@ export default function ApproveArticle({ userRole, userInfos }) {
     medSpecialty: "",
     createInfos: {
       doctorCreated: "",
-      doctorId: "",
+      doctorID: "",
       timeCreated: "",
-      timeEdited: formattedTime,
+      timeEdited: null,
     },
     isDisplay: "",
     status: "",
@@ -151,7 +137,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
       axios.put(
         `http://localhost:5000/article/update/${articleId}`,
         {
-          status: "Request Edit",
+          status: "Edit Requested",
         },
         apiConfig
       );
@@ -159,7 +145,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Request edit successfully");
+      toast.success("Requested content revisions successfully");
       setTimeout(() => {
         navigate("/article-table");
       }, 1200);
@@ -178,7 +164,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Delete article successfully");
+      toast.success("Deleted article successfully");
       setTimeout(() => {
         navigate("/article-table");
       }, 1200);
@@ -216,8 +202,8 @@ export default function ApproveArticle({ userRole, userInfos }) {
                           handleShowModal(
                             event,
                             "delete",
-                            "Confirm delete",
-                            "Are you sure you want to delete this article?"
+                            "Delete article",
+                            "This action will permanently delete the article from the database. Would you like to proceed?"
                           )
                         }
                       >
@@ -247,7 +233,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
                     </button>
                   </div>
                   {userRole === "admin" &&
-                    article.status !== "Request Edit" && (
+                    article.status !== "Edit Requested" && (
                       <div className="c-2 d-grid gap-2">
                         <button
                           className="btn btn-warning"
@@ -255,19 +241,19 @@ export default function ApproveArticle({ userRole, userInfos }) {
                             handleShowModal(
                               event,
                               "edit",
-                              "Confirm request edit",
-                              "Are you sure you want to request edit this article?"
+                              "Request changes",
+                              "Would you like to request content revisions for this article?"
                             )
                           }
                         >
-                          Request edit
+                          Request changes
                         </button>
                       </div>
                     )}
 
                   {userRole === "admin" &&
-                    (article.status === "Pending Update" ||
-                      article.status === "Pending Create") && (
+                    (article.status === "Awaiting Review" ||
+                      article.status === "Updated Revision") && (
                       <div className="c-2 d-grid gap-2">
                         <button
                           type="button"
@@ -276,8 +262,8 @@ export default function ApproveArticle({ userRole, userInfos }) {
                             handleShowModal(
                               event,
                               "approve",
-                              "Confirm approve",
-                              "Are you sure you want to approve this article?"
+                              "Approval confirmation",
+                              "The approved article will be added into the database. Would you like to perform this action?"
                             )
                           }
                         >
@@ -286,7 +272,8 @@ export default function ApproveArticle({ userRole, userInfos }) {
                       </div>
                     )}
                   {userRole !== "admin" &&
-                    article.status === "Request Edit" && (
+                    article.status === "Edit Requested" &&
+                    userInfos.doctorID === article.createInfos.doctorID && (
                       <div className="c-2 d-grid gap-2">
                         <Link
                           className="btn btn-warning"

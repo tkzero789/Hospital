@@ -36,15 +36,13 @@ export default function EditSymptom({ userRole, userInfos }) {
     case "edit":
       action = confirmEdit;
       break;
+    case "cancel":
+      action = confirmCancel;
+      break;
     default:
       action = null;
   }
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [symptom, setSymptom] = useState({
     id: "",
@@ -66,7 +64,7 @@ export default function EditSymptom({ userRole, userInfos }) {
       doctorCreated: "",
       doctorId: "",
       timeCreated: "",
-      timeEdited: formattedTime,
+      timeEdited: now,
     },
     status: "",
   });
@@ -101,12 +99,12 @@ export default function EditSymptom({ userRole, userInfos }) {
     try {
       const response = await axios.put(
         `http://localhost:5000/symptom/edit/${symptom.id}`,
-        { ...symptom, status: "Pending Update" },
+        { ...symptom, status: "Updated Revision" },
         apiConfig
       );
       if (response.data.message === "Symptom updated successfully") {
         setTimeout(() => {
-          toast.success("Edit successfully");
+          toast.success("Submitted revisions successfully");
           setTimeout(() => {
             navigate("/symptom-table");
           }, 1200);
@@ -144,9 +142,14 @@ export default function EditSymptom({ userRole, userInfos }) {
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
-                  onClick={() => {
-                    confirmCancel();
-                  }}
+                  onClick={(event) =>
+                    handleShowModal(
+                      event,
+                      "cancel",
+                      "Cancel symptom editing",
+                      "Would you like to perform this action?"
+                    )
+                  }
                 >
                   Cancel
                 </button>
@@ -159,12 +162,12 @@ export default function EditSymptom({ userRole, userInfos }) {
                     handleShowModal(
                       event,
                       "edit",
-                      "Confirm edit",
-                      "Are you sure you want to confirm edit this symptom?"
+                      "Review and submit revisions",
+                      "Once confirmed, your revisions will be submitted and will go through a review process. Would you like to proceed?"
                     )
                   }
                 >
-                  Confirm edit
+                  Submit revisions
                 </button>
               </div>
               <Toaster

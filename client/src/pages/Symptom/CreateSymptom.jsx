@@ -46,11 +46,6 @@ export default function CreateSymptom({ userRole, userInfos }) {
   }
 
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [symptom, setSymptom] = useState({
     id: uuidv4(),
@@ -71,10 +66,10 @@ export default function CreateSymptom({ userRole, userInfos }) {
     createInfos: {
       doctorCreated: userInfos.fullName,
       doctorID: userInfos.doctorID,
-      timeCreated: formattedTime,
+      timeCreated: now,
       timeEdited: null,
     },
-    status: "Pending Create",
+    status: "Awaiting Review",
     doctorReqID: userInfos.doctorID,
   });
 
@@ -159,8 +154,8 @@ export default function CreateSymptom({ userRole, userInfos }) {
                     handleShowModal(
                       event,
                       "cancel",
-                      "Warning: cancel creating symtom",
-                      "Are you sure you want to perform this action?"
+                      "Cancel symptom creation",
+                      "Would you like to perform this action?"
                     )
                   }
                 >
@@ -175,8 +170,8 @@ export default function CreateSymptom({ userRole, userInfos }) {
                     handleShowModal(
                       event,
                       "create",
-                      "Confirm create",
-                      "Are you sure you want to create this symptom?"
+                      "Create new symptom",
+                      "Once confirmed, your submission will go through a review process. Would you like to perform this action?"
                     )
                   }
                 >

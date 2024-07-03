@@ -180,7 +180,6 @@ const PatientFormResult = ({ patientResult }) => {
                     <p>
                       Result strength:{" "}
                       <span className="fw-med">{strengthLevel}</span>
-                      <span>{i.matchedScore}</span>
                     </p>
                     <div className="pt-1">
                       <ResultBar score={String(i.matchedScore)} />

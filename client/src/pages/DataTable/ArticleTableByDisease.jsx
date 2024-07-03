@@ -139,6 +139,9 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
           className="datagrid"
           rows={articles}
           getRowId={(row) => row._id}
+          getRowClassName={(params) =>
+            `rowWithStatus ${params.row.status.replace(" ", "-")}`
+          }
           columns={columns}
           pageSize={pageSize}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

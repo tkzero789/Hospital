@@ -27,12 +27,30 @@
           position: absolute;
           display: none;
           width: 320px;
-          background-color: #f1f1f1;
+          background-color: var(--bg-white);
           top: 30px;
           left: -280px;
-          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          box-shadow: var(--box-shadow-5);
           z-index: 10;
           border-radius: 8px;
+
+          & > div {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-gray-3);
+
+            span {
+              color: var(--text-dark-header);
+              font-size: 16px;
+              font-weight: var(--roboto-medium-weight);
+            }
+
+            a {
+              text-decoration: none;
+              font-size: 16px;
+            }
+          }
 
           ul {
             list-style: none;
@@ -41,17 +59,28 @@
             li {
               font-size: 16px;
               display: block;
-              padding: 8px 8px;
+              padding: 8px 12px;
               cursor: pointer;
+
+              a {
+                display: flex;
+                text-decoration: none;
+                font-weight: var(--roboto-regular-weight);
+                color: var(--text-dark-1);
+
+                p {
+                  color: var(--text-dark-body);
+                }
+
+                span {
+                  font-weight: var(--roboto-medium-weight);
+                  color: var(--text-dark-1);
+                }
+              }
             }
 
             li:hover {
               background-color: #e2e2e2;
-            }
-
-            li:first-child {
-              border-top-left-radius: 8px;
-              border-top-right-radius: 8px;
             }
 
             li:last-child {
@@ -60,7 +89,7 @@
             }
 
             li:not(:first-child) {
-              border-top: 1px solid black;
+              border-top: 1px solid var(--border-gray-3);
             }
           }
         }
@@ -98,7 +127,7 @@
       }
 
       .item:first-child:hover .noti-list {
-        display: none;
+        display: block;
       }
 
       .item:first-child::after {

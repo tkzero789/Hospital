@@ -152,28 +152,26 @@ export default function SigninStaff() {
                             !user.password && isInputEmpty ? "empty" : ""
                           }`}
                         ></input>
-                      </form>
-                    </div>
-                    <div className="signin-right-btn">
-                      <Toaster
-                        toastOptions={{
-                          className: "toast-noti-3",
-                        }}
-                        position="top-center"
-                        richColors
-                      />
-                      <form>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            checkInputEmpty();
-                            if (!isInputEmpty) {
-                              confirmSignin(e);
-                            }
-                          }}
-                        >
-                          Login
-                        </button>
+                        <div className="signin-right-btn">
+                          <button
+                            type="submit"
+                            onClick={(e) => {
+                              checkInputEmpty();
+                              if (!isInputEmpty) {
+                                confirmSignin(e);
+                              }
+                            }}
+                          >
+                            Login
+                          </button>
+                          <Toaster
+                            toastOptions={{
+                              className: "toast-noti-3",
+                            }}
+                            position="top-center"
+                            richColors
+                          />
+                        </div>
                       </form>
                     </div>
                   </div>

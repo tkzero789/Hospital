@@ -62,9 +62,9 @@ export default function ApproveSymptom({ userRole, userInfos }) {
   async function confirmApprove() {
     setIsClicked(true);
     if (
-      symptom.status === "Pending Create" ||
-      symptom.status === "Pending Update" ||
-      symptom.status === "Request Edit"
+      symptom.status === "Awaiting Review" ||
+      symptom.status === "Updated Revision" ||
+      symptom.status === "Edit Requested"
     ) {
       try {
         // Update status symptom
@@ -102,7 +102,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
       axios.put(
         `http://localhost:5000/symptom/update/${symptomId}`,
         {
-          status: "Request Edit",
+          status: "Edit Requested",
         },
         apiConfig
       );
@@ -110,7 +110,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Request edit successfully");
+      toast.success("Requested content revisions successfully");
       setTimeout(() => {
         navigate("/symptom-table");
       }, 1200);
@@ -129,7 +129,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Delete successfully");
+      toast.success("Deleted successfully");
       setTimeout(() => {
         navigate("/symptom-table");
       }, 1200);
@@ -160,8 +160,8 @@ export default function ApproveSymptom({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "delete",
-                        "Confirm delete",
-                        "Are you sure you want to delete?"
+                        "Delete symptom",
+                        "This action will permanently delete the symptom from the database. Would you like to proceed?"
                       )
                     }
                   >
@@ -180,7 +180,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
                   Back
                 </button>
               </div>
-              {userRole === "admin" && symptom.status !== "Request Edit" && (
+              {userRole === "admin" && symptom.status !== "Edit Requested" && (
                 <div className="c-2 d-grid gap-2">
                   <button
                     className="btn btn-warning"
@@ -188,12 +188,12 @@ export default function ApproveSymptom({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "edit",
-                        "Confirm request edit",
-                        "Are you sure you want to request edit?"
+                        "Request changes",
+                        "Would you like to request content revisions for this symptom?"
                       )
                     }
                   >
-                    Request edit
+                    Request changes
                   </button>
                 </div>
               )}
@@ -206,8 +206,8 @@ export default function ApproveSymptom({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "approve",
-                        "Confirm approve",
-                        "Are you sure you want to approve this symptom?"
+                        "Approval confirmation",
+                        "The approved symptom will be added into the database. Would you like to perform this action?"
                       )
                     }
                   >

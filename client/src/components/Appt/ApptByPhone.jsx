@@ -62,9 +62,9 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
       const bCreated = b.createdAt.split("/").reverse().join("/");
 
       // Sort by status first
-      if (a.status === "Pending" && b.status !== "Pending") {
+      if (a.status === "Reviewing" && b.status !== "Reviewing") {
         return -1;
-      } else if (b.status === "Pending" && a.status !== "Pending") {
+      } else if (b.status === "Reviewing" && a.status !== "Reviewing") {
         return 1;
       }
       // If status is the same, sort by date or created date
@@ -179,8 +179,8 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                                         : "appt-status-accepted"
                                     }`}
                                   >
-                                    {appointment.status === "Pending"
-                                      ? "Pending"
+                                    {appointment.status === "Reviewing"
+                                      ? "Reviewing"
                                       : appointment.status === "Accepted"
                                       ? "Accepted"
                                       : appointment.status}

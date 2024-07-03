@@ -4,11 +4,12 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import Footer from "components/HomePage/Footer/Footer";
-import "pages/Blog/Blog.css";
 import BlogFilter from "components/Blog/BlogFilter";
 import MobileBlogFilter from "components/Blog/MobileBlogFilter";
 import Spinner from "components/UI/Spinner";
 import BlogSkeleton from "components/Blog/BlogSkeleton";
+import FormatDate from "utilities/FormatDate";
+import "pages/Blog/Blog.css";
 
 const ViewBlogList = () => {
   const params = useParams();
@@ -57,17 +58,20 @@ const ViewBlogList = () => {
 
         setIsFilter(false);
       } else {
-        setIsLoading(true); // spinner
+        setIsLoading(true);
         const response = await axios.get(
           `http://localhost:5000/news/blog?page=${currentPage}&limit=${blogsPerPage}`
         );
         let data = response.data;
+        console.log(data);
 
         // Update the state (5 blogs per page)
         setDisplayBlogs(data.blogs);
+        console.log(data.blogs);
 
         // Update the number of totalPages
         setTotalPages(data.totalPages);
+        console.log(data.totalPages);
 
         setIsLoading(false);
       }
@@ -93,15 +97,6 @@ const ViewBlogList = () => {
   const handleOpenFilter = (e) => {
     e.preventDefault();
     setOpenFilter(!openFilter);
-  };
-
-  // Format createdAt
-  const formatDate = (date) => {
-    return new Date(date).toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
   };
 
   // Pagination
@@ -198,7 +193,7 @@ const ViewBlogList = () => {
                                       : "Does not have a tag"}
                                   </Link>
                                   <span className="d-inline fw-thin fs-14 text-secondary-1 ps-2">
-                                    {formatDate(blog.createdAt)}
+                                    <FormatDate date={blog.createdAt} />
                                   </span>
                                   <span>
                                     {blog.intro
@@ -237,7 +232,7 @@ const ViewBlogList = () => {
                                   {blog.tag ? blog.tag : "Does not have a tag"}{" "}
                                 </Link>
                                 <span className="d-inline fw-thin fs-14 text-secondary-1 ps-2">
-                                  {formatDate(blog.createdAt)}
+                                  <FormatDate date={blog.createdAt} />
                                 </span>
                                 <span>
                                   {blog.intro

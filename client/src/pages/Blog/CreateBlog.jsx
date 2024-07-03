@@ -48,13 +48,11 @@ const CreateBlog = ({ userInfos }) => {
       action = null;
   }
 
+  // Navigate
   const navigate = useNavigate();
 
   // Create a ref for the file input
   const fileInputRef = useRef();
-
-  // Format date
-  const now = new Date();
 
   // Blog state
   const [blog, setBlog] = useState({
@@ -62,13 +60,13 @@ const CreateBlog = ({ userInfos }) => {
     title: "",
     tag: "",
     intro: "",
-    image: null,
+    image: [],
     content: "",
     slug: "",
     author: userInfos.fullName,
     doctorID: userInfos.doctorID,
     createAt: null,
-    status: "Pending Create",
+    status: "Awaiting Review",
   });
 
   // Text editor
@@ -97,14 +95,23 @@ const CreateBlog = ({ userInfos }) => {
     } else if (blog.intro === "") {
       window.alert("Please enter the intro");
       return;
-    } else if (blog.image === null) {
-      window.alert("Please select image(s) for this blog");
+    } else if (blog.image.length === 0) {
+      window.alert("Please upload image(s) for this blog");
       return;
-    } else if (blog.content === "") {
-      window.alert("Please enter the content for this blog");
+    } else if (
+      blog.content === "" ||
+      blog.content.content.some(
+        (item) => item.type === "paragraph" && !item.content
+      )
+    ) {
+      window.alert("Please enter the text content for this blog");
+      return;
+    } else if (!blog.content.content.some((item) => item.type === "image")) {
+      window.alert("Please drag the uploaded image(s) into the text editor");
       return;
     }
 
+    const now = new Date();
     const updatedBlog = {
       ...blog,
       id: uuidv4(),
@@ -174,7 +181,7 @@ const CreateBlog = ({ userInfos }) => {
   };
 
   // Upload image
-  const updateInfoImage = async (event) => {
+  const uploadImage = async (event) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
     try {
@@ -189,10 +196,10 @@ const CreateBlog = ({ userInfos }) => {
           },
         }
       );
-      console.log(response.data); // Log the response data to check if the image is uploaded correctly
+      console.log(response.data);
       setBlog((prevBlog) => ({
         ...prevBlog,
-        image: response.data.link, // Ensure that the server is returning the correct URL for the image
+        image: [...prevBlog.image, response.data.link],
       }));
     } catch (error) {
       console.error(error);
@@ -200,28 +207,82 @@ const CreateBlog = ({ userInfos }) => {
     fileInputRef.current = event.target;
   };
 
-  // Remove image
-  const removeImage = async (e) => {
-    e.preventDefault();
-    try {
-      // Extract the key from the image URL
-      const key = blog.image.split("/").pop();
+  // Remove uploaded image
+  const removeImage = async (index) => {
+    const imageToRemove = blog.image[index];
+    if (imageToRemove) {
+      try {
+        const key = imageToRemove.split("/").pop();
+        console.log("key url", imageToRemove);
+        await axios.post(
+          `http://localhost:5000/blog/deleteImg`,
+          { key },
+          apiConfig
+        );
 
-      await axios.post(`http://localhost:5000/blog/delete`, { key }, apiConfig);
+        // Clear the file input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
 
-      // Remove the image from the blog state
-      setBlog((prevBlog) => ({
-        ...prevBlog,
-        image: null,
-      }));
-    } catch (error) {
-      console.error(error);
-    }
-    // Clear the file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+        // Check if the image to remove exists in the content array
+        const imageExistsInContent = blog.content.content.some(
+          (contentItem) =>
+            contentItem.type === "image" &&
+            contentItem.attrs.src.split("/").pop() === key
+        );
+
+        // Update the blog state to remove the image
+        setBlog((prevBlog) => ({
+          ...prevBlog,
+          image: prevBlog.image.filter((_, imgIndex) => imgIndex !== index),
+          content: imageExistsInContent
+            ? {
+                ...prevBlog.content,
+                content: prevBlog.content.content.filter(
+                  (contentItem) =>
+                    !(
+                      contentItem.type === "image" &&
+                      contentItem.attrs.src.split("/").pop() === key
+                    )
+                ),
+              }
+            : { ...prevBlog.content },
+        }));
+
+        // Remove image in the textarea
+        removeImageFromEditorContent(imageToRemove);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
+  // Remove image from EditorContent
+  const removeImageFromEditorContent = (imageUrl) => {
+    if (editor) {
+      const currentContent = editor.getJSON();
+      const removeImageNode = (nodes) =>
+        nodes.filter((node) => {
+          if (node.type === "image" && node.attrs.src === imageUrl) {
+            return false;
+          }
+          if (node.content) {
+            node.content = removeImageNode(node.content);
+          }
+          return true;
+        });
+
+      const updatedContent = {
+        ...currentContent,
+        content: removeImageNode(currentContent.content),
+      };
+
+      editor.commands.setContent(updatedContent);
+    }
+  };
+
+  console.log(blog);
 
   return (
     <>
@@ -264,25 +325,34 @@ const CreateBlog = ({ userInfos }) => {
         </div>
         <div className="text-editor-img">
           <label htmlFor="image">Blog image:</label>
-          <input
-            type="file"
-            name="image"
-            className="form-control border-primary-subtle col-9 mb-2"
-            placeholder="Upload image(s)"
-            onChange={(e) => updateInfoImage(e)}
-            ref={fileInputRef}
-          />
-        </div>
-        {blog.image ? (
-          <div className="text-editor-img">
-            <img src={blog.image} alt="Blog img" />
-            <button onClick={removeImage} className="border rounded">
-              <i className="bi bi-trash3-fill"></i>
+          <div>
+            <button onClick={() => fileInputRef.current.click()}>
+              <i className="bi bi-upload"></i>
+              <span>Upload image</span>
             </button>
+            <input
+              type="file"
+              name="image"
+              className="flex-grow-1 ps-3 py-1"
+              onChange={(e) => uploadImage(e)}
+              ref={fileInputRef}
+            />
           </div>
-        ) : (
-          <div className="pt-2">No image was uploaded</div>
-        )}
+        </div>
+        <div className="text-editor-uploaded-img">
+          {blog.image && blog.image.length > 0 ? (
+            blog.image.map((img, index) => (
+              <div key={index}>
+                <img src={img} alt="Blog img" />
+                <button onClick={() => removeImage(index)}>Remove image</button>
+              </div>
+            ))
+          ) : (
+            <div className="w-100">
+              Image area empty. Please upload an image.
+            </div>
+          )}
+        </div>
         <label htmlFor="info">Blog content:</label>
         <div className="text-editor">
           <MenuBar editor={editor} />
@@ -299,8 +369,8 @@ const CreateBlog = ({ userInfos }) => {
               handleShowModal(
                 event,
                 "create",
-                "Confirm create",
-                "Are you sure you want to create this blog?"
+                "Create new blog",
+                "Once confirmed, your submission will go through a review process. Would you like to perform this action?"
               )
             }
           >

@@ -57,17 +57,15 @@ export default function CreateDisease({ userRole, userInfos }) {
     case "create":
       action = confirmCreate;
       break;
+    case "cancel":
+      action = confirmCancel;
+      break;
     default:
       action = null;
   }
 
   // Format date
   const now = new Date();
-  const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(
-    now.getDate()
-  ).padStart(2, "0")}/${now.getFullYear()}`;
 
   const [disease, setDisease] = useState({
     id: uuidv4(),
@@ -82,10 +80,10 @@ export default function CreateDisease({ userRole, userInfos }) {
     createInfos: {
       doctorCreated: userInfos.fullName,
       doctorID: userInfos.doctorID,
-      timeCreated: formattedTime,
+      timeCreated: now,
       timeEdited: null,
     },
-    status: "Pending Create",
+    status: "Awaiting Review",
     doctorReqID: userInfos.doctorReqID,
   });
   const [dbSymps, setDbSymps] = useState([]);
@@ -264,7 +262,14 @@ export default function CreateDisease({ userRole, userInfos }) {
                   <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={confirmCancel}
+                    onClick={(event) =>
+                      handleShowModal(
+                        event,
+                        "cancel",
+                        "Cancel disease creation",
+                        "Would you like to perform this action?"
+                      )
+                    }
                   >
                     Cancel
                   </button>
@@ -287,8 +292,8 @@ export default function CreateDisease({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "create",
-                        "Confirm create",
-                        "Are you sure you want to create this disease?"
+                        "Create new disease",
+                        "Once confirmed, your submission will go through a review process. Would you like to perform this action?"
                       );
                     } else {
                       checkStep(step);

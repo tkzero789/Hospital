@@ -6,8 +6,9 @@ import { Breadcrumbs } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from "axios";
 import Footer from "components/HomePage/Footer/Footer";
-import "pages/Blog/Blog.css";
 import Spinner from "components/UI/Spinner";
+import FormatDate from "utilities/FormatDate";
+import "pages/Blog/Blog.css";
 
 const ViewSpecificBlog = () => {
   const { blogSlug } = useParams();
@@ -47,6 +48,7 @@ const ViewSpecificBlog = () => {
         </div>
       ) : (
         <>
+          {/* Breadcrumbs */}
           <div className="content-container">
             <Breadcrumbs
               className="breadcrumbs"
@@ -63,7 +65,7 @@ const ViewSpecificBlog = () => {
               ,
             </Breadcrumbs>
           </div>
-
+          {/* Blog content */}
           <div className="content-container individual-blog">
             <div key={blog.id}>
               <div className="individual-blog-headline">
@@ -74,7 +76,9 @@ const ViewSpecificBlog = () => {
                     <div className="text-secondary-1">
                       By: <span className="text-blue-3">{blog.author}</span>
                     </div>
-                    <span className="text-secondary-1">Last updated:</span>
+                    <span className="text-secondary-1">
+                      Last updated: <FormatDate date={blog.createdAt} />
+                    </span>
                   </div>
                   <div className="ms-auto">
                     <Link

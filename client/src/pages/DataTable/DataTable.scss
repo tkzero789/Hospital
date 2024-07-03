@@ -82,11 +82,23 @@
       background-color: rgba(219, 211, 154, 0.5);
       color: goldenrod;
     }
+    &.Awaiting-Review {
+      background-color: rgba(219, 211, 154, 0.5);
+      color: goldenrod;
+    }
     &.Pending-Update {
       background-color: rgba(140, 192, 226, 0.5);
       color: rgb(89, 144, 180);
     }
+    &.Updated-Revision {
+      background-color: rgba(140, 192, 226, 0.5);
+      color: rgb(89, 144, 180);
+    }
     &.Request-Edit {
+      background-color: rgba(231, 110, 193, 0.5);
+      color: rgb(223, 71, 174);
+    }
+    &.Edit-Requested {
       background-color: rgba(231, 110, 193, 0.5);
       color: rgb(223, 71, 174);
     }
@@ -109,11 +121,23 @@
       font-weight: var(--roboto-medium-weight);
       color: black;
     }
+    &.Awaiting-Review {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
     &.Pending-Update {
       font-weight: var(--roboto-medium-weight);
       color: black;
     }
+    &.Updated-Revision {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
     &.Request-Edit {
+      font-weight: var(--roboto-medium-weight);
+      color: black;
+    }
+    &.Edit-Requested {
       font-weight: var(--roboto-medium-weight);
       color: black;
     }

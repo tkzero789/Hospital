@@ -30,11 +30,11 @@ export default function ArticleTable({ userRole, userInfos }) {
   // Assign article priority
   const getPriority = (status) => {
     switch (status) {
-      case "Request Edit":
+      case "Edit Requested":
         return 1;
-      case "Pending Create":
+      case "Awaiting Review":
         return 2;
-      case "Pending Update":
+      case "Updated Revision":
         return 3;
       default:
         return 4;

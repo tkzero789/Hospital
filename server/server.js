@@ -17,7 +17,8 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use("/uploads", express.static("uploads"));
+
+// Routes
 app.use(require("./routes/symptom"));
 app.use(require("./routes/article"));
 app.use(require("./routes/user"));

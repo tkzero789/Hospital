@@ -84,9 +84,9 @@ export default function ViewDisease({ userRole, userInfos }) {
   async function confirmApprove() {
     setIsClicked(true);
     if (
-      disease.status === "Pending Create" ||
-      disease.status === "Pending Update" ||
-      disease.status === "Request Edit"
+      disease.status === "Awaiting Review" ||
+      disease.status === "Updated Revision" ||
+      disease.status === "Edit Requested"
     ) {
       try {
         // Update status symptom
@@ -124,7 +124,7 @@ export default function ViewDisease({ userRole, userInfos }) {
       axios.put(
         `http://localhost:5000/disease/update/${diseaseId}`,
         {
-          status: "Request Edit",
+          status: "Edit Requested",
         },
         apiConfig
       );
@@ -132,7 +132,7 @@ export default function ViewDisease({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Request edit successfully");
+      toast.success("Requested content revisions successfully");
       setTimeout(() => {
         navigate("/disease-table");
       }, 1200);
@@ -151,7 +151,7 @@ export default function ViewDisease({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Delete disease successfully");
+      toast.success("Deleted disease successfully");
       setTimeout(() => {
         navigate("/disease-table");
       }, 1200);
@@ -159,12 +159,12 @@ export default function ViewDisease({ userRole, userInfos }) {
   }
 
   return (
-    <div>
+    <div className="bg-gray-1">
       <h3 className="content-container text-center text-body pt-5">
         View disease
       </h3>
       <div className="content-container py-5">
-        <div className="card border-0 box-shadow-5 p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>
               {
@@ -186,8 +186,8 @@ export default function ViewDisease({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "delete",
-                        "Confirm delete",
-                        "Are you sure you want to delete this disease?"
+                        "Delete disease",
+                        "This action will permanently delete the disease from the database. Would you like to proceed?"
                       )
                     }
                   >
@@ -215,7 +215,7 @@ export default function ViewDisease({ userRole, userInfos }) {
                 </NavLink>
               </div>
               {userInfos.doctorID === disease?.createInfos?.doctorID &&
-                disease.status === "Request Edit" && (
+                disease.status === "Edit Requested" && (
                   <div className="c-2 d-grid gap-2">
                     <NavLink
                       className="btn btn-warning"
@@ -225,7 +225,7 @@ export default function ViewDisease({ userRole, userInfos }) {
                     </NavLink>
                   </div>
                 )}
-              {userRole === "admin" && disease.status !== "Request Edit" && (
+              {userRole === "admin" && disease.status !== "Edit Requested" && (
                 <div className="c-2 d-grid gap-2">
                   <button
                     type="button"
@@ -234,18 +234,18 @@ export default function ViewDisease({ userRole, userInfos }) {
                       handleShowModal(
                         event,
                         "edit",
-                        "Confirm request edit",
-                        "Are you sure you want to request edit this disease?"
+                        "Request changes",
+                        "Would you like to request content revisions for this disease?"
                       )
                     }
                   >
-                    Request edit
+                    Request changes
                   </button>
                 </div>
               )}
               {userRole === "admin" &&
-                (disease.status === "Pending Create" ||
-                  disease.status === "Pending Update") && (
+                (disease.status === "Awaiting Review" ||
+                  disease.status === "Updated Revision") && (
                   <div className="c-2 d-grid gap-2">
                     <button
                       type="button"
@@ -254,8 +254,8 @@ export default function ViewDisease({ userRole, userInfos }) {
                         handleShowModal(
                           event,
                           "approve",
-                          "Confirm approve",
-                          "Are you sure you want to approve this disease?"
+                          "Approval confirmation",
+                          "The approved disease will be added into the database. Would you like to perform this action?"
                         )
                       }
                     >
