@@ -42,19 +42,36 @@ appointmentRoutes.route("/appointment").get(async function (req, res) {
 });
 
 // Get 3 most recent appointments
-appointmentRoutes.route("/appointmentNoti").get(async function (req, res) {
-  try {
-    const db_connect = await dbo.getDb("hospital");
-    const result = await db_connect
-      .collection("appointments")
-      .find({})
-      .sort({ createdAt: -1 })
-      .limit(3)
-      .toArray();
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+appointmentRoutes.get("/appointmentNoti", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  // Function to send data
+  const sendAppointments = async () => {
+    try {
+      const db_connect = await dbo.getDb("hospital");
+      const result = await db_connect
+        .collection("appointments")
+        .find({})
+        .sort({ createdAt: -1 })
+        .limit(3)
+        .toArray();
+      res.write(`data: ${JSON.stringify(result)}\n\n`);
+    } catch (err) {
+      console.error("Error fetching appointments:", err);
+      res
+        .status(500)
+        .write("event: error\ndata: Error fetching appointments\n\n");
+    }
+  };
+
+  sendAppointments();
+  const intervalId = setInterval(sendAppointments, 10000); // Send updates every 10 seconds
+
+  req.on("close", () => {
+    clearInterval(intervalId);
+  });
 });
 
 // Get appointment by ID

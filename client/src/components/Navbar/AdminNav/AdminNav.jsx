@@ -22,19 +22,28 @@ const AdminNav = () => {
   };
 
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/appointmentNoti"
-        );
-        setAppointments(response.data);
-      } catch (err) {
-        console.error("Failed to fetch appointments:", err);
-      }
+    const eventSource = new EventSource(
+      "http://localhost:5000/appointmentNoti"
+    );
+
+    eventSource.onmessage = (event) => {
+      const newAppointments = JSON.parse(event.data);
+      setAppointments(newAppointments);
     };
 
-    fetchAppointments();
+    eventSource.onerror = (error) => {
+      console.error("EventSource failed:", error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
   }, []);
+
+  appointments.map((item) => {
+    return console.log(item.id);
+  });
 
   return (
     <div className="admin-navbar">
@@ -42,7 +51,7 @@ const AdminNav = () => {
         <div className="items">
           <div className="item">
             <NotificationsNoneOutlinedIcon className="icon" />
-            <div className="counter">!</div>
+            <div className="counter">{appointments.length}</div>
             {isClicked && (
               <div className="noti-list">
                 <div>
@@ -57,7 +66,8 @@ const AdminNav = () => {
                       <Link to={`appointment/${appointment.id}/view`}>
                         <p>
                           {" "}
-                          New appointment: <span>{appointment.fullName}</span>
+                          New appointment:{" "}
+                          <span className="fw-med">{appointment.fullName}</span>
                         </p>
                       </Link>
                     </li>
