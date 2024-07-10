@@ -7,7 +7,23 @@ const port = process.env.PORT || 5000;
 const app = express();
 const dbo = require("./db/conn");
 
-app.use(cors({ origin: process.env.CORS_ORIGIN }));
+const allowedOrigins = [
+  "https://668f00f9d127fc7259e40380--sunny-cheesecake-b6844f.netlify.app",
+  process.env.CORS_ORIGIN,
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
