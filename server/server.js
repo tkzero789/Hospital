@@ -7,10 +7,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 const dbo = require("./db/conn");
 
-const allowedOrigins = [
-  "https://668f00f9d127fc7259e40380--sunny-cheesecake-b6844f.netlify.app",
-  process.env.CORS_ORIGIN,
-];
+const allowedOrigins = ["https://sunny-cheesecake-b6844f.netlify.app"];
 
 app.use(
   cors({
