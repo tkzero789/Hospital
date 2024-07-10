@@ -25,6 +25,11 @@ header {
   margin-left: auto;
 }
 
+/* Admin dashboard */
+.custom-height {
+  height: calc(100vh - 50px);
+}
+
 /* Toast notification */
 .toast-noti {
   height: 50px;

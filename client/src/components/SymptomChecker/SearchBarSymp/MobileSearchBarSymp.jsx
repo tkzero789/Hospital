@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
-import "components/SymptomChecker/SymptomChecker.css";
+import "components/SymptomChecker/SymptomChecker.scss";
 
 const MobileSearchBarSymp = ({
   inputRef,
@@ -32,12 +32,15 @@ const MobileSearchBarSymp = ({
   return (
     <>
       <div className="mobile-search-background">
+        <div className="mobile-symptoms-list-header">
+          <span>Search symptoms</span>
+        </div>
         {/* Search */}
         <div className="mobile-search-symp-input">
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search symptom"
+            placeholder="Enter your symptom here"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

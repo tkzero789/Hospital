@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import { Link } from "react-router-dom";
 import { useAuth } from "auth/AuthContext";
+import AdminSearch from "./AdminSearch";
 import "components/Navbar/AdminNav/AdminNav.scss";
 
 const AdminNav = () => {
@@ -21,6 +21,7 @@ const AdminNav = () => {
     }, 100);
   };
 
+  // Appointment notifications
   useEffect(() => {
     const eventSource = new EventSource(
       "http://localhost:5000/appointmentNoti"
@@ -48,6 +49,9 @@ const AdminNav = () => {
   return (
     <div className="admin-navbar">
       <div className="wrapper">
+        <div className="search-bar">
+          <AdminSearch />
+        </div>
         <div className="items">
           <div className="item">
             <NotificationsNoneOutlinedIcon className="icon" />

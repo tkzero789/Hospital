@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import "components/Navbar/SubNav/SubNav.css";
+import "components/Navbar/SubNav/SubNav.scss";
 
 export default function SubNav() {
   const navLinks = [

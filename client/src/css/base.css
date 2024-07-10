@@ -12,6 +12,7 @@
   /* Color */
   --text-dark-1: #1f2532;
   --text-white-1: #ffffff;
+  --text-gray-1: #858585;
   --text-dark-header: #313131;
   --text-dark-sub-header: #222222;
   --text-dark-body: #555555;
@@ -210,6 +211,10 @@
   border-radius: 12px;
 }
 
+.border-top-1 {
+  border-top: 1px solid #d9d9d6;
+}
+
 /* Box shadow */
 .box-shadow-1 {
   box-shadow: var(--box-shadow-1);
@@ -243,6 +248,11 @@
 /* Visible */
 .visible {
   display: block;
+}
+
+/* View height */
+.vh-100 {
+  height: 100vh;
 }
 /* Pre-defined CSS classes: End */
 

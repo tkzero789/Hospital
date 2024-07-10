@@ -130,11 +130,11 @@ export default function CreateSymptom({ userRole, userInfos }) {
 
   return (
     <div>
-      <h3 className="container text-center text-dark-header pt-5">
+      <h3 className="content-container text-center text-dark-header pt-5">
         Create symptom
       </h3>
       <div className="container p-5">
-        <div className="card   p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>
               <SymptomForm

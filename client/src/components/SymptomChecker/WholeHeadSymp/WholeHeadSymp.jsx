@@ -1,5 +1,5 @@
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
-import "components/SymptomChecker/SymptomChecker.css";
+import "components/SymptomChecker/SymptomChecker.scss";
 
 const WholeHeadSymp = ({
   dbSymps,
@@ -7,13 +7,22 @@ const WholeHeadSymp = ({
   position,
   chosenSymps,
   toggleFunction,
+  toggleExtraM,
   handleSnackBarPosition,
 }) => {
   return (
     <>
       <div className="mobile-symp-background-extra">
         <div className="mobile-symptoms-list-header">
-          <span>{position}</span>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              toggleExtraM();
+            }}
+          >
+            <i className="bi bi-chevron-left"></i>
+          </button>
+          {position}
         </div>
         <div className="mobile-symptoms-list-extra">
           {dbSymps

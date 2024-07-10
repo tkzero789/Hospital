@@ -10,7 +10,7 @@ import MobileDiseaseList from "../MobileDiseaseList/MobileDiseaseList";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "components/SymptomChecker/SymptomChecker.css";
+import "components/SymptomChecker/SymptomChecker.scss";
 
 const PatientFormResult = ({ patientResult }) => {
   const [article, setArticle] = useState([]);

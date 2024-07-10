@@ -145,7 +145,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Requested content revisions successfully");
+      toast.success("Requested successfully!");
       setTimeout(() => {
         navigate("/article-table");
       }, 1200);
@@ -164,7 +164,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Deleted article successfully");
+      toast.success("Deleted article successfully!");
       setTimeout(() => {
         navigate("/article-table");
       }, 1200);
@@ -178,10 +178,10 @@ export default function ApproveArticle({ userRole, userInfos }) {
       ) : (
         <div>
           <h3 className="container text-center text-dark-header pt-5">
-            Article
+            Article approval
           </h3>
           <div className="container p-5">
-            <div className="card p-5">
+            <div className="card border-0 box-shadow-6 p-5">
               <form>
                 <div>
                   {

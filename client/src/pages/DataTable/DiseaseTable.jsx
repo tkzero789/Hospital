@@ -119,13 +119,6 @@ export default function DiseaseTable({ userRole, userInfos }) {
       valueGetter: (params) => params.row.createInfos.doctorID,
     },
     {
-      field: "timeCreated",
-      headerName: "Created on",
-      headerClassName: "header-style",
-      width: 180,
-      valueGetter: (params) => params.row.createInfos.timeCreated,
-    },
-    {
       field: "status",
       headerName: "Status",
       headerClassName: "header-style",

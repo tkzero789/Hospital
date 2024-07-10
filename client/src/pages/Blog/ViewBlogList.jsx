@@ -9,7 +9,7 @@ import MobileBlogFilter from "components/Blog/MobileBlogFilter";
 import Spinner from "components/UI/Spinner";
 import BlogSkeleton from "components/Blog/BlogSkeleton";
 import FormatDate from "utilities/FormatDate";
-import "pages/Blog/Blog.css";
+import "pages/Blog/Blog.scss";
 
 const ViewBlogList = () => {
   const params = useParams();
@@ -183,6 +183,7 @@ const ViewBlogList = () => {
                                         thumbnailImage.attrs.alt ||
                                         "Thumbnail image"
                                       }
+                                      loading="lazy"
                                     />
                                   )}
                                 </Link>
@@ -215,6 +216,7 @@ const ViewBlogList = () => {
                                       thumbnailImage.attrs.alt ||
                                       "Thumbnail image"
                                     }
+                                    loading="lazy"
                                   />
                                 )}
                               </Link>

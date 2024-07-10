@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import axios from "axios";
+import FormatDate from "utilities/FormatDate";
 import "pages/DataTable/DataTable.scss";
 
 export default function ApptTable() {
@@ -45,6 +46,9 @@ export default function ApptTable() {
   const sortedAppts = [...appts].sort(
     (a, b) => getPriority(a.status) - getPriority(b.status)
   );
+
+  // Memo
+  const MemoizedFormatDate = React.memo(FormatDate);
 
   const actionColumn = [
     {
@@ -106,7 +110,10 @@ export default function ApptTable() {
       field: "createdAt",
       headerName: "Requested on",
       headerClassName: "header-style",
-      width: 160,
+      width: 180,
+      renderCell: (params) => {
+        return <MemoizedFormatDate date={params.row.createdAt} />;
+      },
     },
     {
       field: "status",

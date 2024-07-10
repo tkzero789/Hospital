@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -10,7 +10,7 @@ import axios from "axios";
 import ConfirmModal from "components/UI/ConfirmModal";
 import MenuBar from "components/Blog/MenuBar";
 import "pages/Blog/Texteditor.scss";
-import "pages/Blog/Blog.css";
+import "pages/Blog/Blog.scss";
 import Spinner from "components/UI/Spinner";
 
 const EditBlog = ({ userInfos }) => {
@@ -18,6 +18,9 @@ const EditBlog = ({ userInfos }) => {
   const apiConfig = {
     headers: { Authorization: `Bearer ${userToken}` },
   };
+
+  // Track image being removed from blog state
+  const [imagesToRemoveFromS3, setImagesToRemoveFromS3] = useState([]);
 
   // State for pop-up modal
   const [showModal, setShowModal] = useState(false);
@@ -45,6 +48,9 @@ const EditBlog = ({ userInfos }) => {
     case "edit":
       action = confirmEdit;
       break;
+    case "cancel":
+      action = confirmCancel;
+      break;
     default:
       action = null;
   }
@@ -53,6 +59,7 @@ const EditBlog = ({ userInfos }) => {
   // Create a ref for the file input
   const fileInputRef = useRef();
 
+  // Text editor
   const editor = useEditor({
     extensions: [StarterKit, Italic, Image],
     content: "",
@@ -67,6 +74,7 @@ const EditBlog = ({ userInfos }) => {
 
   const { blogId } = useParams();
 
+  // Blog state
   const [blog, setBlog] = useState(null);
 
   // Fetch blog content based on id
@@ -94,10 +102,31 @@ const EditBlog = ({ userInfos }) => {
     );
   }
 
+  // Confirm cancel
+  function confirmCancel() {
+    if (
+      blog.content.content.filter((item) => item.type === "image").length !==
+      blog.image.length
+    ) {
+      window.alert(
+        "Please drag the uploaded image(s) into the text editor. If you do not plan to use them, please remove the unused images before exiting."
+      );
+      return;
+    }
+
+    navigate(`/blog/${blogId}/view`);
+  }
+
+  console.log(blog.image.length);
+  console.log(
+    blog.content.content.filter((item) => item.type === "image").length
+  );
+
   // Confirm edit button
   async function confirmEdit() {
     let isSuccessful = false;
 
+    // Check empty input
     if (blog.title === "") {
       window.alert("Please enter the title for this blog");
       return;
@@ -121,6 +150,31 @@ const EditBlog = ({ userInfos }) => {
     } else if (!blog.content.content.some((item) => item.type === "image")) {
       window.alert("Please drag the uploaded image(s) into the text editor");
       return;
+    } else if (
+      blog.content.content.filter((item) => item.type === "image").length !==
+      blog.image.length
+    ) {
+      window.alert(
+        "Please drag the uploaded image(s) into the text editor. If you do not plan to use them, please remove the unused images before submitting."
+      );
+      return;
+    }
+
+    // Process each image removal from S3
+    for (const key of imagesToRemoveFromS3) {
+      try {
+        await axios.post(
+          `http://localhost:5000/blog/deleteImg`,
+          { key },
+          apiConfig
+        );
+      } catch (error) {
+        console.error("Failed to remove image from S3:", error);
+        window.alert(
+          "Failed to remove an image from the server. Please try again."
+        );
+        return;
+      }
     }
 
     const now = new Date();
@@ -155,6 +209,8 @@ const EditBlog = ({ userInfos }) => {
         }, 1200);
       }, 500);
     }
+    // Clear tracking images
+    setImagesToRemoveFromS3([]);
   }
 
   // Slug generation function
@@ -209,55 +265,44 @@ const EditBlog = ({ userInfos }) => {
     fileInputRef.current = event.target;
   };
 
-  // Remove uploaded image
-  const removeImage = async (index) => {
+  // Remove existing image (but not totally remove from s3 yet)
+  const removeImgTemp = (index) => {
     const imageToRemove = blog.image[index];
-    if (imageToRemove) {
-      try {
-        const key = imageToRemove.split("/").pop();
-        console.log("key url", imageToRemove);
-        await axios.post(
-          `http://localhost:5000/blog/deleteImg`,
-          { key },
-          apiConfig
-        );
+    const key = imageToRemove.split("/").pop();
 
-        // Clear the file input
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
+    // Add the key (url) to track the image link
+    setImagesToRemoveFromS3((prevKey) => [...prevKey, key]);
 
-        // Check if the image to remove exists in the content array
-        const imageExistsInContent = blog.content.content.some(
-          (contentItem) =>
-            contentItem.type === "image" &&
-            contentItem.attrs.src.split("/").pop() === key
-        );
-
-        // Update the blog state to remove the image
-        setBlog((prevBlog) => ({
-          ...prevBlog,
-          image: prevBlog.image.filter((_, imgIndex) => imgIndex !== index),
-          content: imageExistsInContent
-            ? {
-                ...prevBlog.content,
-                content: prevBlog.content.content.filter(
-                  (contentItem) =>
-                    !(
-                      contentItem.type === "image" &&
-                      contentItem.attrs.src.split("/").pop() === key
-                    )
-                ),
-              }
-            : { ...prevBlog.content },
-        }));
-
-        // Remove image in the textarea
-        removeImageFromEditorContent(imageToRemove);
-      } catch (error) {
-        console.error(error);
-      }
+    // Clear the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
+
+    // Check if the image to remove exists in the content array
+    const imageExistsInContent = blog.content.content.some(
+      (contentItem) =>
+        contentItem.type === "image" &&
+        contentItem.attrs.src.split("/").pop() === key
+    );
+
+    setBlog((prevBlog) => ({
+      ...prevBlog,
+      image: prevBlog.image.filter((_, imgIndex) => imgIndex !== index),
+      content: imageExistsInContent
+        ? {
+            ...prevBlog.content,
+            content: prevBlog.content.content.filter(
+              (contentItem) =>
+                !(
+                  contentItem.type === "image" &&
+                  contentItem.attrs.src.split("/").pop() === key
+                )
+            ),
+          }
+        : { ...prevBlog.content },
+    }));
+
+    removeImageFromEditorContent(imageToRemove);
   };
 
   // Remove image from EditorContent
@@ -291,7 +336,7 @@ const EditBlog = ({ userInfos }) => {
       <div className="content-container create-blog-text-editor">
         <h3>Edit blog</h3>
         <span>
-          By: <span className="text-blue-1">{userInfos.fullName}</span>
+          By: <span className="text-blue-3">{userInfos.fullName}</span>
         </span>
         <div className="text-editor-title">
           <label htmlFor="title">Title:</label>
@@ -342,7 +387,9 @@ const EditBlog = ({ userInfos }) => {
             blog.image.map((img, index) => (
               <div key={index}>
                 <img src={img} alt="Blog img" />
-                <button onClick={() => removeImage(index)}>Remove image</button>
+                <button onClick={() => removeImgTemp(index)}>
+                  Remove image
+                </button>
               </div>
             ))
           ) : (
@@ -358,14 +405,21 @@ const EditBlog = ({ userInfos }) => {
         </div>
 
         <div className="text-editor-btn">
-          <Link
-            className="c-2 btn btn-outline-secondary"
-            to={`/blog/${blogId}/view`}
-          >
-            Back
-          </Link>
           <button
-            className="c-2 btn btn-warning"
+            className="c-2 btn btn-outline-secondary"
+            onClick={(event) =>
+              handleShowModal(
+                event,
+                "cancel",
+                "Cancel blog editing",
+                "Would you like to perform this action?"
+              )
+            }
+          >
+            Cancel
+          </button>
+          <button
+            className="c-2 btn btn-primary"
             onClick={(event) =>
               handleShowModal(
                 event,
@@ -375,7 +429,7 @@ const EditBlog = ({ userInfos }) => {
               )
             }
           >
-            Confirm edit
+            Submit revisions
           </button>
         </div>
       </div>

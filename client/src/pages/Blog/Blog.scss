@@ -140,6 +140,10 @@
 }
 
 /* For individual blog */
+.news-breadcrumbs {
+  padding-top: 20px !important;
+}
+
 .blog-img {
   width: 100%;
   display: block;
@@ -157,7 +161,11 @@
 }
 
 .individual-blog .individual-blog-headline {
-  width: 60%;
+  width: 65%;
+}
+
+.individual-blog .individual-blog-headline h2 {
+  color: var(--text-dark-header);
 }
 
 .individual-blog .individual-blog-content {
@@ -165,13 +173,8 @@
 }
 
 .individual-blog .individual-blog-content .blog-content {
-  width: 60%;
-}
-
-.individual-blog .related-blogs {
-  height: 400px;
-  width: 40%;
-  background-color: antiquewhite;
+  width: 65%;
+  border-top: 1px solid #d9d9d6;
 }
 
 .individual-blog .blog-tag {
@@ -186,8 +189,6 @@
   display: flex;
   border-radius: 6px;
   padding: 10px 0;
-  margin: 0 0 8px 0;
-  border-bottom: 1px solid #d9d9d6;
 }
 
 .individual-blog .blog-author-info div {
@@ -216,6 +217,322 @@
 .individual-blog ol {
   color: var(--text-dark-sub-header);
   padding-left: 40px;
+}
+
+.individual-blog .related-blogs {
+  height: fit-content;
+  width: 35%;
+  margin-left: 60px;
+}
+
+.individual-blog .related-blogs > .pt-2 {
+  border-top: 2px solid var(--border-blue-3);
+}
+
+.individual-blog .related-blogs .related-blogs-wrapper {
+  width: 100%;
+}
+
+.individual-blog .related-blogs span {
+  display: block;
+  font-size: 20px;
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-dark-header);
+}
+
+.individual-blog .related-blogs ul {
+  list-style: none;
+  padding-left: 0;
+  width: 100%;
+}
+
+.individual-blog .related-blogs li {
+  display: block;
+  padding: 16px 0 12px 0;
+  border-bottom: 1px solid #d9d9d6;
+}
+
+.individual-blog .related-blogs a {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  text-decoration: none !important;
+}
+
+.individual-blog .related-blogs a img {
+  width: 30%;
+}
+
+.individual-blog .related-blogs a h5 {
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: var(--roboto-medium-weight);
+  color: var(--text-dark-header);
+  padding-right: 12px;
+}
+
+.individual-blog .related-blogs a:hover h5 {
+  color: var(--btn-blue-hover-2);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Mobile blogs filter */
+  .blog-list-filter {
+    display: none;
+  }
+
+  .m-open-filter-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    color: var(--text-white-1);
+    background-color: var(--btn-blue-2);
+    border-radius: var(--border-radius-1);
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .m-blog-list-filter {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100%);
+    z-index: 1001;
+    border-radius: var(--border-radius-1);
+    box-shadow: var(--box-shadow-4);
+    animation: open 0.1s ease-in;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    touch-action: none;
+  }
+
+  .m-blog-list-filter.active {
+    display: block;
+    visibility: visible;
+  }
+
+  @keyframes open {
+    from {
+      scale: 0.95;
+      opacity: 0;
+    }
+    to {
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  .m-blog-list-filter-wrapper div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 16px 0;
+    background-color: var(--bg-blue-6);
+    font-size: 20px;
+    color: var(--text-white-1);
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .m-blog-list-filter-wrapper div:first-child button {
+    position: absolute;
+    left: 0;
+    padding: 0;
+    margin-left: 16px;
+    border: none;
+    font-size: 22px;
+    color: var(--text-white-1);
+    background-color: transparent;
+  }
+
+  .m-blog-list-filter-wrapper form {
+    padding: 20px 20px 40px;
+  }
+
+  .m-blog-list-filter-wrapper form h6 {
+    padding-bottom: 16px;
+    font-size: 20px;
+  }
+
+  .m-blog-list-filter-wrapper form input[type="checkbox"] {
+    transform: scale(1.1);
+  }
+
+  .m-blog-list-filter-wrapper form label {
+    padding-left: 12px;
+    font-size: 18px;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .m-blog-list-filter-wrapper form div {
+    padding-left: 4px;
+  }
+
+  .m-blog-list-filter-wrapper form div:not(:last-child) {
+    padding-bottom: 12px;
+  }
+
+  .m-blog-list-filter-wrapper .m-blog-list-filter-btn {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  .m-blog-list-filter-btn button:first-child {
+    width: 30%;
+    text-decoration: none;
+    color: var(--text-dark-1);
+    background-color: #fff;
+    border: 1px solid #d9d9d6;
+    border-radius: var(--border-radius-1);
+    font-size: 16px;
+    display: inline-block;
+    padding: 4px 0;
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .m-blog-list-filter-btn button:last-child {
+    width: 65%;
+    padding: 8px 12px;
+    background-color: var(--btn-blue-1);
+    border-radius: var(--border-radius-1);
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    color: var(--text-white-1);
+    font-weight: var(--roboto-regular-weight);
+  }
+
+  .blog-list-items-wrapper {
+    padding-top: 36px;
+  }
+
+  .blog-list-items-wrapper > span {
+    display: none;
+  }
+
+  .blog-pagination {
+    padding-top: 36px;
+  }
+
+  /* Blogs/News */
+  .news-breadcrumbs {
+    padding-top: 80px !important;
+  }
+
+  .individual-blog .individual-blog-headline {
+    width: 100%;
+  }
+
+  .individual-blog .individual-blog-content {
+    flex-direction: column;
+  }
+
+  .individual-blog .individual-blog-content .blog-content {
+    width: 100%;
+  }
+
+  .individual-blog .related-blogs {
+    width: 100%;
+    margin: 0;
+    padding-top: 32px;
+  }
+
+  .blog-list h1 {
+    font-size: 28px;
+    padding: 82px 0 24px;
+  }
+
+  .blog-list-items {
+    width: 100%;
+    padding: 0;
+  }
+
+  .blog-list-item {
+    flex-direction: column;
+  }
+
+  .blog-link-and-intro {
+    display: none;
+  }
+
+  .blog-thumbnail-img {
+    display: none;
+  }
+
+  .mobile-blog-link {
+    display: block !important;
+    line-height: 1.2;
+    padding-bottom: 16px;
+  }
+
+  .mobile-blog-link a {
+    text-decoration: none;
+    color: var(--text-dark-header);
+    font-size: 20px;
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .mobile-blog-img-and-intro {
+    display: block !important;
+  }
+
+  .mobile-blog-thumbnail-img {
+    display: inline-block;
+    width: 25%;
+    height: 100%;
+  }
+
+  .mobile-blog-thumbnail-img img {
+    width: 100%;
+    height: 105px;
+  }
+
+  .mobile-blog-intro {
+    padding-left: 8px;
+    width: 75%;
+  }
+
+  .mobile-blog-intro a {
+    display: inline-block;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .mobile-blog-intro span {
+    font-size: 14px;
+    color: var(--text-dark-1);
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+  }
+
+  .individual-blog {
+    padding-top: 28px;
+  }
+
+  .individual-blog h4 {
+    display: block;
+    padding: 16px 0 4px;
+  }
+
+  .individual-blog .blog-img {
+    padding: 18px 0 24px 0;
+  }
+
+  .individual-blog .blog-img img {
+    width: 100%;
+  }
 }
 
 /* Mobile phone */
@@ -358,7 +675,33 @@
     display: none;
   }
 
+  .blog-pagination {
+    padding-top: 36px;
+  }
+
   /* Blogs/News */
+  .news-breadcrumbs {
+    padding-top: 80px !important;
+  }
+
+  .individual-blog .individual-blog-headline {
+    width: 100%;
+  }
+
+  .individual-blog .individual-blog-content {
+    flex-direction: column;
+  }
+
+  .individual-blog .individual-blog-content .blog-content {
+    width: 100%;
+  }
+
+  .individual-blog .related-blogs {
+    width: 100%;
+    margin: 0;
+    padding-top: 40px;
+  }
+
   .blog-list h1 {
     font-size: 28px;
     padding: 82px 0 24px;
@@ -438,6 +781,7 @@
 
   .individual-blog h4 {
     display: block;
+    padding: 16px 0 4px;
   }
 
   .individual-blog .blog-img {
@@ -445,6 +789,6 @@
   }
 
   .individual-blog .blog-img img {
-    width: 90%;
+    width: 100%;
   }
 }

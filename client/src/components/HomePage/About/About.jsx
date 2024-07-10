@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HospitalImg from "assets/img/hospital-building.jpg";
+import HospitalImg from "assets/img/hospital-building.webp";
 import "components/HomePage/About/About.scss";
 
 export default function About() {
@@ -38,7 +38,13 @@ export default function About() {
             </div>
             <div className="c-6 md-12">
               <div className="about__img">
-                <img src={HospitalImg} alt="Hospital Building About Section" />
+                <img
+                  src={HospitalImg}
+                  alt="Hospital Building About Section"
+                  width="550"
+                  height="366"
+                  loading="lazy"
+                />
               </div>
             </div>
           </div>

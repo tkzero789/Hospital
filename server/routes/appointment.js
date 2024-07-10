@@ -41,6 +41,51 @@ appointmentRoutes.route("/appointment").get(async function (req, res) {
   }
 });
 
+// Get the number of appointments in current week
+appointmentRoutes.route("/appointmentCurrent").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const now = new Date();
+
+    // Find the most recent Monday
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - (now.getDay() - 1));
+    monday.setHours(0, 0, 0, 0);
+
+    // Find the upcoming Friday
+    const friday = new Date(monday);
+    friday.setDate(monday.getDate() + 4);
+    friday.setHours(23, 59, 59, 999);
+
+    console.log("Date range:", {
+      monday: monday.toISOString(),
+      friday: friday.toISOString(),
+    });
+
+    const query = {
+      createdAt: {
+        $gte: monday.toISOString(),
+        $lte: friday.toISOString(),
+      },
+    };
+
+    // Find the amount of appointments in current week
+    const appointments = await db_connect
+      .collection("appointments")
+      .find(query)
+      .toArray();
+
+    const result = appointments.length;
+
+    console.log("Query result:", result);
+
+    res.json({ totalAppointmentsThisWeek: result });
+  } catch (err) {
+    console.error("Error in /appointmentCurrent:", err);
+    res.status(500).json({ error: err.message, stack: err.stack });
+  }
+});
+
 // Get 3 most recent appointments
 appointmentRoutes.get("/appointmentNoti", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");

@@ -2,6 +2,7 @@ const express = require("express");
 const blogRoutes = express.Router();
 const jwt = require("jsonwebtoken");
 const dbo = require("../db/conn");
+const ObjectId = require("mongodb").ObjectId;
 const multer = require("multer");
 const { Upload } = require("@aws-sdk/lib-storage");
 const {
@@ -87,7 +88,23 @@ blogRoutes.route("/blog").get(async function (req, res) {
   }
 });
 
-// Fetch 8 blogs in for SwipeNews
+// Fetch 5 most current blogs (all status) for Dashboard
+blogRoutes.route("/blog/currentBlogs").get(async function (req, res) {
+  try {
+    const db_connect = await dbo.getDb("hospital");
+    const result = await db_connect
+      .collection("blogs")
+      .find({})
+      .sort({ createdAt: -1 })
+      .limit(6)
+      .toArray();
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
+
+// Fetch 8 most current blogs for SwipeNews (approved)
 blogRoutes.route("/news/blogSwipe").get(async function (req, res) {
   try {
     const db_connect = await dbo.getDb("hospital");
@@ -175,6 +192,42 @@ blogRoutes.route("/news/blogBySlug").get(async function (req, res) {
       res.status(404).json({ error: "Blog not found" });
     }
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Fetch 3 related blogs from the same tag (ViewSpecificBlog)
+blogRoutes.route("/news/relatedBlogs").get(async function (req, res) {
+  try {
+    const tag = req.query.tag;
+    const excludeId = req.query.excludeId;
+    if (!tag) {
+      return res.status(400).json({ error: "Tag is required" });
+    }
+    if (!ObjectId.isValid(excludeId)) {
+      // Check if excludeId is a valid ObjectId
+      return res.status(400).json({ error: "Invalid excludeId" });
+    }
+    const db_connect = await dbo.getDb("hospital");
+
+    const query = {
+      tag: tag,
+      _id: { $ne: new ObjectId(excludeId) }, // Correctly convert excludeId to ObjectId
+    };
+
+    const relatedBlogs = await db_connect
+      .collection("blogs")
+      .find(query)
+      .sort({ createdAt: -1 })
+      .limit(3)
+      .toArray();
+    if (relatedBlogs.length > 0) {
+      res.json(relatedBlogs);
+    } else {
+      res.status(404).json({ error: "No related blogs found" });
+    }
+  } catch (err) {
+    console.error("Error fetching related blogs:", err);
     res.status(500).json({ error: err.message });
   }
 });

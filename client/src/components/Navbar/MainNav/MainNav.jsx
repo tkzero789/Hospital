@@ -6,7 +6,7 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import BaySideLogo from "assets/icons/BaySide-logo-1.svg";
-import "components/Navbar/MainNav/MainNav.css";
+import "components/Navbar/MainNav/MainNav.scss";
 
 const navLinks = [
   { link: "/home", text: "" },
@@ -77,7 +77,12 @@ export default function MainNav() {
                 <NavLink className="nav-link nav-link-first" to={link.link}>
                   {index === 0 && (
                     <div className="home-logo">
-                      <img src={BaySideLogo} alt="BaySide hospital logo"></img>
+                      <img
+                        src={BaySideLogo}
+                        alt="BaySide hospital logo"
+                        width="150"
+                        height="70"
+                      />
                     </div>
                   )}
 

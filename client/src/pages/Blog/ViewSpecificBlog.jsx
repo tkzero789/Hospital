@@ -8,11 +8,12 @@ import axios from "axios";
 import Footer from "components/HomePage/Footer/Footer";
 import Spinner from "components/UI/Spinner";
 import FormatDate from "utilities/FormatDate";
-import "pages/Blog/Blog.css";
+import "pages/Blog/Blog.scss";
 
 const ViewSpecificBlog = () => {
   const { blogSlug } = useParams();
   const [blog, setBlog] = useState([]);
+  const [relatedBlogs, setRelatedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch data
@@ -23,17 +24,21 @@ const ViewSpecificBlog = () => {
         .get(`http://localhost:5000/news/blogBySlug?slug=${blogSlug}`)
         .then((res) => {
           setBlog(res.data);
+          const tag = encodeURIComponent(res.data.tag);
+          return axios.get(
+            `http://localhost:5000/news/relatedBlogs?tag=${tag}&excludeId=${res.data._id}`
+          );
+        })
+        .then((relatedRes) => {
+          setRelatedBlogs(relatedRes.data);
           setIsLoading(false);
         })
         .catch((error) => {
-          // Correctly handle the error here
           console.log(error);
           setIsLoading(false);
         });
     }
   }, [blogSlug]);
-
-  console.log(blog);
 
   return (
     <>
@@ -51,7 +56,7 @@ const ViewSpecificBlog = () => {
           {/* Breadcrumbs */}
           <div className="content-container">
             <Breadcrumbs
-              className="breadcrumbs"
+              className="news-breadcrumbs"
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
             >
@@ -110,6 +115,7 @@ const ViewSpecificBlog = () => {
 
               <section className="individual-blog-content">
                 <div className="blog-content">
+                  <div className="pt-2"></div>
                   <p>{blog.intro}</p>
                   {blog.content?.content.map((item, itemIndex) => {
                     const keyPrefix = `${item.type}-${itemIndex}`;
@@ -218,6 +224,7 @@ const ViewSpecificBlog = () => {
                           <img
                             src={item.attrs.src}
                             alt={item.attrs.alt || ""}
+                            loading="lazy"
                           />
                         </div>
                       );
@@ -225,7 +232,31 @@ const ViewSpecificBlog = () => {
                     return null;
                   })}
                 </div>
-                <div className="related-blogs"></div>
+                <div className="related-blogs">
+                  <div className="pt-2"></div>
+                  <div className="related-blogs-wrapper">
+                    <span>Related News</span>
+                    <ul>
+                      {relatedBlogs.map((blog, index) => {
+                        const relatedBlogThumbnail = blog.content?.content.find(
+                          (item) => item.type === "image"
+                        );
+                        return (
+                          <li key={index}>
+                            <Link to={`/news/view/${blog.slug}`}>
+                              <img
+                                src={relatedBlogThumbnail.attrs.src}
+                                alt={relatedBlogThumbnail.attrs.alt || ""}
+                                loading="lazy"
+                              />
+                              <h5>{blog.title}</h5>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
               </section>
             </div>
           </div>

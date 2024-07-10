@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import TodayIcon from "@mui/icons-material/Today";
@@ -58,6 +59,14 @@ export default function Sidebar() {
 
       <div className="center">
         <ul>
+          {userRole === "admin" && (
+            <li>
+              <NavLink to="/dashboard" activeclassname="active">
+                <SpaceDashboardIcon className="icon" />
+                <span>Dashboard</span>
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink to="/symptom-table" activeclassname="active">
               <MonitorHeartIcon className="icon" />

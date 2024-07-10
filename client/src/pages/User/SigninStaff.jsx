@@ -6,7 +6,7 @@ import { Toaster, toast } from "sonner";
 import { useAuth } from "auth/AuthContext";
 import axios from "axios";
 import BaySideLogo from "assets/icons/BaySide-logo-1.svg";
-import "pages/User/User.css";
+import "pages/User/User.scss";
 
 export default function SigninStaff() {
   // User

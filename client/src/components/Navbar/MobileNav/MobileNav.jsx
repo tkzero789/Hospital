@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import BaySideLogo from "assets/icons/BaySide-logo-1.svg";
-import "components/Navbar/MobileNav/MobileNav.css";
+import "components/Navbar/MobileNav/MobileNav.scss";
 
 export default function MobileNav() {
   const location = useLocation();

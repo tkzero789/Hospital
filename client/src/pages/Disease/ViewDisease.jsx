@@ -132,7 +132,7 @@ export default function ViewDisease({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Requested content revisions successfully");
+      toast.success("Requested successfully!");
       setTimeout(() => {
         navigate("/disease-table");
       }, 1200);
@@ -151,7 +151,7 @@ export default function ViewDisease({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Deleted disease successfully");
+      toast.success("Deleted disease successfully!");
       setTimeout(() => {
         navigate("/disease-table");
       }, 1200);
@@ -160,7 +160,7 @@ export default function ViewDisease({ userRole, userInfos }) {
 
   return (
     <div className="bg-gray-1">
-      <h3 className="content-container text-center text-body pt-5">
+      <h3 className="content-container text-center text-dark-header pt-5">
         View disease
       </h3>
       <div className="content-container py-5">

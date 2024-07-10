@@ -1,7 +1,7 @@
 @use "scss/mixins";
 
 .extra {
-  margin-top: 40px;
+  margin-top: 60px;
   position: relative;
 
   .extra__info {
@@ -18,7 +18,7 @@
       rgba(0, 86, 143, 0.6),
       rgba(0, 86, 143, 0.4)
     ),
-    url("/assets/img/support-bg.jpg");
+    url("/assets/img/support-bg.webp");
   height: 340px;
   background-repeat: no-repeat;
   background-position: center 0%;

@@ -1,7 +1,7 @@
 import ApptIMG from "assets/img/appt-request.jpg";
 import { Link } from "react-router-dom";
 import ConfirmIcon from "assets/icons/confirm-icon.svg";
-import "components/Appt/Appt.css";
+import "components/Appt/Appt.scss";
 
 const ApptSuccessMsg = () => {
   return (

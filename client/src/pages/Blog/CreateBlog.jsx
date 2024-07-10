@@ -10,7 +10,7 @@ import axios from "axios";
 import ConfirmModal from "components/UI/ConfirmModal";
 import MenuBar from "components/Blog/MenuBar";
 import "pages/Blog/Texteditor.scss";
-import "pages/Blog/Blog.css";
+import "pages/Blog/Blog.scss";
 
 const CreateBlog = ({ userInfos }) => {
   const userToken = localStorage.getItem("userToken");
@@ -43,6 +43,9 @@ const CreateBlog = ({ userInfos }) => {
   switch (actionType) {
     case "create":
       action = confirmCreate;
+      break;
+    case "cancel":
+      action = confirmCancel;
       break;
     default:
       action = null;
@@ -81,6 +84,11 @@ const CreateBlog = ({ userInfos }) => {
       }));
     },
   });
+
+  // Confirm cancel
+  function confirmCancel() {
+    navigate("/blog-table");
+  }
 
   // Confirm create button
   async function confirmCreate() {
@@ -236,18 +244,16 @@ const CreateBlog = ({ userInfos }) => {
         setBlog((prevBlog) => ({
           ...prevBlog,
           image: prevBlog.image.filter((_, imgIndex) => imgIndex !== index),
-          content: imageExistsInContent
-            ? {
-                ...prevBlog.content,
-                content: prevBlog.content.content.filter(
-                  (contentItem) =>
-                    !(
-                      contentItem.type === "image" &&
-                      contentItem.attrs.src.split("/").pop() === key
-                    )
-                ),
-              }
-            : { ...prevBlog.content },
+          content: {
+            ...prevBlog.content,
+            content: prevBlog.content.content.filter(
+              (contentItem) =>
+                !(
+                  contentItem.type === "image" &&
+                  contentItem.attrs.src.split("/").pop() === key
+                )
+            ),
+          },
         }));
 
         // Remove image in the textarea
@@ -360,9 +366,19 @@ const CreateBlog = ({ userInfos }) => {
         </div>
 
         <div className="text-editor-btn">
-          <Link className="c-2 btn btn-outline-secondary" to="/blog-table">
-            Back
-          </Link>
+          <button
+            className="c-2 btn btn-outline-secondary"
+            onClick={(event) =>
+              handleShowModal(
+                event,
+                "cancel",
+                "Cancel blog creation",
+                "Would you like to perform this action?"
+              )
+            }
+          >
+            Cancel
+          </button>
           <button
             className="c-2 btn btn-primary"
             onClick={(event) =>

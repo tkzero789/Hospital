@@ -66,6 +66,7 @@ export default function SwipeNews() {
                                     thumbnailImage.attrs.alt ||
                                     "Thumbnail image"
                                   }
+                                  loading="lazy"
                                 />
                               )}
                             </div>

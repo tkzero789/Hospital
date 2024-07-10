@@ -223,7 +223,7 @@ export default function ViewAppt() {
         <span className={`${statusText} fw-bold`}>{formInputs.status}</span>
       </div>
       <div className="container p-5">
-        <div className="card p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>
               <div className="form-group row pb-5">

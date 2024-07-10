@@ -107,7 +107,7 @@ export default function EditUser() {
   return (
     <div>
       <div className="container p-5">
-        <div className="card p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <UserForm user={user} setUser={setUser} editMode={true} />
             <div className="row pt-3 pb-3 justify-content-end">

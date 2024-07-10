@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -58,6 +58,14 @@ export default function BlogTable({ userRole, userInfos }) {
     ? sortedBlogs.filter((b) => b.doctorID === userInfos.doctorID)
     : sortedBlogs;
 
+  // Memo
+  const StatusCell = ({ status }) => {
+    const formattedStatus = status.replace(" ", "-");
+    return <div className={`cellWithStatus ${formattedStatus}`}>{status}</div>;
+  };
+  const MemoizedStatusCell = React.memo(StatusCell);
+  const MemoizedFormatDate = React.memo(FormatDate);
+
   const actionColumn = [
     {
       field: "action",
@@ -114,7 +122,7 @@ export default function BlogTable({ userRole, userInfos }) {
       headerClassName: "header-style",
       width: 180,
       renderCell: (params) => {
-        return <FormatDate date={params.row.createdAt} />;
+        return <MemoizedFormatDate date={params.row.createdAt} />;
       },
     },
     {
@@ -122,12 +130,7 @@ export default function BlogTable({ userRole, userInfos }) {
       headerName: "Status",
       headerClassName: "header-style",
       width: 160,
-      renderCell: (params) => {
-        const status = params.row.status.replace(" ", "-");
-        return (
-          <div className={`cellWithStatus ${status}`}>{params.row.status}</div>
-        );
-      },
+      renderCell: (params) => <MemoizedStatusCell status={params.row.status} />,
     },
   ].concat(actionColumn);
 

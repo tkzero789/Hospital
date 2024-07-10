@@ -252,7 +252,7 @@ export default function CreateDisease({ userRole, userInfos }) {
         Create disease
       </h3>
       <div className="container p-5">
-        <div className="card   p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>{StepDisplay()}</div>
 

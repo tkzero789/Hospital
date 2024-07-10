@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BaySideLogo from "assets/icons/BaySide-logo-2.svg";
 import "components/HomePage/Footer/Footer.scss";
 
@@ -47,7 +47,13 @@ export default function Footer() {
         <div className="footer__wrapper">
           <div className="c-3 md-12">
             <div className="footer__logo">
-              <img src={BaySideLogo} alt="footer logo"></img>
+              <img
+                src={BaySideLogo}
+                alt="footer logo"
+                width="150"
+                height="70"
+                loading="lazy"
+              />
             </div>
             <div className="footer__logo-header">
               <span>BaySide Hospital</span>
@@ -59,34 +65,34 @@ export default function Footer() {
             </div>
             <div className="footer__logo-header">Follow us</div>
             <div className="footer__socials">
-              <NavLink>
+              <Link aria-label="Facebook">
                 <div className="footer__socials-icon">
                   <span>
                     <i className="bi bi-facebook"></i>
                   </span>
                 </div>
-              </NavLink>
-              <NavLink>
+              </Link>
+              <Link aria-label="Youtube">
                 <div className="footer__socials-icon">
                   <span>
                     <i className="bi bi-youtube"></i>
                   </span>
                 </div>
-              </NavLink>
-              <NavLink>
+              </Link>
+              <Link aria-label="Twitter">
                 <div className="footer__socials-icon">
                   <span>
                     <i className="bi bi-twitter-x"></i>
                   </span>
                 </div>
-              </NavLink>
-              <NavLink>
+              </Link>
+              <Link aria-label="Instagram">
                 <div className="footer__socials-icon">
                   <span>
                     <i className="bi bi-instagram"></i>
                   </span>
                 </div>
-              </NavLink>
+              </Link>
             </div>
           </div>
           <div className="c-3 md-12">
@@ -94,7 +100,7 @@ export default function Footer() {
             <ul className="footer__list">
               {footerLinks1.map((e) => (
                 <li className="footer__list-item" key={e.name}>
-                  <NavLink to={e.link}>{e.name}</NavLink>
+                  <Link to={e.link}>{e.name}</Link>
                 </li>
               ))}
             </ul>
@@ -104,7 +110,7 @@ export default function Footer() {
             <ul className="footer__list">
               {footerLinks2.map((link) => (
                 <li className="footer__list-item" key={link.name}>
-                  <NavLink to={link.link}>{link.name}</NavLink>
+                  <Link to={link.link}>{link.name}</Link>
                 </li>
               ))}
             </ul>
@@ -114,7 +120,7 @@ export default function Footer() {
             <ul className="footer__list">
               {footerLinks3.map((link) => (
                 <li className="footer__list-item" key={link.name}>
-                  <NavLink to={link.link}>{link.name}</NavLink>
+                  <Link to={link.link}>{link.name}</Link>
                 </li>
               ))}
             </ul>

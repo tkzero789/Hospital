@@ -102,13 +102,13 @@ export default function Signup({ userRole, userInfos }) {
   }
 
   return (
-    <div>
+    <div className="vh-100 bg-gray-1">
       <h3 className="content-container text-center text-blue-2 pt-5">
         Account registration
       </h3>
       <div className="content-container pt-5">
         <div className="border rounded  ">
-          <form className="d-flex px-6 py-5">
+          <form className="d-flex px-6 py-5 bg-white box-shadow-6 border-radius-1">
             {/* Left box */}
             <div className="c-6 d-flex flex-column pe-8">
               {/* Full name */}

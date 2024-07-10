@@ -5,7 +5,7 @@ import { Toaster, toast } from "sonner";
 import axios from "axios";
 import ConfirmModal from "components/UI/ConfirmModal";
 import FormatDate from "utilities/FormatDate";
-import "pages/Blog/Blog.css";
+import "pages/Blog/Blog.scss";
 
 export default function ViewBlog({ userRole, userInfos }) {
   const userToken = localStorage.getItem("userToken");
@@ -85,7 +85,7 @@ export default function ViewBlog({ userRole, userInfos }) {
         window.alert(message);
       });
     setTimeout(() => {
-      toast.success("Approve!");
+      toast.success("Approved!");
       setTimeout(() => {
         navigate("/blog-table");
       }, 1200);
@@ -110,7 +110,7 @@ export default function ViewBlog({ userRole, userInfos }) {
         window.alert(message);
       });
     setTimeout(() => {
-      toast.success("Requested content revisions successfully");
+      toast.success("Requested successfully!");
       setTimeout(() => {
         navigate("/blog-table");
       }, 1200);
@@ -129,7 +129,7 @@ export default function ViewBlog({ userRole, userInfos }) {
         window.alert(message);
       });
     setTimeout(() => {
-      toast.success("Deleted blog successfully");
+      toast.success("Deleted blog successfully!");
       setTimeout(() => {
         navigate("/blog-table");
       }, 1200);
@@ -144,7 +144,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   return (
     <>
       <div className="content-container individual-blog justify-content-center">
-        <div key={blog.id} className="w-60">
+        <div key={blog.id} className="w-60 pt-4">
           <h2>{blog.title}</h2>
           <Link className="blog-tag pe-none">{blog.tag}</Link>
           <div className="blog-author-info">
@@ -157,6 +157,7 @@ export default function ViewBlog({ userRole, userInfos }) {
               </span>
             </div>
           </div>
+          <div className="pt-2 border-top-1"></div>
           <p>{blog.intro}</p>
           {blog.content?.content?.map((item, index) => {
             if (item.type === "paragraph") {

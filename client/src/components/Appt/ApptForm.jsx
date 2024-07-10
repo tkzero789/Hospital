@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import ApptIMG from "assets/img/appt-request.jpg";
 import "react-calendar/dist/Calendar.css";
 import "components/Appt/Calendar.css";
-import "components/Appt/Appt.css";
+import "components/Appt/Appt.scss";
 
 export default function ApptForm({
   appt,
@@ -175,7 +175,7 @@ export default function ApptForm({
     } else if (!year) {
       toast.error("Please select year");
     } else if (appt.gender === "" || appt.gender === "Select gender") {
-      toast.error("Vui lòng chọn giới tính");
+      toast.error("Please select gender");
     } else if (appt.need === "" || appt.need === "Select services") {
       toast.error("Please select a service");
     } else {
@@ -364,9 +364,11 @@ export default function ApptForm({
                     onChange={(e) => updateApptField(e)}
                   >
                     <option value="Select services">Select services</option>
-                    <option value="Primary care">Primary care</option>
                     <option value="Imaging">Imaging</option>
+                    <option value="General check-ups">General check-ups</option>
+                    <option value="Primary care">Primary care</option>
                     <option value="Senior care">Senior care</option>
+                    <option value="Specialty care">Specialty care</option>
                   </select>
                 </div>
               </div>

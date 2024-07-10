@@ -295,7 +295,7 @@ export default function EditDisease({ userRole, userInfos }) {
     <div>
       <h3 className="container text-center text-body pt-5">Edit disease</h3>
       <div className="container p-5">
-        <div className="card p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>{StepDisplay()}</div>
             <div className="row pt-3 pb-3 justify-content-end">

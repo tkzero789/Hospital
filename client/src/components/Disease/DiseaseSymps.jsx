@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import removeAccents from "remove-accents";
 import SearchBarSymp from "components/SymptomChecker/SearchBarSymp/SearchBarSymp";
-import "components/Disease/Disease.css";
+import "components/Disease/Disease.scss";
 
 export default function DiseaseSymps({
   disease,

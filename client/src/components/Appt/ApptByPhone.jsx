@@ -3,7 +3,8 @@ import ApptIMG from "assets/img/appt-request.jpg";
 import ApptByPhoneDetail from "components/Appt/ApptByPhoneDetail";
 import ApptFilter from "components/Appt//ApptFilter";
 import { Skeleton } from "@mui/material";
-import "components/Appt/Appt.css";
+import "components/Appt/Appt.scss";
+import FormatDate from "utilities/FormatDate";
 
 const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -168,7 +169,9 @@ const ApptByPhone = ({ appointments, setIsPhoneNum }) => {
                                 </div>
                                 <div className="appt-individual">
                                   <p>Requested on</p>
-                                  <p>{appointment.createdAt}</p>
+                                  <p>
+                                    <FormatDate date2={appointment.createdAt} />
+                                  </p>
                                 </div>
                                 <div className="appt-individual">
                                   <p>Status</p>

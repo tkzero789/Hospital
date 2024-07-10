@@ -102,15 +102,13 @@ export default function EditSymptom({ userRole, userInfos }) {
         { ...symptom, status: "Updated Revision" },
         apiConfig
       );
-      if (response.data.message === "Symptom updated successfully") {
+      if (response.data.message === "Symptom updated successfully!") {
         setTimeout(() => {
-          toast.success("Submitted revisions successfully");
+          toast.success("Submitted revisions successfully!");
           setTimeout(() => {
             navigate("/symptom-table");
           }, 1200);
         }, 500);
-      } else {
-        window.alert(response.data.message);
       }
     } catch (err) {
       window.alert(`Error: ${err}`);
@@ -126,7 +124,7 @@ export default function EditSymptom({ userRole, userInfos }) {
     <div>
       <h3 className="container text-center text-body pt-5">Edit symptom</h3>
       <div className="container p-5">
-        <div className="card p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>
               <SymptomForm
@@ -157,7 +155,7 @@ export default function EditSymptom({ userRole, userInfos }) {
               <div className="c-2 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-warning"
+                  className="btn btn-primary"
                   onClick={(event) =>
                     handleShowModal(
                       event,

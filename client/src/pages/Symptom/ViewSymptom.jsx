@@ -106,7 +106,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Requested content revisions successfully");
+      toast.success("Requested successfully!");
       setTimeout(() => {
         navigate("/symptom-table");
       }, 1200);
@@ -125,7 +125,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Deleted symptom successfully");
+      toast.success("Deleted symptom successfully!");
       setTimeout(() => {
         navigate("/symptom-table");
       }, 1200);
@@ -136,7 +136,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
     <div>
       <h3 className="container text-center text-body pt-5">View symptom</h3>
       <div className="container p-5">
-        <div className="card p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>
               <SymptomForm

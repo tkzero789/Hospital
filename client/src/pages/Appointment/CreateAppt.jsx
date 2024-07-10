@@ -6,7 +6,7 @@ import ApptForm from "components/Appt/ApptForm";
 import ApptSuccessMsg from "components/Appt/ApptSuccessMsg";
 import Footer from "components/HomePage/Footer/Footer";
 import ApptOtp from "components/Appt/ApptOtp";
-import "components/Appt/Appt.css";
+import "components/Appt/Appt.scss";
 
 export default function CreateAppt() {
   const [isOtpConfirmed, setIsOtpConfirmed] = useState(false);
@@ -124,7 +124,6 @@ export default function CreateAppt() {
 
       {show && (
         <ApptOtp
-          setIsOtpConfirmed={setIsOtpConfirmed}
           show={show}
           setShow={setShow}
           confirmSetAppt={confirmSetAppt}

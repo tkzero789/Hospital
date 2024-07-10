@@ -95,8 +95,8 @@ const Map = () => {
                 <div className="map__left">
                   <div className="map__left-wrapper">
                     <div className="map__left-select">
-                      <h5>Find Locations</h5>
-                      <select onChange={onChangeSelect}>
+                      <label htmlFor="locationSelect">Find Locations</label>
+                      <select id="locationSelect" onChange={onChangeSelect}>
                         <option value="">Select location</option>
                         {markers.map((marker) => {
                           return (

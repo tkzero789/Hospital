@@ -3,7 +3,7 @@ import { Breadcrumbs, Typography } from "@mui/material";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Footer from "components/HomePage/Footer/Footer";
-import "pages/WorkSchedule/WorkSchedule.css";
+import "pages/WorkSchedule/WorkSchedule.scss";
 
 const WorkSchedule = () => {
   return (

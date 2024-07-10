@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import axios from "axios";
+import FormatDate from "utilities/FormatDate";
 import "pages/DataTable/DataTable.scss";
 
 export default function ArticleTable({ userRole, userInfos }) {
@@ -57,6 +58,9 @@ export default function ArticleTable({ userRole, userInfos }) {
         (b) => b.createInfos.doctorID === userInfos.doctorID
       )
     : sortedArticles;
+
+  // Memo
+  const MemoizedFormatDate = React.memo(FormatDate);
 
   const actionColumn = [
     {
@@ -128,7 +132,9 @@ export default function ArticleTable({ userRole, userInfos }) {
       headerName: "Created on",
       headerClassName: "header-style",
       width: 180,
-      valueGetter: (params) => params.row.createInfos.timeCreated,
+      renderCell: (params) => {
+        return <MemoizedFormatDate date={params.row.createInfos.timeCreated} />;
+      },
     },
     {
       field: "status",

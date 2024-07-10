@@ -9,7 +9,7 @@ import RibbonSVG from "assets/icons/ribbon-icon.svg";
 import ProtectionSVG from "assets/icons/protection-icon.svg";
 import DnaSVG from "assets/icons/dna-icon.svg";
 import Footer from "components/HomePage/Footer/Footer";
-import "pages/Specialty/SpecialtyPage.css";
+import "pages/Specialty/SpecialtyPage.scss";
 
 const SpecialtyPage = () => {
   return (

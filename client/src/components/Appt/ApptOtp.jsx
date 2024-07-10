@@ -1,36 +1,20 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import { Toaster, toast } from "sonner";
+import { Modal, Button } from "react-bootstrap";
+import { MuiOtpInput } from "mui-one-time-password-input";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import "components/Appt/Appt.css";
+import "components/Appt/Appt.scss";
 
-const ApptOtp = ({
-  setIsOtpConfirmed,
-  show,
-  setShow,
-  confirmSetAppt,
-  isSubmit,
-}) => {
+const ApptOtp = ({ show, setShow, confirmSetAppt, isSubmit }) => {
   const [otp, setOtp] = useState("");
 
   const handleClose = () => {
     setShow(false);
   };
 
-  const handleOtpChange = (e) => {
-    const otpInput = e.target.value;
-    if (otpInput.length <= 6) {
-      setOtp(otpInput);
-    }
-  };
-
-  const handleConfirm = () => {
-    if (otp.length === 6) {
-      setIsOtpConfirmed(true);
-      setShow(false);
-    } else {
-      toast.error("Invalid OTP");
+  const handleOtpChange = (newValue) => {
+    if (/^\d*$/.test(newValue) && newValue.length <= 6) {
+      setOtp(newValue);
     }
   };
 
@@ -46,12 +30,14 @@ const ApptOtp = ({
         <Modal.Header closeButton className="border border-bottom-0">
           <Modal.Title>Enter your One-time password</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form.Control
+        <Modal.Body className="otp-input">
+          <MuiOtpInput
             type="number"
             value={otp}
             onChange={handleOtpChange}
-            placeholder="Enter"
+            TextFieldsProps={{ size: "medium" }}
+            length={6}
+            gap={2}
           />
         </Modal.Body>
         <Modal.Footer className="bg-light">
@@ -69,13 +55,6 @@ const ApptOtp = ({
             onClick={confirmSetAppt}
             disabled={otp.length < 6 || isSubmit}
           >
-            <Toaster
-              toastOptions={{
-                className: "toast-noti",
-              }}
-              position="top-center"
-              richColors
-            />
             {isSubmit ? (
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <CircularProgress size={24} style={{ color: "white" }} />

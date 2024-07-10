@@ -148,7 +148,7 @@ symptomRoutes
       if (result.modifiedCount === 0) {
         return res.json({ message: "There was no edit" });
       } else {
-        res.json({ message: "Symptom updated successfully" });
+        res.json({ message: "Symptom updated successfully!" });
       }
     } catch (err) {
       throw err;

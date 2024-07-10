@@ -172,7 +172,7 @@ export default function EditArticle({ userRole, userInfos }) {
         window.alert(message);
       }
       setTimeout(() => {
-        toast.success("Submitted revisions successfully");
+        toast.success("Submitted revisions successfully!");
         setTimeout(() => {
           navigate(`/disease/${diseaseId}/article-table`);
         }, 1200);
@@ -184,7 +184,7 @@ export default function EditArticle({ userRole, userInfos }) {
     <div>
       <h3 className="container text-center text-body pt-5">Edit article</h3>
       <div className="container p-5">
-        <div className="card p-5">
+        <div className="card border-0 box-shadow-6 p-5">
           <form>
             <div>
               {
@@ -215,7 +215,7 @@ export default function EditArticle({ userRole, userInfos }) {
               <div className="col-2 d-grid gap-2">
                 <button
                   type="button"
-                  className="btn btn-warning"
+                  className="btn btn-primary"
                   onClick={(event) =>
                     handleShowModal(
                       event,

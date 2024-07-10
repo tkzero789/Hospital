@@ -2,7 +2,7 @@
 
 .map {
   position: relative;
-  padding-top: 40px;
+  padding-top: 60px;
 }
 
 .map__wrapper {
@@ -20,8 +20,10 @@
   padding: 48px 28px;
 
   .map__left-select {
-    h5 {
+    label {
       color: var(--text-white-1);
+      font-size: 20px;
+      font-weight: var(--roboto-medium-weight);
     }
 
     select {
@@ -119,6 +121,54 @@
       background-color: transparent;
       padding: 8px 12px 0 0;
     }
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .map__wrapper {
+    flex-direction: column;
+
+    & > div {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  .map__left {
+    border-top-left-radius: var(--border-radius-1);
+    border-top-right-radius: var(--border-radius-1);
+    border-bottom-left-radius: 0px;
+  }
+
+  .map__left-wrapper {
+    padding: 24px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .map__left-select {
+      display: none;
+    }
+
+    .map__left-newsletter {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      input {
+        width: 60%;
+      }
+    }
+
+    button {
+      width: 20%;
+    }
+  }
+
+  .location__info {
+    width: 90%;
   }
 }
 

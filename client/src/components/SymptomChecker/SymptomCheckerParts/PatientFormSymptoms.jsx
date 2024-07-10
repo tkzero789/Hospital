@@ -13,7 +13,7 @@ import WholeHeadSymp from "components/SymptomChecker/WholeHeadSymp/WholeHeadSymp
 import MobileSymptom from "components/SymptomChecker/Symptom/MobileSymptom";
 import { MobileSympBtn } from "components/SymptomChecker/MobileSympBtn/MobileSympBtn";
 import { ExtraMobileSympBtn } from "components/SymptomChecker/MobileSympBtn/ExtraMobileSympBtn";
-import "components/SymptomChecker/SymptomChecker.css";
+import "components/SymptomChecker/SymptomChecker.scss";
 import CloseIcon from "components/UI/CloseIcon";
 import { Alert, Snackbar } from "@mui/material";
 import NoSymptom from "../Symptom/NoSymptom";
@@ -1040,6 +1040,7 @@ export default function PatientFormSymptoms({
                       position={"Head"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
@@ -1060,6 +1061,7 @@ export default function PatientFormSymptoms({
                       position={"Eyes"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
@@ -1080,6 +1082,7 @@ export default function PatientFormSymptoms({
                       position={"Ears"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
@@ -1100,6 +1103,7 @@ export default function PatientFormSymptoms({
                       position={"Nose"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}
@@ -1120,6 +1124,7 @@ export default function PatientFormSymptoms({
                       position={"Mouth"}
                       chosenSymps={patientForm.chosenSymps}
                       toggleFunction={toggleWholeHeadM}
+                      toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
                     />
                   )}

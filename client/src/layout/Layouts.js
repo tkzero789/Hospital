@@ -5,6 +5,9 @@ import Spinner from "components/UI/Spinner";
 // staff pages
 import StaffLayout from "pages/Layout/StaffLayout";
 
+// dashboard page
+import Dashboard from "pages/Dashboard/Dashboard";
+
 // symptom pages
 import SymptomTable from "pages/DataTable/SymptomTable";
 import CreateSymptom from "pages/Symptom/CreateSymptom";
@@ -67,12 +70,33 @@ export default function Layouts({ userRole, userInfos }) {
       )}
       {!isLoading && userRole && (
         <StaffLayout>
-          {/* dashboard */}
+          {/* dashboard (default) */}
           <Routes>
             <Route
               exact
               path="/"
-              element={<Navigate to="/dashboard" replace={true} />}
+              element={
+                <RequireAuth
+                  userRole={userRole}
+                  allowedRoles={["head-doctor", "doctor", "admin"]}
+                >
+                  {userRole === "admin" ? (
+                    <Navigate to="/dashboard" replace={true} />
+                  ) : userRole === "head-doctor" || userRole === "doctor" ? (
+                    <Navigate to="/symptom-table" replace={true} />
+                  ) : (
+                    <Navigate to="/unauthorized" replace={true} />
+                  )}
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth userRole={userRole} allowedRoles={["admin"]}>
+                  <Dashboard userRole={userRole} userInfos={userInfos} />
+                </RequireAuth>
+              }
             />
 
             {/* symptom pages */}

@@ -1,17 +1,42 @@
 .admin-navbar {
   height: 50px;
-  border-bottom: 0.5px solid rgb(231, 228, 228);
   display: flex;
   align-items: center;
   font-size: 14px;
   color: #555;
+  background-color: var(--bg-white);
+  z-index: 500;
+  box-shadow: var(--box-shadow-6);
 
   .wrapper {
     width: 100%;
-    padding: 20px;
+    height: 100%;
+    padding: 0 20px;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
+
+    .search-bar {
+      width: 40%;
+      form {
+        position: relative;
+        width: 100%;
+
+        & > i {
+          position: absolute;
+          padding-left: 12px;
+          padding-top: 6px;
+        }
+
+        & > input {
+          width: 100%;
+          padding: 4px 0 4px 36px;
+          border: 1px solid var(--border-gray-3);
+          border-radius: var(--border-radius-1);
+          outline: var(--btn-blue-1);
+        }
+      }
+    }
 
     .items {
       display: flex;

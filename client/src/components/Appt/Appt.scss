@@ -514,6 +514,183 @@
   background-color: var(--btn-blue-hover-1);
 }
 
+/* OTP input */
+.otp-input {
+  padding: 1rem 3rem 2rem;
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Appointment request  */
+  .appt .content-container {
+    padding: 0;
+  }
+
+  .appt-req-body {
+    padding-top: 58px;
+  }
+
+  .appt-wrapper {
+    padding: 8px 8px;
+    box-shadow: none;
+  }
+
+  .select-wrapper {
+    flex-direction: column;
+  }
+
+  .select-wrapper select:not(:last-child) {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .select-wrapper select:last-child {
+    width: 100%;
+  }
+
+  .appt-modal-wrapper {
+    padding: 8px 8px;
+    box-shadow: none;
+  }
+
+  .appt-title {
+    padding-bottom: 8px;
+  }
+  .appt-form {
+    padding: 0;
+    flex-direction: column;
+  }
+
+  .appt-form > div {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .appt .appt-form .c-4 > div {
+    padding: 0;
+  }
+
+  .appt .appt-form .c-4 div > label {
+    margin-bottom: 16px;
+    font-weight: var(--roboto-medium-weight);
+  }
+
+  .appt .appt-form .c-4 div > input {
+    background-color: #f5f5f5;
+  }
+
+  .appt-input {
+    height: 44px;
+  }
+
+  .appt-date-input {
+    height: 44px;
+  }
+
+  .appt-date-icon {
+    top: 80px;
+    right: 12px;
+  }
+
+  .reason-textarea textarea {
+    background-color: #f5f5f5;
+  }
+
+  .appt-modal-info {
+    padding: 0 16px;
+  }
+
+  .appt-modal-data {
+    display: block;
+    padding-bottom: 20px;
+  }
+
+  .appt-modal-data span {
+    display: block;
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .appt-modal-data p {
+    display: block;
+    width: 100%;
+  }
+
+  .appt-btn button {
+    width: 90%;
+    font-size: 18px;
+  }
+
+  .appt-modal-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .appt-modal-btn button:first-child {
+    width: 90%;
+    font-size: 18px;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  .appt-modal-btn button:last-child {
+    width: 90%;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .appt-success {
+    box-shadow: none;
+  }
+
+  .appt-success-wrapper {
+    padding: 8px 8px;
+  }
+
+  /* CHECKING APPOINTMENT INFO BY PHONE NUMBER (GUEST) */
+  .appt-detail {
+    box-shadow: none;
+  }
+
+  .appt-detail-wrapper {
+    padding: 8px 8px;
+  }
+
+  .appt-detail-item {
+    margin-bottom: 20px;
+  }
+
+  .appt-detail-item-wrapper {
+    flex-direction: column;
+  }
+
+  .appt-detail-item-wrapper .appt-individual {
+    display: flex;
+    width: 100% !important;
+    padding: 2px 0;
+  }
+
+  .appt-detail-item-wrapper .appt-individual p:first-child {
+    flex-grow: 1;
+  }
+
+  .appt-detail-item-wrapper .appt-individual:first-child p:last-child {
+    padding: 0;
+  }
+
+  .appt-individual-btn {
+    width: 100%;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  .appt-individual-btn button {
+    width: 100%;
+  }
+}
+
 /* Mobile phone */
 @media only screen and (max-width: 767px) {
   /* Appointment request  */
@@ -678,5 +855,10 @@
 
   .appt-individual-btn button {
     width: 100%;
+  }
+
+  /* OTP input */
+  .otp-input {
+    padding: 1rem;
   }
 }

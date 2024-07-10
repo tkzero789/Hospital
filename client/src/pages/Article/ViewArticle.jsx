@@ -98,7 +98,7 @@ export default function ViewArticle({ userRole, userInfos }) {
           apiConfig
         )
         .then((res) => {
-          window.alert("Set as main article successfully");
+          window.alert("Set as main article successfully!");
           console.log(res);
           setArticle({
             ...article,
@@ -123,7 +123,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Deleted article successfully");
+      toast.success("Deleted article successfully!");
       setTimeout(() => {
         navigate(`/disease/${diseaseId}/article-table`);
       }, 1200);
@@ -145,7 +145,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       console.log(`${err}`);
     }
     setTimeout(() => {
-      toast.success("Requested content revisions successfully");
+      toast.success("Requested successfully!");
       setTimeout(() => {
         navigate("/article-table");
       }, 1200);
@@ -160,7 +160,7 @@ export default function ViewArticle({ userRole, userInfos }) {
         <div>
           <h3 className="container text-center text-body pt-5">View article</h3>
           <div className="container p-5">
-            <div className="card p-5">
+            <div className="card border-0 box-shadow-6 p-5">
               <form>
                 <div>
                   {

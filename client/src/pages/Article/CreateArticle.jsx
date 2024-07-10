@@ -144,7 +144,7 @@ export default function CreateArticle({ userRole, userInfos }) {
         window.alert(message);
       }
       setTimeout(() => {
-        toast.success("Created article successfully");
+        toast.success("Created article successfully!");
         setTimeout(() => {
           navigate(`/disease/${diseaseId}/article-table`);
         }, 1200);
