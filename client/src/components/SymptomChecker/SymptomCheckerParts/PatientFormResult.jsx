@@ -28,7 +28,7 @@ const PatientFormResult = ({ patientResult }) => {
         let otherArticles = [];
         for (let result of patientResult) {
           const res = await axios.get(
-            `http://localhost:5000/article/by-disease/${result.id}`
+            `${process.env.REACT_APP_API_URL}/article/by-disease/${result.id}`
           );
           const validArticles = res.data.filter(
             (article) =>

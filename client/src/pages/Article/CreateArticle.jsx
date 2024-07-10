@@ -86,7 +86,7 @@ export default function CreateArticle({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/disease/${diseaseId}`)
+      .get(`${process.env.REACT_APP_API_URL}/disease/${diseaseId}`)
       .then((res) => {
         const disease = res.data;
         setArticle({
@@ -132,7 +132,11 @@ export default function CreateArticle({ userRole, userInfos }) {
       try {
         // Create new article
         await axios
-          .post("http://localhost:5000/article/add", article, apiConfig)
+          .post(
+            `${process.env.REACT_APP_API_URL}/article/add`,
+            article,
+            apiConfig
+          )
           .then((res) => {
             if (res.data && res.data.message === "Article already exists") {
               throw new Error("Duplicated");

@@ -22,7 +22,7 @@ export default function ViewUser() {
   useEffect(() => {
     console.log(userId);
     axios
-      .get(`http://localhost:5000/user/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/user/${userId}`)
       .then((res) => {
         setUser(res.data);
       })
@@ -34,7 +34,7 @@ export default function ViewUser() {
 
   function updateStatus(newStatus) {
     axios
-      .post(`http://localhost:5000/user/update-status/${userId}`, {
+      .post(`${process.env.REACT_APP_API_URL}/user/update-status/${userId}`, {
         status: newStatus,
       })
       .catch((err) => {
@@ -46,10 +46,12 @@ export default function ViewUser() {
 
   function confirmDelete() {
     if (window.confirm("Are you sure you want to delete?")) {
-      axios.delete(`http://localhost:5000/user/${userId}`).catch((err) => {
-        const message = `Error: ${err}`;
-        window.alert(message);
-      });
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/user/${userId}`)
+        .catch((err) => {
+          const message = `Error: ${err}`;
+          window.alert(message);
+        });
     }
   }
 

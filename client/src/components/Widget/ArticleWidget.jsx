@@ -9,7 +9,7 @@ const ArticleWidget = () => {
 
   useEffect(() => {
     try {
-      axios.get(`http://localhost:5000/article`).then((res) => {
+      axios.get(`${process.env.REACT_APP_API_URL}/article`).then((res) => {
         setData(res.data);
       });
     } catch (err) {

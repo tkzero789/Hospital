@@ -11,7 +11,7 @@ export default function ArticlePatientView({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/article/${articleId}`)
+      .get(`${process.env.REACT_APP_API_URL}/article/${articleId}`)
       .then((res) => {
         const dbarticle = res.data;
         if (!dbarticle) {

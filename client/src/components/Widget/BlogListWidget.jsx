@@ -11,9 +11,11 @@ const BlogListWidget = () => {
   // Fetch current blogs
   useEffect(() => {
     try {
-      axios.get(`http://localhost:5000/blog/currentBlogs`).then((res) => {
-        setData(res.data);
-      });
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/blog/currentBlogs`)
+        .then((res) => {
+          setData(res.data);
+        });
     } catch (err) {
       console.log(err);
     }
@@ -22,7 +24,7 @@ const BlogListWidget = () => {
   // Fetch all blogs to get category
   useEffect(() => {
     try {
-      axios.get("http://localhost:5000/blog").then((res) => {
+      axios.get(`${process.env.REACT_APP_API_URL}/blog`).then((res) => {
         setCategory(res.data);
       });
     } catch (err) {

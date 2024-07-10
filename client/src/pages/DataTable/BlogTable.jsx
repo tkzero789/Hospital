@@ -14,7 +14,7 @@ export default function BlogTable({ userRole, userInfos }) {
   // Fetch all blogs data
   useEffect(() => {
     axios
-      .get("http://localhost:5000/blog")
+      .get(`${process.env.REACT_APP_API_URL}/blog`)
       .then((res) => {
         const blogData = res.data;
         const blogDataWithNo = blogData.map((item, index) => ({

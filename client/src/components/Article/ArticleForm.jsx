@@ -29,7 +29,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
     const response = await axios.post(
-      `http://localhost:5000/article/upload`,
+      `${process.env.REACT_APP_API_URL}/article/upload`,
       formData,
       {
         headers: {
@@ -62,7 +62,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         const key = imageToRemove.split("/").pop();
         console.log("key url", imageToRemove);
         await axios.post(
-          "http://localhost:5000/article/deleteImg",
+          `${process.env.REACT_APP_API_URL}/article/deleteImg`,
           { key },
           apiConfig
         );
@@ -95,7 +95,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
     const response = await axios.post(
-      `http://localhost:5000/article/upload`,
+      `${process.env.REACT_APP_API_URL}/article/upload`,
       formData,
       {
         headers: {
@@ -128,7 +128,7 @@ const ArticleForm = ({ article, setArticle, mode }) => {
         const key = imageToRemove.split("/").pop();
         console.log("key url", imageToRemove);
         await axios.post(
-          "http://localhost:5000/article/deleteImg",
+          `${process.env.REACT_APP_API_URL}/article/deleteImg`,
           { key },
           apiConfig
         );

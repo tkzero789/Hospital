@@ -45,7 +45,7 @@ export default function CreateAppt() {
     };
 
     await axios
-      .post("http://localhost:5000/appointment/add", updatedAppt)
+      .post(`${process.env.REACT_APP_API_URL}/appointment/add`, updatedAppt)
       .then((res) => {
         if (res.data && res.data.message === "Phone number spamming") {
           throw new Error(
@@ -77,7 +77,9 @@ export default function CreateAppt() {
   async function checkPhoneNumber() {
     const phoneNumber = appt.phoneNumber;
     await axios
-      .post("http://localhost:5000/check-phone-number", { phoneNumber })
+      .post(`${process.env.REACT_APP_API_URL}/check-phone-number`, {
+        phoneNumber,
+      })
       .then((res) => {
         if (res.data && res.data.message === "Phone number spamming") {
           throw new Error(

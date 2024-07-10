@@ -71,7 +71,7 @@ export default function ViewArticle({ userRole, userInfos }) {
   // get article from DB by articleId
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/article/${articleId}`)
+      .get(`${process.env.REACT_APP_API_URL}/article/${articleId}`)
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
@@ -93,7 +93,7 @@ export default function ViewArticle({ userRole, userInfos }) {
       console.log(apiConfig);
       await axios
         .post(
-          `http://localhost:5000/article/${article.id}/set-isdisplay`,
+          `${process.env.REACT_APP_API_URL}/article/${article.id}/set-isdisplay`,
           { diseaseId: article.diseaseId },
           apiConfig
         )
@@ -116,7 +116,7 @@ export default function ViewArticle({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       await axios.delete(
-        `http://localhost:5000/article/delete/${articleId}`,
+        `${process.env.REACT_APP_API_URL}/article/delete/${articleId}`,
         apiConfig
       );
     } catch (err) {
@@ -135,7 +135,7 @@ export default function ViewArticle({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       axios.put(
-        `http://localhost:5000/article/update/${articleId}`,
+        `${process.env.REACT_APP_API_URL}/article/update/${articleId}`,
         {
           status: "Edit Requested",
         },

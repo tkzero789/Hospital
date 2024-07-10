@@ -128,7 +128,7 @@ const CreateBlog = ({ userInfos }) => {
 
     try {
       await axios.post(
-        "http://localhost:5000/blog/add",
+        `${process.env.REACT_APP_API_URL}/blog/add`,
         updatedBlog,
         apiConfig
       );
@@ -194,7 +194,7 @@ const CreateBlog = ({ userInfos }) => {
     formData.append("image", event.target.files[0]);
     try {
       const response = await axios.post(
-        `http://localhost:5000/blog/upload`,
+        `${process.env.REACT_APP_API_URL}/blog/upload`,
         formData,
         {
           ...apiConfig,
@@ -223,7 +223,7 @@ const CreateBlog = ({ userInfos }) => {
         const key = imageToRemove.split("/").pop();
         console.log("key url", imageToRemove);
         await axios.post(
-          `http://localhost:5000/blog/deleteImg`,
+          `${process.env.REACT_APP_API_URL}/blog/deleteImg`,
           { key },
           apiConfig
         );

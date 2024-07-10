@@ -37,7 +37,7 @@ const ViewBlogList = () => {
           .map((tag) => encodeURIComponent(tag))
           .join(",");
         const response = await axios.get(
-          `http://localhost:5000/news/blogByTags?tags=${tagsQuery}`
+          `${process.env.REACT_APP_API_URL}/news/blogByTags?tags=${tagsQuery}`
         );
         allFilteredBlogs = response.data;
 
@@ -60,7 +60,7 @@ const ViewBlogList = () => {
       } else {
         setIsLoading(true);
         const response = await axios.get(
-          `http://localhost:5000/news/blog?page=${currentPage}&limit=${blogsPerPage}`
+          `${process.env.REACT_APP_API_URL}/news/blog?page=${currentPage}&limit=${blogsPerPage}`
         );
         let data = response.data;
         console.log(data);
