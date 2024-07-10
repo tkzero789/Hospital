@@ -7,7 +7,8 @@ const port = process.env.PORT || 5000;
 const app = express();
 const dbo = require("./db/conn");
 
-app.use(cors({ origin: "http://localhost:3000" }));
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
