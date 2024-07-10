@@ -12,7 +12,7 @@ app.use(
   cors({
     origin: [
       corsOrigin,
-      "https://bayside-hospital-qk4vvahj7-tkzero789s-projects.vercel.app/",
+      "https://bayside-hospital-qk4vvahj7-tkzero789s-projects.vercel.app",
     ],
     credentials: true,
   })
