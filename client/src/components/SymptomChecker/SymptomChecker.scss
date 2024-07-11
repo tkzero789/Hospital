@@ -77,6 +77,29 @@
   padding-top: 32px;
 }
 
+.steps-info-section div h5 span {
+  color: #d84444;
+  position: relative;
+  animation: showUp 0.5s;
+}
+
+@keyframes showUp {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.steps-info-section div h5 span i {
+  color: #d84444;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  right: -16px;
+}
+
 .select-age {
   width: 100%;
   margin-top: 18px;
