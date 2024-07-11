@@ -74,6 +74,7 @@ export default function CreateAppt() {
         const message = `Error: ${err}`;
         console.log(message);
       });
+    window.scrollTo({ top: 0, left: 0 });
   }
 
   // Check for existed phone number
