@@ -94,7 +94,7 @@ const ApptChartWidget = () => {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/appointment`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/appointment`)
       .then((res) => {
         const apptsData = getNumberOfAppt(res.data);
         const needsData = getNumberOfNeed(res.data);

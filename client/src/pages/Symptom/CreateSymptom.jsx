@@ -104,7 +104,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
       const updatedSymptom = { ...symptom };
       await axios
         .post(
-          `https://bayside-render-server.onrender.com/symptom/add`,
+          `${process.env.REACT_APP_API_BASE_URL}/symptom/add`,
           updatedSymptom,
           apiConfig
         )

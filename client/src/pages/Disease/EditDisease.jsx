@@ -95,7 +95,7 @@ export default function EditDisease({ userRole, userInfos }) {
   // Fetch disease data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/disease/${diseaseId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/disease/${diseaseId}`)
       .then((res) => {
         const dbDisease = res.data;
         if (!dbDisease) {
@@ -129,7 +129,7 @@ export default function EditDisease({ userRole, userInfos }) {
   // Fetch symptom data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/symptom`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })
@@ -253,9 +253,7 @@ export default function EditDisease({ userRole, userInfos }) {
     try {
       if (origName !== disease.name) {
         await axios
-          .get(
-            `https://bayside-render-server.onrender.com/disease/${disease.name}`
-          )
+          .get(`${process.env.REACT_APP_API_BASE_URL}/disease/${disease.name}`)
           .then((res) => {
             if (res.data) {
               throw new Error("Duplicated disease name!");
@@ -265,7 +263,7 @@ export default function EditDisease({ userRole, userInfos }) {
       // Edit disease
       await axios
         .put(
-          `https://bayside-render-server.onrender.com/disease/edit/${diseaseId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/disease/edit/${diseaseId}`,
           disease,
           apiConfig
         )

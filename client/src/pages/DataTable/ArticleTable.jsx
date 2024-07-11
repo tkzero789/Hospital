@@ -13,7 +13,7 @@ export default function ArticleTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/article/`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/article/`)
       .then((res) => {
         const articleData = res.data;
         const articleDataWithNo = articleData.map((item, index) => ({

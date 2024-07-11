@@ -12,7 +12,7 @@ export default function SymptomTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/symptom/`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/symptom/`)
       .then((res) => {
         const symptomsData = res.data.reverse();
         const symptomsDataWithNo = symptomsData.map((item, index) => ({

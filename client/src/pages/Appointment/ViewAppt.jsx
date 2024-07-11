@@ -80,7 +80,7 @@ export default function ViewAppt() {
   useEffect(() => {
     console.log(apptId);
     axios
-      .get(`https://bayside-render-server.onrender.com/appointment/${apptId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/appointment/${apptId}`)
       .then((res) => {
         const formData = res.data;
         setFormInputs(formData);
@@ -115,7 +115,7 @@ export default function ViewAppt() {
     console.log(newStatus);
     axios
       .post(
-        `https://bayside-render-server.onrender.com/appointment/update/${apptId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/appointment/update/${apptId}`,
         {
           status: newStatus,
         },
@@ -150,7 +150,7 @@ export default function ViewAppt() {
       if (prevIsEditable) {
         axios
           .post(
-            `https://bayside-render-server.onrender.com/appointment/edit/${apptId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/appointment/edit/${apptId}`,
             formInputs,
             apiConfig
           )
@@ -161,7 +161,7 @@ export default function ViewAppt() {
             // Fetch the updated data
             axios
               .get(
-                `https://bayside-render-server.onrender.com/appointment/${apptId}`
+                `${process.env.REACT_APP_API_BASE_URL}/appointment/${apptId}`
               )
               .then((res) => {
                 setFormInputs(res.data);
@@ -200,7 +200,7 @@ export default function ViewAppt() {
   async function deleteAppt() {
     axios
       .delete(
-        `https://bayside-render-server.onrender.com/appointment/${apptId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/appointment/${apptId}`,
         apiConfig
       )
       .then(() => {

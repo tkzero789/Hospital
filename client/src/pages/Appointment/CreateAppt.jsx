@@ -46,7 +46,7 @@ export default function CreateAppt() {
 
     await axios
       .post(
-        `https://bayside-render-server.onrender.com/appointment/add`,
+        `${process.env.REACT_APP_API_BASE_URL}/appointment/add`,
         updatedAppt
       )
       .then((res) => {
@@ -80,7 +80,7 @@ export default function CreateAppt() {
   async function checkPhoneNumber() {
     const phoneNumber = appt.phoneNumber;
     await axios
-      .post(`https://bayside-render-server.onrender.com/check-phone-number`, {
+      .post(`${process.env.REACT_APP_API_BASE_URL}/check-phone-number`, {
         phoneNumber,
       })
       .then((res) => {

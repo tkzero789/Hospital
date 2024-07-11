@@ -57,7 +57,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   // Fetch blog content based on id
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/blog/${blogId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/blog/${blogId}`)
       .then((res) => {
         setBlog(res.data);
       })
@@ -71,7 +71,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   async function confirmApprove() {
     axios
       .post(
-        `https://bayside-render-server.onrender.com/blog/update/${blogId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/blog/update/${blogId}`,
         {
           status: "Approved",
         },
@@ -96,7 +96,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   async function requestEdit() {
     axios
       .post(
-        `https://bayside-render-server.onrender.com/blog/update/${blogId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/blog/update/${blogId}`,
         {
           status: "Edit Requested",
         },
@@ -120,10 +120,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   // Delete a blog from database
   async function confirmDelete() {
     axios
-      .delete(
-        `https://bayside-render-server.onrender.com/blog/${blogId}`,
-        apiConfig
-      )
+      .delete(`${process.env.REACT_APP_API_BASE_URL}/blog/${blogId}`, apiConfig)
       .then(() => {
         setIsClicked(true);
       })

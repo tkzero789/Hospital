@@ -28,7 +28,7 @@ const PatientFormResult = ({ patientResult }) => {
         let otherArticles = [];
         for (let result of patientResult) {
           const res = await axios.get(
-            `https://bayside-render-server.onrender.com/article/by-disease/${result.id}`
+            `${process.env.REACT_APP_API_BASE_URL}/article/by-disease/${result.id}`
           );
           const validArticles = res.data.filter(
             (article) =>

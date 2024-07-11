@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 const dbo = require("./db/conn");
 
-app.use(cors({ origin: "https://hospital-render-client.onrender.com" }));
+app.use(cors({ origin: process.env.CORS_ORIGIN_URL }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(

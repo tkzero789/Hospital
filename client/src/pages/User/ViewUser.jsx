@@ -22,7 +22,7 @@ export default function ViewUser() {
   useEffect(() => {
     console.log(userId);
     axios
-      .get(`https://bayside-render-server.onrender.com/user/${userId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/user/${userId}`)
       .then((res) => {
         setUser(res.data);
       })
@@ -35,7 +35,7 @@ export default function ViewUser() {
   function updateStatus(newStatus) {
     axios
       .post(
-        `https://bayside-render-server.onrender.com/user/update-status/${userId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/user/update-status/${userId}`,
         {
           status: newStatus,
         }
@@ -50,7 +50,7 @@ export default function ViewUser() {
   function confirmDelete() {
     if (window.confirm("Are you sure you want to delete?")) {
       axios
-        .delete(`https://bayside-render-server.onrender.com/user/${userId}`)
+        .delete(`${process.env.REACT_APP_API_BASE_URL}/user/${userId}`)
         .catch((err) => {
           const message = `Error: ${err}`;
           window.alert(message);

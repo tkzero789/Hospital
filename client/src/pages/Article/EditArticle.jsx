@@ -85,7 +85,7 @@ export default function EditArticle({ userRole, userInfos }) {
   // get article by articleId
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/article/${articleId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/article/${articleId}`)
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
@@ -147,7 +147,7 @@ export default function EditArticle({ userRole, userInfos }) {
         if (origTitle !== article.title) {
           await axios
             .get(
-              `https://bayside-render-server.onrender.com/article/${article.title}`
+              `${process.env.REACT_APP_API_BASE_URL}/article/${article.title}`
             )
             .then((res) => {
               if (res.data) {
@@ -158,7 +158,7 @@ export default function EditArticle({ userRole, userInfos }) {
         // Edit article
         axios
           .put(
-            `https://bayside-render-server.onrender.com/article/edit/${articleId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/article/edit/${articleId}`,
             article,
             apiConfig
           )

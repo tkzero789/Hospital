@@ -50,7 +50,7 @@ export default function SymptomChecker() {
   // Fetch diseases data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/disease`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/disease`)
       .then((res) => {
         setPatientResult(res.data);
       })
@@ -63,7 +63,7 @@ export default function SymptomChecker() {
   // Fetch symptoms data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/symptom`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })

@@ -17,7 +17,7 @@ const ApptDetailGuest = () => {
     if (phoneNumber) {
       axios
         .get(
-          `https://bayside-render-server.onrender.com/appointment/${e.target.value}`
+          `${process.env.REACT_APP_API_BASE_URL}/appointment/${e.target.value}`
         )
         .then((response) => {
           console.log("API response:", response.data);

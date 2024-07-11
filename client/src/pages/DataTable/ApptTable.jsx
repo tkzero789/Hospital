@@ -13,7 +13,7 @@ export default function ApptTable() {
   // Fetch appointment data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/appointment`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/appointment`)
       .then((res) => {
         const reverseData = res.data.reverse();
         const reverseDataWithNo = reverseData.map((item, index) => ({

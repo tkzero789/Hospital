@@ -14,7 +14,7 @@ export default function BlogTable({ userRole, userInfos }) {
   // Fetch all blogs data
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/blog`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/blog`)
       .then((res) => {
         const blogData = res.data;
         const blogDataWithNo = blogData.map((item, index) => ({

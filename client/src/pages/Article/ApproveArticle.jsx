@@ -85,7 +85,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
   // get article from DB by articleId
   useEffect(() => {
     axios
-      .get(`https://bayside-render-server.onrender.com/article/${articleId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/article/${articleId}`)
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
@@ -105,7 +105,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
   async function confirmApprove() {
     axios
       .put(
-        `https://bayside-render-server.onrender.com/article/update/${articleId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/article/update/${articleId}`,
         {
           status: "Approved",
         },
@@ -135,7 +135,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       axios.put(
-        `https://bayside-render-server.onrender.com/article/update/${articleId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/article/update/${articleId}`,
         {
           status: "Edit Requested",
         },
@@ -157,7 +157,7 @@ export default function ApproveArticle({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       await axios.delete(
-        `https://bayside-render-server.onrender.com/article/delete/${articleId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/article/delete/${articleId}`,
         apiConfig
       );
     } catch (err) {

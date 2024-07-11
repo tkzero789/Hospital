@@ -10,7 +10,7 @@ const AppointmentWidget = () => {
   useEffect(() => {
     try {
       axios
-        .get(`https://bayside-render-server.onrender.com/appointmentCurrent`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/appointmentCurrent`)
         .then((res) => {
           setAppointments(res.data.totalAppointmentsThisWeek);
         });
