@@ -114,6 +114,7 @@ symptomRoutes
           id: req.body.id,
           name: req.body.name,
           position: req.body.position,
+          gender: req.body.gender,
           categories: req.body.categories,
           createInfos: req.body.createInfos,
           status: req.body.status,
@@ -137,6 +138,7 @@ symptomRoutes
         $set: {
           name: req.body.name,
           position: req.body.position,
+          gender: req.body.gender,
           categories: req.body.categories,
           createInfos: req.body.createInfos,
           status: req.body.status,

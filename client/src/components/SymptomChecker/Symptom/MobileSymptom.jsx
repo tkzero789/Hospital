@@ -6,6 +6,7 @@ const MobileSymptom = ({
   onCheck,
   toggleFunction,
   handleSnackBarPosition,
+  gender,
 }) => {
   const handleScrollTo = () => {
     let scrollPosition = 0;
@@ -22,24 +23,33 @@ const MobileSymptom = ({
     window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
   };
 
-  return (
-    <>
-      <button
-        key={symptom.id}
-        className="symptom-button"
-        onClick={(e) => {
-          e.preventDefault();
-          onCheck(symptom.id);
-          console.log(symptom.id);
-          toggleFunction();
-          handleScrollTo();
-          handleSnackBarPosition({ vertical: "bottom", horizontal: "center" });
-        }}
-      >
-        <span>{symptom.name}</span>
-      </button>
-    </>
-  );
+  const shouldRender = symptom.gender === gender || symptom.gender === "Both";
+
+  if (shouldRender) {
+    return (
+      <>
+        <button
+          key={symptom.id}
+          className="symptom-button"
+          onClick={(e) => {
+            e.preventDefault();
+            onCheck(symptom.id);
+            console.log(symptom.id);
+            toggleFunction();
+            handleScrollTo();
+            handleSnackBarPosition({
+              vertical: "bottom",
+              horizontal: "center",
+            });
+          }}
+        >
+          <span>{symptom.name}</span>
+        </button>
+      </>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default MobileSymptom;

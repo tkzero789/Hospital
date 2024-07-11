@@ -414,6 +414,7 @@ export default function PatientFormSymptoms({
                 onCheck={onCheck}
                 chosenSymps={patientForm.chosenSymps}
                 handleSnackBarPosition={handleSnackBarPosition}
+                gender={patientForm.gender}
               />
               <div className="flex-grow-1"></div>
               {/* Display selected symptoms */}
@@ -491,6 +492,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -520,6 +522,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -549,6 +552,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -578,6 +582,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -607,6 +612,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -636,6 +642,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -665,6 +672,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -694,6 +702,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -723,6 +732,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -752,6 +762,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -784,6 +795,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -813,6 +825,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -842,6 +855,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -871,6 +885,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -900,6 +915,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -929,6 +945,7 @@ export default function PatientFormSymptoms({
                             onCheck={onCheck}
                             key={symptom.id}
                             handleSnackBarPosition={handleSnackBarPosition}
+                            gender={patientForm.gender}
                           />
                         ))}
                     </div>
@@ -973,6 +990,7 @@ export default function PatientFormSymptoms({
               dbSymps={dbSymps}
               chosenSymps={patientForm.chosenSymps}
               handleSnackBarPosition={handleSnackBarPosition}
+              gender={patientForm.gender}
             />
           )}
         </div>
@@ -1042,6 +1060,7 @@ export default function PatientFormSymptoms({
                       toggleFunction={toggleWholeHeadM}
                       toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
+                      gender={patientForm.gender}
                     />
                   )}
                   {/* Eyes */}
@@ -1063,6 +1082,7 @@ export default function PatientFormSymptoms({
                       toggleFunction={toggleWholeHeadM}
                       toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
+                      gender={patientForm.gender}
                     />
                   )}
                   {/* Ears */}
@@ -1084,6 +1104,7 @@ export default function PatientFormSymptoms({
                       toggleFunction={toggleWholeHeadM}
                       toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
+                      gender={patientForm.gender}
                     />
                   )}
                   {/* Nose */}
@@ -1105,6 +1126,7 @@ export default function PatientFormSymptoms({
                       toggleFunction={toggleWholeHeadM}
                       toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
+                      gender={patientForm.gender}
                     />
                   )}
                   {/* Mouth */}
@@ -1126,6 +1148,7 @@ export default function PatientFormSymptoms({
                       toggleFunction={toggleWholeHeadM}
                       toggleExtraM={toggleExtraM}
                       handleSnackBarPosition={handleSnackBarPosition}
+                      gender={patientForm.gender}
                     />
                   )}
 
@@ -1159,6 +1182,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleNeckM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleNeckM} />
@@ -1186,6 +1210,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleChestM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleChestM} />
@@ -1213,6 +1238,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleUpperArmM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleUpperArmM} />
@@ -1240,6 +1266,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleForeArmM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleForeArmM} />
@@ -1267,6 +1294,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleMidAbM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleMidAbM} />
@@ -1294,6 +1322,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleLowerAbM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleLowerAbM} />
@@ -1321,6 +1350,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleHandM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleHandM} />
@@ -1348,6 +1378,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleThighM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleThighM} />
@@ -1375,6 +1406,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleKneeM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleKneeM} />
@@ -1402,6 +1434,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleLowerLegM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleLowerLegM} />
@@ -1429,6 +1462,7 @@ export default function PatientFormSymptoms({
                         key={symptom.id}
                         toggleFunction={toggleFootM}
                         handleSnackBarPosition={handleSnackBarPosition}
+                        gender={patientForm.gender}
                       />
                     ))}
                   <MobileSympBtn toggleFunction={toggleFootM} />

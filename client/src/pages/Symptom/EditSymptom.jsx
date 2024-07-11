@@ -130,7 +130,7 @@ export default function EditSymptom({ userRole, userInfos }) {
               <SymptomForm
                 symptom={symptom}
                 setSymptom={setSymptom}
-                mode="doctor edit"
+                mode="doctor-edit"
                 origCats={[]}
                 origDescs={[]}
               />
