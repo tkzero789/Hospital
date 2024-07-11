@@ -13,7 +13,7 @@ export default function DiseaseTable({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/disease/`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/disease/`)
       .then((res) => {
         const reverseData = res.data.reverse();
         const reverseDataWithNo = reverseData.map((item, index) => ({

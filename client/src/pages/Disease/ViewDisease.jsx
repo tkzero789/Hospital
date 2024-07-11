@@ -55,7 +55,7 @@ export default function ViewDisease({ userRole, userInfos }) {
   // get disease from DB by diseaseId
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/disease/${diseaseId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/disease/${diseaseId}`)
       .then((res) => {
         console.log(res.data);
         const dbdisease = res.data;
@@ -70,7 +70,7 @@ export default function ViewDisease({ userRole, userInfos }) {
   // get symptoms from DB
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/symptom`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })
@@ -92,7 +92,7 @@ export default function ViewDisease({ userRole, userInfos }) {
         // Update status symptom
         await axios
           .put(
-            `http://localhost:5000/disease/update/${diseaseId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/disease/update/${diseaseId}`,
             {
               status: "Approved",
             },
@@ -122,7 +122,7 @@ export default function ViewDisease({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       axios.put(
-        `http://localhost:5000/disease/update/${diseaseId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/disease/update/${diseaseId}`,
         {
           status: "Edit Requested",
         },
@@ -144,7 +144,7 @@ export default function ViewDisease({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       await axios.delete(
-        `http://localhost:5000/disease/delete/${diseaseId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/disease/delete/${diseaseId}`,
         apiConfig
       );
     } catch (err) {

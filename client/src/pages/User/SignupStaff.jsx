@@ -74,7 +74,7 @@ export default function Signup({ userRole, userInfos }) {
       const newUser = { ...user };
       console.log(newUser);
       axios
-        .post(`http://localhost:5000/signup`, newUser)
+        .post(`${process.env.REACT_APP_API_BASE_URL}/signup`, newUser)
         .then((res) => {
           console.log("User created");
           console.log(res.data);

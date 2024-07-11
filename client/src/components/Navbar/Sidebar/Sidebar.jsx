@@ -30,7 +30,7 @@ export default function Sidebar() {
         headers: { Authorization: `Bearer ${token}` },
       };
       const response = await axios.post(
-        `http://localhost:5000/signout`,
+        `${process.env.REACT_APP_API_BASE_URL}/signout`,
         null,
         config
       );

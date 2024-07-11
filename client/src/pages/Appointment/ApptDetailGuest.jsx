@@ -16,7 +16,9 @@ const ApptDetailGuest = () => {
     e.preventDefault();
     if (phoneNumber) {
       axios
-        .get(`http://localhost:5000/appointment/${e.target.value}`)
+        .get(
+          `${process.env.REACT_APP_API_BASE_URL}/appointment/${e.target.value}`
+        )
         .then((response) => {
           console.log("API response:", response.data);
           const filteredAppointments = response.data.filter(

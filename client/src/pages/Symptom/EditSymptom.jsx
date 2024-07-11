@@ -75,7 +75,7 @@ export default function EditSymptom({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/symptom/${symptomId}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/symptom/${symptomId}`)
       .then((res) => {
         const dbsymptom = res.data;
         console.log(dbsymptom);
@@ -98,7 +98,7 @@ export default function EditSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       const response = await axios.put(
-        `http://localhost:5000/symptom/edit/${symptom.id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/symptom/edit/${symptom.id}`,
         { ...symptom, status: "Updated Revision" },
         apiConfig
       );

@@ -50,7 +50,7 @@ export default function SymptomChecker() {
   // Fetch diseases data
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/disease`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/disease`)
       .then((res) => {
         setPatientResult(res.data);
       })
@@ -63,7 +63,7 @@ export default function SymptomChecker() {
   // Fetch symptoms data
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/symptom`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })

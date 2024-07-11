@@ -21,12 +21,14 @@ const ViewSpecificBlog = () => {
     if (blogSlug) {
       setIsLoading(true);
       axios
-        .get(`http://localhost:5000/news/blogBySlug?slug=${blogSlug}`)
+        .get(
+          `${process.env.REACT_APP_API_BASE_URL}/news/blogBySlug?slug=${blogSlug}`
+        )
         .then((res) => {
           setBlog(res.data);
           const tag = encodeURIComponent(res.data.tag);
           return axios.get(
-            `http://localhost:5000/news/relatedBlogs?tag=${tag}&excludeId=${res.data._id}`
+            `${process.env.REACT_APP_API_BASE_URL}/news/relatedBlogs?tag=${tag}&excludeId=${res.data._id}`
           );
         })
         .then((relatedRes) => {
