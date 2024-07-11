@@ -17,7 +17,16 @@ export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
       </div>
       <div className="steps-info-section">
         <div className="form-group pb-4 pb-md-2">
-          <h5 className="fw-med text-dark-1">Age</h5>
+          <h5 className="fw-med text-dark-1">
+            {parseInt(patientForm.age, 10) < 1 ||
+            parseInt(patientForm.age, 10) > 125 ? (
+              <span>
+                Invalid age <i className="bi bi-exclamation-circle-fill"></i>
+              </span>
+            ) : (
+              "Age"
+            )}
+          </h5>
           <div className="select-age">
             <input
               type="number"

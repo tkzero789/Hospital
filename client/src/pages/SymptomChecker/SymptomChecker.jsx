@@ -336,7 +336,10 @@ export default function SymptomChecker() {
                           className="btn"
                           disabled={
                             (step === 1 &&
-                              (!patientForm.age || !patientForm.gender)) ||
+                              (!patientForm.age ||
+                                !patientForm.gender ||
+                                parseInt(patientForm.age, 10) < 1 ||
+                                parseInt(patientForm.age, 10) > 125)) ||
                             (step === 2 &&
                               patientForm.chosenSymps.length === 0) ||
                             (step > 2 &&
