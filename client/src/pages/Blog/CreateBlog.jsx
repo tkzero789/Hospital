@@ -234,11 +234,11 @@ const CreateBlog = ({ userInfos }) => {
         }
 
         // Check if the image to remove exists in the content array
-        const imageExistsInContent = blog.content.content.some(
-          (contentItem) =>
-            contentItem.type === "image" &&
-            contentItem.attrs.src.split("/").pop() === key
-        );
+        // const imageExistsInContent = blog.content.content.some(
+        //   (contentItem) =>
+        //     contentItem.type === "image" &&
+        //     contentItem.attrs.src.split("/").pop() === key
+        // );
 
         // Update the blog state to remove the image
         setBlog((prevBlog) => ({

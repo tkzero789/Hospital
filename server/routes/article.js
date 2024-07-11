@@ -10,7 +10,7 @@ const {
   DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const stream = require("stream");
-require("dotenv").config({ path: "../.config.env" });
+require("dotenv").config();
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
