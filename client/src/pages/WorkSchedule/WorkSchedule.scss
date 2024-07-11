@@ -1,6 +1,6 @@
 /* Work schedule Page */
 .work {
-  padding-top: 28px;
+  padding-top: 20px;
 }
 
 .work-wrapper h1 {
@@ -34,4 +34,18 @@
 
 .work-wrapper li:not(:first-child) {
   padding-top: 4px;
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .work {
+    padding-top: 82px;
+  }
+}
+
+/* Mobile phone */
+@media only screen and (max-width: 767px) {
+  .work {
+    padding-top: 82px;
+  }
 }
