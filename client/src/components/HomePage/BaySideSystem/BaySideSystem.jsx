@@ -29,7 +29,7 @@ export default function BaySideSystem() {
                   <div className="system__card">
                     <Link>
                       <div className="system__card-img">
-                        <img src={AmbulanceSVG} alt="BKCare System"></img>
+                        <img src={AmbulanceSVG} alt="Bayside System"></img>
                       </div>
                       <div className="system__card-header">
                         Emergency Medical Solutions
@@ -48,7 +48,7 @@ export default function BaySideSystem() {
                   <div className="system__card">
                     <Link>
                       <div className="system__card-img">
-                        <img src={HospitalSVG} alt="BKCare System"></img>
+                        <img src={HospitalSVG} alt="Bayside System"></img>
                       </div>
                       <div className="system__card-header">
                         Professional Hospital System
@@ -67,7 +67,7 @@ export default function BaySideSystem() {
                   <div className="system__card">
                     <Link>
                       <div className="system__card-img">
-                        <img src={ClipboardSVG} alt="BKCare System"></img>
+                        <img src={ClipboardSVG} alt="Bayside System"></img>
                       </div>
                       <div className="system__card-header">
                         High-quality healthcare
