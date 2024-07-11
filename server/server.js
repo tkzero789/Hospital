@@ -7,23 +7,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 const dbo = require("./db/conn");
 
-const allowedOrigins = [
-  "https://hospital-render-client.onrender.com",
-  "https://bayside-render-server.onrender.com",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors({ origin: "https://hospital-render-client.onrender.com" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
