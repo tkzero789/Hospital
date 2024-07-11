@@ -12,7 +12,7 @@ export default function SymptomTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom/`)
+      .get(`http://localhost:5000/symptom/`)
       .then((res) => {
         const symptomsData = res.data.reverse();
         const symptomsDataWithNo = symptomsData.map((item, index) => ({

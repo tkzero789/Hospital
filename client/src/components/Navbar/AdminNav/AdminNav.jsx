@@ -24,7 +24,7 @@ const AdminNav = () => {
   // Appointment notifications
   useEffect(() => {
     const eventSource = new EventSource(
-      `${process.env.REACT_APP_API_URL}/appointmentNoti`
+      `http://localhost:5000/appointmentNoti`
     );
 
     eventSource.onmessage = (event) => {

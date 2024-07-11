@@ -9,7 +9,7 @@ const SymptomWidget = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_API_URL}/symptom`).then((res) => {
+      axios.get(`http://localhost:5000/symptom`).then((res) => {
         setData(res.data);
       });
     } catch (err) {

@@ -9,7 +9,7 @@ const UserWidget = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_API_URL}/user`).then((res) => {
+      axios.get(`http://localhost:5000/user`).then((res) => {
         setData(res.data);
       });
     } catch (err) {

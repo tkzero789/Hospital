@@ -14,7 +14,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
     async function fetchData() {
       try {
         const articleRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/article/by-disease/${diseaseId}`
+          `http://localhost:5000/article/by-disease/${diseaseId}`
         );
         const articleData = articleRes.data;
         const articleDataWithNo = articleData.map((item, index) => ({

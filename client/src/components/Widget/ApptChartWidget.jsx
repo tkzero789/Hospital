@@ -94,7 +94,7 @@ const ApptChartWidget = () => {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/appointment`)
+      .get(`http://localhost:5000/appointment`)
       .then((res) => {
         const apptsData = getNumberOfAppt(res.data);
         const needsData = getNumberOfNeed(res.data);

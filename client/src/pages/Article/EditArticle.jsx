@@ -85,7 +85,7 @@ export default function EditArticle({ userRole, userInfos }) {
   // get article by articleId
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/article/${articleId}`)
+      .get(`http://localhost:5000/article/${articleId}`)
       .then((res) => {
         const dbArticle = res.data;
         if (!dbArticle) {
@@ -146,7 +146,7 @@ export default function EditArticle({ userRole, userInfos }) {
       try {
         if (origTitle !== article.title) {
           await axios
-            .get(`${process.env.REACT_APP_API_URL}/article/${article.title}`)
+            .get(`http://localhost:5000/article/${article.title}`)
             .then((res) => {
               if (res.data) {
                 throw new Error("Duplicated article name!");
@@ -156,7 +156,7 @@ export default function EditArticle({ userRole, userInfos }) {
         // Edit article
         axios
           .put(
-            `${process.env.REACT_APP_API_URL}/article/edit/${articleId}`,
+            `http://localhost:5000/article/edit/${articleId}`,
             article,
             apiConfig
           )

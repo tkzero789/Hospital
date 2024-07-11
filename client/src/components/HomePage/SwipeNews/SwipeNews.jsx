@@ -14,9 +14,7 @@ export default function SwipeNews() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/news/blogSwipe`
-        );
+        const res = await axios.get(`http://localhost:5000/news/blogSwipe`);
         setBlogs(res.data);
       } catch (error) {
         console.error("Error fetching blogs", error);

@@ -13,7 +13,7 @@ export default function ArticleTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/article/`)
+      .get(`http://localhost:5000/article/`)
       .then((res) => {
         const articleData = res.data;
         const articleDataWithNo = articleData.map((item, index) => ({

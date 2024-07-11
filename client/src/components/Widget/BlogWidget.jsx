@@ -9,7 +9,7 @@ const BlogWidget = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_API_URL}/blog`).then((res) => {
+      axios.get(`http://localhost:5000/blog`).then((res) => {
         setData(res.data);
       });
     } catch (err) {

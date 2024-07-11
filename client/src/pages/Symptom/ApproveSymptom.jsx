@@ -53,11 +53,9 @@ export default function ApproveSymptom({ userRole, userInfos }) {
 
   const [symptom, setSymptom] = useState([]);
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom/${symptomId}`)
-      .then((res) => {
-        setSymptom(res.data);
-      });
+    axios.get(`http://localhost:5000/symptom/${symptomId}`).then((res) => {
+      setSymptom(res.data);
+    });
   }, [symptomId]);
 
   // Approve
@@ -72,7 +70,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
         // Update status symptom
         await axios
           .put(
-            `${process.env.REACT_APP_API_URL}/symptom/update/${symptomId}`,
+            `http://localhost:5000/symptom/update/${symptomId}`,
             {
               status: "Approved",
             },
@@ -102,7 +100,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       axios.put(
-        `${process.env.REACT_APP_API_URL}/symptom/update/${symptomId}`,
+        `http://localhost:5000/symptom/update/${symptomId}`,
         {
           status: "Edit Requested",
         },
@@ -124,7 +122,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/symptom/delete/${symptomId}`,
+        `http://localhost:5000/symptom/delete/${symptomId}`,
         apiConfig
       );
     } catch (err) {

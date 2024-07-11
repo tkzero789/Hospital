@@ -57,7 +57,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   // Fetch blog content based on id
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/blog/${blogId}`)
+      .get(`http://localhost:5000/blog/${blogId}`)
       .then((res) => {
         setBlog(res.data);
       })
@@ -71,7 +71,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   async function confirmApprove() {
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/blog/update/${blogId}`,
+        `http://localhost:5000/blog/update/${blogId}`,
         {
           status: "Approved",
         },
@@ -96,7 +96,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   async function requestEdit() {
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/blog/update/${blogId}`,
+        `http://localhost:5000/blog/update/${blogId}`,
         {
           status: "Edit Requested",
         },
@@ -120,7 +120,7 @@ export default function ViewBlog({ userRole, userInfos }) {
   // Delete a blog from database
   async function confirmDelete() {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/blog/${blogId}`, apiConfig)
+      .delete(`http://localhost:5000/blog/${blogId}`, apiConfig)
       .then(() => {
         setIsClicked(true);
       })

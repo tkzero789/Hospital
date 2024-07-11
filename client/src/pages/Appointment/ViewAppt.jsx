@@ -80,7 +80,7 @@ export default function ViewAppt() {
   useEffect(() => {
     console.log(apptId);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/appointment/${apptId}`)
+      .get(`http://localhost:5000/appointment/${apptId}`)
       .then((res) => {
         const formData = res.data;
         setFormInputs(formData);
@@ -115,7 +115,7 @@ export default function ViewAppt() {
     console.log(newStatus);
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/appointment/update/${apptId}`,
+        `http://localhost:5000/appointment/update/${apptId}`,
         {
           status: newStatus,
         },
@@ -150,7 +150,7 @@ export default function ViewAppt() {
       if (prevIsEditable) {
         axios
           .post(
-            `${process.env.REACT_APP_API_URL}/appointment/edit/${apptId}`,
+            `http://localhost:5000/appointment/edit/${apptId}`,
             formInputs,
             apiConfig
           )
@@ -160,7 +160,7 @@ export default function ViewAppt() {
 
             // Fetch the updated data
             axios
-              .get(`${process.env.REACT_APP_API_URL}/appointment/${apptId}`)
+              .get(`http://localhost:5000/appointment/${apptId}`)
               .then((res) => {
                 setFormInputs(res.data);
               })
@@ -197,10 +197,7 @@ export default function ViewAppt() {
   // Delete Appointment
   async function deleteAppt() {
     axios
-      .delete(
-        `${process.env.REACT_APP_API_URL}/appointment/${apptId}`,
-        apiConfig
-      )
+      .delete(`http://localhost:5000/appointment/${apptId}`, apiConfig)
       .then(() => {
         setIsClicked(true);
       })

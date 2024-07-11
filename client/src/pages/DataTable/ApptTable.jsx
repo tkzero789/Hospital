@@ -13,7 +13,7 @@ export default function ApptTable() {
   // Fetch appointment data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/appointment`)
+      .get(`http://localhost:5000/appointment`)
       .then((res) => {
         const reverseData = res.data.reverse();
         const reverseDataWithNo = reverseData.map((item, index) => ({

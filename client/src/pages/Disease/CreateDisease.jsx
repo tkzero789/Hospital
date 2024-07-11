@@ -96,7 +96,7 @@ export default function CreateDisease({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom`)
+      .get(`http://localhost:5000/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })
@@ -221,11 +221,7 @@ export default function CreateDisease({ userRole, userInfos }) {
     try {
       // Create disease
       await axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/disease/add`,
-          disease,
-          apiConfig
-        )
+        .post(`http://localhost:5000/disease/add`, disease, apiConfig)
         .then((res) => {
           if (res.data && res.data.message === "Disease already exists") {
             throw new Error("Duplicated disease!");

@@ -9,11 +9,9 @@ const AppointmentWidget = () => {
 
   useEffect(() => {
     try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/appointmentCurrent`)
-        .then((res) => {
-          setAppointments(res.data.totalAppointmentsThisWeek);
-        });
+      axios.get(`http://localhost:5000/appointmentCurrent`).then((res) => {
+        setAppointments(res.data.totalAppointmentsThisWeek);
+      });
     } catch (err) {
       console.log(err);
     }

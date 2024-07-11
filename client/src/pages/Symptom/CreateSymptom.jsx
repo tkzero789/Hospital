@@ -103,11 +103,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
       // Create new symptom
       const updatedSymptom = { ...symptom };
       await axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/symptom/add`,
-          updatedSymptom,
-          apiConfig
-        )
+        .post(`http://localhost:5000/symptom/add`, updatedSymptom, apiConfig)
         .then((res) => {
           if (res.data && res.data.message === "Symptom already exists") {
             throw new Error("Duplicated symptom!");

@@ -95,7 +95,7 @@ export default function EditDisease({ userRole, userInfos }) {
   // Fetch disease data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/disease/${diseaseId}`)
+      .get(`http://localhost:5000/disease/${diseaseId}`)
       .then((res) => {
         const dbDisease = res.data;
         if (!dbDisease) {
@@ -129,7 +129,7 @@ export default function EditDisease({ userRole, userInfos }) {
   // Fetch symptom data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom`)
+      .get(`http://localhost:5000/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })
@@ -253,7 +253,7 @@ export default function EditDisease({ userRole, userInfos }) {
     try {
       if (origName !== disease.name) {
         await axios
-          .get(`${process.env.REACT_APP_API_URL}/disease/${disease.name}`)
+          .get(`http://localhost:5000/disease/${disease.name}`)
           .then((res) => {
             if (res.data) {
               throw new Error("Duplicated disease name!");
@@ -263,7 +263,7 @@ export default function EditDisease({ userRole, userInfos }) {
       // Edit disease
       await axios
         .put(
-          `${process.env.REACT_APP_API_URL}/disease/edit/${diseaseId}`,
+          `http://localhost:5000/disease/edit/${diseaseId}`,
           disease,
           apiConfig
         )

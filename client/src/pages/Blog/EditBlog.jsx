@@ -81,7 +81,7 @@ const EditBlog = ({ userInfos }) => {
   useEffect(() => {
     console.log(blogId);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/blog/${blogId}`)
+      .get(`http://localhost:5000/blog/${blogId}`)
       .then((res) => {
         setBlog(res.data);
         if (editor) {
@@ -164,7 +164,7 @@ const EditBlog = ({ userInfos }) => {
     for (const key of imagesToRemoveFromS3) {
       try {
         await axios.post(
-          `${process.env.REACT_APP_API_URL}/blog/deleteImg`,
+          `http://localhost:5000/blog/deleteImg`,
           { key },
           apiConfig
         );
@@ -188,7 +188,7 @@ const EditBlog = ({ userInfos }) => {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/blog/edit/${blogId}`,
+        `http://localhost:5000/blog/edit/${blogId}`,
         updatedBlog,
         apiConfig
       );
@@ -244,7 +244,7 @@ const EditBlog = ({ userInfos }) => {
     formData.append("image", event.target.files[0]);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/blog/upload`,
+        `http://localhost:5000/blog/upload`,
         formData,
         {
           ...apiConfig,
