@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 const dbo = require("./db/conn");
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["https://hospital-render-client.onrender.com"];
 
 app.use(
   cors({
