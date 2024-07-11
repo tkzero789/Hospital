@@ -27,33 +27,37 @@ const MobileDiseaseList = ({
               strengthLevel = "Significant";
             }
             return (
-              <div
-                key={index}
-                className={`m-disease-list-item`}
-                onClick={() => handleDiseaseClick(index)}
-              >
-                <p>{i.name}</p>
-                <p>Specialty: {i.medSpecialty}</p>
-                <p>
-                  Result strength:{" "}
-                  <span className="fw-med">{strengthLevel}</span>
-                </p>
-                <div className="pt-1">
-                  <ResultBar score={String(i.matchedScore)} />
+              <div className="m-disease-list-wrapper">
+                <div
+                  key={index}
+                  className="m-disease-list-item"
+                  onClick={() => handleDiseaseClick(index)}
+                >
+                  <p>{i.name}</p>
+                  <p>Specialty: {i.medSpecialty}</p>
+                  <p>
+                    Result strength:{" "}
+                    <span className="fw-med">{strengthLevel}</span>
+                  </p>
+                  <div className="pt-1">
+                    <ResultBar score={String(i.matchedScore)} />
+                  </div>
+                  <img src={RightArrow} alt="icon" />
                 </div>
-                <img src={RightArrow} alt="icon" />
               </div>
             );
           })}
-        <button
-          className="m-disease-close"
-          onClick={(e) => {
-            e.preventDefault();
-            setIsClicked(true);
-          }}
-        >
-          Close
-        </button>
+        <div className="m-disease-close">
+          {" "}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIsClicked(true);
+            }}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </>
   );

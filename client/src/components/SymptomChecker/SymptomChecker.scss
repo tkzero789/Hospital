@@ -1278,15 +1278,14 @@
   }
 
   .m-disease-list {
+    display: block;
     position: fixed;
-    margin-top: 58px;
-    background-color: white;
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - 58px);
-    z-index: 10;
-    display: block;
+    height: 100%;
+    z-index: 1200;
+    background-color: var(--bg-white);
     visibility: visible;
     transition: top 0.4s ease-in-out, opacity 0.3s ease-in-out;
   }
@@ -1304,6 +1303,12 @@
     color: var(--text-white-1);
     font-weight: var(--roboto-regular-weight);
     background-color: var(--bg-blue-2);
+  }
+
+  .m-disease-list .m-disease-list-wrapper {
+    width: 100%;
+    max-height: calc(100% - 170px);
+    overflow-y: auto;
   }
 
   .m-disease-list .m-disease-list-item {
@@ -1355,13 +1360,22 @@
   }
 
   .m-disease-close {
-    position: absolute;
-    color: var(--text-white-1);
-    background-color: var(--bg-blue-2);
-    bottom: 0;
     width: 100%;
-    padding: 8px 0;
-    border: none;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    padding: 28px;
+    background-color: var(--bg-white);
+  }
+
+  .m-disease-close button {
+    width: 100%;
+    padding: 8px 12px;
+    color: var(--text-blue-2);
+    border: 1px solid var(--text-blue-2);
+    border-radius: var(--border-radius-1);
+    background-color: var(--bg-white);
+    font-weight: var(--roboto-medium-weight);
   }
 
   .m-disease-list .m-disease-list-item .progress {
@@ -1662,15 +1676,14 @@
   }
 
   .m-disease-list {
+    display: block;
     position: fixed;
-    margin-top: 58px;
-    background-color: white;
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - 58px);
-    z-index: 10;
-    display: block;
+    height: 100%;
+    z-index: 1200;
+    background-color: var(--bg-white);
     visibility: visible;
     transition: top 0.4s ease-in-out, opacity 0.3s ease-in-out;
   }
@@ -1688,6 +1701,12 @@
     color: var(--text-white-1);
     font-weight: var(--roboto-regular-weight);
     background-color: var(--bg-blue-2);
+  }
+
+  .m-disease-list .m-disease-list-wrapper {
+    width: 100%;
+    max-height: calc(100% - 170px);
+    overflow-y: auto;
   }
 
   .m-disease-list .m-disease-list-item {
@@ -1739,13 +1758,22 @@
   }
 
   .m-disease-close {
-    position: absolute;
-    color: var(--text-white-1);
-    background-color: var(--bg-blue-2);
-    bottom: 0;
     width: 100%;
-    padding: 8px 0;
-    border: none;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    padding: 28px;
+    background-color: var(--bg-white);
+  }
+
+  .m-disease-close button {
+    width: 100%;
+    padding: 8px 12px;
+    color: var(--text-blue-2);
+    border: 1px solid var(--text-blue-2);
+    border-radius: var(--border-radius-1);
+    background-color: var(--bg-white);
+    font-weight: var(--roboto-medium-weight);
   }
 
   .m-disease-list .m-disease-list-item .progress {
