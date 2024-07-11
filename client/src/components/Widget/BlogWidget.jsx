@@ -9,9 +9,11 @@ const BlogWidget = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_API_URL}/blog`).then((res) => {
-        setData(res.data);
-      });
+      axios
+        .get(`https://bayside-render-server.onrender.com/blog`)
+        .then((res) => {
+          setData(res.data);
+        });
     } catch (err) {
       console.log(err);
     }

@@ -81,7 +81,7 @@ const EditBlog = ({ userInfos }) => {
   useEffect(() => {
     console.log(blogId);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/blog/${blogId}`)
+      .get(`https://bayside-render-server.onrender.com/blog/${blogId}`)
       .then((res) => {
         setBlog(res.data);
         if (editor) {
@@ -164,7 +164,7 @@ const EditBlog = ({ userInfos }) => {
     for (const key of imagesToRemoveFromS3) {
       try {
         await axios.post(
-          `${process.env.REACT_APP_API_URL}/blog/deleteImg`,
+          `https://bayside-render-server.onrender.com/blog/deleteImg`,
           { key },
           apiConfig
         );
@@ -188,7 +188,7 @@ const EditBlog = ({ userInfos }) => {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/blog/edit/${blogId}`,
+        `https://bayside-render-server.onrender.com/blog/edit/${blogId}`,
         updatedBlog,
         apiConfig
       );
@@ -244,7 +244,7 @@ const EditBlog = ({ userInfos }) => {
     formData.append("image", event.target.files[0]);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/blog/upload`,
+        `https://bayside-render-server.onrender.com/blog/upload`,
         formData,
         {
           ...apiConfig,

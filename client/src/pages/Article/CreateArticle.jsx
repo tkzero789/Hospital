@@ -86,7 +86,7 @@ export default function CreateArticle({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/disease/${diseaseId}`)
+      .get(`https://bayside-render-server.onrender.com/disease/${diseaseId}`)
       .then((res) => {
         const disease = res.data;
         setArticle({
@@ -133,7 +133,7 @@ export default function CreateArticle({ userRole, userInfos }) {
         // Create new article
         await axios
           .post(
-            `${process.env.REACT_APP_API_URL}/article/add`,
+            `https://bayside-render-server.onrender.com/article/add`,
             article,
             apiConfig
           )

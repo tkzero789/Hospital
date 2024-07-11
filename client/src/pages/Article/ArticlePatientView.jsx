@@ -11,7 +11,7 @@ export default function ArticlePatientView({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/article/${articleId}`)
+      .get(`https://bayside-render-server.onrender.com/article/${articleId}`)
       .then((res) => {
         const dbarticle = res.data;
         if (!dbarticle) {

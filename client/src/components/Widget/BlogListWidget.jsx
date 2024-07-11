@@ -12,7 +12,7 @@ const BlogListWidget = () => {
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/blog/currentBlogs`)
+        .get(`https://bayside-render-server.onrender.com/blog/currentBlogs`)
         .then((res) => {
           setData(res.data);
         });
@@ -24,9 +24,11 @@ const BlogListWidget = () => {
   // Fetch all blogs to get category
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_API_URL}/blog`).then((res) => {
-        setCategory(res.data);
-      });
+      axios
+        .get(`https://bayside-render-server.onrender.com/blog`)
+        .then((res) => {
+          setCategory(res.data);
+        });
     } catch (err) {
       console.log(err);
     }

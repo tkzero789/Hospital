@@ -73,7 +73,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom/${symptomId}`)
+      .get(`https://bayside-render-server.onrender.com/symptom/${symptomId}`)
       .then((res) => {
         const dbsymptom = res.data;
         console.log(dbsymptom);
@@ -96,7 +96,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       axios.put(
-        `${process.env.REACT_APP_API_URL}/symptom/update/${symptomId}`,
+        `https://bayside-render-server.onrender.com/symptom/update/${symptomId}`,
         {
           status: "Edit Requested",
         },
@@ -118,7 +118,7 @@ export default function ViewSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/symptom/delete/${symptomId}`,
+        `https://bayside-render-server.onrender.com/symptom/delete/${symptomId}`,
         apiConfig
       );
     } catch (err) {

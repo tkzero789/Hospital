@@ -14,7 +14,7 @@ export default function ArticleTableByDisease({ userRole, userInfos }) {
     async function fetchData() {
       try {
         const articleRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/article/by-disease/${diseaseId}`
+          `https://bayside-render-server.onrender.com/article/by-disease/${diseaseId}`
         );
         const articleData = articleRes.data;
         const articleDataWithNo = articleData.map((item, index) => ({

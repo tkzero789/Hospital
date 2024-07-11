@@ -16,7 +16,9 @@ const ApptDetailGuest = () => {
     e.preventDefault();
     if (phoneNumber) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/appointment/${e.target.value}`)
+        .get(
+          `https://bayside-render-server.onrender.com/appointment/${e.target.value}`
+        )
         .then((response) => {
           console.log("API response:", response.data);
           const filteredAppointments = response.data.filter(

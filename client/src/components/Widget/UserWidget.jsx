@@ -9,9 +9,11 @@ const UserWidget = () => {
 
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_API_URL}/user`).then((res) => {
-        setData(res.data);
-      });
+      axios
+        .get(`https://bayside-render-server.onrender.com/user`)
+        .then((res) => {
+          setData(res.data);
+        });
     } catch (err) {
       console.log(err);
     }

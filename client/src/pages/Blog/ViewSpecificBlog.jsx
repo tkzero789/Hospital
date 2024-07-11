@@ -22,13 +22,13 @@ const ViewSpecificBlog = () => {
       setIsLoading(true);
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/news/blogBySlug?slug=${blogSlug}`
+          `https://bayside-render-server.onrender.com/news/blogBySlug?slug=${blogSlug}`
         )
         .then((res) => {
           setBlog(res.data);
           const tag = encodeURIComponent(res.data.tag);
           return axios.get(
-            `${process.env.REACT_APP_API_URL}/news/relatedBlogs?tag=${tag}&excludeId=${res.data._id}`
+            `https://bayside-render-server.onrender.com/news/relatedBlogs?tag=${tag}&excludeId=${res.data._id}`
           );
         })
         .then((relatedRes) => {

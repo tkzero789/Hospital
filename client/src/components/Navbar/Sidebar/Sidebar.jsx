@@ -30,7 +30,7 @@ export default function Sidebar() {
         headers: { Authorization: `Bearer ${token}` },
       };
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/signout`,
+        `https://bayside-render-server.onrender.com/signout`,
         null,
         config
       );

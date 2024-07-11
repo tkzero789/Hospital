@@ -54,7 +54,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
   const [symptom, setSymptom] = useState([]);
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom/${symptomId}`)
+      .get(`https://bayside-render-server.onrender.com/symptom/${symptomId}`)
       .then((res) => {
         setSymptom(res.data);
       });
@@ -72,7 +72,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
         // Update status symptom
         await axios
           .put(
-            `${process.env.REACT_APP_API_URL}/symptom/update/${symptomId}`,
+            `https://bayside-render-server.onrender.com/symptom/update/${symptomId}`,
             {
               status: "Approved",
             },
@@ -102,7 +102,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       axios.put(
-        `${process.env.REACT_APP_API_URL}/symptom/update/${symptomId}`,
+        `https://bayside-render-server.onrender.com/symptom/update/${symptomId}`,
         {
           status: "Edit Requested",
         },
@@ -124,7 +124,7 @@ export default function ApproveSymptom({ userRole, userInfos }) {
     setIsClicked(true);
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/symptom/delete/${symptomId}`,
+        `https://bayside-render-server.onrender.com/symptom/delete/${symptomId}`,
         apiConfig
       );
     } catch (err) {

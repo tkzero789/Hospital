@@ -96,7 +96,7 @@ export default function CreateDisease({ userRole, userInfos }) {
   // Fetch data
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/symptom`)
+      .get(`https://bayside-render-server.onrender.com/symptom`)
       .then((res) => {
         setDbSymps(res.data);
       })
@@ -222,7 +222,7 @@ export default function CreateDisease({ userRole, userInfos }) {
       // Create disease
       await axios
         .post(
-          `${process.env.REACT_APP_API_URL}/disease/add`,
+          `https://bayside-render-server.onrender.com/disease/add`,
           disease,
           apiConfig
         )

@@ -23,7 +23,7 @@ export default function EditUser() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${userId}`)
+      .get(`https://bayside-render-server.onrender.com/user/${userId}`)
       .then((res) => {
         setUser(res.data);
       })
@@ -58,7 +58,7 @@ export default function EditUser() {
       console.log(updatedUser);
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/user/update/${userId}`,
+          `https://bayside-render-server.onrender.com/user/update/${userId}`,
           updatedUser
         )
         .then((res) => {
@@ -88,9 +88,12 @@ export default function EditUser() {
 
   function updateStatus(newStatus) {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/user/update-status/${userId}`, {
-        status: newStatus,
-      })
+      .post(
+        `https://bayside-render-server.onrender.com/user/update-status/${userId}`,
+        {
+          status: newStatus,
+        }
+      )
       .catch((err) => {
         const message = `Error: ${err}`;
         window.alert(message);
@@ -101,7 +104,7 @@ export default function EditUser() {
   function confirmDelete() {
     if (window.confirm("Are you sure you want to delete this account?")) {
       axios
-        .delete(`${process.env.REACT_APP_API_URL}/user/${userId}`)
+        .delete(`https://bayside-render-server.onrender.com/user/${userId}`)
         .catch((err) => {
           const message = `Error: ${err}`;
           window.alert(message);

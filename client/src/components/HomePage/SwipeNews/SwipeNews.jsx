@@ -15,7 +15,7 @@ export default function SwipeNews() {
     const fetchBlogs = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/news/blogSwipe`
+          `https://bayside-render-server.onrender.com/news/blogSwipe`
         );
         setBlogs(res.data);
       } catch (error) {

@@ -128,7 +128,7 @@ const CreateBlog = ({ userInfos }) => {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/blog/add`,
+        `https://bayside-render-server.onrender.com/blog/add`,
         updatedBlog,
         apiConfig
       );
@@ -194,7 +194,7 @@ const CreateBlog = ({ userInfos }) => {
     formData.append("image", event.target.files[0]);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/blog/upload`,
+        `https://bayside-render-server.onrender.com/blog/upload`,
         formData,
         {
           ...apiConfig,
@@ -223,7 +223,7 @@ const CreateBlog = ({ userInfos }) => {
         const key = imageToRemove.split("/").pop();
         console.log("key url", imageToRemove);
         await axios.post(
-          `${process.env.REACT_APP_API_URL}/blog/deleteImg`,
+          `https://bayside-render-server.onrender.com/blog/deleteImg`,
           { key },
           apiConfig
         );

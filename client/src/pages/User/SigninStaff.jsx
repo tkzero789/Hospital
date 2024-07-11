@@ -41,7 +41,7 @@ export default function SigninStaff() {
   async function confirmSignin(e) {
     e.preventDefault();
     await axios
-      .post(`${process.env.REACT_APP_API_URL}/signin`, user)
+      .post(`https://bayside-render-server.onrender.com/signin`, user)
       .then((res) => {
         console.log("Signed in");
         console.log(res.data);

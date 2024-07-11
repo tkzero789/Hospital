@@ -11,7 +11,7 @@ export default function UserTable({ userRole, userInfos }) {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user`)
+      .get(`https://bayside-render-server.onrender.com/user`)
       .then((res) => {
         // Add an 'id' field to each users object
         const usersWithIds = res.data.map((item) => ({

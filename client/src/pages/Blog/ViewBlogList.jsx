@@ -37,7 +37,7 @@ const ViewBlogList = () => {
           .map((tag) => encodeURIComponent(tag))
           .join(",");
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/news/blogByTags?tags=${tagsQuery}`
+          `https://bayside-render-server.onrender.com/news/blogByTags?tags=${tagsQuery}`
         );
         allFilteredBlogs = response.data;
 
@@ -60,7 +60,7 @@ const ViewBlogList = () => {
       } else {
         setIsLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/news/blog?page=${currentPage}&limit=${blogsPerPage}`
+          `https://bayside-render-server.onrender.com/news/blog?page=${currentPage}&limit=${blogsPerPage}`
         );
         let data = response.data;
         console.log(data);
