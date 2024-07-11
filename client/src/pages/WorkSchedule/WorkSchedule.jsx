@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-import { Breadcrumbs, Typography } from "@mui/material";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Footer from "components/HomePage/Footer/Footer";
 import "pages/WorkSchedule/WorkSchedule.scss";
 
@@ -13,18 +10,6 @@ const WorkSchedule = () => {
           <title>Business hours</title>
         </Helmet>
       </HelmetProvider>
-      <div className="content-container">
-        <Breadcrumbs
-          className="breadcrumbs"
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link className="text-secondary" to="/home">
-            Home
-          </Link>
-          ,<Typography className="text-dark">Business hours</Typography>,
-        </Breadcrumbs>
-      </div>
       <div className="work">
         <div className="content-container">
           <div className="work-wrapper">
