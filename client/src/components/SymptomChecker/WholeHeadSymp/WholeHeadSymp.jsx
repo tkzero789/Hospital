@@ -9,6 +9,7 @@ const WholeHeadSymp = ({
   toggleFunction,
   toggleExtraM,
   handleSnackBarPosition,
+  gender,
 }) => {
   return (
     <>
@@ -39,6 +40,7 @@ const WholeHeadSymp = ({
                 key={symptom.id}
                 toggleFunction={toggleFunction}
                 handleSnackBarPosition={handleSnackBarPosition}
+                gender={gender}
               />
             ))}
         </div>

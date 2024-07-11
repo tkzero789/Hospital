@@ -25,6 +25,13 @@ export default function SymptomForm({
     { value: "Knee", label: "Knee" },
     { value: "Shin", label: "Shin" },
     { value: "Foot", label: "Foot" },
+    { value: "Non specific", label: "Non specific" },
+  ];
+
+  const genderOptions = [
+    { value: "Both", label: "Both" },
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
   ];
 
   function updateField(event) {
@@ -156,7 +163,7 @@ export default function SymptomForm({
           name="name"
           value={symptom.name}
           placeholder="Enter symptom name"
-          disabled={mode === "view" || mode === "doctor edit"}
+          disabled={mode === "view"}
           onChange={(e) => updateField(e)}
         />
       </div>
@@ -166,10 +173,26 @@ export default function SymptomForm({
           name="position"
           value={symptom.position}
           className="form-select col border-dark-subtle shadow-sm"
-          disabled={mode === "view" || mode === "doctor edit"}
+          disabled={mode === "view"}
           onChange={(e) => updateField(e)}
         >
           {positionOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="form-group row pb-5">
+        <h4 className="card-title text-dark-1 col-3">Gender:</h4>
+        <select
+          name="gender"
+          value={symptom.gender}
+          className="form-select col border-dark-subtle shadow-sm"
+          disabled={mode === "view"}
+          onChange={(e) => updateField(e)}
+        >
+          {genderOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

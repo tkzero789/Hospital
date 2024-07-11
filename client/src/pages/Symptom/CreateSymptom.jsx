@@ -51,6 +51,7 @@ export default function CreateSymptom({ userRole, userInfos }) {
     id: uuidv4(),
     name: "",
     position: "Head",
+    gender: "Both",
     categories: [
       {
         id: uuidv4(),

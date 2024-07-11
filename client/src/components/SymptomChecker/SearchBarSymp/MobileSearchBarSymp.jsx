@@ -17,6 +17,7 @@ const MobileSearchBarSymp = ({
   dbSymps,
   chosenSymps,
   handleSnackBarPosition,
+  gender,
 }) => {
   // Delay 1s on rendering symptom
   const [delay, setDelay] = useState(false);
@@ -74,6 +75,7 @@ const MobileSearchBarSymp = ({
                       key={symptom.id}
                       toggleFunction={toggleFunction}
                       handleSnackBarPosition={handleSnackBarPosition}
+                      gender={gender}
                     />
                   ))
               : Array(10)

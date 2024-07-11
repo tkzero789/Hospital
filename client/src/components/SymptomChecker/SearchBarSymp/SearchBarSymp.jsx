@@ -14,6 +14,7 @@ const SearchBarSymp = ({
   onCheck,
   chosenSymps,
   handleSnackBarPosition,
+  gender,
 }) => {
   // Delay 0.5s on rendering symptom
   const [delay, setDelay] = useState(false);
@@ -65,6 +66,7 @@ const SearchBarSymp = ({
                     onCheck={onCheck}
                     key={symptom.id}
                     handleSnackBarPosition={handleSnackBarPosition}
+                    gender={gender}
                   />
                 ))
             : Array(6)
