@@ -3,6 +3,14 @@ import "components/SymptomChecker/SymptomChecker.scss";
 
 export default function PatientFormAgeGen({ patientForm, setPatientForm }) {
   function updateField(event) {
+    // If the value is not a whole number, prevent updating the state for the 'age' field
+    if (
+      event.target.name === "age" &&
+      !Number.isInteger(+event.target.value) &&
+      event.target.value !== ""
+    ) {
+      return;
+    }
     setPatientForm({
       ...patientForm,
       [event.target.name]: event.target.value,

@@ -11,23 +11,24 @@ const MobileDiseaseList = ({
     <>
       <div className={`m-disease-list ${isClicked ? "hide" : ""}`}>
         <h6>Conditions that match your symptoms</h6>
-        {patientResult
-          .filter((i) => i.status === "Approved")
-          .map((i, index) => {
-            const matchedScore = parseInt(i.matchedScore, 10);
-            let strengthLevel;
+        <div className="m-disease-list-wrapper">
+          {patientResult
+            .filter((i) => i.status === "Approved")
+            .map((i, index) => {
+              const matchedScore = parseInt(i.matchedScore, 10);
+              let strengthLevel;
 
-            if (matchedScore <= 5) {
-              strengthLevel = "Weak";
-            } else if (matchedScore > 5 && matchedScore <= 14) {
-              strengthLevel = "Fair";
-            } else if (matchedScore > 14 && matchedScore <= 28) {
-              strengthLevel = "High";
-            } else {
-              strengthLevel = "Significant";
-            }
-            return (
-              <div className="m-disease-list-wrapper">
+              if (matchedScore <= 5) {
+                strengthLevel = "Weak";
+              } else if (matchedScore > 5 && matchedScore <= 14) {
+                strengthLevel = "Fair";
+              } else if (matchedScore > 14 && matchedScore <= 28) {
+                strengthLevel = "High";
+              } else {
+                strengthLevel = "Significant";
+              }
+
+              return (
                 <div
                   key={index}
                   className="m-disease-list-item"
@@ -44,9 +45,9 @@ const MobileDiseaseList = ({
                   </div>
                   <img src={RightArrow} alt="icon" />
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
         <div className="m-disease-close">
           {" "}
           <button

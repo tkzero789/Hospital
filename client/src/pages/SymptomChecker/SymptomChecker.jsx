@@ -25,6 +25,8 @@ export default function SymptomChecker() {
   const [chosenSymps, setChosenSymps] = useState([]);
   // keep patient result updated every step, contain disease objects from dbDiseases
   const [patientResult, setPatientResult] = useState([]);
+  // store the patientResult data if step back to 1
+  const [storePatientResult, setStorePatientResult] = useState([]);
   // set step and previous step in the process
   const [prevStep, setPrevStep] = useState(1);
   const [step, setStep] = useState(1);
@@ -53,6 +55,7 @@ export default function SymptomChecker() {
       .get(`${process.env.REACT_APP_API_BASE_URL}/disease`)
       .then((res) => {
         setPatientResult(res.data);
+        setStorePatientResult(res.data);
       })
       .catch((err) => {
         const message = `Error: ${err}`;
@@ -279,6 +282,9 @@ export default function SymptomChecker() {
   const location = useLocation();
   const check = location.pathname === "/symptom-checker";
 
+  console.log("storePatientResult", storePatientResult);
+  console.log("patientResult", patientResult);
+
   return (
     <>
       <HelmetProvider>
@@ -306,6 +312,7 @@ export default function SymptomChecker() {
                       onClick={() => {
                         if (step === 2) {
                           setDefault();
+                          setPatientResult(storePatientResult);
                         } else {
                           handlePrev();
                         }
