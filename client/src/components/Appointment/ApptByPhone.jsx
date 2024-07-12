@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import ApptIMG from "assets/img/appt-request.jpg";
-import ApptByPhoneDetail from "components/Appt/ApptByPhoneDetail";
-import ApptFilter from "components/Appt//ApptFilter";
+import ApptByPhoneDetail from "components/Appointment/ApptByPhoneDetail";
+import ApptFilter from "components/Appointment//ApptFilter";
 import { Skeleton } from "@mui/material";
-import "components/Appt/Appt.scss";
+import "components/Appointment/Appt.scss";
 import FormatDate from "utilities/FormatDate";
 
 const ApptByPhone = ({ appointments, setIsPhoneNum }) => {

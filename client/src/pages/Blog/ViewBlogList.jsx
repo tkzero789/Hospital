@@ -12,10 +12,10 @@ import FormatDate from "utilities/FormatDate";
 import "pages/Blog/Blog.scss";
 
 const ViewBlogList = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const pageWithNumber = params.pageWithNumber;
   const pageNumber = parseInt(pageWithNumber.split("-")[1], 10);
-  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(parseInt(pageNumber, 10) || 1);
   const [isLoading, setIsLoading] = useState(true);
   const [isFilter, setIsFilter] = useState(false);
@@ -67,11 +67,9 @@ const ViewBlogList = () => {
 
         // Update the state (5 blogs per page)
         setDisplayBlogs(data.blogs);
-        console.log(data.blogs);
 
         // Update the number of totalPages
         setTotalPages(data.totalPages);
-        console.log(data.totalPages);
 
         setIsLoading(false);
       }

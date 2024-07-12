@@ -5,8 +5,8 @@ import { Toaster, toast } from "sonner";
 import { Link } from "react-router-dom";
 import ApptIMG from "assets/img/appt-request.jpg";
 import "react-calendar/dist/Calendar.css";
-import "components/Appt/Calendar.css";
-import "components/Appt/Appt.scss";
+import "components/Appointment/Calendar.css";
+import "components/Appointment/Appt.scss";
 
 export default function ApptForm({
   appt,

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-import ApptByPhone from "components/Appt/ApptByPhone";
+import ApptByPhone from "components/Appointment/ApptByPhone";
 import SearchApptDetail from "assets/icons/search-appt-detail-icon.svg";
 import Footer from "components/HomePage/Footer/Footer";
 import ApptIMG from "assets/img/appt-request.jpg";
