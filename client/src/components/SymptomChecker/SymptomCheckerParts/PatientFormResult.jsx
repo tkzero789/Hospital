@@ -42,8 +42,6 @@ const PatientFormResult = ({ patientResult }) => {
           );
           mainArticle = mainArticle.concat(validArticles);
           otherArticles = otherArticles.concat(relatedArticles);
-
-          console.log("result", result);
         }
         const timer = setTimeout(() => {
           setArticle(mainArticle);
