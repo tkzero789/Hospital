@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import "components/Appt/Appt.scss";
+import "components/Appointment/Appt.scss";
 
 const ApptOtp = ({ show, setShow, confirmSetAppt, isSubmit }) => {
   const [otp, setOtp] = useState("");
