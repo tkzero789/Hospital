@@ -20,8 +20,10 @@ const UserWidget = () => {
     <>
       <div className="widget">
         <div className="widget__wrapper">
-          <div className="widget__icon-user">
-            <PeopleIcon className="icon-user" />
+          <div>
+            <div className="widget__icon-user">
+              <PeopleIcon className="icon-user" />
+            </div>
           </div>
           <div>
             <span>{data.length}</span>

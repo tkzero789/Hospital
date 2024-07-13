@@ -21,12 +21,14 @@ const Dashboard = () => {
         <div className="dashboard__wrapper">
           <div className="top">
             <div className="top__wrapper">
-              <SymptomWidget />
-              <DiseaseWidget />
-              <ArticleWidget />
-              <AppointmentWidget />
-              <BlogWidget />
-              <UserWidget />
+              <div className="widget-list">
+                <SymptomWidget />
+                <DiseaseWidget />
+                <ArticleWidget />
+                <AppointmentWidget />
+                <BlogWidget />
+                <UserWidget />
+              </div>
             </div>
           </div>
           <div className="middle">

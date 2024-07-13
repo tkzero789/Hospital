@@ -20,8 +20,10 @@ const BlogWidget = () => {
     <>
       <div className="widget">
         <div className="widget__wrapper">
-          <div className="widget__icon-blog">
-            <NewspaperIcon className="icon-blog" />
+          <div>
+            <div className="widget__icon-blog">
+              <NewspaperIcon className="icon-blog" />
+            </div>
           </div>
           <div>
             <span>{data.length}</span>
