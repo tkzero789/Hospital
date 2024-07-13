@@ -19,6 +19,7 @@ const ViewBlogList = () => {
   const [currentPage, setCurrentPage] = useState(parseInt(pageNumber, 10) || 1);
   const [isLoading, setIsLoading] = useState(true);
   const [isFilter, setIsFilter] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [displayBlogs, setDisplayBlogs] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -32,6 +33,7 @@ const ViewBlogList = () => {
 
       // If there is at least on tag being selected
       if (selectedTags.length > 0) {
+        setIsChecked(true);
         setIsFilter(true);
         const tagsQuery = selectedTags
           .map((tag) => encodeURIComponent(tag))
@@ -58,6 +60,7 @@ const ViewBlogList = () => {
 
         setIsFilter(false);
       } else {
+        setIsChecked(false);
         setIsLoading(true);
         const response = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/news/blog?page=${currentPage}&limit=${blogsPerPage}`
@@ -161,7 +164,10 @@ const ViewBlogList = () => {
                           <div className="blog-list-item" key={blog.id}>
                             {/* Mobile blog link title */}
                             <div className="mobile-blog-link d-none">
-                              <Link to={`/news/view/${blog.slug}`}>
+                              <Link
+                                to={`/news/view/${blog.slug}`}
+                                target={isChecked ? "_blank" : undefined}
+                              >
                                 {blog.title
                                   ? blog.title
                                   : "Does not have a title"}
@@ -173,6 +179,7 @@ const ViewBlogList = () => {
                                 <Link
                                   className="mobile-blog-thumbnail-img"
                                   to={`/news/view/${blog.slug}`}
+                                  target={isChecked ? "_blank" : undefined}
                                 >
                                   {thumbnailImage && (
                                     <img
@@ -206,6 +213,7 @@ const ViewBlogList = () => {
                               <Link
                                 className="blog-thumbnail-img"
                                 to={`/news/view/${blog.slug}`}
+                                target={isChecked ? "_blank" : undefined}
                               >
                                 {thumbnailImage && (
                                   <img
@@ -222,7 +230,10 @@ const ViewBlogList = () => {
                             <div className="c-9 md-8">
                               <div className="blog-link-and-intro">
                                 <div className="d-block">
-                                  <Link to={`/news/view/${blog.slug}`}>
+                                  <Link
+                                    to={`/news/view/${blog.slug}`}
+                                    target={isChecked ? "_blank" : undefined}
+                                  >
                                     {blog.title
                                       ? blog.title
                                       : "Does not have a title"}
