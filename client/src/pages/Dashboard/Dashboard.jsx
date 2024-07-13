@@ -1,3 +1,4 @@
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import SymptomWidget from "components/Widget/SymptomWidget";
 import DiseaseWidget from "components/Widget/DiseaseWidget";
 import ArticleWidget from "components/Widget/ArticleWidget";
@@ -11,6 +12,11 @@ import "pages/Dashboard/Dashboard.scss";
 const Dashboard = () => {
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Dashboard</title>
+        </Helmet>
+      </HelmetProvider>
       <div className="dashboard">
         <div className="dashboard__wrapper">
           <div className="top">
