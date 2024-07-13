@@ -21,7 +21,7 @@ const ApptSuccessMsg = () => {
                 </div>
                 <p>
                   BaySide's call center will contact you as soon as possible to
-                  confirm your appointment.. <br />
+                  confirm your appointment.<br />
                   Thank you for choosing BaySide Hospital.
                 </p>
 
