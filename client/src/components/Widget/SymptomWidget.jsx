@@ -20,8 +20,10 @@ const SymptomWidget = () => {
     <>
       <div className="widget">
         <div className="widget__wrapper">
-          <div className="widget__icon-symptom">
-            <MonitorHeartIcon className="icon-symptom" />
+          <div>
+            <div className="widget__icon-symptom">
+              <MonitorHeartIcon className="icon-symptom" />
+            </div>
           </div>
           <div>
             <span>{data.length}</span>

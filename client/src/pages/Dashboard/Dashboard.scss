@@ -1,12 +1,5 @@
 .dashboard {
-  background-image: linear-gradient(
-    to right,
-    #e5f6fd,
-    #e5f6fd,
-    #e5f6fd,
-    #e5f6fd,
-    #e5f6fd
-  );
+  background-color: #f4f6f9;
   width: 100%;
   height: calc(100vh - 50px);
 
@@ -17,16 +10,26 @@
   }
 
   .top {
-    width: 100%;
-
-    &__wrapper {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      column-gap: 1em;
+    .widget-list {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-between;
     }
   }
 
   .middle {
     padding: 28px 0;
+  }
+}
+
+// Large laptop responsive (15.6 inches)
+@media only screen and (max-width: 1440px) {
+  .dashboard {
+    .top {
+      .widget-list {
+        // column-gap: 6em;
+      }
+    }
   }
 }

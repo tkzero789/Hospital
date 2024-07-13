@@ -21,8 +21,10 @@ const DiseaseWidget = () => {
     <>
       <div className="widget">
         <div className="widget__wrapper">
-          <div className="widget__icon-disease">
-            <MedicalServicesIcon className="icon-disease" />
+          <div>
+            <div className="widget__icon-disease">
+              <MedicalServicesIcon className="icon-disease" />
+            </div>
           </div>
           <div>
             <span>{data.length}</span>

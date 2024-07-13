@@ -22,8 +22,10 @@ const AppointmentWidget = () => {
     <>
       <div className="widget">
         <div className="widget__wrapper">
-          <div className="widget__icon-appt">
-            <TodayIcon className="icon-appt" />
+          <div>
+            <div className="widget__icon-appt">
+              <TodayIcon className="icon-appt" />
+            </div>
           </div>
           <div>
             <span>{appointments}</span>
