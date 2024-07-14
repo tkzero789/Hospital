@@ -53,14 +53,14 @@ export default function CreateAppt() {
         if (res.data && res.data.message === "Phone number spamming") {
           throw new Error(
             toast.error(
-              "The phone number has been marked as spam. If this is a mistake, please contact our customer service to resolve the issue"
+              "The phone number has been marked as spam. Please contact our customer service to resolve the issue"
             )
           );
         }
         if (res.data && res.data.message === "Phone number pending") {
           throw new Error(
             toast.error(
-              "The phone number has requested an appointment. Please wait for our customer service to contact you for confirmation"
+              "This number has an appointment pending. Confirmation call coming"
             )
           );
         }
@@ -88,14 +88,14 @@ export default function CreateAppt() {
         if (res.data && res.data.message === "Phone number spamming") {
           throw new Error(
             toast.error(
-              "The phone number has been marked as spam. If this is a mistake, please contact our customer service to resolve the issue"
+              "The phone number has been marked as spam. Please contact our customer service to resolve the issue"
             )
           );
         }
         if (res.data && res.data.message === "Phone number pending") {
           throw new Error(
             toast.error(
-              "The phone number has requested an appointment. Please wait for our customer service to contact you for confirmation"
+              "This number has an appointment pending. Confirmation call coming"
             )
           );
         }

@@ -169,7 +169,7 @@ export default function ApptForm({
     } else if (!inputEmail.checkValidity()) {
       toast.error("Invalid email");
     } else if (!date) {
-      toast.error("Please select date");
+      toast.error("Please select date of birth");
     } else if (!month || month === "00") {
       toast.error("Please select month");
     } else if (!year) {
@@ -432,7 +432,7 @@ export default function ApptForm({
               <div className="appt-btn">
                 <Toaster
                   toastOptions={{
-                    className: "toast-noti",
+                    className: "toast-noti-3",
                   }}
                   position="top-center"
                   richColors
