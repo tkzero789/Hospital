@@ -333,104 +333,106 @@ const EditBlog = ({ userInfos }) => {
 
   return (
     <>
-      <div className="content-container create-blog-text-editor">
+      <div className="container create-blog-text-editor">
         <h3>Edit blog</h3>
-        <span>
-          By: <span className="text-blue-3">{userInfos.fullName}</span>
-        </span>
-        <div className="text-editor-title">
-          <label htmlFor="title">Title:</label>
-          <textarea value={blog.title} onChange={onChangeTitle} />
-        </div>
-        <div className="text-editor-tag">
-          <label htmlFor="category">Category:</label>
-          <select value={blog.tag} onChange={onChangeTag}>
-            <option value="">Select category</option>
-            <option value="Children's Health">Children's Health</option>
-            <option value="Diet & Food">Diet & Food</option>
-            <option value="Emotional Wellbeing">Emotional Wellbeing</option>
-            <option value="Exercise & Fitness">Exercise & Fitness</option>
-            <option value="Men's Health">Men's Health</option>
-            <option value="Parenting">Parenting</option>
-            <option value="Pregnancy & Childbirth">
-              Pregnacy & Childbirth
-            </option>
-            <option value="Primary Care">Primary Care</option>
-            <option value="Science & Research">Science & Research</option>
-            <option value="Sex & Relationship">Sex & Relationship</option>
-            <option value="Wellness">Wellness</option>
-            <option value="Women's Health">Women's Health</option>
-          </select>
-        </div>
-        <div className="text-editor-intro">
-          <label htmlFor="intro">Introduction:</label>
-          <textarea value={blog.intro} onChange={onChangeIntro} />
-        </div>
-        <div className="text-editor-img">
-          <label htmlFor="image">Blog image:</label>
-          <div>
-            <button onClick={() => fileInputRef.current.click()}>
-              <i className="bi bi-upload"></i>
-              <span>Upload image</span>
-            </button>
-            <input
-              type="file"
-              name="image"
-              className="flex-grow-1 ps-3 py-1"
-              onChange={(e) => uploadImage(e)}
-              ref={fileInputRef}
-            />
+        <div className="blog-text-wrapper">
+          <span>
+            By: <span className="text-blue-3">{userInfos.fullName}</span>
+          </span>
+          <div className="text-editor-title">
+            <label htmlFor="title">Title:</label>
+            <textarea value={blog.title} onChange={onChangeTitle} />
           </div>
-        </div>
-        <div className="text-editor-uploaded-img">
-          {blog.image && blog.image.length > 0 ? (
-            blog.image.map((img, index) => (
-              <div key={index}>
-                <img src={img} alt="Blog img" />
-                <button onClick={() => removeImgTemp(index)}>
-                  Remove image
-                </button>
-              </div>
-            ))
-          ) : (
-            <div className="w-100">
-              Image area empty. Please upload an image.
+          <div className="text-editor-tag">
+            <label htmlFor="category">Category:</label>
+            <select value={blog.tag} onChange={onChangeTag}>
+              <option value="">Select category</option>
+              <option value="Children's Health">Children's Health</option>
+              <option value="Diet & Food">Diet & Food</option>
+              <option value="Emotional Wellbeing">Emotional Wellbeing</option>
+              <option value="Exercise & Fitness">Exercise & Fitness</option>
+              <option value="Men's Health">Men's Health</option>
+              <option value="Parenting">Parenting</option>
+              <option value="Pregnancy & Childbirth">
+                Pregnacy & Childbirth
+              </option>
+              <option value="Primary Care">Primary Care</option>
+              <option value="Science & Research">Science & Research</option>
+              <option value="Sex & Relationship">Sex & Relationship</option>
+              <option value="Wellness">Wellness</option>
+              <option value="Women's Health">Women's Health</option>
+            </select>
+          </div>
+          <div className="text-editor-intro">
+            <label htmlFor="intro">Introduction:</label>
+            <textarea value={blog.intro} onChange={onChangeIntro} />
+          </div>
+          <div className="text-editor-img">
+            <label htmlFor="image">Blog image:</label>
+            <div>
+              <button onClick={() => fileInputRef.current.click()}>
+                <i className="bi bi-upload"></i>
+                <span>Upload image</span>
+              </button>
+              <input
+                type="file"
+                name="image"
+                className="flex-grow-1 ps-3 py-1"
+                onChange={(e) => uploadImage(e)}
+                ref={fileInputRef}
+              />
             </div>
-          )}
-        </div>
-        <label htmlFor="info">Info</label>
-        <div className="text-editor">
-          <MenuBar editor={editor} />
-          <EditorContent editor={editor} />
-        </div>
+          </div>
+          <div className="text-editor-uploaded-img">
+            {blog.image && blog.image.length > 0 ? (
+              blog.image.map((img, index) => (
+                <div key={index}>
+                  <img src={img} alt="Blog img" />
+                  <button onClick={() => removeImgTemp(index)}>
+                    Remove image
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="w-100">
+                Image area empty. Please upload an image.
+              </div>
+            )}
+          </div>
+          <label htmlFor="info">Info</label>
+          <div className="text-editor">
+            <MenuBar editor={editor} />
+            <EditorContent editor={editor} />
+          </div>
 
-        <div className="text-editor-btn">
-          <button
-            className="c-2 btn btn-outline-secondary"
-            onClick={(event) =>
-              handleShowModal(
-                event,
-                "cancel",
-                "Cancel blog editing",
-                "Would you like to perform this action?"
-              )
-            }
-          >
-            Cancel
-          </button>
-          <button
-            className="c-2 btn btn-primary"
-            onClick={(event) =>
-              handleShowModal(
-                event,
-                "edit",
-                "Review and submit revisions",
-                "Once confirmed, your revisions will be submitted and will go through a review process. Would you like to proceed?"
-              )
-            }
-          >
-            Submit revisions
-          </button>
+          <div className="text-editor-btn">
+            <button
+              className="c-2 btn btn-outline-secondary"
+              onClick={(event) =>
+                handleShowModal(
+                  event,
+                  "cancel",
+                  "Cancel blog editing",
+                  "Would you like to perform this action?"
+                )
+              }
+            >
+              Cancel
+            </button>
+            <button
+              className="c-2 btn btn-primary"
+              onClick={(event) =>
+                handleShowModal(
+                  event,
+                  "edit",
+                  "Review and submit revisions",
+                  "Once confirmed, your revisions will be submitted and will go through a review process. Would you like to proceed?"
+                )
+              }
+            >
+              Submit revisions
+            </button>
+          </div>
         </div>
       </div>
       <Toaster

@@ -1,16 +1,24 @@
 .create-blog-text-editor {
+  padding-bottom: 48px;
   > h3 {
     display: block;
     text-align: center;
     margin: 0 auto;
-    padding: 16px 0;
+    padding: 48px 0;
     color: var(--text-dark-header);
     font-weight: var(--roboto-medium-weight);
   }
 
-  > span {
-    font-size: 18px;
-    font-weight: var(--roboto-medium-weight);
+  > .blog-text-wrapper {
+    padding: 48px;
+    box-shadow: var(--box-shadow-6);
+    border-radius: var(--border-radius-1);
+    background-color: var(--bg-white);
+
+    > span {
+      font-size: 18px;
+      font-weight: var(--roboto-medium-weight);
+    }
   }
 
   label {
@@ -30,14 +38,14 @@
     resize: vertical;
     padding: 4px 8px;
     width: 100%;
-    border: 2px solid #9e9e9e;
+    border: 1px solid #9e9e9e;
     border-radius: 8px;
   }
 }
 
 .text-editor {
   border-radius: 8px;
-  border: 2px solid #9e9e9e;
+  border: 1px solid #9e9e9e;
 
   .menu-bar {
     padding: 4px 6px;
@@ -62,7 +70,7 @@
 
 .ProseMirror {
   padding: 10px;
-  border-top: 2px solid #9e9e9e;
+  border-top: 1px solid #9e9e9e;
   background-color: white;
   border-radius: 0 0 8px 8px;
   min-height: 300px;
@@ -210,7 +218,7 @@
 }
 
 .text-editor-btn {
-  padding: 32px 0 40px 0;
+  padding: 32px 0 0 0;
   display: flex;
   justify-content: end;
 

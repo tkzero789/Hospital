@@ -10,7 +10,6 @@ export default function NavbarLayout({ title, children }) {
   // Regular expression to match dynamic path
   const diseasePathRegex = /^\/disease\/[^/]+\/article-table$/;
   const viewBlogPathRegex = /^\/blog\/[^/]+\/view$/;
-  const editBlogPathRegex = /^\/blog\/[^/]+\/edit$/;
 
   // Determine if the current path is "/appointment-table" or "/symptom-table"
   const Background = !(
@@ -19,11 +18,9 @@ export default function NavbarLayout({ title, children }) {
     path === "/article-table" ||
     path === "/appointment-table" ||
     path === "/blog-table" ||
-    path === "/create-blog" ||
     path === "/user-table" ||
     diseasePathRegex.test(path) ||
-    viewBlogPathRegex.test(path) ||
-    editBlogPathRegex.test(path)
+    viewBlogPathRegex.test(path)
   );
   return (
     <div className="list">

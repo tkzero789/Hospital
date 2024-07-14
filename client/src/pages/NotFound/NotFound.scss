@@ -14,10 +14,25 @@
     font-size: 20px;
     color: var(--text-dark-1);
     font-weight: var(--roboto-medium-weight);
+    text-align: center;
   }
 
   a {
     margin-top: 40px;
     @include mixins.btn;
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .not-found {
+    padding-top: 58px;
+  }
+}
+
+/* Mobile phone */
+@media only screen and (max-width: 767px) {
+  .not-found {
+    padding-top: 58px;
   }
 }

@@ -91,7 +91,7 @@ const ApptDetailGuest = () => {
                       <button onClick={handleBtnClick}>
                         <Toaster
                           toastOptions={{
-                            className: "toast-noti",
+                            className: "toast-noti-3",
                           }}
                           position="top-center"
                           richColors

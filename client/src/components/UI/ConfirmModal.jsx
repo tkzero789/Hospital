@@ -19,7 +19,7 @@ function ConfirmModal({ title, body, show, hide, action, isClicked }) {
         >
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{body}</Modal.Body>
+        <Modal.Body className="pt-0">{body}</Modal.Body>
         <Modal.Footer className="bg-light">
           <Button
             variant="outline-secondary"

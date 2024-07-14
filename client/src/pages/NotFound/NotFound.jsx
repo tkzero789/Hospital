@@ -1,6 +1,7 @@
-import NotFoundImg from "assets/icons/404-page-not-found.svg";
-import "pages/NotFound/NotFound.scss";
 import { Link } from "react-router-dom";
+import NotFoundImg from "assets/icons/404-page-not-found.svg";
+import Footer from "components/HomePage/Footer/Footer";
+import "pages/NotFound/NotFound.scss";
 
 const NotFound = () => {
   return (
@@ -10,13 +11,15 @@ const NotFound = () => {
           <div className="not-found__section">
             <img src={NotFoundImg} alt="error" />
             <span>
-              The page you are looking for is not found or never existed.
+              The page you requested could not be found. It may never have
+              existed, or the URL may be incorrect.
             </span>
 
             <Link to="/home">Back to home</Link>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
