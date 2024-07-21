@@ -58,6 +58,7 @@ List of demo accounts that allow you to experience the system from different use
 ## Site Navigation
 - **Home Page**:
 ![bayside-home](https://github.com/user-attachments/assets/04035781-5e1d-41f4-9896-7bf2aa33824b)
+
 The following main navigation elements are interactive and will direct users to specific pages or functionalities:
 - Appointment dropdown
     - [Request appointment](https://bayside-hospital.onrender.com/appt-request)
