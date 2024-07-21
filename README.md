@@ -13,6 +13,8 @@ BaySide Hospital is a personal project showcasing a comprehensive healthcare pla
 - **Symptom Checker**: this feature helps users make informed decisions about seeking medical care.
 - **News/Health Articles**: stay informed about various medical topics, preventive care, and health tips through articles written by doctors.
 
+[Visit site](https://bayside-hospital.onrender.com/home)
+
 ## Tech Stack
 Here's an overview of the key technologies powering my project:
 
