@@ -7,7 +7,7 @@
 - [Site Navigation](#site-navigation)
 
 ## About
-BaySide Hospital is a comprehensive healthcare platform designed to enhance patient care and accessibility. The website offers a range of features to support our community's health and well-being:
+BaySide Hospital is a personal project showcasing a comprehensive healthcare platform designed to enhance patient care and accessibility. The website offers a range of features to support our community's health and well-being:
 
 - **Appointment Scheduling**: users can easily request and manage medical appointments online.
 - **Symptom Checker**: this feature helps users make informed decisions about seeking medical care.
@@ -59,13 +59,17 @@ List of demo accounts that allow you to experience the system from different use
 - **Home Page**:
 ![bayside-home](https://github.com/user-attachments/assets/04035781-5e1d-41f4-9896-7bf2aa33824b)
 The following main navigation elements are interactive and will direct users to specific pages or functionalities:
-- Request appointment dropdown
-    - Request appointment
-    - Check appointment status
-- News & Insights
-- Request appointment button
-- Health checker
+- Appointment dropdown
+    - [Request appointment](https://bayside-hospital.onrender.com/appt-request)
+    - [Check appointment status](https://bayside-hospital.onrender.com/appt-detail-guest)
+- [News & Insights](https://bayside-hospital.onrender.com/news/page-1)
+- [Request appointment button](https://bayside-hospital.onrender.com/appt-request)
+- [Health checker](https://bayside-hospital.onrender.com/symptom-checker)
 - [Patient portal](https://bayside-hospital.onrender.com/signin-staff) (login as admin, head doctor, or doctor)
+
+
+
+
 
 
 
