@@ -1,7 +1,7 @@
 ## Table of Contents
 
 - [About](#about)
-- [Tech Stack Overview](#tech-stack-overview)
+- [Tech Stack](#tech-stack)
 - [Note on Installation](#note-on-installation)
 - [User Roles and Permissions](#user-roles-and-permissions)
 - [Site Navigation](#site-navigation)
@@ -13,7 +13,7 @@ BaySide Hospital is a comprehensive healthcare platform designed to enhance pati
 - **Symptom Checker**: this feature helps users make informed decisions about seeking medical care.
 - **News/Health Articles**: stay informed about various medical topics, preventive care, and health tips through articles written by doctors.
 
-## Tech Stack Overview
+## Tech Stack
 Here's an overview of the key technologies powering my project:
 
 - **Core Stack**
@@ -65,7 +65,7 @@ The following main navigation elements are interactive and will direct users to 
 - News & Insights
 - Request appointment button
 - Health checker
-- Patient portal (login as admin, head doctor, or doctor)
+- [Patient portal](https://bayside-hospital.onrender.com/signin-staff) (login as admin, head doctor, or doctor)
 
 
 
