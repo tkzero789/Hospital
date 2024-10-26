@@ -289,13 +289,13 @@ export default function SymptomChecker() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Health check</title>
+          <title>Health checker</title>
         </Helmet>
       </HelmetProvider>
       <SympCheckerModal />
       <div className={`symp-checker w-100 ${check ? "bg-gray-4" : ""}`}>
         <div className="content-container">
-          <h3 className="text-center">Health check</h3>
+          <h3 className="text-center">Health checker</h3>
           <div className="symp-checker-board">
             <div className="card">
               <div className="progress-bar-step border rounded">
