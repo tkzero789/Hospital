@@ -1,3 +1,5 @@
+![BaysideProject](https://github.com/user-attachments/assets/b372e34c-0e91-437c-a43c-0495b4d2d79d)
+
 ## Table of Contents
 
 - [About](#about)
