@@ -42,10 +42,6 @@ const AdminNav = () => {
     };
   }, []);
 
-  appointments.map((item) => {
-    return console.log(item.id);
-  });
-
   return (
     <div className="admin-navbar">
       <div className="wrapper">
