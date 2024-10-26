@@ -33,7 +33,7 @@ const ApptChartWidget = () => {
     const weekDates = getCurrentWeekDates(); // Returns dates of the current week
     const startOfWeek = new Date(weekDates[0]);
     const endOfWeek = new Date(weekDates[weekDates.length - 1]);
-    endOfWeek.setHours(23, 59, 59, 999); // Set to the end of the last day
+    endOfWeek.setUTCHours(23, 59, 59, 999); // Set to the end of the last day
 
     const needsCount = {
       Imaging: 0,
@@ -67,7 +67,7 @@ const ApptChartWidget = () => {
     const weekDates = getCurrentWeekDates();
     const startOfWeek = new Date(weekDates[0]);
     const endOfWeek = new Date(weekDates[weekDates.length - 1]);
-    endOfWeek.setHours(23, 59, 59, 999); // Set to the end of the last day
+    endOfWeek.setUTCHours(23, 59, 59, 999); // Set to the end of the last day
 
     // Initialize counts
     const genderCounts = {
@@ -109,15 +109,15 @@ const ApptChartWidget = () => {
   // Get the number of dates in week (from Monday to Friday)
   const getCurrentWeekDates = () => {
     const now = new Date();
-    now.setHours(0, 0, 0, 0); // Normalize the time to the start of the day to avoid timezone issues
-    const dayOfWeek = now.getDay();
+    now.setUTCHours(0, 0, 0, 0); // Normalize the time to the start of the day to avoid timezone issues
+    const dayOfWeek = now.getUTCDay();
     const differenceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
     const firstDayOfWeek = new Date(now);
-    firstDayOfWeek.setDate(now.getDate() + differenceToMonday);
+    firstDayOfWeek.setUTCDate(now.getUTCDate() + differenceToMonday);
 
     const weekDates = Array.from({ length: 5 }).map((_, i) => {
       const date = new Date(firstDayOfWeek);
-      date.setDate(date.getDate() + i);
+      date.setUTCDate(date.getUTCDate() + i);
       return date.toISOString().split("T")[0];
     });
     return weekDates;
