@@ -26,7 +26,7 @@ Here's an overview of the key technologies powering my project:
     - React
     - Node.js
 - **Styling**
-    - CSS/SCSS
+    - CSS/Sass
     - Bootstrap
     - MUI
 - **Authentication**
