@@ -13,7 +13,7 @@ const navLinks = [
   { link: "/symptom-checker", text: "Health Checker" },
   { link: "", text: "Services" },
   { link: "", text: "Patients & Visitors" },
-  { link: "", text: "Find care" },
+  { link: "", text: "Find Care" },
 ];
 
 export default function MainNav() {
@@ -130,7 +130,7 @@ export default function MainNav() {
             ) : (
               <li key={"signout"}>
                 <NavLink className="nav-link nav-link-first" to="/signin-staff">
-                  <div className="main-nav-text">Patient portal</div>
+                  <div className="main-nav-text">Patient Portal</div>
                 </NavLink>
               </li>
             )}
